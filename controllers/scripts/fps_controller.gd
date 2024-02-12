@@ -26,15 +26,21 @@ var gravity = 9.8
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		_mouse_captured = true
+		capture_mouse()
 	elif event.is_action_pressed("exit"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		_mouse_captured = false
+		uncapture_mouse()
 	
 	if event is InputEventMouseMotion && _mouse_captured == true:
 		look_dir = event.relative * 0.001
 		_rotate_camera()
+
+func capture_mouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	_mouse_captured = true
+
+func uncapture_mouse():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	_mouse_captured = false
 
 #func _input(event):
 	#if event.is_action_pressed("exit"):
@@ -44,24 +50,8 @@ func _rotate_camera(sens_mod: float = 1.0) -> void:
 	self.rotation.y -= look_dir.x * MOUSE_SENSITIVITY
 	CAMERA_CONTROLLER.rotation.x = clamp(CAMERA_CONTROLLER.rotation.x - look_dir.y * MOUSE_SENSITIVITY, -1.5, 1.5)
 	
-#func update_camera(delta) -> void:
-	#_current_rotation = _rotation_input
-	#_mouse_rotation.x += _tilt_input * delta
-	#_mouse_rotation.x = clamp(_mouse_rotation.x, TILT_LOWER_LIMIT, TILT_UPPER_LIMIT)
-	#_mouse_rotation.y += _rotation_input * delta
-	#
-	#_player_rotation = Vector3(0.0,_mouse_rotation.y,0.0)
-	#_camera_rotation = Vector3(_mouse_rotation.x,0.0,0.0)
-#
-	#CAMERA_CONTROLLER.transform.basis = Basis.from_euler(_camera_rotation)
-	#global_transform.basis = Basis.from_euler(_player_rotation)
-	#
-	#CAMERA_CONTROLLER.rotation.z = 0.0
-#
-	#_rotation_input = 0.0
-	#_tilt_input = 0.0
-	
 func _ready():
+	capture_mouse()
 	
 	Global.player = self
 	
