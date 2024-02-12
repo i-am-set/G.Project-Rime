@@ -1,0 +1,81 @@
+[gd_resource type="AnimationLibrary" load_steps=3 format=3 uid="uid://jn0rdr68w44f"]
+
+[sub_resource type="Animation" id="Animation_u3xk2"]
+resource_name = "Idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("crowbar:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0.0772995, -0.25, 0, 0.2, 0.00177211, 0.116286, -0.1, -0.0011814, 0.2, 0, 0.0610865, -0.1, -0.000326708, 0.2, 0.0014454, 0.0465829, -0.25, 0, 0.3, 0.0016344, 0.077, -0.2, 0.0005318, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("crowbar:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(3.07178, -0.25, 0, 0.25, 0, 3.07178, -0.25, 0, 0.25, 0, 3.07178, -0.25, 0, 0.25, 0, 3.07178, -0.25, 0, 0.25, 0, 3.07178, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("crowbar:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(0.0959931, -0.25, 0, 0.3, -0.00392602, 0.0436332, -0.1, 0.000586893, 0.2, -3.81097e-06, 0.0959931, -0.2, 0.000208899, 0.1, 0.000208899, 0.0501272, -0.1, 0, 0.1, 0.00118141, 0.0959931, -0.1, -0.000972502, 0.0999999, -0.00274462),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2)
+}
+
+[sub_resource type="Animation" id="Animation_jhlpw"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("crowbar:rotation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.139626, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("crowbar:rotation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(3.07178, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("crowbar:rotation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.0436332, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[resource]
+_data = {
+"Idle": SubResource("Animation_u3xk2"),
+"RESET": SubResource("Animation_jhlpw")
+}

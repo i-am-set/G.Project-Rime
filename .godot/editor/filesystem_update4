@@ -1,0 +1,5 @@
+res://levels/level_015.tscn
+res://environment/WE_test.tres
+res://materials/grid.tres
+res://controllers/fps_controller.tscn
+res://meshes/weapons/weapon.tscn

@@ -1,0 +1,380 @@
+[gd_scene load_steps=22 format=3 uid="uid://cef2utfilwuag"]
+
+[ext_resource type="PackedScene" uid="uid://btv0a42cgxt8g" path="res://levels/WE_test.tscn" id="1_1y8is"]
+[ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="2_fkivt"]
+[ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://controllers/fps_controller.tscn" id="3_02ufi"]
+[ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_cyrvj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gd0ev"]
+material = ExtResource("2_fkivt")
+size = Vector3(20, 0.5, 80)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pmrh2"]
+data = PackedVector3Array(-10, 0.25, 40, 10, 0.25, 40, -10, -0.25, 40, 10, 0.25, 40, 10, -0.25, 40, -10, -0.25, 40, 10, 0.25, -40, -10, 0.25, -40, 10, -0.25, -40, -10, 0.25, -40, -10, -0.25, -40, 10, -0.25, -40, 10, 0.25, 40, 10, 0.25, -40, 10, -0.25, 40, 10, 0.25, -40, 10, -0.25, -40, 10, -0.25, 40, -10, 0.25, -40, -10, 0.25, 40, -10, -0.25, -40, -10, 0.25, 40, -10, -0.25, 40, -10, -0.25, -40, 10, 0.25, 40, -10, 0.25, 40, 10, 0.25, -40, -10, 0.25, 40, -10, 0.25, -40, 10, 0.25, -40, -10, -0.25, 40, 10, -0.25, 40, -10, -0.25, -40, 10, -0.25, 40, 10, -0.25, -40, -10, -0.25, -40)
+
+[sub_resource type="Shader" id="Shader_cwof1"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.1.dev4's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+varying vec3 uv1_triplanar_pos;
+uniform float uv1_blend_sharpness;
+varying vec3 uv1_power_normal;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	TANGENT = vec3(0.0,0.0,-1.0) * abs(NORMAL.x);
+	TANGENT+= vec3(1.0,0.0,0.0) * abs(NORMAL.y);
+	TANGENT+= vec3(1.0,0.0,0.0) * abs(NORMAL.z);
+	TANGENT = normalize(TANGENT);
+	BINORMAL = vec3(0.0,1.0,0.0) * abs(NORMAL.x);
+	BINORMAL+= vec3(0.0,0.0,-1.0) * abs(NORMAL.y);
+	BINORMAL+= vec3(0.0,1.0,0.0) * abs(NORMAL.z);
+	BINORMAL = normalize(BINORMAL);
+	uv1_power_normal=pow(abs(NORMAL),vec3(uv1_blend_sharpness));
+	uv1_triplanar_pos = VERTEX * uv1_scale + uv1_offset;
+	uv1_power_normal/=dot(uv1_power_normal,vec3(1.0));
+	uv1_triplanar_pos *= vec3(1.0,-1.0, 1.0);
+}
+
+vec4 triplanar_texture(sampler2D p_sampler,vec3 p_weights,vec3 p_triplanar_pos) {
+	vec4 samp=vec4(0.0);
+	samp+= texture(p_sampler,p_triplanar_pos.xy) * p_weights.z;
+	samp+= texture(p_sampler,p_triplanar_pos.xz) * p_weights.y;
+	samp+= texture(p_sampler,p_triplanar_pos.zy * vec2(-1.0,1.0)) * p_weights.x;
+	return samp;
+}
+
+void fragment() {
+	vec4 albedo_tex = triplanar_texture(texture_albedo,uv1_power_normal,uv1_triplanar_pos);
+	ALBEDO = (albedo.rgb * albedo_tex.r) + albedo_tex.g + albedo_tex.b;
+	float metallic_tex = dot(triplanar_texture(texture_metallic,uv1_power_normal,uv1_triplanar_pos),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(triplanar_texture(texture_roughness,uv1_power_normal,uv1_triplanar_pos),roughness_texture_channel);
+	ROUGHNESS = (1.0 - albedo_tex.g) * roughness;
+	SPECULAR = specular;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tkeet"]
+render_priority = 0
+shader = SubResource("Shader_cwof1")
+shader_parameter/albedo = Color(1, 0.666667, 0, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.5
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv1_offset = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("4_cyrvj")
+shader_parameter/texture_roughness = ExtResource("4_cyrvj")
+
+[sub_resource type="BoxMesh" id="BoxMesh_qctcq"]
+material = SubResource("ShaderMaterial_tkeet")
+size = Vector3(1, 5, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_20dey"]
+data = PackedVector3Array(-0.5, 2.5, 10, 0.5, 2.5, 10, -0.5, -2.5, 10, 0.5, 2.5, 10, 0.5, -2.5, 10, -0.5, -2.5, 10, 0.5, 2.5, -10, -0.5, 2.5, -10, 0.5, -2.5, -10, -0.5, 2.5, -10, -0.5, -2.5, -10, 0.5, -2.5, -10, 0.5, 2.5, 10, 0.5, 2.5, -10, 0.5, -2.5, 10, 0.5, 2.5, -10, 0.5, -2.5, -10, 0.5, -2.5, 10, -0.5, 2.5, -10, -0.5, 2.5, 10, -0.5, -2.5, -10, -0.5, 2.5, 10, -0.5, -2.5, 10, -0.5, -2.5, -10, 0.5, 2.5, 10, -0.5, 2.5, 10, 0.5, 2.5, -10, -0.5, 2.5, 10, -0.5, 2.5, -10, 0.5, 2.5, -10, -0.5, -2.5, 10, 0.5, -2.5, 10, -0.5, -2.5, -10, 0.5, -2.5, 10, 0.5, -2.5, -10, -0.5, -2.5, -10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_n5ou5"]
+material = SubResource("ShaderMaterial_tkeet")
+size = Vector3(1, 5, 10)
+
+[sub_resource type="Shader" id="Shader_xhlsx"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.1.dev4's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+varying vec3 uv1_triplanar_pos;
+uniform float uv1_blend_sharpness;
+varying vec3 uv1_power_normal;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	TANGENT = vec3(0.0,0.0,-1.0) * abs(NORMAL.x);
+	TANGENT+= vec3(1.0,0.0,0.0) * abs(NORMAL.y);
+	TANGENT+= vec3(1.0,0.0,0.0) * abs(NORMAL.z);
+	TANGENT = normalize(TANGENT);
+	BINORMAL = vec3(0.0,1.0,0.0) * abs(NORMAL.x);
+	BINORMAL+= vec3(0.0,0.0,-1.0) * abs(NORMAL.y);
+	BINORMAL+= vec3(0.0,1.0,0.0) * abs(NORMAL.z);
+	BINORMAL = normalize(BINORMAL);
+	uv1_power_normal=pow(abs(NORMAL),vec3(uv1_blend_sharpness));
+	uv1_triplanar_pos = VERTEX * uv1_scale + uv1_offset;
+	uv1_power_normal/=dot(uv1_power_normal,vec3(1.0));
+	uv1_triplanar_pos *= vec3(1.0,-1.0, 1.0);
+}
+
+vec4 triplanar_texture(sampler2D p_sampler,vec3 p_weights,vec3 p_triplanar_pos) {
+	vec4 samp=vec4(0.0);
+	samp+= texture(p_sampler,p_triplanar_pos.xy) * p_weights.z;
+	samp+= texture(p_sampler,p_triplanar_pos.xz) * p_weights.y;
+	samp+= texture(p_sampler,p_triplanar_pos.zy * vec2(-1.0,1.0)) * p_weights.x;
+	return samp;
+}
+
+void fragment() {
+	vec4 albedo_tex = triplanar_texture(texture_albedo,uv1_power_normal,uv1_triplanar_pos);
+	ALBEDO = (albedo.rgb * albedo_tex.r) + albedo_tex.g + albedo_tex.b;
+	float metallic_tex = dot(triplanar_texture(texture_metallic,uv1_power_normal,uv1_triplanar_pos),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(triplanar_texture(texture_roughness,uv1_power_normal,uv1_triplanar_pos),roughness_texture_channel);
+	ROUGHNESS = (1.0 - albedo_tex.g) * roughness;
+	SPECULAR = specular;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khlyx"]
+render_priority = 0
+shader = SubResource("Shader_xhlsx")
+shader_parameter/albedo = Color(1, 0, 0, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.5
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("4_cyrvj")
+shader_parameter/texture_roughness = ExtResource("4_cyrvj")
+
+[sub_resource type="BoxMesh" id="BoxMesh_cwg2w"]
+material = SubResource("ShaderMaterial_khlyx")
+size = Vector3(10, 3, 2)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_emcex"]
+data = PackedVector3Array(-5, 1.5, 1, 5, 1.5, 1, -5, -1.5, 1, 5, 1.5, 1, 5, -1.5, 1, -5, -1.5, 1, 5, 1.5, -1, -5, 1.5, -1, 5, -1.5, -1, -5, 1.5, -1, -5, -1.5, -1, 5, -1.5, -1, 5, 1.5, 1, 5, 1.5, -1, 5, -1.5, 1, 5, 1.5, -1, 5, -1.5, -1, 5, -1.5, 1, -5, 1.5, -1, -5, 1.5, 1, -5, -1.5, -1, -5, 1.5, 1, -5, -1.5, 1, -5, -1.5, -1, 5, 1.5, 1, -5, 1.5, 1, 5, 1.5, -1, -5, 1.5, 1, -5, 1.5, -1, 5, 1.5, -1, -5, -1.5, 1, 5, -1.5, 1, -5, -1.5, -1, 5, -1.5, 1, 5, -1.5, -1, -5, -1.5, -1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bptv1"]
+material = SubResource("ShaderMaterial_khlyx")
+size = Vector3(10, 3, 3)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qm4fb"]
+data = PackedVector3Array(-5, 1.5, 1.5, 5, 1.5, 1.5, -5, -1.5, 1.5, 5, 1.5, 1.5, 5, -1.5, 1.5, -5, -1.5, 1.5, 5, 1.5, -1.5, -5, 1.5, -1.5, 5, -1.5, -1.5, -5, 1.5, -1.5, -5, -1.5, -1.5, 5, -1.5, -1.5, 5, 1.5, 1.5, 5, 1.5, -1.5, 5, -1.5, 1.5, 5, 1.5, -1.5, 5, -1.5, -1.5, 5, -1.5, 1.5, -5, 1.5, -1.5, -5, 1.5, 1.5, -5, -1.5, -1.5, -5, 1.5, 1.5, -5, -1.5, 1.5, -5, -1.5, -1.5, 5, 1.5, 1.5, -5, 1.5, 1.5, 5, 1.5, -1.5, -5, 1.5, 1.5, -5, 1.5, -1.5, 5, 1.5, -1.5, -5, -1.5, 1.5, 5, -1.5, 1.5, -5, -1.5, -1.5, 5, -1.5, 1.5, 5, -1.5, -1.5, -5, -1.5, -1.5)
+
+[sub_resource type="Shader" id="Shader_cyyhh"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.1.dev4's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+varying vec3 uv1_triplanar_pos;
+uniform float uv1_blend_sharpness;
+varying vec3 uv1_power_normal;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	TANGENT = vec3(0.0,0.0,-1.0) * abs(NORMAL.x);
+	TANGENT+= vec3(1.0,0.0,0.0) * abs(NORMAL.y);
+	TANGENT+= vec3(1.0,0.0,0.0) * abs(NORMAL.z);
+	TANGENT = normalize(TANGENT);
+	BINORMAL = vec3(0.0,1.0,0.0) * abs(NORMAL.x);
+	BINORMAL+= vec3(0.0,0.0,-1.0) * abs(NORMAL.y);
+	BINORMAL+= vec3(0.0,1.0,0.0) * abs(NORMAL.z);
+	BINORMAL = normalize(BINORMAL);
+	uv1_power_normal=pow(abs(NORMAL),vec3(uv1_blend_sharpness));
+	uv1_triplanar_pos = VERTEX * uv1_scale + uv1_offset;
+	uv1_power_normal/=dot(uv1_power_normal,vec3(1.0));
+	uv1_triplanar_pos *= vec3(1.0,-1.0, 1.0);
+}
+
+vec4 triplanar_texture(sampler2D p_sampler,vec3 p_weights,vec3 p_triplanar_pos) {
+	vec4 samp=vec4(0.0);
+	samp+= texture(p_sampler,p_triplanar_pos.xy) * p_weights.z;
+	samp+= texture(p_sampler,p_triplanar_pos.xz) * p_weights.y;
+	samp+= texture(p_sampler,p_triplanar_pos.zy * vec2(-1.0,1.0)) * p_weights.x;
+	return samp;
+}
+
+void fragment() {
+	vec4 albedo_tex = triplanar_texture(texture_albedo,uv1_power_normal,uv1_triplanar_pos);
+	ALBEDO = (albedo.rgb * albedo_tex.r) + albedo_tex.g + albedo_tex.b;
+	float metallic_tex = dot(triplanar_texture(texture_metallic,uv1_power_normal,uv1_triplanar_pos),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(triplanar_texture(texture_roughness,uv1_power_normal,uv1_triplanar_pos),roughness_texture_channel);
+	ROUGHNESS = (1.0 - albedo_tex.g) * roughness;
+	SPECULAR = specular;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ljwfn"]
+render_priority = 0
+shader = SubResource("Shader_cyyhh")
+shader_parameter/albedo = Color(1, 0.666667, 0, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 0.5
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv1_offset = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("4_cyrvj")
+shader_parameter/texture_roughness = ExtResource("4_cyrvj")
+
+[sub_resource type="BoxMesh" id="BoxMesh_dq3x3"]
+material = SubResource("ShaderMaterial_ljwfn")
+size = Vector3(1, 5, 33.38)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_n4aja"]
+data = PackedVector3Array(-10, 0.25, 40, 10, 0.25, 40, -10, -0.25, 40, 10, 0.25, 40, 10, -0.25, 40, -10, -0.25, 40, 10, 0.25, -40, -10, 0.25, -40, 10, -0.25, -40, -10, 0.25, -40, -10, -0.25, -40, 10, -0.25, -40, 10, 0.25, 40, 10, 0.25, -40, 10, -0.25, 40, 10, 0.25, -40, 10, -0.25, -40, 10, -0.25, 40, -10, 0.25, -40, -10, 0.25, 40, -10, -0.25, -40, -10, 0.25, 40, -10, -0.25, 40, -10, -0.25, -40, 10, 0.25, 40, -10, 0.25, 40, 10, 0.25, -40, -10, 0.25, 40, -10, 0.25, -40, 10, 0.25, -40, -10, -0.25, 40, 10, -0.25, 40, -10, -0.25, -40, 10, -0.25, 40, 10, -0.25, -40, -10, -0.25, -40)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_1y8is")]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -24.214)
+mesh = SubResource("BoxMesh_gd0ev")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_pmrh2")
+
+[node name="FPSController" parent="." instance=ExtResource("3_02ufi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.30072)
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2.5, 0)
+mesh = SubResource("BoxMesh_qctcq")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_20dey")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 2.5, 0)
+mesh = SubResource("BoxMesh_qctcq")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2.5, -16)
+mesh = SubResource("BoxMesh_n5ou5")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 2.5, -21.1681)
+mesh = SubResource("BoxMesh_qctcq")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.47944, -3.56067)
+mesh = SubResource("BoxMesh_cwg2w")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/MeshInstance3D5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/MeshInstance3D5/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_emcex")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.02556, -19.4166)
+mesh = SubResource("BoxMesh_bptv1")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D/MeshInstance3D6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/MeshInstance3D6/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qm4fb")
+
+[node name="Node3D2" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -25.798, 0, -26.215)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2.5, 7.37419)
+mesh = SubResource("BoxMesh_qctcq")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D2/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D2/MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_20dey")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.30579, 2.5, 13.094)
+mesh = SubResource("BoxMesh_dq3x3")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.275814, 2.5, -15.6258)
+mesh = SubResource("BoxMesh_qctcq")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 2.5, -15.6258)
+visible = false
+mesh = SubResource("BoxMesh_qctcq")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2.5, -38.4538)
+mesh = SubResource("BoxMesh_qctcq")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 2.5, -38.4538)
+mesh = SubResource("BoxMesh_qctcq")
+skeleton = NodePath("../..")
+
+[node name="Floor2" type="MeshInstance3D" parent="Node3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -24.214)
+mesh = SubResource("BoxMesh_gd0ev")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D2/Floor2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D2/Floor2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_n4aja")

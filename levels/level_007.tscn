@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=3 uid="uid://hwcfodjh80hl"]
+
+[ext_resource type="PackedScene" uid="uid://btv0a42cgxt8g" path="res://levels/WE_test.tscn" id="1_c8imp"]
+[ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="2_wlrhx"]
+[ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://controllers/fps_controller.tscn" id="3_j2ul6"]
+[ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_26von"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gd0ev"]
+material = ExtResource("2_wlrhx")
+size = Vector3(50, 0.5, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_hvhu4"]
+data = PackedVector3Array(-25, 0.25, 25, 25, 0.25, 25, -25, -0.25, 25, 25, 0.25, 25, 25, -0.25, 25, -25, -0.25, 25, 25, 0.25, -25, -25, 0.25, -25, 25, -0.25, -25, -25, 0.25, -25, -25, -0.25, -25, 25, -0.25, -25, 25, 0.25, 25, 25, 0.25, -25, 25, -0.25, 25, 25, 0.25, -25, 25, -0.25, -25, 25, -0.25, 25, -25, 0.25, -25, -25, 0.25, 25, -25, -0.25, -25, -25, 0.25, 25, -25, -0.25, 25, -25, -0.25, -25, 25, 0.25, 25, -25, 0.25, 25, 25, 0.25, -25, -25, 0.25, 25, -25, 0.25, -25, 25, 0.25, -25, -25, -0.25, 25, 25, -0.25, 25, -25, -0.25, -25, 25, -0.25, 25, 25, -0.25, -25, -25, -0.25, -25)
+
+[sub_resource type="Shader" id="Shader_cwof1"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.1.dev4's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+varying vec3 uv1_triplanar_pos;
+uniform float uv1_blend_sharpness;
+varying vec3 uv1_power_normal;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	TANGENT = vec3(0.0,0.0,-1.0) * abs(NORMAL.x);
+	TANGENT+= vec3(1.0,0.0,0.0) * abs(NORMAL.y);
+	TANGENT+= vec3(1.0,0.0,0.0) * abs(NORMAL.z);
+	TANGENT = normalize(TANGENT);
+	BINORMAL = vec3(0.0,1.0,0.0) * abs(NORMAL.x);
+	BINORMAL+= vec3(0.0,0.0,-1.0) * abs(NORMAL.y);
+	BINORMAL+= vec3(0.0,1.0,0.0) * abs(NORMAL.z);
+	BINORMAL = normalize(BINORMAL);
+	uv1_power_normal=pow(abs(NORMAL),vec3(uv1_blend_sharpness));
+	uv1_triplanar_pos = VERTEX * uv1_scale + uv1_offset;
+	uv1_power_normal/=dot(uv1_power_normal,vec3(1.0));
+	uv1_triplanar_pos *= vec3(1.0,-1.0, 1.0);
+}
+
+vec4 triplanar_texture(sampler2D p_sampler,vec3 p_weights,vec3 p_triplanar_pos) {
+	vec4 samp=vec4(0.0);
+	samp+= texture(p_sampler,p_triplanar_pos.xy) * p_weights.z;
+	samp+= texture(p_sampler,p_triplanar_pos.xz) * p_weights.y;
+	samp+= texture(p_sampler,p_triplanar_pos.zy * vec2(-1.0,1.0)) * p_weights.x;
+	return samp;
+}
+
+void fragment() {
+	vec4 albedo_tex = triplanar_texture(texture_albedo,uv1_power_normal,uv1_triplanar_pos);
+	ALBEDO = (albedo.rgb * albedo_tex.r) + albedo_tex.g + albedo_tex.b;
+	float metallic_tex = dot(triplanar_texture(texture_metallic,uv1_power_normal,uv1_triplanar_pos),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(triplanar_texture(texture_roughness,uv1_power_normal,uv1_triplanar_pos),roughness_texture_channel);
+	ROUGHNESS = (1.0 - albedo_tex.g) * roughness;
+	SPECULAR = specular;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gcpn7"]
+render_priority = 0
+shader = SubResource("Shader_cwof1")
+shader_parameter/albedo = Color(0.0196078, 0.054902, 0.0196078, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.252
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/specular = 1.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv1_offset = Vector3(0.5, 0.5, 0.5)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("4_26von")
+shader_parameter/texture_roughness = ExtResource("4_26von")
+
+[sub_resource type="BoxMesh" id="BoxMesh_ueyme"]
+material = SubResource("ShaderMaterial_gcpn7")
+size = Vector3(1, 4, 1)
+
+[sub_resource type="MultiMesh" id="MultiMesh_g3xta"]
+transform_format = 1
+instance_count = 50
+mesh = SubResource("BoxMesh_ueyme")
+buffer = PackedFloat32Array(-1.91705, 0, 1.11219, -11.352, 0, 2.21631, 0, 0, -1.11219, 0, -1.91705, 2.74148, -1.47657, 0, 1.48054, -17.9099, 0, -2.09099, 0, -0.5, 1.48054, 0, 1.47657, -7.77827, 0.616422, 0, 1.77345, 10.4785, 0, -1.87753, 0, -0.5, 1.77345, 0, -0.616422, 14.2729, 1.73638, 0, -0.448639, 6.87877, 0, -1.7934, 0, -0.5, -0.448639, 0, -1.73638, 5.86699, 1.51967, 0, 1.35819, 14.4132, 0, -2.03816, 0, -0.5, 1.35819, 0, -1.51967, -11.6196, 2.15229, 0, -0.618038, 12.9764, 0, -2.23927, 0, -0.5, -0.618038, 0, -2.15229, -7.0147, 2.07199, 0, 0.573879, 21.8717, 0, -2.15, 0, -0.5, 0.573879, 0, -2.07199, 12.8578, -1.32403, 0, 1.57014, -7.57318, 0, -2.05387, 0, -0.5, 1.57014, 0, 1.32403, 14.1901, 1.4756, 0, 0.997211, 6.17814, 0, -1.78096, 0, -0.5, 0.997211, 0, -1.4756, -21.4038, 1.18985, 0, -1.86879, 12.8021, 0, 2.21543, 0, 0, 1.86879, 0, 1.18985, -3.97488, -0.360829, 0, -1.81863, 4.22305, 0, 1.85408, 0, 0, 1.81863, 0, -0.360829, 22.73, 1.32781, 0, -1.59692, 1.98959, 0, 2.07683, 0, 0, 1.59692, 0, 1.32781, 24.2739, -1.82031, 0, 0.176526, -13.9083, 0, 1.82885, 0, 0, -0.176526, 0, -1.82031, -20.0253, -1.65427, 0, 1.23159, 1.11132, 0, 2.06238, 0, 0, -1.23159, 0, -1.65427, -9.03203, 2.23295, 0, 0.00239964, 16.9148, 0, -2.23295, 0, -0.5, 0.00239964, 0, -2.23295, 15.3398, 0.325786, 0, -1.81905, 7.79489, 0, 1.84799, 0, 0, 1.81905, 0, 0.325786, 2.81589, -0.555555, 0, -1.81237, 18.9205, 0, 1.8956, 0, 0, 1.81237, 0, -0.555555, 2.32361, -2.12857, 0, -0.366264, -13.7867, 0, 2.15985, 0, 0, 0.366264, 0, -2.12857, 5.13513, 0.278233, 0, -2.00606, 8.19116, 0, 2.02526, 0, 0, 2.00606, 0, 0.278233, 13.0042, 0.338825, 0, -2.17401, 23.0091, 0, 2.20025, 0, 0, 2.17401, 0, 0.338825, -10.9045, 1.37658, 0, -1.12414, -0.615438, 0, -1.77726, 0, -0.5, -1.12414, 0, -1.37658, -18.9804, -0.63574, 0, -2.04408, 23.032, 0, 2.14066, 0, 0, 2.04408, 0, -0.63574, -20.9829, -0.247429, 0, 1.90108, 14.0242, 0, -1.91711, 0, -0.5, 1.90108, 0, 0.247429, 20.7426, 0, 2.15184, 0, 25, 1.9715, 0, -0.862332, -0.219169, -0.862332, 0, -1.9715, 9.3619, 1.68808, 0, -1.18991, 19.7733, 0, -2.0653, 0, -0.5, -1.18991, 0, -1.68808, 3.11332, 1.93544, 0, 0.0349488, 12.4598, 0, -1.93576, 0, -0.5, 0.0349488, 0, -1.93544, -2.17367, 1.9416, 0, 0.763675, 15.3178, 0, -2.08639, 0, -0.5, 0.763675, 0, -1.9416, 8.30726, 0.998247, 0, 1.63613, -23.7853, 0, -1.91662, 0, -0.5, 1.63613, 0, -0.998247, -11.5812, -1.20278, 0, 1.35432, -17.7022, 0, -1.81132, 0, -0.5, 1.35432, 0, 1.20278, -2.98633, -0.846185, 0, 1.79996, 6.74507, 0, -1.98894, 0, -0.5, 1.79996, 0, 0.846185, 6.74649, 0.0454099, 0, 2.11921, 3.55168, 0, -2.1197, 0, -0.5, 2.11921, 0, -0.0454099, 11.5327, 2.00214, 0, -0.479376, -11.4428, 0, -2.05873, 0, -0.5, -0.479376, 0, -2.00214, -23.2485, 0, -1.87524, 0, -25, 1.45414, 0, -1.18407, -0.119947, 1.18407, 0, 1.45414, -16.8446, -0.819611, 0, -1.64936, 11.7717, 0, 1.84178, 0, 0, 1.64936, 0, -0.819611, 23.1038, -1.19689, 0, -1.76622, 1.40931, 0, 2.13356, 0, 0, 1.76622, 0, -1.19689, 16.9524, 0.512675, 0, -1.76714, 12.6156, 0, 1.84001, 0, 0, 1.76714, 0, 0.512675, 20.1836, -1.41751, 0, 1.22979, -24.2826, 0, 1.87663, 0, 0, -1.22979, 0, -1.41751, -20.1345, 0.80736, 0, -1.92306, -14.4137, 0, 2.08567, 0, 0, 1.92306, 0, 0.80736, 20.2642, 1.48233, 0, 1.2107, 23.0547, 0, -1.91392, 0, -0.5, 1.2107, 0, -1.48233, 15.116, -0.580556, 0, -1.73405, -23.6313, 0, 1.82865, 0, 0, 1.73405, 0, -0.580556, 24.1451, 1.71065, 0, 0.627602, 19.9099, 0, -1.82215, 0, -0.5, 0.627602, 0, -1.71065, -19.2556, 0.440462, 0, 1.74412, 15.5808, 0, -1.79888, 0, -0.5, 1.74412, 0, -0.440462, 22.1457, -0.405665, 0, 2.08006, -19.5215, 0, -2.11925, 0, -0.5, 2.08006, 0, 0.405665, 14.9143, 1.47611, 0, -1.48412, 21.7841, 0, 2.0932, 0, 0, 1.48412, 0, 1.47611, 16.7763, 0.81138, 0, 1.86266, -22.6289, 0, -2.03171, 0, -0.5, 1.86266, 0, -0.81138, -21.7056, 1.16537, 0, -1.7385, -2.00856, 0, 2.09295, 0, 0, 1.7385, 0, 1.16537, 19.372, 0.956616, 0, 1.8295, -18.2785, 0, -2.0645, 0, -0.5, 1.8295, 0, -0.956616, -17.6331, 0.952775, 0, -1.93269, -13.1178, 0, 2.15478, 0, 0, 1.93269, 0, 0.952775, 16.5649, 0.286242, 0, -1.86951, 2.75292, 0, 1.8913, 0, 0, 1.86951, 0, 0.286242, 20.915, -1.36942, 0, 1.15844, 7.74577, 0, 1.79368, 0, 0, -1.15844, 0, -1.36942, -16.1161)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_c8imp")]
+
+[node name="DirectionalLight3D" parent="WorldEnvironment" index="0"]
+transform = Transform3D(0.980792, 0.164096, 0.105449, -0.0141497, -0.479328, 0.877522, 0.194542, -0.862158, -0.467799, 0, 2.38245, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("BoxMesh_gd0ev")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_hvhu4")
+
+[node name="FPSController" parent="." instance=ExtResource("3_j2ul6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+TOGGLE_CROUCH = false
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
+multimesh = SubResource("MultiMesh_g3xta")
+
+[editable path="WorldEnvironment"]
