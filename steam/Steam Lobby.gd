@@ -7,8 +7,8 @@ enum search_distance {Close, Default, Far, Worldwide}
 @onready var lobbySetName = $CreateLobby/LobbySetName
 @onready var lobbyGetName = $Chat/ChatName
 @onready var lobbyOutput = $Chat/ChatOutput
-#@onready var lobbyPopup = 
-#@onready var lobbyList = 
+@onready var lobbyPopup = $LobbyPopup
+@onready var lobbyList = $LobbyPopup/Scroll/VBox
 @onready var playerCount = $Players/PlayerCount
 @onready var playerList = $Players/PlayerList
 @onready var chatInput = $SendMessage/TextEdit
@@ -18,7 +18,7 @@ func _ready():
 	steamName.text = Global.STEAM_NAME
 	# Steamwork connections
 	Steam.lobby_created.connect(_on_lobby_created)
-	#Steam.lobby_match_list.connect(_on_lobby_match_list)
+	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
 	##Steam.lobby_message.connect(_on_lobby_message)
@@ -62,9 +62,13 @@ func get_lobby_members() -> void:
 	for this_member in range(0, num_of_members):
 		# Get the member's Steam ID
 		var member_steam_id: int = Steam.getLobbyMemberByIndex(Global.LOBBY_ID, this_member)
-
+		
 		# Get the member's Steam name
-		var member_steam_name: String = Steam.getFriendPersonaName(member_steam_id)
+		
+		var member_steam_name: String
+		while member_steam_name == "":
+			member_steam_name =  Steam.getFriendPersonaName(member_steam_id)
+		
 
 		# Add them to the list
 		add_player_list(member_steam_id, member_steam_name)
@@ -107,10 +111,14 @@ func _on_lobby_created(connect: int, this_lobby_id: int) -> void:
 func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, response: int) -> void:
 	# If joining was successful
 	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
+		var _name = Steam.getLobbyData(this_lobby_id, "name")
+		
+		# Display that you joined
+		display_message("Successfully joined lobby %s..." % _name)
+		
 		# Set this lobby ID as your lobby ID
 		Global.LOBBY_ID = this_lobby_id
 		
-		var _name = Steam.getLobbyData(this_lobby_id, "name")
 		lobbyGetName.text = str(_name)
 		
 		# Get the lobby members
@@ -128,7 +136,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			Steam.CHAT_ROOM_ENTER_RESPONSE_DOESNT_EXIST: fail_reason = "This lobby no longer exists."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_NOT_ALLOWED: fail_reason = "You don't have permission to join this lobby."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_FULL: fail_reason = "The lobby is now full."
-			Steam.CHAT_ROOM_ENTER_RESPONSE_ERROR: fail_reason = "Uh... something unexpected happened!"
+			Steam.CHAT_ROOM_ENTER_RESPONSE_ERROR: fail_reason = "Something unexpected happened!"
 			Steam.CHAT_ROOM_ENTER_RESPONSE_BANNED: fail_reason = "You are banned from this lobby."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_LIMITED: fail_reason = "You cannot join due to having a limited account."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_CLAN_DISABLED: fail_reason = "This lobby is locked or disabled."
@@ -146,7 +154,7 @@ func _on_lobby_join_Requested(this_lobby_id: int, friend_id: int) -> void:
 	# Get the lobby owner's name
 	var owner_name: String = Steam.getFriendPersonaName(friend_id)
 	
-	display_message("Joining %s's lobby..." % owner_name)
+	display_message("Joining %s's lobby ..." % owner_name)
 	
 	# Attempt to join the lobby
 	join_lobby(this_lobby_id)
@@ -173,35 +181,48 @@ func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_sta
 		display_message(str(changer) + " has been banned from the lobby.")
 	else:
 		display_message(str(changer) + " made an unknown change.")
-#
+
+
+func _on_lobby_match_list(these_lobbies: Array) -> void:
+	print("started list")
+	for this_lobby in these_lobbies:
+		print(this_lobby)
+		# Pull lobby data from Steam
+		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
+
+		# Get the current number of members
+		var lobby_num_members: int = Steam.getNumLobbyMembers(this_lobby)
+
+		# Create a button for the lobby
+		var lobby_button_text: RichTextLabel = RichTextLabel.new()
+		var lobby_button_margin_container : MarginContainer = MarginContainer.new()
+		var lobby_button : Button = Button.new()
+		
+		lobby_button_text.add_child(lobby_button_margin_container)
+		lobby_button_margin_container.add_child(lobby_button)
+		
+		lobby_button_text.bbcode_enabled = true
+		lobby_button_text.custom_minimum_size = Vector2(900, 53)
+		lobby_button_margin_container.custom_minimum_size = Vector2(900, 53)
+		lobby_button.custom_minimum_size = Vector2(900, 53)
+		lobby_button_text.text = ("[center]Lobby %s: %s - %s Player(s)" % [this_lobby, lobby_name, lobby_num_members])
+		#lobby_button.set_name("lobby_%s" % this_lobby)
+		lobby_button.connect("pressed", Callable(self, "join_lobby").bind(this_lobby))
+
+		# Add the new lobby to the list
+		lobbyList.add_child(lobby_button_text)
+
 #func _on_open_lobby_list_pressed() -> void:
 	## Set distance to worldwide
 	#Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 #
 	#print("Requesting a lobby list")
 	#Steam.requestLobbyList()
-#
-#
-#func _on_lobby_match_list(these_lobbies: Array) -> void:
-	#for this_lobby in these_lobbies:
-		## Pull lobby data from Steam, these are specific to our example
-		#var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
-		#var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")
-#
-		## Get the current number of members
-		#var lobby_num_members: int = Steam.getNumLobbyMembers(this_lobby)
-#
-		## Create a button for the lobby
-		#var lobby_button: Button = Button.new()
-		#lobby_button.set_text("Lobby %s: %s [%s] - %s Player(s)" % [this_lobby, lobby_name, lobby_mode, lobby_num_members])
-		#lobby_button.set_size(Vector2(800, 50))
-		#lobby_button.set_name("lobby_%s" % this_lobby)
-		#lobby_button.connect("pressed", Callable(self, "join_lobby").bind(this_lobby))
-#
-		## Add the new lobby to the list
-		#$Lobbies/Scroll/List.add_child(lobby_button)
-#
-#
+
+
+
+
+
 #func join_lobby(this_lobby_id: int) -> void:
 	#print("Attempting to join lobby %s" % lobby_id)
 #
@@ -315,7 +336,12 @@ func _on_create_lobby_pressed():
 
 
 func _on_join_lobby_pressed():
-	pass # Replace with function body.
+	lobbyPopup.show()
+	# Set server search distance to worldwide
+	Steam.addRequestLobbyListDistanceFilter(int(search_distance.Worldwide))
+	display_message("Searching for lobbies...")
+	
+	Steam.requestLobbyList()
 
 
 func _on_start_game_pressed():
@@ -324,6 +350,14 @@ func _on_start_game_pressed():
 
 func _on_leave_lobby_pressed():
 	pass # Replace with function body.
+
+
+func _on_send_message_pressed():
+	pass # Replace with function body.
+
+
+func _on_close_popup_pressed():
+	lobbyPopup.hide()
 
 
 
@@ -337,15 +371,16 @@ func check_command_line() -> void:
 
 	# There are arguments to process
 	if ARGUMENTS.size() > 0:
+		for argument in ARGUMENTS:
+			# Invite argument passed
+			if Global.LOBBY_INVITE_ARG:
+				join_lobby(int(argument))
+			
+			# Steam connection argument
+			if argument == "connect_lobby":
+				Global.LOBBY_INVITE_ARG = true
 
-		# A Steam connection argument exists
-		if ARGUMENTS[0] == "+connect_lobby":
 
-			# Lobby invite exists so try to connect to it
-			if int(ARGUMENTS[1]) > 0:
 
-				# At this point, you'll probably want to change scenes
-				# Something like a loading into lobby screen
-				print("Command line lobby ID: %s" % ARGUMENTS[1])
-				#join_lobby(int(ARGUMENTS[1]))
+
 

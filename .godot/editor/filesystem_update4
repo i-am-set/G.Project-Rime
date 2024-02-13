@@ -3,13 +3,5 @@ res://environment/WE_test.tres
 res://materials/grid.tres
 res://controllers/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
-res://multiplayer/MultiplayerController.tscn
-res://controllers/scripts/CrouchingPlayerState.gd
-res://controllers/scripts/SlidingPlayerState.gd
-res://controllers/scripts/fps_controller.gd
-res://steam/SteamController.gd
-res://steam_appid.txt
-res://steam/SteamController.tscn
-res://scripts/global.gd
-res://steam/Steam Lobby.gd
 res://scenes/mainmenu.tscn
+res://steam/Steam Lobby.gd

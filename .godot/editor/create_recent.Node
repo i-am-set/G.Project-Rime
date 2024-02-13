@@ -1,6 +1,11 @@
 RichTextLabel
-TextEdit
-Label
-Panel
+MarginContainer
 Button
+VBoxContainer
+Panel
+ScrollContainer
+Popup
+Label
+PopupPanel
+TextEdit
 Area3D

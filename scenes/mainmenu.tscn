@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://bf3ab670oy0m8"]
+[gd_scene load_steps=4 format=3 uid="uid://bf3ab670oy0m8"]
 
 [ext_resource type="Script" path="res://steam/Steam Lobby.gd" id="1_0trix"]
 
 [sub_resource type="Theme" id="Theme_ti0bt"]
 Button/font_sizes/font_size = 32
 Label/font_sizes/font_size = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bt38q"]
+bg_color = Color(0.364706, 0.290196, 0.32549, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -135,7 +138,52 @@ offset_right = 1012.0
 offset_bottom = 38.0
 placeholder_text = "Your Message Here"
 
+[node name="LobbyPopup" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 489.0
+offset_top = 127.0
+offset_right = 1449.0
+offset_bottom = 805.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bt38q")
+
+[node name="Scroll" type="ScrollContainer" parent="LobbyPopup"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 52.0
+offset_right = 1071.0
+offset_bottom = 608.0
+horizontal_scroll_mode = 0
+
+[node name="VBox" type="VBoxContainer" parent="LobbyPopup/Scroll"]
+layout_mode = 2
+
+[node name="ClosePopup" type="Button" parent="LobbyPopup"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -152.0
+offset_top = -63.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Close"
+
+[node name="Label" type="Label" parent="LobbyPopup"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 1000.0
+offset_bottom = 722.0
+theme_override_font_sizes/font_size = 32
+text = "Lobby List"
+
 [connection signal="pressed" from="CreateLobby" to="." method="_on_create_lobby_pressed"]
 [connection signal="pressed" from="JoinLobby" to="." method="_on_join_lobby_pressed"]
 [connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]
 [connection signal="pressed" from="LeaveLobby" to="." method="_on_leave_lobby_pressed"]
+[connection signal="pressed" from="SendMessage" to="." method="_on_send_message_pressed"]
+[connection signal="pressed" from="LobbyPopup/ClosePopup" to="." method="_on_close_popup_pressed"]
