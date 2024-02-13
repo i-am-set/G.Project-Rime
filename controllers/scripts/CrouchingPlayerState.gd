@@ -6,7 +6,7 @@ class_name CrouchingPlayerState extends PlayerMovementState
 @export var TOGGLE_CROUCH : bool = false
 @export_range(1, 6, 0.1) var CROUCH_SPEED : float = 4.0
 
-@onready var CROUCH_SHAPECAST : ShapeCast3D = %ShapeCast3D
+@onready var CROUCH_SHAPECAST : ShapeCast3D = %OverheadShapeCast
 
 var RELEASED : bool = false
 

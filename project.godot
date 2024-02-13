@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="G.Project-Rime"
-run/main_scene="res://levels/level_015.tscn"
-config/features=PackedStringArray("4.2", "Forward Plus")
+run/main_scene="res://scenes/mainmenu.tscn"
+config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -21,11 +21,10 @@ Global="*res://scripts/global.gd"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=960
+window/size/viewport_height=540
 window/size/mode=2
 window/size/initial_position_type=0
-window/size/always_on_top=true
 
 [dotnet]
 

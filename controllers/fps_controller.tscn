@@ -63,7 +63,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ShapeCast3D:position")
+tracks/3/path = NodePath("OverheadShapeCast:position")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -170,7 +170,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ShapeCast3D:position")
+tracks/3/path = NodePath("OverheadShapeCast:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -311,7 +311,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("ShapeCast3D:position")
+tracks/3/path = NodePath("OverheadShapeCast:position")
 tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -466,7 +466,7 @@ script = ExtResource("1_rmovy")
 MOUSE_SENSITIVITY = 1.0
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 ANIMATIONPLAYER = NodePath("AnimationPlayer")
-CROUCH_SHAPECAST = NodePath("ShapeCast3D")
+CROUCH_SHAPECAST = NodePath("OverheadShapeCast")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -502,9 +502,9 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5]
+blend_times = [&"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5]
 
-[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+[node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.5, 0)
 shape = SubResource("SeparationRayShape3D_cvmy6")
@@ -576,6 +576,8 @@ script = ExtResource("8_3j14g")
 
 [node name="WalkingPlayerState" type="Node" parent="PlayerStateMachine"]
 script = ExtResource("9_64gk6")
+SPEED = 3.0
+ACCELERATION = 0.075
 
 [node name="SprintingPlayerState" type="Node" parent="PlayerStateMachine"]
 unique_name_in_owner = true

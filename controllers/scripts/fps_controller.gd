@@ -20,7 +20,7 @@ var _camera_rotation : Vector3
 
 var _current_rotation : float
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+# Get the gravity from the project s ettings to be synced with RigidBody nodes.
 
 var gravity = 9.8
 
