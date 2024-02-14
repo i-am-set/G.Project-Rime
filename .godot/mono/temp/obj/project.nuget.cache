@@ -1,15 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "LN05WBcy7UdEzmyyaIxL5j/IVeu7wcVf/xFK4DNyhRGNCQ+4CXX9V/Lpfvrd94dqyLHLOC/b8mHHz80W6kcGrg==",
+  "dgSpecHash": "TlWfjqF89xC6YZWtiUN6CbEbA0h3ZVHH5vCzdHRgPv2zZpOWB0iD6HybEmNrNx2a5hwW12fxhHsLH05Cwe313A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+  "projectFilePath": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\SethLaptop\\.nuget\\packages\\godot.sourcegenerators\\4.2.1\\godot.sourcegenerators.4.2.1.nupkg.sha512",
-    "C:\\Users\\SethLaptop\\.nuget\\packages\\godotsharp\\4.2.1\\godotsharp.4.2.1.nupkg.sha512",
-    "C:\\Users\\SethLaptop\\.nuget\\packages\\godotsharpeditor\\4.2.1\\godotsharpeditor.4.2.1.nupkg.sha512",
-    "C:\\Users\\SethLaptop\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.23\\microsoft.netcore.app.ref.6.0.23.nupkg.sha512",
-    "C:\\Users\\SethLaptop\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.23\\microsoft.windowsdesktop.app.ref.6.0.23.nupkg.sha512",
-    "C:\\Users\\SethLaptop\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.23\\microsoft.aspnetcore.app.ref.6.0.23.nupkg.sha512"
+    "C:\\Users\\sethg\\.nuget\\packages\\godot.sourcegenerators\\4.2.1\\godot.sourcegenerators.4.2.1.nupkg.sha512",
+    "C:\\Users\\sethg\\.nuget\\packages\\godotsharp\\4.2.1\\godotsharp.4.2.1.nupkg.sha512",
+    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\6.0.26\\microsoft.netcore.app.runtime.win-x64.6.0.26.nupkg.sha512",
+    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.26\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.26.nupkg.sha512",
+    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512",
+    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\6.0.26\\microsoft.aspnetcore.app.runtime.win-x64.6.0.26.nupkg.sha512"
   ],
   "logs": []
 }

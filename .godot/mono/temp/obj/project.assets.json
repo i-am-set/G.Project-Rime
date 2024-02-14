@@ -20,19 +20,24 @@
             "related": ".xml"
           }
         }
-      },
-      "GodotSharpEditor/4.2.1": {
+      }
+    },
+    "net6.0/win-x64": {
+      "Godot.SourceGenerators/4.2.1": {
         "type": "package",
-        "dependencies": {
-          "GodotSharp": "4.2.1"
-        },
+        "build": {
+          "build/Godot.SourceGenerators.props": {}
+        }
+      },
+      "GodotSharp/4.2.1": {
+        "type": "package",
         "compile": {
-          "lib/net6.0/GodotSharpEditor.dll": {
+          "lib/net6.0/GodotSharp.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0/GodotSharpEditor.dll": {
+          "lib/net6.0/GodotSharp.dll": {
             "related": ".xml"
           }
         }
@@ -65,42 +70,28 @@
         "lib/net6.0/GodotSharp.dll",
         "lib/net6.0/GodotSharp.xml"
       ]
-    },
-    "GodotSharpEditor/4.2.1": {
-      "sha512": "wibPQq4Gj43T/zlhwogJRnRSxfvfIqGCvnPEz1nSp6aPx4CTu1gZW7gDYx/MRQ9LX2SwKh4N6QXkFp7PhB33Tw==",
-      "type": "package",
-      "path": "godotsharpeditor/4.2.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "godotsharpeditor.4.2.1.nupkg.sha512",
-        "godotsharpeditor.nuspec",
-        "lib/net6.0/GodotSharpEditor.dll",
-        "lib/net6.0/GodotSharpEditor.xml"
-      ]
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Godot.SourceGenerators >= 4.2.1",
-      "GodotSharp >= 4.2.1",
-      "GodotSharpEditor >= 4.2.1"
+      "GodotSharp >= 4.2.1"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\SethLaptop\\.nuget\\packages\\": {}
+    "C:\\Users\\sethg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+      "projectUniqueName": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
       "projectName": "Godot FPS Project",
-      "projectPath": "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
-      "packagesPath": "C:\\Users\\SethLaptop\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\.godot\\mono\\temp\\obj\\",
+      "projectPath": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+      "packagesPath": "C:\\Users\\sethg\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\.godot\\mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\SethLaptop\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\sethg\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -131,10 +122,6 @@
           "GodotSharp": {
             "target": "Package",
             "version": "[4.2.1, )"
-          },
-          "GodotSharpEditor": {
-            "target": "Package",
-            "version": "[4.2.1, )"
           }
         },
         "imports": [
@@ -151,15 +138,27 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.23, 6.0.23]"
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+            "version": "[6.0.26, 6.0.26]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.23, 6.0.23]"
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Runtime.win-x64",
+            "version": "[6.0.26, 6.0.26]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.23, 6.0.23]"
+            "version": "[6.0.26, 6.0.26]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+            "version": "[6.0.26, 6.0.26]"
           }
         ],
         "frameworkReferences": {
@@ -167,7 +166,12 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.312\\RuntimeIdentifierGraph.json"
+      }
+    },
+    "runtimes": {
+      "win-x64": {
+        "#import": []
       }
     }
   }

@@ -36,7 +36,7 @@ offset_bottom = 65.0
 theme_override_font_sizes/font_size = 32
 text = "Lobby Name:"
 
-[node name="LobbySetName" type="TextEdit" parent="CreateLobby"]
+[node name="LobbySetName" type="LineEdit" parent="CreateLobby"]
 layout_mode = 0
 offset_left = 378.0
 offset_top = 46.0
@@ -130,7 +130,7 @@ offset_bottom = 950.0
 theme_override_font_sizes/font_size = 16
 text = "Send Message"
 
-[node name="TextEdit" type="TextEdit" parent="SendMessage"]
+[node name="LineEdit" type="LineEdit" parent="SendMessage"]
 layout_mode = 0
 offset_left = 199.0
 offset_top = 2.0

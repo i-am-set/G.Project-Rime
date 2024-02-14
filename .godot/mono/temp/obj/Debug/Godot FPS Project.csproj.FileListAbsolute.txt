@@ -15,3 +15,20 @@ C:\Users\SethLaptop\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\refint\Go
 C:\Users\SethLaptop\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.pdb
 C:\Users\SethLaptop\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.genruntimeconfig.cache
 C:\Users\SethLaptop\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\ref\Godot FPS Project.dll
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\bin\Debug\Godot FPS Project.deps.json
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\bin\Debug\Godot FPS Project.runtimeconfig.json
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\bin\Debug\Godot FPS Project.dll
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\bin\Debug\Godot FPS Project.pdb
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\bin\Debug\GodotSharp.dll
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.csproj.AssemblyReference.cache
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.AssemblyInfoInputs.cache
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.AssemblyInfo.cs
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.csproj.CoreCompileInputs.cache
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.csproj.CopyComplete
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.dll
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\refint\Godot FPS Project.dll
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.pdb
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.genruntimeconfig.cache
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\ref\Godot FPS Project.dll

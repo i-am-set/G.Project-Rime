@@ -11,7 +11,7 @@ enum search_distance {Close, Default, Far, Worldwide}
 @onready var lobbyList = $LobbyPopup/Scroll/VBox
 @onready var playerCount = $Players/PlayerCount
 @onready var playerList = $Players/PlayerList
-@onready var chatInput = $SendMessage/TextEdit
+@onready var chatInput = $SendMessage/LineEdit
 
 func _ready():
 	# set steam name on screen
@@ -21,7 +21,7 @@ func _ready():
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
-	##Steam.lobby_message.connect(_on_lobby_message)
+	Steam.lobby_message.connect(_on_lobby_message)
 	Steam.lobby_data_update.connect(_on_lobby_data_update)
 	Steam.join_requested.connect(_on_lobby_join_Requested)
 	##Steam.lobby_invite.connect(_on_lobby_invite)
@@ -29,14 +29,19 @@ func _ready():
 	## Check for command line arguments
 	check_command_line()
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("enter"):
+		send_chat_message()
+
 #################
 ### Functions ###
 #################
 
 func create_lobby() -> void:
 	# Make sure a lobby is not already set
-	if Global.LOBBY_ID == 0:
-		Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, Global.LOBBY_MAX_MEMBERS)
+	if lobbySetName.text != "":
+		if Global.LOBBY_ID == 0:
+			Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, Global.LOBBY_MAX_MEMBERS)
 
 func join_lobby(this_lobby_id):
 	#lobbyPopup.hide()
@@ -81,6 +86,38 @@ func add_player_list(this_steam_id, this_steam_name):
 	# Populate player list
 	for member in Global.LOBBY_MEMBERS:
 		playerList.add_text(str(member["steam_name"]) + "\n")
+
+func send_chat_message():
+	# Get chat input
+	var this_message = chatInput.text
+	# Pass message to steam
+	if this_message != "":
+		var is_sent = Steam.sendLobbyChatMsg(Global.LOBBY_ID, this_message)
+	# Check message sent
+		if not is_sent:
+			display_message("ERROR: Chat message failed to send")
+	# Clear chat input
+	chatInput.text = ""
+
+func leave_lobby():
+	# If in a lobby, leave it
+	if Global.LOBBY_ID != 0:
+		display_message("Leaving lobby...")
+		# Send leave request
+		Steam.leaveLobby(Global.LOBBY_ID)
+		# Wipe LOBBY_ID
+		Global.LOBBY_ID = 0
+		
+		lobbyGetName.text = "Lobby Name"
+		playerCount.text = "Players (0)"
+		playerList.clear()
+		
+		# Close session with all users
+		for member in Global.LOBBY_MEMBERS:
+			Steam.closeP2PSessionWithUser(member["steam_id"])
+		
+		# Clear lobby list
+		Global.LOBBY_MEMBERS.clear()
 
 func display_message(message):
 	lobbyOutput.add_text("\n" + str(message))
@@ -146,8 +183,8 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 
 		print("Failed to join this chat room: %s" % fail_reason)
 
-		##Reopen the lobby list
-		#_on_open_lobby_list_pressed()
+		#Reopen the lobby list
+		lobbyPopup.show()
 
 
 func _on_lobby_join_Requested(this_lobby_id: int, friend_id: int) -> void:
@@ -211,6 +248,11 @@ func _on_lobby_match_list(these_lobbies: Array) -> void:
 
 		# Add the new lobby to the list
 		lobbyList.add_child(lobby_button_text)
+
+func _on_lobby_message(result, user, message, type):
+	# Sender and their message
+	var sender = Steam.getFriendPersonaName(user)
+	display_message(str(sender) + " : " + str(message))
 
 #func _on_open_lobby_list_pressed() -> void:
 	## Set distance to worldwide
@@ -286,42 +328,6 @@ func _on_lobby_match_list(these_lobbies: Array) -> void:
 	#get_lobby_members()
 #
 #
-#func _on_send_chat_pressed() -> void:
-	## Get the entered chat message
-	#var this_message: String = $Chat.get_text()
-#
-	## If there is even a message
-	#if this_message.length() > 0:
-		## Pass the message to Steam
-		#var was_sent: bool = Steam.sendLobbyChatMsg(lobby_id, this_message)
-#
-		## Was it sent successfully?
-		#if not was_sent:
-			#print("ERROR: Chat message failed to send.")
-#
-	## Clear the chat input
-	#$Chat.clear()
-#
-#
-#func leave_lobby() -> void:
-	## If in a lobby, leave it
-	#if lobby_id != 0:
-		## Send leave request to Steam
-		#Steam.leaveLobby(lobby_id)
-#
-		## Wipe the Steam lobby ID then display the default lobby ID and player list title
-		#lobby_id = 0
-#
-		## Close session with all users
-		#for this_member in lobby_members:
-			## Make sure this isn't your Steam ID
-			#if this_member['steam_id'] != steam_id:
-#
-				## Close the P2P session
-				#Steam.closeP2PSessionWithUser(this_member['steam_id'])
-#
-		## Clear the local lobby list
-		#lobby_members.clear()
 
 
 
@@ -349,11 +355,11 @@ func _on_start_game_pressed():
 
 
 func _on_leave_lobby_pressed():
-	pass # Replace with function body.
+	leave_lobby()
 
 
 func _on_send_message_pressed():
-	pass # Replace with function body.
+	send_chat_message()
 
 
 func _on_close_popup_pressed():
