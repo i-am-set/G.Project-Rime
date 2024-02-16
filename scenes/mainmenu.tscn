@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bf3ab670oy0m8"]
 
-[ext_resource type="Script" path="res://steam/Steam Lobby.gd" id="1_0trix"]
+[ext_resource type="Script" path="res://steam/SteamLobby.gd" id="1_0trix"]
 
 [sub_resource type="Theme" id="Theme_ti0bt"]
 Button/font_sizes/font_size = 32

@@ -4,4 +4,6 @@ res://materials/grid.tres
 res://controllers/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
-res://steam/Steam Lobby.gd
+res://steam/SteamController.gd
+res://steam/SteamP2P.gd
+res://steam/SteamLobby.gd

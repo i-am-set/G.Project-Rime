@@ -3,6 +3,8 @@ extends Node
 enum lobby_status {Private, Friends, Public, Invisible}
 enum search_distance {Close, Default, Far, Worldwide}
 
+const PACKET_READ_LIMIT: int = 32
+
 @onready var steamName = $SteamName
 @onready var lobbySetName = $CreateLobby/LobbySetName
 @onready var lobbyGetName = $Chat/ChatName
@@ -27,7 +29,17 @@ func _ready():
 	##Steam.lobby_invite.connect(_on_lobby_invite)
 	#Steam.persona_state_change.connect(_on_persona_change)
 	## Check for command line arguments
+	
+	Steam.p2p_session_request.connect(_on_p2p_session_request)
+	#Steam.p2p_session_connect_fail.connect(_on_p2p_session_connect_fail)
+#
+	## Check for command line arguments
 	check_command_line()
+
+func _process(delta):
+	# If the player is connected, read packets
+	if Global.LOBBY_ID > 0:
+		read_all_p2p_packets()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("enter"):
@@ -43,6 +55,7 @@ func create_lobby() -> void:
 		if Global.LOBBY_ID == 0:
 			Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, Global.LOBBY_MAX_MEMBERS)
 
+
 func join_lobby(this_lobby_id):
 	#lobbyPopup.hide()
 	var _name = Steam.getLobbyData(this_lobby_id, "name")
@@ -53,6 +66,7 @@ func join_lobby(this_lobby_id):
 	
 	# Steam join request
 	Steam.joinLobby(this_lobby_id)
+
 
 func get_lobby_members() -> void:
 	# Clear your previous lobby list
@@ -78,6 +92,7 @@ func get_lobby_members() -> void:
 		# Add them to the list
 		add_player_list(member_steam_id, member_steam_name)
 
+
 func add_player_list(this_steam_id, this_steam_name):
 	# Add players to list
 	Global.LOBBY_MEMBERS.append({"steam_id":this_steam_id, "steam_name":this_steam_name})
@@ -86,6 +101,7 @@ func add_player_list(this_steam_id, this_steam_name):
 	# Populate player list
 	for member in Global.LOBBY_MEMBERS:
 		playerList.add_text(str(member["steam_name"]) + "\n")
+
 
 func send_chat_message():
 	# Get chat input
@@ -98,6 +114,7 @@ func send_chat_message():
 			display_message("ERROR: Chat message failed to send")
 	# Clear chat input
 	chatInput.text = ""
+
 
 func leave_lobby():
 	# If in a lobby, leave it
@@ -119,9 +136,79 @@ func leave_lobby():
 		# Clear lobby list
 		Global.LOBBY_MEMBERS.clear()
 
+
 func display_message(message):
 	lobbyOutput.add_text("\n" + str(message))
 
+
+func read_all_p2p_packets(read_count: int = 0):
+	if read_count >= PACKET_READ_LIMIT:
+		return
+
+	if Steam.getAvailableP2PPacketSize(0) > 0:
+		read_p2p_packet()
+		read_all_p2p_packets(read_count + 1)
+
+
+func make_p2p_handshake() -> void:
+	print("Sending P2P handshake to the lobby")
+
+	send_p2p_packet(0, {"message": "handshake", "from": Global.STEAM_ID})
+
+
+func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
+	# Set the send_type and channel
+	var send_type: int = Steam.P2P_SEND_RELIABLE
+	var channel: int = 0
+
+	# Create a data array to send the data through
+	var this_data: PackedByteArray
+
+	# Compress the PackedByteArray we create from our dictionary  using the GZIP compression method
+	var compressed_data: PackedByteArray = var_to_bytes(packet_data).compress(FileAccess.COMPRESSION_GZIP)
+	this_data.append_array(compressed_data)
+
+	# If sending a packet to everyone
+	if target == 0:
+		# If there is more than one user, send packets
+		if Global.LOBBY_MEMBERS.size() > 1:
+			# Loop through all members that aren't you
+			for this_member in Global.LOBBY_MEMBERS:
+				if this_member['steam_id'] != Global.STEAM_ID:
+					Steam.sendP2PPacket(this_member['steam_id'], this_data, send_type, channel)
+
+	# Else send it to someone specific
+	else:
+		Steam.sendP2PPacket(target, this_data, send_type, channel)
+
+
+func read_p2p_packet() -> void:
+	var packet_size: int = Steam.getAvailableP2PPacketSize(0)
+
+	# There is a packet
+	if packet_size > 0:
+		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
+
+		if this_packet.is_empty() or this_packet == null:
+			print("WARNING: read an empty packet with non-zero size!")
+
+		# Get the remote user's ID
+		var packet_sender: int = this_packet['steam_id_remote']
+
+		# Make the packet data readable
+		var packet_code: PackedByteArray = this_packet['data']
+
+		# Decompress the array before turning it into a useable dictionary
+		var readable_data: Dictionary = bytes_to_var(packet_code.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
+
+		# Print the packet to output
+		print("Packet: %s" % readable_data)
+
+		# Append logic here to deal with packet data
+		if(readable_data["position"]):
+			display_message(readable_data["position"])
+		if(readable_data["name"]):
+			display_message(readable_data["name"])
 
 #######################
 ### Steam Callbacks ###
@@ -162,7 +249,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		get_lobby_members()
 		
 		## Make the initial handshake
-		#make_p2p_handshake()
+		make_p2p_handshake()
 		
 	# Else it failed for some reason
 	else:
@@ -254,15 +341,54 @@ func _on_lobby_message(result, user, message, type):
 	var sender = Steam.getFriendPersonaName(user)
 	display_message(str(sender) + " : " + str(message))
 
+
+func _on_p2p_session_request(remote_id: int) -> void:
+	# Get the requester's name
+	var this_requester: String = Steam.getFriendPersonaName(remote_id)
+	print("%s is requesting a P2P session" % this_requester)
+
+	# Accept the P2P session; can apply logic to deny this request if needed
+	Steam.acceptP2PSessionWithUser(remote_id)
+
+	# Make the initial handshake
+	make_p2p_handshake()
+
+
+func _on_p2p_session_connect_fail(steam_id: int, session_error: int) -> void:
+	# If no error was given
+	if session_error == 0:
+		print("WARNING: Session failure with %s: no error given" % steam_id)
+
+	# Else if target user was not running the same game
+	elif session_error == 1:
+		print("WARNING: Session failure with %s: target user not running the same game" % steam_id)
+
+	# Else if local user doesn't own app / game
+	elif session_error == 2:
+		print("WARNING: Session failure with %s: local user doesn't own app / game" % steam_id)
+
+	# Else if target user isn't connected to Steam
+	elif session_error == 3:
+		print("WARNING: Session failure with %s: target user isn't connected to Steam" % steam_id)
+
+	# Else if connection timed out
+	elif session_error == 4:
+		print("WARNING: Session failure with %s: connection timed out" % steam_id)
+
+	# Else if unused
+	elif session_error == 5:
+		print("WARNING: Session failure with %s: unused" % steam_id)
+
+	# Else no known error
+	else:
+		print("WARNING: Session failure with %s: unknown error %s" % [steam_id, session_error])
+
 #func _on_open_lobby_list_pressed() -> void:
 	## Set distance to worldwide
 	#Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 #
 	#print("Requesting a lobby list")
 	#Steam.requestLobbyList()
-
-
-
 
 
 #func join_lobby(this_lobby_id: int) -> void:
@@ -275,13 +401,6 @@ func _on_lobby_message(result, user, message, type):
 	#Steam.joinLobby(this_lobby_id)
 #
 #
-
-
-
-
-
-
-
 
 
 ## A user's information has changed
@@ -351,7 +470,9 @@ func _on_join_lobby_pressed():
 
 
 func _on_start_game_pressed():
-	pass # Replace with function body.
+	var dict = {"position" : var_to_str(Vector3(1, 2, 69)),
+				"name" : String(Global.STEAM_NAME)}
+	send_p2p_packet(0, dict)
 
 
 func _on_leave_lobby_pressed():
