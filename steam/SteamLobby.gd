@@ -167,7 +167,7 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Compress the PackedByteArray we create from our dictionary  using the GZIP compression method
 	var compressed_data: PackedByteArray = var_to_bytes(packet_data).compress(FileAccess.COMPRESSION_GZIP)
 	this_data.append_array(compressed_data)
-
+	
 	# If sending a packet to everyone
 	if target == 0:
 		# If there is more than one user, send packets
@@ -203,12 +203,13 @@ func read_p2p_packet() -> void:
 
 		# Print the packet to output
 		print("Packet: %s" % readable_data)
+		print(readable_data["message"])
 
 		# Append logic here to deal with packet data
-		if(readable_data["position"]):
-			display_message(readable_data["position"])
-		if(readable_data["name"]):
-			display_message(readable_data["name"])
+		#if(readable_data["position"]):
+			#display_message(readable_data["position"])
+		#if(readable_data["name"]):
+			#display_message(readable_data["name"])
 
 #######################
 ### Steam Callbacks ###
