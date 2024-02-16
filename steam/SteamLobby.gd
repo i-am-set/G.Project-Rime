@@ -169,6 +169,11 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	this_data.append_array(compressed_data)
 	
 	# If sending a packet to everyone
+	if target == -1:
+		# Loop through all members that aren't you
+		for this_member in Global.LOBBY_MEMBERS:
+			Steam.sendP2PPacket(this_member['steam_id'], this_data, send_type, channel)
+	# If sending a packet to everyone but self
 	if target == 0:
 		# If there is more than one user, send packets
 		if Global.LOBBY_MEMBERS.size() > 1:
@@ -206,7 +211,9 @@ func read_p2p_packet() -> void:
 
 		# Append logic here to deal with packet data
 		if readable_data.has("message"):
+			print("bout")
 			if readable_data["message"] == "start_game":
+				print("bout")
 				get_tree().change_scene_to_file("res://levels/level_002.tscn")
 		elif readable_data.has("steam_id"):
 			if readable_data["steam_id"] != 0:
@@ -470,7 +477,7 @@ func _on_join_lobby_pressed():
 
 
 func _on_start_game_pressed():
-	send_p2p_packet(0, {"message" : "start_game"})
+	send_p2p_packet(-1, {"message" : "start_game"})
 
 
 func _on_leave_lobby_pressed():
