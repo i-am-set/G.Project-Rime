@@ -6,3 +6,4 @@ res://levels/level_015.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
 res://controllers/scripts/fps_controller.gd
+res://scenes/fps_controller.tscn

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://btv0a42cgxt8g" path="res://levels/WE_test.tscn" id="1_j77fg"]
 [ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="2_km72d"]
-[ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://controllers/fps_controller.tscn" id="3_p3ril"]
+[ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://scenes/fps_controller.tscn" id="3_p3ril"]
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_3lfq3"]
 [ext_resource type="Texture2D" uid="uid://d4io8dgtn66sn" path="res://textures/Lambdaspray_2a.png" id="5_hesfj"]
 

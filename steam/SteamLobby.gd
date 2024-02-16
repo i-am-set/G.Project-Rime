@@ -5,6 +5,8 @@ enum search_distance {Close, Default, Far, Worldwide}
 
 const PACKET_READ_LIMIT: int = 32
 
+var _player_node = preload("res://scenes/fps_controller.tscn")
+
 @onready var steamName = $SteamName
 @onready var lobbySetName = $CreateLobby/LobbySetName
 @onready var lobbyGetName = $Chat/ChatName
@@ -188,11 +190,11 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 
 
 func read_p2p_packet() -> void:
-	var packet_size: int = Steam.getAvailableP2PPacketSize(0)
+	var packet_size: int = Steam.getAvailableP2PPacketSize(2) # reliable
 
 	# There is a packet
 	if packet_size > 0:
-		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
+		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 2) # reliable
 
 		if this_packet.is_empty() or this_packet == null:
 			print("WARNING: read an empty packet with non-zero size!")
@@ -217,8 +219,12 @@ func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
 		
 		if packet_data["message"] == "start_game":
-			print("peanut")
-		
+			for this_member in Global.LOBBY_MEMBERS:
+				if this_member['steam_id'] != Global.STEAM_ID:
+					var player_instance = _player_node.instantiate()
+					player_instance._steam_ID = this_member['steam_id']
+					get_tree().get_root().add_child(player_instance)
+					player_instance.global_transform.origin = Vector3(10, 10, 0)
 	elif packet_data.has("steam_id"):
 		if packet_data["steam_id"] != 0:
 			Steam.getFriendPersonaName(packet_data["steam_id"])

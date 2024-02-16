@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://btv0a42cgxt8g" path="res://levels/WE_test.tscn" id="1_ebiip"]
 [ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="2_rfajg"]
-[ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://controllers/fps_controller.tscn" id="3_10bob"]
+[ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://scenes/fps_controller.tscn" id="3_10bob"]
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_1hu5d"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_v2uqa"]

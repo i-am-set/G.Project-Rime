@@ -77,17 +77,18 @@ func update_gravity(delta) -> void:
 	velocity.y -= gravity * delta
 	
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
-	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-	
-	_cached_position = global_position
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
-	if direction:
-		velocity.x = lerp(velocity.x,direction.x * speed, acceleration)
-		velocity.z = lerp(velocity.z,direction.z * speed, acceleration)
-	else:
-		velocity.x = move_toward(velocity.x, 0, deceleration)
-		velocity.z = move_toward(velocity.z, 0, deceleration)
+	if _steam_ID == Steam.getSteamID():
+		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+		
+		_cached_position = global_position
+		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		
+		if direction:
+			velocity.x = lerp(velocity.x,direction.x * speed, acceleration)
+			velocity.z = lerp(velocity.z,direction.z * speed, acceleration)
+		else:
+			velocity.x = move_toward(velocity.x, 0, deceleration)
+			velocity.z = move_toward(velocity.z, 0, deceleration)
 	
 func update_velocity() -> void:
 	move_and_slide()
