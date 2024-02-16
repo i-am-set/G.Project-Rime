@@ -173,6 +173,7 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 		# Loop through all members that aren't you
 		for this_member in Global.LOBBY_MEMBERS:
 			Steam.sendP2PPacket(this_member['steam_id'], this_data, send_type, channel)
+			print("0")
 	# If sending a packet to everyone but self
 	if target == 0:
 		# If there is more than one user, send packets
@@ -189,9 +190,10 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 
 func read_p2p_packet() -> void:
 	var packet_size: int = Steam.getAvailableP2PPacketSize(0)
-
+	print("1")
 	# There is a packet
 	if packet_size > 0:
+		print("2")
 		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
 
 		if this_packet.is_empty() or this_packet == null:
