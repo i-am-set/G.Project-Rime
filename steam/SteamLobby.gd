@@ -470,9 +470,7 @@ func _on_join_lobby_pressed():
 
 
 func _on_start_game_pressed():
-	var dict = {"position" : var_to_str(Vector3(1, 2, 69)),
-				"name" : String(Global.STEAM_NAME)}
-	send_p2p_packet(0, dict)
+	send_p2p_packet(0, {"message" : "start_game"})
 
 
 func _on_leave_lobby_pressed():
