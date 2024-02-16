@@ -145,7 +145,7 @@ func read_all_p2p_packets(read_count: int = 0):
 	if read_count >= PACKET_READ_LIMIT:
 		return
 	
-	if Steam.getAvailableP2PPacketSize(2) > 0:
+	if Steam.getAvailableP2PPacketSize(2) > 0: # reliable
 		read_p2p_packet()
 		read_all_p2p_packets(read_count + 1)
 
@@ -188,11 +188,11 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 
 
 func read_p2p_packet() -> void:
-	var packet_size: int = Steam.getAvailableP2PPacketSize(2)
+	var packet_size: int = Steam.getAvailableP2PPacketSize(2) # reliable
 
 	# There is a packet
 	if packet_size > 0:
-		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
+		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 2) # reliable
 
 		if this_packet.is_empty() or this_packet == null:
 			print("WARNING: read an empty packet with non-zero size!")

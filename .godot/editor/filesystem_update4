@@ -2,3 +2,6 @@ res://controllers/fps_controller.tscn
 res://environment/WE_test.tres
 res://materials/grid.tres
 res://steam/SteamLobby.gd
+res://levels/level_015.tscn
+res://meshes/weapons/weapon.tscn
+res://scenes/mainmenu.tscn
