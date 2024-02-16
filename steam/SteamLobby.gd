@@ -220,7 +220,7 @@ func process_data(packet_data : Dictionary):
 		
 		if packet_data["message"] == "start_game":
 			await get_tree().change_scene_to_file("res://levels/level_013.tscn")
-			#
+			
 			## Wait for the scene to change
 			#await(get_tree(), "idle_frame")
 			
