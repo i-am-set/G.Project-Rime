@@ -8,3 +8,4 @@ res://scenes/mainmenu.tscn
 res://controllers/scripts/fps_controller.gd
 res://scenes/fps_controller.tscn
 res://levels/level_013.tscn
+res://delte_this.gd

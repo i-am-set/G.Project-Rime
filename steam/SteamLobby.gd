@@ -5,8 +5,6 @@ enum search_distance {Close, Default, Far, Worldwide}
 
 const PACKET_READ_LIMIT: int = 32
 
-var _player_node = preload("res://scenes/fps_controller.tscn")
-
 @onready var steamName = $SteamName
 @onready var lobbySetName = $CreateLobby/LobbySetName
 @onready var lobbyGetName = $Chat/ChatName
@@ -223,13 +221,6 @@ func process_data(packet_data : Dictionary):
 			
 			## Wait for the scene to change
 			#await(get_tree(), "idle_frame")
-			
-			for this_member in Global.LOBBY_MEMBERS:
-				if this_member['steam_id'] != Global.STEAM_ID:
-					var player_instance = _player_node.instantiate()
-					player_instance._steam_ID = this_member['steam_id']
-					print(get_tree())
-					player_instance.global_transform.origin = Vector3(1, 0, 1)
 	elif packet_data.has("steam_id"):
 		if packet_data["steam_id"] != 0:
 			Steam.getFriendPersonaName(packet_data["steam_id"])

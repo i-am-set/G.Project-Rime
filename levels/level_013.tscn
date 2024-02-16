@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://dmrsmgqeyrusi"]
+[gd_scene load_steps=20 format=3 uid="uid://dmrsmgqeyrusi"]
 
 [ext_resource type="PackedScene" uid="uid://btv0a42cgxt8g" path="res://levels/WE_test.tscn" id="1_3v375"]
+[ext_resource type="Script" path="res://delte_this.gd" id="1_d8qfs"]
 [ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="2_0fe3s"]
 [ext_resource type="PackedScene" uid="uid://c3ffql15mo0aj" path="res://scenes/fps_controller.tscn" id="3_n6q51"]
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_bl8fx"]
@@ -134,6 +135,7 @@ data = PackedVector3Array(-2, 0.1, 2, 2, 0.1, 2, -2, -0.1, 2, 2, 0.1, 2, 2, -0.1
 size = Vector3(3, 3, 3)
 
 [node name="Node3D" type="Node3D"]
+script = ExtResource("1_d8qfs")
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("1_3v375")]
 
