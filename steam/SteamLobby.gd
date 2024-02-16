@@ -228,8 +228,9 @@ func process_data(packet_data : Dictionary):
 				if this_member['steam_id'] != Global.STEAM_ID:
 					var player_instance = _player_node.instantiate()
 					player_instance._steam_ID = this_member['steam_id']
-					get_tree().get_root().add_child(player_instance)
-					player_instance.global_transform.origin = Vector3(10, 10, 0)
+					print(get_tree().get_root())
+					#get_tree().get_root().add_child(player_instance)
+					player_instance.global_transform.origin = Vector3(1, 0, 1)
 	elif packet_data.has("steam_id"):
 		if packet_data["steam_id"] != 0:
 			Steam.getFriendPersonaName(packet_data["steam_id"])
