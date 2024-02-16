@@ -118,29 +118,3 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Else send it to someone specific
 	else:
 		Steam.sendP2PPacket(target, this_data, send_type, channel)
-
-func read_p2p_packet() -> void:
-	var packet_size: int = Steam.getAvailableP2PPacketSize(0)
-	
-	# There is a packet
-	if packet_size > 0:
-		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
-	
-		if this_packet.is_empty() or this_packet == null:
-			print("WARNING: read an empty packet with non-zero size!")
-	
-		# Get the remote user's ID
-		var packet_sender: int = this_packet['steam_id_remote']
-	
-		# Make the packet data readable
-		var packet_code: PackedByteArray = this_packet['data']
-	
-		# Decompress the array before turning it into a useable dictionary
-		var readable_data: Dictionary = bytes_to_var(packet_code.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
-	
-		# Print the packet to output
-		print("Packet: %s" % readable_data)
-	
-		# Append logic here to deal with packet data
-		if readable_data.has("location"):
-			print(readable_data["location"])

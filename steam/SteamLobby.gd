@@ -188,11 +188,11 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 
 
 func read_p2p_packet() -> void:
-	var packet_size: int = Steam.getAvailableP2PPacketSize(2) # reliable 
+	var packet_size: int = Steam.getAvailableP2PPacketSize(0)
 
 	# There is a packet
 	if packet_size > 0:
-		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 2) # reliable
+		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
 
 		if this_packet.is_empty() or this_packet == null:
 			print("WARNING: read an empty packet with non-zero size!")
