@@ -203,7 +203,7 @@ func read_p2p_packet() -> void:
 
 		# Print the packet to output
 		print("Packet: %s" % readable_data)
-		if readable_data["location"]:
+		if readable_data.has("location"):
 			print(readable_data["location"])
 		print(readable_data["message"] + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
