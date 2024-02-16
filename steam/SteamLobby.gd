@@ -145,7 +145,7 @@ func read_all_p2p_packets(read_count: int = 0):
 	if read_count >= PACKET_READ_LIMIT:
 		return
 	
-	if Steam.getAvailableP2PPacketSize(0) > 0:
+	if Steam.getAvailableP2PPacketSize(2) > 0:
 		read_p2p_packet()
 		read_all_p2p_packets(read_count + 1)
 
@@ -159,7 +159,7 @@ func make_p2p_handshake() -> void:
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
 	var send_type: int = Steam.P2P_SEND_RELIABLE
-	var channel: int = 0 # unreliable
+	var channel: int = 2 # reliable
 
 	# Create a data array to send the data through
 	var this_data: PackedByteArray
@@ -188,7 +188,7 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 
 
 func read_p2p_packet() -> void:
-	var packet_size: int = Steam.getAvailableP2PPacketSize(0)
+	var packet_size: int = Steam.getAvailableP2PPacketSize(2)
 
 	# There is a packet
 	if packet_size > 0:
@@ -210,12 +210,18 @@ func read_p2p_packet() -> void:
 		print("Packet: %s" % readable_data)
 
 		# Append logic here to deal with packet data
-		if readable_data.has("message"):
-			if readable_data["message"] == "start_game":
-				get_tree().change_scene_to_file("res://levels/level_002.tscn")
-		elif readable_data.has("steam_id"):
-			if readable_data["steam_id"] != 0:
-				Steam.getFriendPersonaName(readable_data["steam_id"])
+		process_data(readable_data)
+
+
+func process_data(packet_data : Dictionary):
+	if packet_data.has("message"):
+		
+		if packet_data["message"] == "start_game":
+			print("peanut")
+		
+	elif packet_data.has("steam_id"):
+		if packet_data["steam_id"] != 0:
+			Steam.getFriendPersonaName(packet_data["steam_id"])
 
 
 #######################
