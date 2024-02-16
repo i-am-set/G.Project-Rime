@@ -7,3 +7,4 @@ res://scenes/mainmenu.tscn
 res://steam/SteamController.gd
 res://steam/SteamP2P.gd
 res://steam/SteamLobby.gd
+res://controllers/scripts/fps_controller.gd

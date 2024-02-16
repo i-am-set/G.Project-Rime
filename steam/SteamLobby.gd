@@ -36,7 +36,7 @@ func _ready():
 	## Check for command line arguments
 	check_command_line()
 
-func _process(delta):
+func _physics_process(delta):
 	# If the player is connected, read packets
 	if Global.LOBBY_ID > 0:
 		read_all_p2p_packets()
@@ -159,7 +159,7 @@ func make_p2p_handshake() -> void:
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
 	var send_type: int = Steam.P2P_SEND_RELIABLE
-	var channel: int = 0
+	var channel: int = 2 # reliable
 
 	# Create a data array to send the data through
 	var this_data: PackedByteArray
@@ -203,15 +203,15 @@ func read_p2p_packet() -> void:
 
 		# Print the packet to output
 		print("Packet: %s" % readable_data)
-		if readable_data.has("location"):
-			print(readable_data["location"])
-		print(readable_data["message"] + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
 		# Append logic here to deal with packet data
-		#if(readable_data["position"]):
-			#display_message(readable_data["position"])
-		#if(readable_data["name"]):
-			#display_message(readable_data["name"])
+		if readable_data.has("message"):
+			if readable_data["message"] == "start_game":
+				get_tree().change_scene_to_file("res://levels/level_002.tscn")
+		elif readable_data.has("steam_id"):
+			if readable_data["steam_id"] != 0:
+				Steam.getFriendPersonaName(readable_data["steam_id"])
+
 
 #######################
 ### Steam Callbacks ###
@@ -452,9 +452,6 @@ func _on_p2p_session_connect_fail(steam_id: int, session_error: int) -> void:
 #
 
 
-
-
-
 ###############################
 ### Button Signal Functions ###
 ###############################
@@ -490,8 +487,6 @@ func _on_close_popup_pressed():
 	lobbyPopup.hide()
 
 
-
-
 #############################
 ### Command Line Arugment ###
 #############################
@@ -509,8 +504,3 @@ func check_command_line() -> void:
 			# Steam connection argument
 			if argument == "connect_lobby":
 				Global.LOBBY_INVITE_ARG = true
-
-
-
-
-
