@@ -219,7 +219,10 @@ func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
 		
 		if packet_data["message"] == "start_game":
-			await get_tree().change_scene("res://levels/level_013.tscn")
+			await get_tree().change_scene_to_file("res://levels/level_013.tscn")
+			#
+			## Wait for the scene to change
+			#await(get_tree(), "idle_frame")
 			
 			for this_member in Global.LOBBY_MEMBERS:
 				if this_member['steam_id'] != Global.STEAM_ID:
