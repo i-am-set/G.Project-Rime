@@ -473,7 +473,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_u6tj1")
 
 [node name="PlaceholderMesh" type="MeshInstance3D" parent="CollisionShape3D"]
-visible = false
 mesh = SubResource("CapsuleMesh_6tv51")
 
 [node name="CameraController" type="Node3D" parent="."]
