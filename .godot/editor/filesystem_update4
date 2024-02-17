@@ -7,3 +7,4 @@ res://levels/level_015.tscn
 res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
+res://steam/SteamLobby.gd
