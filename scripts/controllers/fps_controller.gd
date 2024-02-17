@@ -28,7 +28,6 @@ var _steam_ID : int
 var _current_rotation : float
 
 # Get the gravity from the project s ettings to be synced with RigidBody nodes.
-
 var gravity = 9.8
 
 func _authorize_user():

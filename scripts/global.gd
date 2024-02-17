@@ -14,6 +14,7 @@ var LOBBY_ID = 0
 var LOBBY_MAX_MEMBERS = 4
 var LOBBY_MEMBERS = []
 var LOBBY_INVITE_ARG = false
+var LOBBY_PEER_INSTANCES = {}
 
 func _ready():
 	var INIT = Steam.steamInit()

@@ -16,3 +16,5 @@ res://scripts/controllers/fps_controller.gd
 res://scripts/controllers/fps_peer.gd
 res://scripts/controllers/IdlePlayerState.gd
 res://scripts/PlayerMovementState.gd
+res://scripts/game_initialize.gd
+res://scripts/global.gd

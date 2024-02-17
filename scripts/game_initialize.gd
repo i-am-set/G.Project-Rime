@@ -11,6 +11,7 @@ func _ready():
 				player_instance._steam_ID = this_member['steam_id']
 				player_instance._deauthorize_user()
 				player_instance.strip_into_peer()
+				Global.LOBBY_PEER_INSTANCES[this_member['steam_id']] = player_instance
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(-5, 10, 0)
 			else:
