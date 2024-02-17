@@ -46,10 +46,10 @@ func uncapture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_mouse_captured = false
 
-#func _input(event):
-	#if event.is_action_pressed("exit"):
-		#get_tree().quit()
-		
+func delete_camera():
+	remove_child(CAMERA_CONTROLLER)
+	CAMERA_CONTROLLER.queue_free()
+
 func _rotate_camera(sens_mod: float = 1.0) -> void:
 	self.rotation.y -= look_dir.x * MOUSE_SENSITIVITY
 	CAMERA_CONTROLLER.rotation.x = clamp(CAMERA_CONTROLLER.rotation.x - look_dir.y * MOUSE_SENSITIVITY, -1.5, 1.5)
@@ -65,7 +65,8 @@ func _ready():
 	
 	CROUCH_SHAPECAST.add_exception($".")
 	
-	CAMERA_CONTROLLER.fov = 75.0
+	if CAMERA_CONTROLLER != null:
+		CAMERA_CONTROLLER.fov = 75.0
 
 func _physics_process(delta):
 	Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)
