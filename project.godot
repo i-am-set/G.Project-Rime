@@ -93,6 +93,10 @@ enter={
 3d_render/layer_1="Default"
 3d_render/layer_2="Weapon"
 
+[physics]
+
+common/physics_ticks_per_second=40
+
 [rendering]
 
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
