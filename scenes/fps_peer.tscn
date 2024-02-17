@@ -1,0 +1,72 @@
+[gd_scene load_steps=14 format=3 uid="uid://nosop1m6v3qc"]
+
+[ext_resource type="Script" path="res://scripts/controllers/fps_controller.gd" id="1_3j2io"]
+[ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_kr4k6"]
+[ext_resource type="Script" path="res://scripts/state_machine.gd" id="7_ne7jy"]
+[ext_resource type="Script" path="res://scripts/controllers/IdlePlayerState.gd" id="8_yvnfh"]
+[ext_resource type="Script" path="res://scripts/controllers/WalkingPlayerState.gd" id="9_shre4"]
+[ext_resource type="Script" path="res://scripts/controllers/SprintingPlayerState.gd" id="10_oqpyu"]
+[ext_resource type="Script" path="res://scripts/controllers/CrouchingPlayerState.gd" id="11_edou6"]
+[ext_resource type="Script" path="res://scripts/controllers/SlidingPlayerState.gd" id="12_myspv"]
+[ext_resource type="Script" path="res://scripts/controllers/JumpingPlayerState.gd" id="13_6h67i"]
+[ext_resource type="Script" path="res://scripts/controllers/FallingPlayerState.gd" id="14_nh615"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u6tj1"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6tv51"]
+material = ExtResource("2_kr4k6")
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cvmy6"]
+length = 0.75
+
+[node name="FPSPeer" type="CharacterBody3D" node_paths=PackedStringArray("CROUCH_SHAPECAST", "PlayerStateMachine")]
+script = ExtResource("1_3j2io")
+MOUSE_SENSITIVITY = 1.0
+CROUCH_SHAPECAST = NodePath("OverheadShapeCast")
+PlayerStateMachine = NodePath("PlayerStateMachine")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_u6tj1")
+
+[node name="PlaceholderMesh" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_6tv51")
+
+[node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.5, 0)
+shape = SubResource("SeparationRayShape3D_cvmy6")
+target_position = Vector3(0, 0, 0)
+margin = 0.5
+debug_shape_custom_color = Color(0, 1, 0, 1)
+
+[node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("7_ne7jy")
+CURRENT_STATE = NodePath("IdlePlayerState")
+
+[node name="IdlePlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("8_yvnfh")
+
+[node name="WalkingPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("9_shre4")
+SPEED = 3.0
+ACCELERATION = 0.075
+
+[node name="SprintingPlayerState" type="Node" parent="PlayerStateMachine"]
+unique_name_in_owner = true
+script = ExtResource("10_oqpyu")
+SPEED = 7.0
+
+[node name="CrouchingPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("11_edou6")
+SPEED = 1.0
+TOGGLE_CROUCH = true
+
+[node name="SlidingPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("12_myspv")
+
+[node name="JumpingPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("13_6h67i")
+
+[node name="FallingPlayerState" type="Node" parent="PlayerStateMachine"]
+script = ExtResource("14_nh615")

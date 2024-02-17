@@ -14,7 +14,7 @@ const PACKET_READ_LIMIT: int = 32
 @onready var playerCount = $Players/PlayerCount
 @onready var playerList = $Players/PlayerList
 @onready var chatInput = $SendMessage/LineEdit
-
+var inttemp = 0
 func _ready():
 	# set steam name on screen
 	steamName.text = Global.STEAM_NAME
@@ -40,6 +40,12 @@ func _physics_process(delta):
 	# If the player is connected, read packets
 	if Global.LOBBY_ID > 0:
 		read_all_p2p_packets()
+	
+	inttemp += 1
+	if inttemp == 30:
+		print("went...")
+		inttemp = 0
+		get_lobby_members()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("enter"):

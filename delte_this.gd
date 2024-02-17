@@ -10,7 +10,7 @@ func _ready():
 				var player_instance = _player_node.instantiate()
 				player_instance._steam_ID = this_member['steam_id']
 				player_instance._deauthorize_user()
-				player_instance.delete_camera()
+				player_instance.strip_into_peer()
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(-5, 10, 0)
 			else:

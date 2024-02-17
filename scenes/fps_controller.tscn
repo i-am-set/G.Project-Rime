@@ -1,21 +1,21 @@
 [gd_scene load_steps=28 format=3 uid="uid://c3ffql15mo0aj"]
 
-[ext_resource type="Script" path="res://controllers/scripts/fps_controller.gd" id="1_rmovy"]
+[ext_resource type="Script" path="res://scripts/controllers/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
 [ext_resource type="PackedScene" uid="uid://v8g6dodhumyk" path="res://meshes/weapons/weapon.tscn" id="3_835tj"]
 [ext_resource type="Script" path="res://scripts/reticle.gd" id="4_701vw"]
 [ext_resource type="Theme" uid="uid://cjxg2tt7m1r7e" path="res://ui/themes/debug.tres" id="5_tib1u"]
 [ext_resource type="Script" path="res://scripts/debug.gd" id="6_m06v1"]
 [ext_resource type="Script" path="res://scripts/state_machine.gd" id="7_v8t7u"]
-[ext_resource type="Script" path="res://controllers/scripts/IdlePlayerState.gd" id="8_3j14g"]
-[ext_resource type="Script" path="res://controllers/scripts/WalkingPlayerState.gd" id="9_64gk6"]
-[ext_resource type="Script" path="res://controllers/SprintingPlayerState.gd" id="10_28nsp"]
-[ext_resource type="Script" path="res://controllers/scripts/CrouchingPlayerState.gd" id="11_ay1bc"]
-[ext_resource type="Script" path="res://controllers/scripts/SlidingPlayerState.gd" id="12_ekroh"]
-[ext_resource type="Script" path="res://controllers/scripts/JumpingPlayerState.gd" id="13_l8kcj"]
-[ext_resource type="Script" path="res://controllers/scripts/FallingPlayerState.gd" id="14_ulvwa"]
-[ext_resource type="Script" path="res://controllers/scripts/WeaponViewport.gd" id="15_wi0nt"]
-[ext_resource type="Script" path="res://controllers/scripts/WeaponCamera.gd" id="16_5mq01"]
+[ext_resource type="Script" path="res://scripts/controllers/IdlePlayerState.gd" id="8_rqw4w"]
+[ext_resource type="Script" path="res://scripts/controllers/WalkingPlayerState.gd" id="9_wvqjd"]
+[ext_resource type="Script" path="res://scripts/controllers/SprintingPlayerState.gd" id="10_ssjb3"]
+[ext_resource type="Script" path="res://scripts/controllers/CrouchingPlayerState.gd" id="11_4t53l"]
+[ext_resource type="Script" path="res://scripts/controllers/SlidingPlayerState.gd" id="12_walwr"]
+[ext_resource type="Script" path="res://scripts/controllers/JumpingPlayerState.gd" id="13_fbjl8"]
+[ext_resource type="Script" path="res://scripts/controllers/FallingPlayerState.gd" id="14_7wlsx"]
+[ext_resource type="Script" path="res://scripts/controllers/WeaponViewport.gd" id="15_yu4nu"]
+[ext_resource type="Script" path="res://scripts/controllers/WeaponCamera.gd" id="16_577f2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u6tj1"]
 
@@ -461,13 +461,17 @@ _data = {
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cvmy6"]
 length = 0.75
 
-[node name="FPSController" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "ANIMATIONPLAYER", "CROUCH_SHAPECAST", "PlayerStateMachine")]
-script = ExtResource("1_rmovy")
+[node name="FPSController" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "ANIMATIONPLAYER", "CROUCH_SHAPECAST", "PLAYERSTATEMACHINE", "USERINTERFACE", "WEAPONVIEWPORT")]
+script = ExtResource("1_k00bc")
 MOUSE_SENSITIVITY = 1.0
+TILT_LOWER_LIMIT = -1.571
+TILT_UPPER_LIMIT = 1.571
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 ANIMATIONPLAYER = NodePath("AnimationPlayer")
 CROUCH_SHAPECAST = NodePath("OverheadShapeCast")
-PlayerStateMachine = NodePath("PlayerStateMachine")
+PLAYERSTATEMACHINE = NodePath("PlayerStateMachine")
+USERINTERFACE = NodePath("UserInterface")
+WEAPONVIEWPORT = NodePath("WeaponViewport")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -572,31 +576,31 @@ script = ExtResource("7_v8t7u")
 CURRENT_STATE = NodePath("IdlePlayerState")
 
 [node name="IdlePlayerState" type="Node" parent="PlayerStateMachine"]
-script = ExtResource("8_3j14g")
+script = ExtResource("8_rqw4w")
 
 [node name="WalkingPlayerState" type="Node" parent="PlayerStateMachine"]
-script = ExtResource("9_64gk6")
+script = ExtResource("9_wvqjd")
 SPEED = 3.0
 ACCELERATION = 0.075
 
 [node name="SprintingPlayerState" type="Node" parent="PlayerStateMachine"]
 unique_name_in_owner = true
-script = ExtResource("10_28nsp")
+script = ExtResource("10_ssjb3")
 SPEED = 7.0
 
 [node name="CrouchingPlayerState" type="Node" parent="PlayerStateMachine"]
-script = ExtResource("11_ay1bc")
+script = ExtResource("11_4t53l")
 SPEED = 1.0
 TOGGLE_CROUCH = true
 
 [node name="SlidingPlayerState" type="Node" parent="PlayerStateMachine"]
-script = ExtResource("12_ekroh")
+script = ExtResource("12_walwr")
 
 [node name="JumpingPlayerState" type="Node" parent="PlayerStateMachine"]
-script = ExtResource("13_l8kcj")
+script = ExtResource("13_fbjl8")
 
 [node name="FallingPlayerState" type="Node" parent="PlayerStateMachine"]
-script = ExtResource("14_ulvwa")
+script = ExtResource("14_7wlsx")
 
 [node name="WeaponViewport" type="SubViewportContainer" parent="."]
 visible = false
@@ -610,10 +614,10 @@ grow_vertical = 2
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 0
-script = ExtResource("15_wi0nt")
+script = ExtResource("15_yu4nu")
 
 [node name="Camera3D" type="Camera3D" parent="WeaponViewport/SubViewport" node_paths=PackedStringArray("MAIN_CAMERA")]
 visible = false
 cull_mask = 1048574
-script = ExtResource("16_5mq01")
+script = ExtResource("16_577f2")
 MAIN_CAMERA = NodePath("../../../CameraController/Camera3D/WeaponRig")

@@ -1,12 +1,7 @@
-class_name Player
+class_name Peer
 
 extends CharacterBody3D
 
-@export var MOUSE_SENSITIVITY : float = 0.5
-@export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
-@export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
-@export var CAMERA_CONTROLLER : Camera3D
-@export var ANIMATIONPLAYER : AnimationPlayer
 @export var CROUCH_SHAPECAST : ShapeCast3D
 @export var PlayerStateMachine : StateMachine
 

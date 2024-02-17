@@ -18,9 +18,8 @@ func _ready():
 	CURRENT_STATE.enter(null)
 
 func _process(delta):
-	if _is_authorized_user:
-		CURRENT_STATE.update(delta)
-		Global.debug.add_property("Current State",CURRENT_STATE.name,1)
+	CURRENT_STATE.update(delta)
+	Global.debug.add_property("Current State",CURRENT_STATE.name,1)
 		
 func _physics_process(delta):
 	CURRENT_STATE.physics_update(delta)
