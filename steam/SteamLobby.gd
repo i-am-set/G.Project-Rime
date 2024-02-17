@@ -222,9 +222,8 @@ func process_data(packet_data : Dictionary):
 		
 		if packet_data["message"] == "start_game":
 			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
-		
 		if packet_data["message"] == "move":
-			if packet_data.has("steam_id") && packet_data.has("player_position"):
+			if packet_data.has("steam_id") && packet_data.has("player_position") && Global.LOBBY_PEER_INSTANCES.has(packet_data["steam_id"]):
 				Global.LOBBY_PEER_INSTANCES[packet_data["steam_id"]].global_position = packet_data["player_position"]
 		
 			## Wait for the scene to change

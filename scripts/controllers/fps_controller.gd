@@ -115,12 +115,12 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 func update_velocity() -> void:
 	move_and_slide()
 	if global_position != _cached_position:
-		send_p2p_packet(0, {"steam_id" : _steam_ID, "player_position" : global_position})
+		send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position})
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
 	var send_type: int = Steam.P2P_SEND_RELIABLE
-	var channel: int = 0 # unreliable
+	var channel: int = 2 # unreliable
 	
 	# Create a data array to send the data through
 	var this_data: PackedByteArray
