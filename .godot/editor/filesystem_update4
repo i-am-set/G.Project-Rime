@@ -9,3 +9,4 @@ res://controllers/scripts/fps_controller.gd
 res://levels/level_007.tscn
 res://delte_this.gd
 res://steam/SteamLobby.gd
+res://controllers/scripts/WeaponCamera.gd

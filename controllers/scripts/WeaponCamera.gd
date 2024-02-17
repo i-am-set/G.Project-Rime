@@ -4,4 +4,5 @@ extends Camera3D
 
 # Match Weapon Camera to Player Camera
 func _process(delta: float) -> void:
-	global_transform = MAIN_CAMERA.global_transform
+	if MAIN_CAMERA != null:
+		global_transform = MAIN_CAMERA.global_transform
