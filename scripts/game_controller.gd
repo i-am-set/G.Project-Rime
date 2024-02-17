@@ -19,6 +19,7 @@ func _ready():
 				var player_instance = _player_node.instantiate()
 				player_instance._steam_ID = this_member['steam_id']
 				player_instance._authorize_user()
+				player_instance.VISOR.visible = false
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(5, 10, 0)
 	else:
@@ -26,6 +27,7 @@ func _ready():
 		var player_instance = _player_node.instantiate()
 		player_instance._steam_ID = Global.STEAM_ID
 		player_instance._authorize_user()
+		player_instance.VISOR.visible = false
 		add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(5, 10, 0)
 		print("self created")

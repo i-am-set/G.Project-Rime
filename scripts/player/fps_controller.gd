@@ -2,6 +2,8 @@ class_name Player
 
 extends CharacterBody3D
 
+@export var VISOR : MeshInstance3D
+
 @export var MOUSE_SENSITIVITY : float = 0.5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
@@ -21,7 +23,8 @@ var _rotation_input : float
 var _tilt_input : float
 var _mouse_rotation : Vector3
 var _camera_rotation : Vector3
-var _cached_position : Vector3 = position
+var _cached_position : Vector3
+var _cached_rotation : Vector3
 var _steam_ID : int
 
 var _current_rotation : float
@@ -101,7 +104,6 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 	if _is_authorized_user == true:
 		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 		
-		_cached_position = global_position
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		
 		if direction:
@@ -112,8 +114,10 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			velocity.z = move_toward(velocity.z, 0, deceleration)
 	
 func update_velocity() -> void:
+	_cached_position = global_position
+	_cached_rotation = rotation
 	move_and_slide()
-	if global_position != _cached_position:
+	if global_position != _cached_position || rotation != _cached_rotation:
 		send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position, "player_rotation" : rotation})
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:

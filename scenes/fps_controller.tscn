@@ -464,8 +464,9 @@ _data = {
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cvmy6"]
 length = 0.75
 
-[node name="FPSController" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "ANIMATIONPLAYER", "CROUCH_SHAPECAST", "PLAYERSTATEMACHINE", "USERINTERFACE", "WEAPONVIEWPORT")]
+[node name="FPSController" type="CharacterBody3D" node_paths=PackedStringArray("VISOR", "CAMERA_CONTROLLER", "ANIMATIONPLAYER", "CROUCH_SHAPECAST", "PLAYERSTATEMACHINE", "USERINTERFACE", "WEAPONVIEWPORT")]
 script = ExtResource("1_k00bc")
+VISOR = NodePath("CollisionShape3D/Visor")
 MOUSE_SENSITIVITY = 1.0
 TILT_LOWER_LIMIT = -1.571
 TILT_UPPER_LIMIT = 1.571
