@@ -1,11 +1,11 @@
-res://controllers/fps_controller.tscn
+res://levels/level_015.tscn
 res://environment/WE_test.tres
 res://materials/grid.tres
-res://steam/SteamLobby.gd
-res://levels/level_015.tscn
+res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
-res://controllers/scripts/fps_controller.gd
-res://scenes/fps_controller.tscn
 res://levels/level_013.tscn
+res://controllers/scripts/fps_controller.gd
+res://levels/level_007.tscn
 res://delte_this.gd
+res://steam/SteamLobby.gd

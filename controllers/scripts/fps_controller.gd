@@ -9,6 +9,8 @@ extends CharacterBody3D
 @export var ANIMATIONPLAYER : AnimationPlayer
 @export var CROUCH_SHAPECAST : ShapeCast3D
 
+var _authorized_user : bool = false
+
 var _mouse_input : bool = false
 var _mouse_captured : bool = false
 var look_dir: Vector2 # Input direction for look/aim
@@ -32,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("exit"):
 		uncapture_mouse()
 	
-	if event is InputEventMouseMotion && _mouse_captured == true:
+	if event is InputEventMouseMotion && _mouse_captured == true && _authorized_user == true:
 		look_dir = event.relative * 0.001
 		_rotate_camera()
 
@@ -77,7 +79,7 @@ func update_gravity(delta) -> void:
 	velocity.y -= gravity * delta
 	
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
-	if _steam_ID == Steam.getSteamID():
+	if _authorized_user == true:
 		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 		
 		_cached_position = global_position
