@@ -120,7 +120,7 @@ func update_velocity() -> void:
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
 	var send_type: int = Steam.P2P_SEND_RELIABLE
-	var channel: int = 2 # unreliable
+	var channel: int = 0 # unreliable
 	
 	# Create a data array to send the data through
 	var this_data: PackedByteArray
