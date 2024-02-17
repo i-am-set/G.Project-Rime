@@ -33,11 +33,9 @@ var gravity = 9.8
 
 func _authorize_user():
 	_is_authorized_user = true
-	PLAYERSTATEMACHINE._is_authorized_user = true
 
 func _deauthorize_user():
 	_is_authorized_user = false
-	PLAYERSTATEMACHINE._is_authorized_user = false
 
 func strip_into_peer():
 	remove_child(CAMERA_CONTROLLER)
@@ -50,6 +48,8 @@ func strip_into_peer():
 	USERINTERFACE.queue_free()
 	remove_child(WEAPONVIEWPORT)
 	WEAPONVIEWPORT.queue_free()
+	remove_child(PLAYERSTATEMACHINE)
+	PLAYERSTATEMACHINE.queue_free()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -88,10 +88,11 @@ func _ready():
 		CAMERA_CONTROLLER.fov = 75.0
 
 func _physics_process(delta):
-	Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)
-	Global.debug.add_property("ShapeCast", CROUCH_SHAPECAST.is_colliding(), 2)
-	Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
-	Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
+	if _is_authorized_user:
+		Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)
+		Global.debug.add_property("ShapeCast", CROUCH_SHAPECAST.is_colliding(), 2)
+		Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
+		Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
 	
 	#update_camera(delta)
 	

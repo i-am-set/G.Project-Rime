@@ -3,7 +3,6 @@ class_name StateMachine
 extends Node
 
 @export var CURRENT_STATE : State
-var _is_authorized_user : bool = false
 var states: Dictionary = {}
 
 func _ready():
