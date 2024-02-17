@@ -10,3 +10,4 @@ res://levels/level_007.tscn
 res://delte_this.gd
 res://steam/SteamLobby.gd
 res://controllers/scripts/WeaponCamera.gd
+res://scripts/state_machine.gd

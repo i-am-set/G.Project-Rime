@@ -83,12 +83,10 @@ func get_lobby_members() -> void:
 		var member_steam_id: int = Steam.getLobbyMemberByIndex(Global.LOBBY_ID, this_member)
 		
 		# Get the member's Steam name
-		
 		var member_steam_name: String
 		while member_steam_name == "":
 			member_steam_name =  Steam.getFriendPersonaName(member_steam_id)
 		
-
 		# Add them to the list
 		add_player_list(member_steam_id, member_steam_name)
 

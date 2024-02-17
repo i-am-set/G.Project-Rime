@@ -8,8 +8,9 @@ extends CharacterBody3D
 @export var CAMERA_CONTROLLER : Camera3D
 @export var ANIMATIONPLAYER : AnimationPlayer
 @export var CROUCH_SHAPECAST : ShapeCast3D
+@export var PlayerStateMachine : StateMachine
 
-var _authorized_user : bool = false
+var _is_authorized_user : bool = false
 
 var _mouse_input : bool = false
 var _mouse_captured : bool = false
@@ -28,13 +29,21 @@ var _current_rotation : float
 
 var gravity = 9.8
 
+func _authorize_user():
+	_is_authorized_user = true
+	PlayerStateMachine._is_authorized_user = true
+
+func _deauthorize_user():
+	_is_authorized_user = false
+	PlayerStateMachine._is_authorized_user = false
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		capture_mouse()
 	elif event.is_action_pressed("exit"):
 		uncapture_mouse()
 	
-	if event is InputEventMouseMotion && _mouse_captured == true && _authorized_user == true:
+	if event is InputEventMouseMotion && _mouse_captured == true && _is_authorized_user == true:
 		look_dir = event.relative * 0.001
 		_rotate_camera()
 
@@ -80,7 +89,7 @@ func update_gravity(delta) -> void:
 	velocity.y -= gravity * delta
 	
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
-	if _authorized_user == true:
+	if _is_authorized_user == true:
 		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 		
 		_cached_position = global_position

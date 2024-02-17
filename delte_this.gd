@@ -9,22 +9,22 @@ func _ready():
 				print("creating player %s" %this_member['steam_id'])
 				var player_instance = _player_node.instantiate()
 				player_instance._steam_ID = this_member['steam_id']
-				player_instance._authorized_user = false
+				player_instance._deauthorize_user()
 				player_instance.delete_camera()
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(-5, 10, 0)
 			else:
-				print("creating self")
+				print("creating self with friends")
 				var player_instance = _player_node.instantiate()
 				player_instance._steam_ID = this_member['steam_id']
-				player_instance._authorized_user = true
+				player_instance._authorize_user()
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(5, 10, 0)
 	else:
-		print("creating self")
+		print("creating self alone")
 		var player_instance = _player_node.instantiate()
 		player_instance._steam_ID = Global.STEAM_ID
-		player_instance._authorized_user = true
+		player_instance._authorize_user()
 		add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(5, 10, 0)
 		print("self created")
