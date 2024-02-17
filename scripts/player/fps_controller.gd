@@ -20,7 +20,6 @@ var look_dir: Vector2 # Input direction for look/aim
 var _rotation_input : float
 var _tilt_input : float
 var _mouse_rotation : Vector3
-var _player_rotation : Vector3
 var _camera_rotation : Vector3
 var _cached_position : Vector3 = position
 var _steam_ID : int
@@ -115,7 +114,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 func update_velocity() -> void:
 	move_and_slide()
 	if global_position != _cached_position:
-		send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position})
+		send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position, "player_rotation" : rotation})
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel

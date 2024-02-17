@@ -100,8 +100,9 @@ func read_p2p_packet() -> void:
 func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
 		if packet_data["message"] == "move":
-			if packet_data.has("steam_id") && packet_data.has("player_position") && Global.LOBBY_PEER_INSTANCES.has(packet_data["steam_id"]):
-				Global.LOBBY_PEER_INSTANCES[packet_data["steam_id"]].global_position = packet_data["player_position"]
-				print(Global.LOBBY_PEER_INSTANCES[packet_data["steam_id"]].global_position)
+			if packet_data.has("steam_id") && packet_data.has("player_position") && packet_data.has("player_rotation") && Global.LOBBY_PEER_INSTANCES.has(packet_data["steam_id"]):
+				var player_instance = Global.LOBBY_PEER_INSTANCES[packet_data["steam_id"]]
+				player_instance.global_position = packet_data["player_position"]
+				player_instance.rotation = packet_data["player_rotation"]
 			## Wait for the scene to change
 			#await(get_tree(), "idle_frame")
