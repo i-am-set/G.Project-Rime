@@ -3,6 +3,8 @@ extends Node
 var _player_node = preload("res://scenes/fps_controller.tscn")
 
 func _ready():
+	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
+	
 	if Global.LOBBY_MEMBERS.size() > 1:
 		for this_member in Global.LOBBY_MEMBERS:
 			if this_member['steam_id'] != Global.STEAM_ID:
@@ -44,6 +46,35 @@ func read_all_p2p_packets(read_count: int = 0):
 	if Steam.getAvailableP2PPacketSize(0) > 0:
 		read_p2p_packet()
 		read_all_p2p_packets(read_count + 1)
+
+#######################
+### Steam Callbacks ###
+#######################
+
+func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_state):
+	# User who made lobby change
+	var changer = Steam.getFriendPersonaName(making_change_id)
+	
+	# chat_state change made
+	if chat_state == 1:
+		pass
+		#display_message(str(changer) + " has joined the lobby.")
+	elif chat_state == 2:
+		remove_child(Global.LOBBY_PEER_INSTANCES[making_change_id])
+		Global.LOBBY_PEER_INSTANCES[making_change_id].queue_free()
+		#display_message(str(changer) + " has left the lobby.")
+	elif chat_state == 3:
+		pass
+		#display_message(str(changer) + " has disconnected.")
+	elif chat_state == 8:
+		pass
+		#display_message(str(changer) + " has been kicked from the lobby.")
+	elif chat_state == 16:
+		pass
+		#display_message(str(changer) + " has been banned from the lobby.")
+	else:
+		pass
+		#display_message(str(changer) + " made an unknown change.")
 
 #------------------------------------------------------------------#
 
@@ -106,5 +137,3 @@ func process_data(packet_data : Dictionary):
 				var player_instance = Global.LOBBY_PEER_INSTANCES[packet_data["steam_id"]]
 				player_instance.global_position = packet_data["player_position"]
 				player_instance.rotation = packet_data["player_rotation"]
-			## Wait for the scene to change
-			#await(get_tree(), "idle_frame")
