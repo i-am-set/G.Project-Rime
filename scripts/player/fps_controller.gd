@@ -24,7 +24,7 @@ var _tilt_input : float
 var _mouse_rotation : Vector3
 var _camera_rotation : Vector3
 var _cached_position : Vector3
-var _cached_rotation : Vector3
+var _cached_rotation_y : int
 var _steam_ID : int
 
 var _current_rotation : float
@@ -70,9 +70,6 @@ func uncapture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_mouse_captured = false
 
-func _rotate_camera(sens_mod: float = 1.0) -> void:
-	self.rotation.y -= look_dir.x * MOUSE_SENSITIVITY
-	CAMERA_CONTROLLER.rotation.x = clamp(CAMERA_CONTROLLER.rotation.x - look_dir.y * MOUSE_SENSITIVITY, -1.5, 1.5)
 	
 func _ready():
 	capture_mouse()
@@ -95,8 +92,17 @@ func _physics_process(delta):
 		Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
 		Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
 	
-	#update_camera(delta)
-	
+	send_data()
+
+func send_data():
+	if global_position != _cached_position || rotation.y != _cached_rotation_y:
+		send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position, "player_rotation" : rotation})
+
+func _rotate_camera(sens_mod: float = 1.0) -> void:
+	_cached_rotation_y = rotation.y
+	self.rotation.y -= look_dir.x * MOUSE_SENSITIVITY
+	CAMERA_CONTROLLER.rotation.x = clamp(CAMERA_CONTROLLER.rotation.x - look_dir.y * MOUSE_SENSITIVITY, -1.5, 1.5)
+
 func update_gravity(delta) -> void:
 	velocity.y -= gravity * delta
 	
@@ -115,10 +121,8 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 	
 func update_velocity() -> void:
 	_cached_position = global_position
-	_cached_rotation = rotation
+	
 	move_and_slide()
-	if global_position != _cached_position || rotation != _cached_rotation:
-		send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position, "player_rotation" : rotation})
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
