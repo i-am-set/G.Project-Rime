@@ -18,3 +18,4 @@ res://scripts/controllers/IdlePlayerState.gd
 res://scripts/PlayerMovementState.gd
 res://scripts/game_initialize.gd
 res://scripts/global.gd
+res://scripts/game_controller.gd

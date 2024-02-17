@@ -1,15 +1,15 @@
 [gd_scene load_steps=14 format=3 uid="uid://nosop1m6v3qc"]
 
-[ext_resource type="Script" path="res://scripts/controllers/fps_controller.gd" id="1_3j2io"]
+[ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_3j2io"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_kr4k6"]
 [ext_resource type="Script" path="res://scripts/state_machine.gd" id="7_ne7jy"]
-[ext_resource type="Script" path="res://scripts/controllers/IdlePlayerState.gd" id="8_yvnfh"]
-[ext_resource type="Script" path="res://scripts/controllers/WalkingPlayerState.gd" id="9_shre4"]
-[ext_resource type="Script" path="res://scripts/controllers/SprintingPlayerState.gd" id="10_oqpyu"]
-[ext_resource type="Script" path="res://scripts/controllers/CrouchingPlayerState.gd" id="11_edou6"]
-[ext_resource type="Script" path="res://scripts/controllers/SlidingPlayerState.gd" id="12_myspv"]
-[ext_resource type="Script" path="res://scripts/controllers/JumpingPlayerState.gd" id="13_6h67i"]
-[ext_resource type="Script" path="res://scripts/controllers/FallingPlayerState.gd" id="14_nh615"]
+[ext_resource type="Script" path="res://scripts/player/IdlePlayerState.gd" id="8_yvnfh"]
+[ext_resource type="Script" path="res://scripts/player/WalkingPlayerState.gd" id="9_shre4"]
+[ext_resource type="Script" path="res://scripts/player/SprintingPlayerState.gd" id="10_oqpyu"]
+[ext_resource type="Script" path="res://scripts/player/CrouchingPlayerState.gd" id="11_edou6"]
+[ext_resource type="Script" path="res://scripts/player/SlidingPlayerState.gd" id="12_myspv"]
+[ext_resource type="Script" path="res://scripts/player/JumpingPlayerState.gd" id="13_6h67i"]
+[ext_resource type="Script" path="res://scripts/player/FallingPlayerState.gd" id="14_nh615"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u6tj1"]
 

@@ -3,8 +3,6 @@ extends Node
 enum lobby_status {Private, Friends, Public, Invisible}
 enum search_distance {Close, Default, Far, Worldwide}
 
-const PACKET_READ_LIMIT: int = 32
-
 @onready var steamName = $SteamName
 @onready var lobbySetName = $CreateLobby/LobbySetName
 @onready var lobbyGetName = $Chat/ChatName
@@ -146,7 +144,7 @@ func display_message(message):
 
 
 func read_all_p2p_packets(read_count: int = 0):
-	if read_count >= PACKET_READ_LIMIT:
+	if read_count >= Global.PACKET_READ_LIMIT:
 		return
 	
 	if Steam.getAvailableP2PPacketSize(2) > 0: # reliable
@@ -219,18 +217,10 @@ func read_p2p_packet() -> void:
 
 func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
-		
 		if packet_data["message"] == "start_game":
 			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
-		if packet_data["message"] == "move":
-			if packet_data.has("steam_id") && packet_data.has("player_position") && Global.LOBBY_PEER_INSTANCES.has(packet_data["steam_id"]):
-				Global.LOBBY_PEER_INSTANCES[packet_data["steam_id"]].global_position = packet_data["player_position"]
-		
 			## Wait for the scene to change
 			#await(get_tree(), "idle_frame")
-	elif packet_data.has("steam_id"):
-		if packet_data["steam_id"] != 0:
-			Steam.getFriendPersonaName(packet_data["steam_id"])
 
 
 #######################

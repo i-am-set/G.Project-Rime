@@ -3,6 +3,8 @@ extends Node
 var debug # Reference to DebugPanel for debug property assignment
 var player # Reference to PlayerController
 
+const PACKET_READ_LIMIT: int = 32
+
 # Steam Variables
 var OWNED = false
 var ONLINE = false
