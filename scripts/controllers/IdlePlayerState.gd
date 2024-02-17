@@ -10,11 +10,12 @@ func _ready():
 	_is_authorized_user = get_parent()._is_authorized_user
 
 func enter(previous_state) -> void:
-	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":
-		await ANIMATION.animation_finished
-		ANIMATION.pause()
-	else:
-		ANIMATION.pause()
+	if ANIMATION != null:
+		if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":
+			await ANIMATION.animation_finished
+			ANIMATION.pause()
+		else:
+			ANIMATION.pause()
 
 func update(delta):
 	PLAYER.update_gravity(delta)
