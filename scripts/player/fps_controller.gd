@@ -119,8 +119,8 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		if global_position != _cached_position || rotation != _cached_rotation:
 			send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position, "player_rotation" : rotation})
 	
-#func update_velocity() -> void:
-	#
+func update_velocity() -> void:
+	pass
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel

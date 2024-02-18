@@ -24,7 +24,7 @@ func _ready():
 	Steam.lobby_message.connect(_on_lobby_message)
 	Steam.lobby_data_update.connect(_on_lobby_data_update)
 	Steam.join_requested.connect(_on_lobby_join_Requested)
-	##Steam.lobby_invite.connect(_on_lobby_invite)
+	Steam.lobby_invite.connect(_on_lobby_invite)
 	#Steam.persona_state_change.connect(_on_persona_change)
 	## Check for command line arguments
 	
@@ -332,24 +332,15 @@ func _on_p2p_session_connect_fail(steam_id: int, session_error: int) -> void:
 	else:
 		print("WARNING: Session failure with %s: unknown error %s" % [steam_id, session_error])
 
+func _on_lobby_invite(inviter, lobby, game):
+	display_message(str(inviter) + str(lobby) + str(game))
+
 #func _on_open_lobby_list_pressed() -> void:
 	## Set distance to worldwide
 	#Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 #
 	#print("Requesting a lobby list")
 	#Steam.requestLobbyList()
-
-
-#func join_lobby(this_lobby_id: int) -> void:
-	#print("Attempting to join lobby %s" % lobby_id)
-#
-	## Clear any previous lobby members lists, if you were in a previous lobby
-	#lobby_members.clear()
-#
-	## Make the lobby join request to Steam
-	#Steam.joinLobby(this_lobby_id)
-#
-#
 
 
 ## A user's information has changed
@@ -360,40 +351,6 @@ func _on_p2p_session_connect_fail(steam_id: int, session_error: int) -> void:
 #
 		## Update the player list
 		#get_lobby_members()
-#
-#
-#func make_p2p_handshake() -> void:
-	#print("Sending P2P handshake to the lobby")
-#
-	#send_p2p_packet(0, {"message": "handshake", "from": steam_id})
-#
-#
-#func _on_lobby_chat_update(this_lobby_id: int, change_id: int, making_change_id: int, chat_state: int) -> void:
-	## Get the user who has made the lobby change
-	#var changer_name: String = Steam.getFriendPersonaName(change_id)
-#
-	## If a player has joined the lobby
-	#if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
-		#print("%s has joined the lobby." % changer_name)
-#
-	## Else if a player has left the lobby
-	#elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
-		#print("%s has left the lobby." % changer_name)
-#
-	## Else if a player has been kicked
-	#elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_KICKED:
-		#print("%s has been kicked from the lobby." % changer_name)
-#
-	## Else if a player has been banned
-	#elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_BANNED:
-		#print("%s has been banned from the lobby." % changer_name)
-#
-	## Else there was some unknown change
-	#else:
-		#print("%s did... something." % changer_name)
-#
-	## Update the lobby now that a change has occurred
-	#get_lobby_members()
 #
 #
 

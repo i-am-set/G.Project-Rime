@@ -34,6 +34,10 @@ func _ready():
 		player_instance.global_transform.origin = Vector3(5, 10, 0)
 		print("self created")
 
+func display_message(message):
+	pass
+	#lobbyOutput.add_text("\n" + str(message))
+
 func _physics_process(delta):
 	# If the player is connected, read packets
 	if Global.LOBBY_ID > 0:
@@ -57,24 +61,34 @@ func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_sta
 	
 	# chat_state change made
 	if chat_state == 1:
-		pass
-		#display_message(str(changer) + " has joined the lobby.")
+		if making_change_id != Global.STEAM_ID:
+				print("creating player %s" %making_change_id)
+				var player_instance = _player_node.instantiate()
+				player_instance._steam_ID = making_change_id
+				player_instance._deauthorize_user()
+				player_instance.strip_into_peer()
+				Global.LOBBY_PEER_INSTANCES[making_change_id] = player_instance
+				add_child(player_instance)
+				player_instance.global_transform.origin = Vector3(-5, 10, 0)
+		display_message(str(changer) + " has joined the lobby.")
 	elif chat_state == 2:
 		remove_child(Global.LOBBY_PEER_INSTANCES[making_change_id])
 		Global.LOBBY_PEER_INSTANCES[making_change_id].queue_free()
-		#display_message(str(changer) + " has left the lobby.")
+		display_message(str(changer) + " has left the lobby.")
 	elif chat_state == 3:
-		pass
-		#display_message(str(changer) + " has disconnected.")
+		remove_child(Global.LOBBY_PEER_INSTANCES[making_change_id])
+		Global.LOBBY_PEER_INSTANCES[making_change_id].queue_free()
+		display_message(str(changer) + " has disconnected.")
 	elif chat_state == 8:
-		pass
-		#display_message(str(changer) + " has been kicked from the lobby.")
+		remove_child(Global.LOBBY_PEER_INSTANCES[making_change_id])
+		Global.LOBBY_PEER_INSTANCES[making_change_id].queue_free()
+		display_message(str(changer) + " has been kicked from the lobby.")
 	elif chat_state == 16:
-		pass
-		#display_message(str(changer) + " has been banned from the lobby.")
+		remove_child(Global.LOBBY_PEER_INSTANCES[making_change_id])
+		Global.LOBBY_PEER_INSTANCES[making_change_id].queue_free()
+		display_message(str(changer) + " has been banned from the lobby.")
 	else:
-		pass
-		#display_message(str(changer) + " made an unknown change.")
+		display_message(str(changer) + " made an unknown change.")
 
 #------------------------------------------------------------------#
 
