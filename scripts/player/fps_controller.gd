@@ -94,8 +94,9 @@ func _physics_process(delta):
 		Global.debug.add_property("ShapeCast", CROUCH_SHAPECAST.is_colliding(), 2)
 		Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
 		Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
-	
-	#update_camera(delta)
+		
+		_cached_position = global_position
+		_cached_rotation = rotation
 	
 func update_gravity(delta) -> void:
 	velocity.y -= gravity * delta
@@ -112,13 +113,14 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		else:
 			velocity.x = move_toward(velocity.x, 0, deceleration)
 			velocity.z = move_toward(velocity.z, 0, deceleration)
+		
+		move_and_slide()
+		
+		if global_position != _cached_position || rotation != _cached_rotation:
+			send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position, "player_rotation" : rotation})
 	
-func update_velocity() -> void:
-	_cached_position = global_position
-	_cached_rotation = rotation
-	move_and_slide()
-	if global_position != _cached_position || rotation != _cached_rotation:
-		send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position, "player_rotation" : rotation})
+#func update_velocity() -> void:
+	#
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
