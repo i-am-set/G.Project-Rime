@@ -135,6 +135,9 @@ func leave_lobby():
 
 
 func display_message(message):
+	if lobbyChatOutput.text == "":
+		lobbyChatOutput.text += (str(message))
+		return
 	lobbyChatOutput.add_text("\n" + str(message))
 
 

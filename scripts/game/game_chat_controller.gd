@@ -65,6 +65,10 @@ func deselect_chat_input():
 	chat.modulate.a = 0.5
 
 func display_message(message):
+	if chatOutput.text == "":
+		chatOutput.text += (str(message))
+		return
+	
 	chatOutput.text += ("\n" + str(message))
 	chatOutput.scroll_vertical += 100
 
