@@ -6,13 +6,12 @@ enum search_distance {Close, Default, Far, Worldwide}
 @onready var steamName = $SteamName
 @onready var lobbySetName = $CreateLobby/LobbySetName
 @onready var lobbyGetName = $Chat/ChatName
-@onready var lobbyOutput = $Chat/ChatOutput
+@onready var lobbyChatOutput = $Chat/ChatOutput
 @onready var lobbyPopup = $LobbyPopup
 @onready var lobbyList = $LobbyPopup/Scroll/VBox
 @onready var playerCount = $Players/PlayerCount
 @onready var playerList = $Players/PlayerList
 @onready var chatInput = $SendMessage/LineEdit
-var inttemp = 0
 func _ready():
 	# set steam name on screen
 	steamName.text = Global.STEAM_NAME
@@ -26,7 +25,6 @@ func _ready():
 	Steam.join_requested.connect(_on_lobby_join_Requested)
 	Steam.lobby_invite.connect(_on_lobby_invite)
 	#Steam.persona_state_change.connect(_on_persona_change)
-	## Check for command line arguments
 	
 	Steam.p2p_session_request.connect(_on_p2p_session_request)
 	#Steam.p2p_session_connect_fail.connect(_on_p2p_session_connect_fail)
@@ -39,10 +37,7 @@ func _physics_process(delta):
 	if Global.LOBBY_ID > 0:
 		read_all_p2p_packets()
 	
-	inttemp += 1
-	if inttemp == 30:
-		print("went...")
-		inttemp = 0
+	if Global.GLOBAL_TICK % 40 == 0:
 		get_lobby_members()
 
 func _input(event: InputEvent) -> void:
@@ -140,7 +135,7 @@ func leave_lobby():
 
 
 func display_message(message):
-	lobbyOutput.add_text("\n" + str(message))
+	lobbyChatOutput.add_text("\n" + str(message))
 
 
 func read_all_p2p_packets(read_count: int = 0):

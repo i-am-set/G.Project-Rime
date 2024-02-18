@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
 [ext_resource type="PackedScene" uid="uid://v8g6dodhumyk" path="res://meshes/weapons/weapon.tscn" id="3_835tj"]
-[ext_resource type="Script" path="res://scripts/reticle.gd" id="4_701vw"]
+[ext_resource type="Script" path="res://scripts/player/reticle.gd" id="4_ntsfx"]
 [ext_resource type="Theme" uid="uid://cjxg2tt7m1r7e" path="res://ui/themes/debug.tres" id="5_tib1u"]
-[ext_resource type="Script" path="res://scripts/debug.gd" id="6_m06v1"]
-[ext_resource type="Script" path="res://scripts/state_machine.gd" id="7_v8t7u"]
+[ext_resource type="Script" path="res://scripts/game/debug.gd" id="6_kecrd"]
+[ext_resource type="Script" path="res://scripts/player/state_machine.gd" id="7_f1ve2"]
 [ext_resource type="Script" path="res://scripts/player/IdlePlayerState.gd" id="8_rqw4w"]
 [ext_resource type="Script" path="res://scripts/player/WalkingPlayerState.gd" id="9_wvqjd"]
 [ext_resource type="Script" path="res://scripts/player/SprintingPlayerState.gd" id="10_ssjb3"]
@@ -542,7 +542,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_701vw")
+script = ExtResource("4_ntsfx")
 PLAYER_CONTROLLER = NodePath("../..")
 RETICLE_DISTANCE = 10.0
 
@@ -570,7 +570,7 @@ offset_top = 10.0
 offset_right = 210.0
 offset_bottom = 50.0
 theme = ExtResource("5_tib1u")
-script = ExtResource("6_m06v1")
+script = ExtResource("6_kecrd")
 
 [node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
 layout_mode = 2
@@ -580,7 +580,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
-script = ExtResource("7_v8t7u")
+script = ExtResource("7_f1ve2")
 CURRENT_STATE = NodePath("IdlePlayerState")
 
 [node name="IdlePlayerState" type="Node" parent="PlayerStateMachine"]

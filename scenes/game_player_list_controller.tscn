@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0fx2i70ma8n7"]
+
+[ext_resource type="Script" path="res://scripts/game/game_player_list_controller.gd" id="1_m5gga"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5yhoa"]
+bg_color = Color(0.211765, 0.211765, 0.211765, 0.603922)
+
+[node name="GamePlayerListController" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m5gga")
+
+[node name="Players" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.271
+anchor_right = 0.729
+anchor_bottom = 1.0
+offset_left = -0.160034
+offset_top = 68.0
+offset_right = 0.159973
+offset_bottom = -68.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5yhoa")
+
+[node name="PlayerCount" type="Label" parent="Players"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 2.0
+offset_right = 72.0
+offset_bottom = 18.0
+theme_override_colors/font_color = Color(0.643137, 0.643137, 0.643137, 1)
+theme_override_font_sizes/font_size = 16
+text = "Players (0)"
+
+[node name="PlayerList" type="RichTextLabel" parent="Players"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 27.0
+offset_right = -9.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 32
+
+[node name="Panel" type="Panel" parent="Players/PlayerList"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

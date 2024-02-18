@@ -17,7 +17,6 @@ extends CharacterBody3D
 var _is_authorized_user : bool = false
 
 var _mouse_input : bool = false
-var _mouse_captured : bool = false
 var look_dir: Vector2 # Input direction for look/aim
 var _rotation_input : float
 var _tilt_input : float
@@ -53,22 +52,22 @@ func strip_into_peer():
 	PLAYERSTATEMACHINE.queue_free()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
+	if event.is_action_pressed("mouse_click"):
 		capture_mouse()
 	elif event.is_action_pressed("exit"):
 		uncapture_mouse()
 	
-	if event is InputEventMouseMotion && _mouse_captured == true && _is_authorized_user == true:
+	if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true && _is_authorized_user == true:
 		look_dir = event.relative * 0.001
 		_rotate_camera()
 
 func capture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	_mouse_captured = true
+	Global.MOUSE_CAPTURED = true
 
 func uncapture_mouse():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	_mouse_captured = false
+	Global.MOUSE_CAPTURED = false
 
 func _rotate_camera(sens_mod: float = 1.0) -> void:
 	self.rotation.y -= look_dir.x * MOUSE_SENSITIVITY
@@ -103,7 +102,9 @@ func update_gravity(delta) -> void:
 	
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
 	if _is_authorized_user == true:
-		var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+		var input_dir = Vector3.ZERO
+		if (Global.MOUSE_CAPTURED == true):
+			input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 		
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		

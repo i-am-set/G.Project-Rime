@@ -17,6 +17,8 @@ var LOBBY_MAX_MEMBERS = 4
 var LOBBY_MEMBERS = []
 var LOBBY_INVITE_ARG = false
 var LOBBY_PEER_INSTANCES = {}
+var MOUSE_CAPTURED = false
+var GLOBAL_TICK = 0
 
 func _ready():
 	var INIT = Steam.steamInit()
@@ -52,5 +54,15 @@ func _ready():
 		#OS.alert("License not found.\nPlease purchase a copy of the game to proceed.", "Game is not owned.")
 		#get_tree().quit()
 
-func _process(delta):
+func _physics_process(delta):
 	Steam.run_callbacks()
+	
+	GLOBAL_TICK += 1
+	if GLOBAL_TICK % 40 == 0:
+		repair_globals()
+
+func repair_globals():
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		MOUSE_CAPTURED = true
+	elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		MOUSE_CAPTURED = false
