@@ -1,3 +1,5 @@
+CollisionShape3D
+GPUParticles3D
 Sprite2D
 Sprite3D
 MeshInstance3D
@@ -11,5 +13,3 @@ MarginContainer
 Button
 VBoxContainer
 ScrollContainer
-Popup
-Label

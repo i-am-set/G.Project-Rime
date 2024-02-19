@@ -10,6 +10,7 @@ func set_height_map(texture : NoiseTexture2D):
 	size = texture.get_width()
 	image = texture.get_image()
 	RenderingServer.global_shader_parameter_set("heightmap", texture)
+	Global.WORLD_HEIGHT_MAP = texture
 
 func get_height(x,z):
 	if image != null:

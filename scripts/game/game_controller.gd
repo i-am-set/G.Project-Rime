@@ -9,6 +9,7 @@ var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
 var _chat_instance : Control
 var _player_list_instance : Control
+var _authorized_player : Player
 
 func _ready():
 	# Steamwork connections
@@ -44,6 +45,7 @@ func _ready():
 				player_instance._steam_ID = this_member['steam_id']
 				player_instance._authorize_user()
 				player_instance.VISOR.visible = false
+				_authorized_player = player_instance
 				attach_player_to_world(player_instance)
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(5, 10, 0)
@@ -53,6 +55,7 @@ func _ready():
 		player_instance._steam_ID = Global.STEAM_ID
 		player_instance._authorize_user()
 		player_instance.VISOR.visible = false
+		_authorized_player = player_instance
 		attach_player_to_world(player_instance)
 		add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(5, 10, 0)

@@ -21,3 +21,6 @@ res://delete.tscn
 res://scripts/player/fps_controller.gd
 res://main.tscn
 res://world/heightmap/Heightmap.gd
+res://world/clipmap/clipmap_partition.gd
+res://scripts/player/IdlePlayerState.gd
+res://shaders/foliage_shader_G4alpha10.tres

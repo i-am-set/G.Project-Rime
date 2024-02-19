@@ -136,14 +136,22 @@ func leave_lobby():
 		Global.LOBBY_MEMBERS.clear()
 
 
-func initialize_game(seed):
+func generate_height_map(seed : int) -> NoiseTexture2D:
 	var texture = NoiseTexture2D.new()
 	var fastNoiseLite = FastNoiseLite.new()
 	texture.width = 512
 	texture.height = 512
 	texture.seamless = true
 	fastNoiseLite.seed = seed
+	fastNoiseLite.frequency = 0.0075
+	fastNoiseLite.fractal_octaves = 5
 	texture.noise = fastNoiseLite
+	
+	return texture
+
+
+func initialize_game(seed):
+	var texture = generate_height_map(seed)
 	# Cement changes
 	Global.WORLD_SEED = seed
 	Heightmap.set_height_map(texture)

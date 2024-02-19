@@ -13,6 +13,7 @@ extends CharacterBody3D
 @export var PLAYERSTATEMACHINE : StateMachine
 @export var USERINTERFACE : Control
 @export var WEAPONVIEWPORT : SubViewportContainer
+@export var GRASS_EMITTER : GPUParticles3D
 
 var _is_authorized_user : bool = false
 

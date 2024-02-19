@@ -21,6 +21,7 @@ var MOUSE_CAPTURED = false
 var GLOBAL_TICK = 0
 # World Variables
 var WORLD_SEED = 0
+var WORLD_HEIGHT_MAP = null
 
 func _ready():
 	var INIT = Steam.steamInit()
@@ -71,6 +72,7 @@ func remove_lobby_data():
 	GLOBAL_TICK = 0
 	# World Variables
 	WORLD_SEED = 0
+	WORLD_HEIGHT_MAP = null
 
 func repair_globals():
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

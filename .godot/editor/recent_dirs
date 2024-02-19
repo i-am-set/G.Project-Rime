@@ -1,7 +1,7 @@
 res://scenes
-res://levels
-res://world/clipmap
 res://
+res://world/clipmap
+res://levels
 res://world/heightmap
 res://world/collisionmap
 res://scripts
