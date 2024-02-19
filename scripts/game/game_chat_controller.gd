@@ -7,8 +7,10 @@ extends Control
 @onready var chatInput = $Chat/SendMessage/LineEdit
 @onready var sendMessage = $Chat/SendMessage
 @onready var playerList = $Players/PlayerList
+@onready var chatHideTimer = $ChatHideTimer
 
 var _chat_type : String = "GLOBAL"
+var chat_hide_tween : Tween
 
 func _ready():
 	capture_mouse()
@@ -18,6 +20,12 @@ func _input(event: InputEvent) -> void:
 	if Global.MOUSE_CAPTURED == true && chatInput.has_focus():
 		deselect_chat_input()
 	if Input.is_action_just_pressed("enter"):
+		# stop the tween if needed and reset variable
+		if chat_hide_tween != null:
+			if chat_hide_tween.is_running():
+				chat_hide_tween.stop()
+				chat.modulate.a = 1
+		# change logic based on if the chat window is open or not
 		if chat.visible == false || chatInput.has_focus() == false:
 			chat.visible = true
 			select_chat_input()
@@ -70,9 +78,18 @@ func display_message(message):
 		return
 	
 	chatOutput.text += ("\n" + str(message))
-	chatOutput.scroll_vertical += 100
+	chatOutput.scroll_vertical += 1000
+
+func _on_chat_hide_timer_timeout():
+	chat_hide_tween = get_tree().create_tween()
+	chat_hide_tween.tween_property(chat, "modulate:a", 0, 1)
+	await chat_hide_tween.finished
+	chat.visible = false
 
 func send_chat_message():
+	# reset the timer
+	chatHideTimer.stop()
+	chatHideTimer.start()
 	# Get chat input
 	var this_message = chatInput.text
 	# Pass message to steam

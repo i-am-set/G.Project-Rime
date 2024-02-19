@@ -15,6 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_bvp7h")
 
 [node name="Chat" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.5
@@ -77,3 +78,9 @@ offset_top = 1.0
 offset_right = -2.0
 offset_bottom = 34.0
 placeholder_text = "Your Message Here"
+
+[node name="ChatHideTimer" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+
+[connection signal="timeout" from="ChatHideTimer" to="." method="_on_chat_hide_timer_timeout"]

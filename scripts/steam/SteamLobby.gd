@@ -165,6 +165,7 @@ func _on_lobby_created(connect: int, this_lobby_id: int) -> void:
 	if connect == 1:
 		# Set the lobby ID
 		Global.LOBBY_ID = this_lobby_id
+		Steam.setLobbyData(this_lobby_id, "is_started", "false")
 		display_message("Created lobby: " + lobbySetName.text)
 
 		# Set this lobby as joinable, just in case, though this should be done by default
@@ -195,8 +196,12 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		# Get the lobby members
 		get_lobby_members()
 		
-		## Make the initial handshake
+		# Make the initial handshake
 		make_p2p_handshake()
+		
+		# Put player in game if game is started
+		if Steam.getLobbyData(this_lobby_id, "is_started") == "true":
+			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
 		
 	# Else it failed for some reason
 	else:
@@ -466,6 +471,5 @@ func read_p2p_packet() -> void:
 func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
 		if packet_data["message"] == "start_game":
+			Steam.setLobbyData(Global.LOBBY_ID, "is_started", "true")
 			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
-			## Wait for the scene to change
-			#await(get_tree(), "idle_frame")
