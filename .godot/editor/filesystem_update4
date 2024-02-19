@@ -10,3 +10,13 @@ res://scenes/game_player_list_controller.tscn
 res://scripts/game/game_chat_controller.gd
 res://scripts/steam/SteamLobby.gd
 res://scripts/game/global.gd
+res://world/clipmap/clipmap.tscn
+res://world/clipmap/clipmap.gd
+res://world/clipmap/clipmap.gdshader
+res://world/collisionmap/collisionmap.tscn
+res://world/collisionmap/collisionmap.gd
+res://world/clipmap/clipmap_partition.tscn
+res://scripts/game/game_controller.gd
+res://delete.tscn
+res://scripts/player/fps_controller.gd
+res://main.tscn

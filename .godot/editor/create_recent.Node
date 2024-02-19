@@ -1,7 +1,8 @@
+MeshInstance3D
+StaticBody3D
 Timer
 TextEdit
 Panel
-MeshInstance3D
 LineEdit
 RichTextLabel
 MarginContainer
@@ -11,4 +12,3 @@ ScrollContainer
 Popup
 Label
 PopupPanel
-Area3D

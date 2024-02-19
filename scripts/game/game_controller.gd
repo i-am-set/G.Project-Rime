@@ -4,6 +4,9 @@ var _player_node = preload("res://scenes/fps_controller.tscn")
 var _chat = preload("res://scenes/game_chat_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
+@onready var _collision_map = $Terrain/Collisionmap
+@onready var _clip_map = $Terrain/Clipmap
+
 var _chat_instance : Control
 var _player_list_instance : Control
 
@@ -41,6 +44,7 @@ func _ready():
 				player_instance._steam_ID = this_member['steam_id']
 				player_instance._authorize_user()
 				player_instance.VISOR.visible = false
+				attach_player_to_world(player_instance)
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(5, 10, 0)
 	else:
@@ -49,6 +53,7 @@ func _ready():
 		player_instance._steam_ID = Global.STEAM_ID
 		player_instance._authorize_user()
 		player_instance.VISOR.visible = false
+		attach_player_to_world(player_instance)
 		add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(5, 10, 0)
 		print("self created")
@@ -111,6 +116,10 @@ func read_all_p2p_packets(read_count: int = 0):
 	if Steam.getAvailableP2PPacketSize(0) > 0:
 		read_p2p_packet()
 		read_all_p2p_packets(read_count + 1)
+
+func attach_player_to_world(player_instance: Node3D):
+	_collision_map.physics_body = player_instance
+	_clip_map.player_character = player_instance
 
 #######################
 ### Steam Callbacks ###

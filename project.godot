@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://scripts/game/global.gd"
+Heightmap="*res://world/heightmap/Heightmap.gd"
 
 [display]
 
@@ -131,3 +132,30 @@ textures/default_filters/anisotropic_filtering_level=4
 textures/default_filters/texture_mipmap_bias=-1.0
 anti_aliasing/quality/msaa_3d=1
 anti_aliasing/quality/screen_space_aa=1
+
+[shader_globals]
+
+clipmap_partition_length={
+"type": "float",
+"value": 16.0
+}
+clipmap_position={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+amplitude={
+"type": "float",
+"value": 8.0
+}
+lod_step={
+"type": "float",
+"value": 1.0
+}
+heightmap={
+"type": "sampler2D",
+"value": "res://world/heightmap/heightmap.png"
+}
+normalmap={
+"type": "sampler2D",
+"value": "res://world/heightmap/normalmap.png"
+}

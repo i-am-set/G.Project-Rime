@@ -1,9 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://hwcfodjh80hl"]
+[gd_scene load_steps=14 format=3 uid="uid://hwcfodjh80hl"]
 
 [ext_resource type="PackedScene" uid="uid://btv0a42cgxt8g" path="res://levels/WE_test.tscn" id="1_c8imp"]
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_k660m"]
 [ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="2_wlrhx"]
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_26von"]
+[ext_resource type="PackedScene" uid="uid://c7xublrnupds4" path="res://world/collisionmap/collisionmap.tscn" id="5_yn4mj"]
+[ext_resource type="PackedScene" uid="uid://b11lm75hfbnky" path="res://world/clipmap/clipmap.tscn" id="6_lyg2o"]
+[ext_resource type="PackedScene" uid="uid://bm3se7nbvev48" path="res://world/clipmap/clipmap_partition.tscn" id="7_bw2i8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gd0ev"]
 material = ExtResource("2_wlrhx")
@@ -116,5 +119,14 @@ shape = SubResource("ConcavePolygonShape3D_hvhu4")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
 multimesh = SubResource("MultiMesh_g3xta")
+
+[node name="Terrain" type="StaticBody3D" parent="."]
+
+[node name="Collisionmap" parent="Terrain" instance=ExtResource("5_yn4mj")]
+
+[node name="Clipmap" parent="Terrain" instance=ExtResource("6_lyg2o")]
+
+[node name="clipmap_partition" parent="." instance=ExtResource("7_bw2i8")]
+visible = false
 
 [editable path="WorldEnvironment"]
