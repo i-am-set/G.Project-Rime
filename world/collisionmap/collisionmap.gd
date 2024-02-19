@@ -9,7 +9,6 @@ extends CollisionShape3D
 func _ready():
 	update_shape()
 	
-	
 func _physics_process(delta):
 	if physics_body == null:
 		return
@@ -20,7 +19,8 @@ func _physics_process(delta):
 		update_shape()
 	
 func update_shape():
-	for i in faces.size():
-		var global_vert = faces[i] + global_position
-		faces[i].y = Heightmap.get_height(global_vert.x,global_vert.z)
-	shape.set_faces(faces)
+	if Heightmap.image != null:
+		for i in faces.size():
+			var global_vert = faces[i] + global_position
+			faces[i].y = Heightmap.get_height(global_vert.x,global_vert.z)
+		shape.set_faces(faces)

@@ -14,7 +14,7 @@ extends CharacterBody3D
 @export var USERINTERFACE : Control
 @export var WEAPONVIEWPORT : SubViewportContainer
 
-@export var _is_authorized_user : bool = false
+var _is_authorized_user : bool = false
 
 var _mouse_input : bool = false
 var look_dir: Vector2 # Input direction for look/aim

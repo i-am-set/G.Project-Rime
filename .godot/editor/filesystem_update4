@@ -20,3 +20,4 @@ res://scripts/game/game_controller.gd
 res://delete.tscn
 res://scripts/player/fps_controller.gd
 res://main.tscn
+res://world/heightmap/Heightmap.gd

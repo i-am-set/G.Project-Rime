@@ -19,6 +19,8 @@ var LOBBY_INVITE_ARG = false
 var LOBBY_PEER_INSTANCES = {}
 var MOUSE_CAPTURED = false
 var GLOBAL_TICK = 0
+# World Variables
+var WORLD_SEED = 0
 
 func _ready():
 	var INIT = Steam.steamInit()
@@ -60,6 +62,15 @@ func _physics_process(delta):
 	GLOBAL_TICK += 1
 	if GLOBAL_TICK % 40 == 0:
 		repair_globals()
+
+func remove_lobby_data():
+	# Lobby Variables
+	LOBBY_ID = 0
+	LOBBY_MEMBERS = []
+	LOBBY_PEER_INSTANCES = {}
+	GLOBAL_TICK = 0
+	# World Variables
+	WORLD_SEED = 0
 
 func repair_globals():
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

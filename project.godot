@@ -151,11 +151,11 @@ lod_step={
 "type": "float",
 "value": 1.0
 }
-heightmap={
-"type": "sampler2D",
-"value": "res://world/heightmap/heightmap.png"
-}
 normalmap={
 "type": "sampler2D",
 "value": "res://world/heightmap/normalmap.png"
+}
+heightmap={
+"type": "sampler2D",
+"value": "res://world/heightmap/heightmap.png"
 }

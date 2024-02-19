@@ -119,8 +119,6 @@ func leave_lobby():
 		display_message("Leaving lobby...")
 		# Send leave request
 		Steam.leaveLobby(Global.LOBBY_ID)
-		# Wipe LOBBY_ID
-		Global.LOBBY_ID = 0
 		
 		lobbyGetName.text = "Lobby Name"
 		playerCount.text = "Players (0)"
@@ -129,9 +127,28 @@ func leave_lobby():
 		# Close session with all users
 		for member in Global.LOBBY_MEMBERS:
 			Steam.closeP2PSessionWithUser(member["steam_id"])
+		await get_tree().process_frame
+		
+		# Wipe lobby data
+		Global.leave_lobby()
 		
 		# Clear lobby list
 		Global.LOBBY_MEMBERS.clear()
+
+
+func initialize_game(seed):
+	var texture = NoiseTexture2D.new()
+	var fastNoiseLite = FastNoiseLite.new()
+	texture.width = 512
+	texture.height = 512
+	texture.seamless = true
+	fastNoiseLite.seed = seed
+	texture.noise = fastNoiseLite
+	# Cement changes
+	Global.WORLD_SEED = seed
+	Heightmap.set_height_map(texture)
+	# Await processing
+	await get_tree().process_frame
 
 
 func display_message(message):
@@ -201,6 +218,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		
 		# Put player in game if game is started
 		if Steam.getLobbyData(this_lobby_id, "is_started") == "true":
+			await initialize_game(int(Steam.getLobbyData(this_lobby_id, "world_seed")))
 			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
 		
 	# Else it failed for some reason
@@ -471,5 +489,8 @@ func read_p2p_packet() -> void:
 func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
 		if packet_data["message"] == "start_game":
+			var seed = randi_range(1, 999999999999)
+			Steam.setLobbyData(Global.LOBBY_ID, "world_seed", str(seed))
+			await initialize_game(seed)
 			Steam.setLobbyData(Global.LOBBY_ID, "is_started", "true")
 			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
