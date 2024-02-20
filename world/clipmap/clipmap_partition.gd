@@ -18,9 +18,3 @@ func _ready():
 	var subdivides = max(length/subdivision_length - 1, 0)
 	mesh.subdivide_width = subdivides
 	mesh.subdivide_depth = subdivides
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

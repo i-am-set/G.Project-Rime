@@ -11,6 +11,11 @@ var _chat_instance : Control
 var _player_list_instance : Control
 var _authorized_player : Player
 
+var noise : FastNoiseLite = preload('res://world/heightmap/resource_noise.tres')
+var tree_data : Dictionary = {}
+var radius : float = 200.0
+var points : Array = []
+
 func _ready():
 	# Steamwork connections
 	Steam.lobby_joined.connect(_on_lobby_joined)
@@ -60,6 +65,8 @@ func _ready():
 		add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(5, 10, 0)
 		print("self created")
+	
+	noise.seed = randi()
 
 func _physics_process(delta):
 	# If the player is connected, read packets
@@ -69,6 +76,12 @@ func _physics_process(delta):
 	# Do stuff every 40 global ticks
 	if Global.GLOBAL_TICK % 40 == 0:
 		get_lobby_members()
+		generate_local_resources()
+
+
+func _input(event):
+	if Input.is_action_just_pressed("ui_scroll_up"):
+		pass
 
 func display_message(message):
 	_chat_instance.display_message(message)
@@ -123,6 +136,39 @@ func read_all_p2p_packets(read_count: int = 0):
 func attach_player_to_world(player_instance: Node3D):
 	_collision_map.physics_body = player_instance
 	_clip_map.player_character = player_instance
+
+func generate_local_resources():
+	var _authorized_player_position = _authorized_player.position
+	
+	for x in range(_authorized_player_position.x-(radius*0.5), _authorized_player_position.x+(radius*0.5)):
+		for z in range(_authorized_player_position.z-(radius*0.5), _authorized_player_position.z+(radius*0.5)):
+			var height = noise.get_noise_2d(x, z) * 100
+			points.append(height)
+			if height > 0.5 && !tree_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
+				var tree : MeshInstance3D = MeshInstance3D.new()
+				tree.mesh = BoxMesh.new()
+				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
+				tree_data[tree.position] = tree
+	
+	for tree_location in tree_data:
+		if tree_data[tree_location] == null:
+			continue
+		var distance = Vector2(tree_location.x, tree_location.z).distance_to(Vector2(_authorized_player_position.x, _authorized_player_position.z))
+		if distance < radius and tree_data[tree_location].get_parent() == null:
+			add_child(tree_data[tree_location])
+		elif distance >= radius and tree_data[tree_location].get_parent() != null:
+			remove_child(tree_data[tree_location])
+
+func replenish_resources():
+	var tempNode
+	for node in tree_data:
+		if tree_data.has(tempNode):
+			tree_data.erase(tempNode)
+		remove_child(tree_data[node])
+		tree_data[node].queue_free()
+		tempNode = node
+	if tree_data.has(tempNode):
+		tree_data.erase(tempNode)
 
 #######################
 ### Steam Callbacks ###

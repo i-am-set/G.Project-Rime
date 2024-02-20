@@ -13,4 +13,3 @@ sky = SubResource("Sky_0poj2")
 ssao_enabled = true
 ssil_enabled = true
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.04

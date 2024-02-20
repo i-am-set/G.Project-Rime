@@ -125,6 +125,7 @@ multimesh = SubResource("MultiMesh_g3xta")
 [node name="Collisionmap" parent="Terrain" instance=ExtResource("5_yn4mj")]
 
 [node name="Clipmap" parent="Terrain" instance=ExtResource("6_lyg2o")]
+distance = 12
 
 [node name="clipmap_partition" parent="." instance=ExtResource("7_bw2i8")]
 visible = false

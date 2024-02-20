@@ -8,3 +8,6 @@ res://scenes/mainmenu.tscn
 res://world/clipmap/clipmap_partition.tscn
 res://scripts/player/fps_controller.gd
 res://scripts/game/game_controller.gd
+res://world/clipmap/clipmap_partition.gd
+res://world/heightmap/resource_noise.tres
+res://DELETE_LATER.tres
