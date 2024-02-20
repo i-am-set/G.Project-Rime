@@ -66,7 +66,7 @@ func _ready():
 		player_instance.global_transform.origin = Vector3(5, 10, 0)
 		print("self created")
 	
-	noise.seed = randi()
+	noise.seed = Global.WORLD_SEED
 
 func _physics_process(delta):
 	# If the player is connected, read packets
