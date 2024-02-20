@@ -402,6 +402,10 @@ func _on_join_lobby_pressed():
 
 
 func _on_start_game_pressed():
+	var seed = randi_range(1, 999999999999)
+	Global.WORLD_SEED = seed
+	Steam.setLobbyData(Global.LOBBY_ID, "world_seed", str(seed))
+	await get_tree().process_frame
 	send_p2p_packet(-1, {"message" : "start_game"})
 
 
@@ -497,8 +501,6 @@ func read_p2p_packet() -> void:
 func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
 		if packet_data["message"] == "start_game":
-			var seed = randi_range(1, 999999999999)
-			Steam.setLobbyData(Global.LOBBY_ID, "world_seed", str(seed))
-			await initialize_game(seed)
+			await initialize_game(int(Steam.getLobbyData(Global.LOBBY_ID, "world_seed")))
 			Steam.setLobbyData(Global.LOBBY_ID, "is_started", "true")
 			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
