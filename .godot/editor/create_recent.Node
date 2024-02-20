@@ -1,7 +1,9 @@
-CollisionShape3D
-GPUParticles3D
 Sprite2D
 Sprite3D
+ProtonScatter
+MultiMeshInstance3D
+CollisionShape3D
+GPUParticles3D
 MeshInstance3D
 StaticBody3D
 Timer
@@ -10,6 +12,3 @@ Panel
 LineEdit
 RichTextLabel
 MarginContainer
-Button
-VBoxContainer
-ScrollContainer
