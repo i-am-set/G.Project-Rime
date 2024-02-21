@@ -5,9 +5,11 @@ extends Node3D
 @export var tree_mesh_2 : MeshInstance3D
 @export var tree_mesh_3 : MeshInstance3D
 @export var tree_mesh_4 : MeshInstance3D
+@export var tree_mesh_5 : MeshInstance3D
+
 
 func _ready():
-	var rand_tree = randi_range(1, 4)
+	var rand_tree = randi_range(1, 5)
 	if rand_tree == 1:
 		tree_mesh_1.show()
 		set_material_parameters(tree_mesh_1)
@@ -20,6 +22,9 @@ func _ready():
 	elif rand_tree == 4:
 		tree_mesh_4.show()
 		set_material_parameters(tree_mesh_4)
+	elif rand_tree == 5:
+		tree_mesh_5.show()
+		set_material_parameters(tree_mesh_5)
 
 
 func set_material_parameters(tree_mesh : MeshInstance3D):
