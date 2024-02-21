@@ -3,6 +3,7 @@ res://environment/WE_test.tres
 res://world/heightmap/resource_noise.tres
 res://materials/grid.tres
 res://world/clipmap/clipmap.gdshader
+res://meshes/nature/tree_sway.gdshader
 res://scripts/world/tree_controller.gd
 res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
