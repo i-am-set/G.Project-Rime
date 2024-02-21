@@ -11,6 +11,7 @@ var _chat_instance : Control
 var _player_list_instance : Control
 var _authorized_player : Player
 
+var tree_preload = preload("res://meshes/nature/tree_instance.tscn")
 var noise : FastNoiseLite = preload('res://world/heightmap/resource_noise.tres')
 var tree_data : Dictionary = {}
 var radius : float = 200.0
@@ -144,9 +145,10 @@ func generate_local_resources():
 		for z in range(_authorized_player_position.z-(radius*0.5), _authorized_player_position.z+(radius*0.5)):
 			var height = noise.get_noise_2d(x, z) * 100
 			points.append(height)
-			if height > 0.5 && !tree_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
-				var tree : MeshInstance3D = MeshInstance3D.new()
-				tree.mesh = BoxMesh.new()
+			if height > 0.3 && !tree_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
+				var tree = tree_preload.instantiate()
+				tree.scale = Vector3(randf_range(0.75, 1.25), randf_range(0.5, 1.5), randf_range(0.75, 1.25))
+				tree.rotation.y = randi_range(0, 359)
 				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
 				tree_data[tree.position] = tree
 	

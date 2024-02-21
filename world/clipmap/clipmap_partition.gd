@@ -7,7 +7,7 @@ var z = 0
 func _ready():
 	var length = ProjectSettings.get_setting("shader_globals/clipmap_partition_length").value
 	var lod_step = ProjectSettings.get_setting("shader_globals/lod_step").value
-	
+
 	mesh = PlaneMesh.new()
 	mesh.size = Vector2.ONE * length
 	

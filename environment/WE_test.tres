@@ -9,7 +9,12 @@ panorama = ExtResource("1_mj5wh")
 sky_material = SubResource("PanoramaSkyMaterial_cmrwf")
 
 [resource]
+background_mode = 2
 sky = SubResource("Sky_0poj2")
+ambient_light_source = 3
 ssao_enabled = true
 ssil_enabled = true
 volumetric_fog_enabled = true
+volumetric_fog_density = 0.025
+volumetric_fog_albedo = Color(0.721569, 0.870588, 0.94902, 1)
+volumetric_fog_ambient_inject = 1.45

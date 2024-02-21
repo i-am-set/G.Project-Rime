@@ -3,11 +3,11 @@
 [ext_resource type="Shader" path="res://world/clipmap/clipmap.gdshader" id="1_f215y"]
 [ext_resource type="Script" path="res://world/clipmap/clipmap_partition.gd" id="1_thu34"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t6oan"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tw4mb"]
 render_priority = 0
 shader = ExtResource("1_f215y")
 
 [node name="clipmap_partition" type="MeshInstance3D"]
-material_override = SubResource("ShaderMaterial_t6oan")
+material_override = SubResource("ShaderMaterial_tw4mb")
 extra_cull_margin = 500.0
 script = ExtResource("1_thu34")

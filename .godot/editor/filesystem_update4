@@ -1,14 +1,10 @@
 res://levels/level_007.tscn
-res://world/clipmap/clipmap.gdshader
 res://environment/WE_test.tres
+res://world/heightmap/resource_noise.tres
 res://materials/grid.tres
+res://world/clipmap/clipmap.gdshader
 res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
+res://meshes/nature/tree_instance.tscn
 res://world/clipmap/clipmap_partition.tscn
-res://scripts/player/fps_controller.gd
-res://scripts/game/game_controller.gd
-res://world/clipmap/clipmap_partition.gd
-res://world/heightmap/resource_noise.tres
-res://DELETE_LATER.tres
-res://scripts/steam/SteamLobby.gd

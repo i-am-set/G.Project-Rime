@@ -1,6 +1,9 @@
+res://world/clipmap
+res://materials
+res://scripts/world
+res://meshes/nature
 res://
 res://world/heightmap
-res://world/clipmap
 res://scenes
 res://levels
 res://world/collisionmap

@@ -20,7 +20,7 @@ float get_height(vec3 world_vertex){
 }
 
 void vertex(){
-	dev_albedo = vec3(1);
+	dev_albedo = vec3(0.8, 0.8, 1);
 	
 	vec3 world_vertex = VERTEX + MODEL_MATRIX[3].xyz;
 	normalmap_position = (world_vertex.xz + 0.5)/float(textureSize(heightmap,0).x);
@@ -57,6 +57,7 @@ void vertex(){
 }
 
 void fragment() {
-	NORMAL_MAP = texture(normalmap,normalmap_position).rgb;
+	NORMAL_MAP = texture(normalmap,UV).rgb;
+	NORMAL_MAP_DEPTH = 1.0;
 	ALBEDO = dev_albedo;
 }
