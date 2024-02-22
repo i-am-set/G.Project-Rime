@@ -13,7 +13,6 @@ config_version=5
 config/name="G.Project-Rime"
 run/main_scene="res://scenes/mainmenu.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
-config/icon="res://icon.svg"
 
 [autoload]
 
@@ -142,7 +141,7 @@ anti_aliasing/quality/screen_space_aa=1
 
 clipmap_partition_length={
 "type": "float",
-"value": 16.0
+"value": 32.0
 }
 clipmap_position={
 "type": "vec3",
@@ -162,5 +161,9 @@ normalmap={
 }
 heightmap={
 "type": "sampler2D",
-"value": "res://Snow010A_1K-PNG_NormalGL.png"
+"value": "res://world/heightmap/heightmap.png"
+}
+fade_distance={
+"type": "float",
+"value": 70.0
 }

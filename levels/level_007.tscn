@@ -110,13 +110,13 @@ transform = Transform3D(0.980792, 0.164096, 0.105449, -0.0141497, -0.479328, 0.8
 light_color = Color(0.713726, 0.721569, 0.721569, 1)
 light_angular_distance = 0.5
 shadow_blur = 0.5
-directional_shadow_split_1 = 0.036
+directional_shadow_split_1 = 0.107
 directional_shadow_split_2 = 0.159
 directional_shadow_split_3 = 0.511
 directional_shadow_blend_splits = true
 directional_shadow_fade_start = 0.0
 directional_shadow_max_distance = 85.2
-directional_shadow_pancake_size = 3.7
+directional_shadow_pancake_size = 33.0
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
@@ -135,7 +135,6 @@ multimesh = SubResource("MultiMesh_g3xta")
 [node name="Collisionmap" parent="Terrain" instance=ExtResource("5_yn4mj")]
 
 [node name="Clipmap" parent="Terrain" instance=ExtResource("6_lyg2o")]
-distance = 12
 
 [node name="clipmap_partition" parent="." instance=ExtResource("7_bw2i8")]
 visible = false

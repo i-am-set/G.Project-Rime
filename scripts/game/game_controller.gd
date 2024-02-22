@@ -147,8 +147,8 @@ func generate_local_resources():
 			points.append(height)
 			if height > 0.3 && !tree_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
 				var tree = tree_preload.instantiate()
-				tree.scale = Vector3(randf_range(0.75, 1.25), randf_range(0.5, 1.5), randf_range(0.75, 1.25))
-				tree.rotation.y = randi_range(0, 359)
+				tree.scale = Vector3(randf_range(0.9, 1.1), randf_range(0.8, 1.2), randf_range(0.9, 1.1))
+				tree.rotation = Vector3(deg_to_rad(randi_range(-2, 2)), deg_to_rad(randi_range(0, 359)), deg_to_rad(randi_range(-2, 2)))
 				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
 				tree_data[tree.position] = tree
 	
