@@ -163,7 +163,15 @@ heightmap={
 "type": "sampler2D",
 "value": "res://world/heightmap/heightmap.png"
 }
-fade_distance={
+sway_speed={
 "type": "float",
-"value": 70.0
+"value": 1.0
+}
+fade_distance_max={
+"type": "float",
+"value": 75.0
+}
+fade_distance_min={
+"type": "float",
+"value": 95.0
 }

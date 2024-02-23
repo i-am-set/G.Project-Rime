@@ -1,7 +1,11 @@
+res://shaders
+res://scenes/nature/trees
+res://scripts/world/nature
+res://materials/nature
+res://meshes/nature
 res://world/clipmap
 res://materials
 res://scripts/world
-res://meshes/nature
 res://
 res://world/heightmap
 res://scenes

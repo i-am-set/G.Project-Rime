@@ -39,8 +39,9 @@ func delete_other_meshes():
 	pass
 
 func set_material_parameters(tree_mesh : MeshInstance3D):
-	var tree_material = tree_mesh.material_override
-	tree_material.set_shader_parameter("normal_texture", bark_normal)
+	pass
+	#var tree_material = tree_mesh.material_override
+	#tree_material.set_shader_parameter("normal_texture", bark_normal)
 	#tree_material.set_shader_parameter("albedo", Color(randf_range(0.09, 0.130), randf_range(0.07, 0.11), randf_range(0.03, 0.06)))
 	#tree_material.set_shader_parameter("albedo", Color(randf_range(0.55, 0.64), randf_range(0.55, 0.64), randf_range(0.55, 0.64)))
 	#tree_mesh.material_override.distance_fade_mode = 3

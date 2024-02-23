@@ -6,14 +6,15 @@ var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
 @onready var _collision_map = $Terrain/Collisionmap
 @onready var _clip_map = $Terrain/Clipmap
+@onready var resource_instancer = $ResourceInstancer
 
 var _chat_instance : Control
 var _player_list_instance : Control
 var _authorized_player : Player
 
-var tree_preload = preload("res://meshes/nature/tree_instance.tscn")
+var tree_preload = preload("res://scenes/nature/trees/birch_tree_3.tscn")
 var noise : FastNoiseLite = preload('res://world/heightmap/resource_noise.tres')
-var tree_data : Dictionary = {}
+var resource_data : Dictionary = {}
 var radius : float = 200.0
 var points : Array = []
 
@@ -145,32 +146,30 @@ func generate_local_resources():
 		for z in range(_authorized_player_position.z-(radius*0.5), _authorized_player_position.z+(radius*0.5)):
 			var height = noise.get_noise_2d(x, z) * 100
 			points.append(height)
-			if height > 0.3 && !tree_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
-				var tree = tree_preload.instantiate()
-				tree.scale = Vector3(randf_range(0.9, 1.1), randf_range(0.8, 1.2), randf_range(0.9, 1.1))
-				tree.rotation = Vector3(deg_to_rad(randi_range(-2, 2)), deg_to_rad(randi_range(0, 359)), deg_to_rad(randi_range(-2, 2)))
+			if height > 0.3 && !resource_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
+				var tree = resource_instancer.instantiate_tree()
 				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
-				tree_data[tree.position] = tree
+				resource_data[tree.position] = tree
 	
-	for tree_location in tree_data:
-		if tree_data[tree_location] == null:
+	for resource_location in resource_data:
+		if resource_data[resource_location] == null:
 			continue
-		var distance = Vector2(tree_location.x, tree_location.z).distance_to(Vector2(_authorized_player_position.x, _authorized_player_position.z))
-		if distance < radius and tree_data[tree_location].get_parent() == null:
-			add_child(tree_data[tree_location])
-		elif distance >= radius and tree_data[tree_location].get_parent() != null:
-			remove_child(tree_data[tree_location])
+		var distance = Vector2(resource_location.x, resource_location.z).distance_to(Vector2(_authorized_player_position.x, _authorized_player_position.z))
+		if distance < radius and resource_data[resource_location].get_parent() == null:
+			add_child(resource_data[resource_location])
+		elif distance >= radius and resource_data[resource_location].get_parent() != null:
+			remove_child(resource_data[resource_location])
 
 func replenish_resources():
 	var tempNode
-	for node in tree_data:
-		if tree_data.has(tempNode):
-			tree_data.erase(tempNode)
-		remove_child(tree_data[node])
-		tree_data[node].queue_free()
+	for node in resource_data:
+		if resource_data.has(tempNode):
+			resource_data.erase(tempNode)
+		remove_child(resource_data[node])
+		resource_data[node].queue_free()
 		tempNode = node
-	if tree_data.has(tempNode):
-		tree_data.erase(tempNode)
+	if resource_data.has(tempNode):
+		resource_data.erase(tempNode)
 
 #######################
 ### Steam Callbacks ###

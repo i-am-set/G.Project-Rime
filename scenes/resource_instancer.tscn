@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://diatixhqy12pa"]
+
+[ext_resource type="Script" path="res://scripts/world/nature/tree_instancer.gd" id="1_b7ghr"]
+
+[node name="ResourceInstancer" type="Node3D"]
+script = ExtResource("1_b7ghr")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0guic57kx6nm"]
+
+[ext_resource type="PackedScene" uid="uid://d1hcg83g0u0oi" path="res://meshes/nature/trees/birch_model_1.glb" id="1_m2ef5"]
+[ext_resource type="Material" uid="uid://dg0d7hgeoqydn" path="res://materials/nature/birch_tree_material.tres" id="2_pn8rk"]
+
+[node name="birch_tree_1" instance=ExtResource("1_m2ef5")]
+
+[node name="tree_001" parent="." index="0"]
+material_override = ExtResource("2_pn8rk")

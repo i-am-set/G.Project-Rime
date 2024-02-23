@@ -7,6 +7,9 @@ global uniform vec3 clipmap_position;
 global uniform float clipmap_partition_length;
 global uniform float lod_step;
 
+global uniform float fade_distance_min;
+global uniform float fade_distance_max;
+
 varying vec2 normalmap_position;
 varying vec3 dev_albedo;
 
@@ -60,4 +63,13 @@ void fragment() {
 	NORMAL_MAP = texture(normalmap,UV).rgb;
 	NORMAL_MAP_DEPTH = 1.0;
 	ALBEDO = dev_albedo;
+	
+	// fade logic
+	{
+		float fade_length = length(VERTEX);
+		const vec3 magic = vec3(0.06711056f, 0.00583715f, 52.9829189f);		float fade = clamp(smoothstep(fade_distance_min, fade_distance_max, fade_length), 0.0, 1.0);
+		if (fade < 0.001 || fade < fract(magic.z * fract(dot(FRAGCOORD.xy, magic.xy)))) {
+			discard;
+		}
+	}
 }
