@@ -12,3 +12,5 @@ res://levels/level_007.tscn
 res://scenes/resource_instancer.tscn
 res://scripts/resource objects/resource_instancer.gd
 res://scenes/resourceobjects/nature/trees/birch_tree_1.tscn
+res://scenes/resourceobjects/nature/trees/tall_pine_tree_1.tscn
+res://scenes/resourceobjects/nature/trees/tall_pine_tree_2.tscn

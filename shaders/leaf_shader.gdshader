@@ -4,7 +4,6 @@ shader_type spatial;
 render_mode blend_mix,depth_draw_always,cull_disabled;
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
-uniform float point_size : hint_range(0,128);
 uniform float roughness : hint_range(0,1);
 uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;

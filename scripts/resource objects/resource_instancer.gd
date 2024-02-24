@@ -14,7 +14,8 @@ var pine_tree = [
 	preload("res://scenes/resourceobjects/nature/trees/pine_tree_4.tscn"),
 ]
 var tall_pine_tree = [
-	preload("res://scenes/resourceobjects/nature/trees/pine_tree_4.tscn")
+	preload("res://scenes/resourceobjects/nature/trees/tall_pine_tree_1.tscn"),
+	preload("res://scenes/resourceobjects/nature/trees/tall_pine_tree_2.tscn")
 ]
 var trees = [
 	birch_tree,
@@ -29,9 +30,9 @@ var trees = [
 #------------------------------------------------------#
 
 var weights : Dictionary = {
-	birch_tree : 10,
-	pine_tree : 0.1,
-	tall_pine_tree : 1
+	birch_tree : 3,
+	pine_tree : 0.5,
+	tall_pine_tree : 10
 }
 
 var _is_initialized : bool = false
@@ -71,9 +72,7 @@ func instantiate_resource(height_seed : int) -> Node3D:
 func tree_parameters(tree) -> Node3D:
 	tree.get_child(0).material_override = tree.get_child(0).material_override.duplicate()
 	var tree_shader = tree.get_child(0).material_override
-	tree.get_child(0).lod_bias = 0.1
-	var treess= StandardMaterial3D
-	treess.DEPTH_DRAW_OPAQUE_ONLY
+	tree.get_child(0).lod_bias = 0.25
 	tree_shader.set_shader_parameter("tree_base_height", _rng_base.randf_range(0.1, 1.2))
 	tree_shader.set_shader_parameter("tree_base_darkness", _rng_base.randf_range(0.1, 0.2))
 	tree_shader.set_shader_parameter("uv1_offset", Vector3(_rng_base.randf_range(1, 20),1 ,1))

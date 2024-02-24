@@ -1,0 +1,48 @@
+[gd_scene load_steps=11 format=3 uid="uid://6b410v2gv4fo"]
+
+[ext_resource type="PackedScene" uid="uid://iw1drp4nv1sv" path="res://meshes/nature/trees/tall_pine_model_2.glb" id="1_vdml2"]
+[ext_resource type="Shader" path="res://shaders/tree_shader.gdshader" id="2_n8cao"]
+[ext_resource type="Texture2D" uid="uid://dy66mgbs1v1ca" path="res://textures/nature/pine/Pine_1K-JPG_Color.jpg" id="3_pmx2m"]
+[ext_resource type="Texture2D" uid="uid://q41258iqao71" path="res://textures/nature/pine/Pine_1K-JPG_NormalGL.jpg" id="4_b7i68"]
+[ext_resource type="Texture2D" uid="uid://ce2yyap265544" path="res://textures/nature/pine/Pine_1K-JPG_Roughness.jpg" id="5_pcbte"]
+[ext_resource type="Texture2D" uid="uid://ds7r7drk2iyf6" path="res://textures/nature/birch/BirchBase_1K-JPG_Color.jpg" id="6_uxcli"]
+[ext_resource type="Shader" path="res://shaders/leaf_shader.gdshader" id="7_gdjgf"]
+[ext_resource type="Texture2D" uid="uid://vumnicjktnyy" path="res://meshes/nature/pinetree_branch_hd.png" id="8_8je02"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ebans"]
+render_priority = 0
+shader = ExtResource("2_n8cao")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/tree_base_height = 1.0
+shader_parameter/tree_base_darkness = 0.2
+shader_parameter/roughness = 1.0
+shader_parameter/normal_scale = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/sway_strength = 0.05
+shader_parameter/sway_phase_len = 8.0
+shader_parameter/texture_albedo = ExtResource("3_pmx2m")
+shader_parameter/tree_base_texture = ExtResource("6_uxcli")
+shader_parameter/texture_roughness = ExtResource("5_pcbte")
+shader_parameter/texture_normal = ExtResource("4_b7i68")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1wm8x"]
+render_priority = 0
+shader = ExtResource("7_gdjgf")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/roughness = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sway_strength = 0.05
+shader_parameter/sway_phase_len = 8.0
+shader_parameter/texture_albedo = ExtResource("8_8je02")
+
+[node name="tall_pine_model_2" instance=ExtResource("1_vdml2")]
+
+[node name="tree_001" parent="." index="0"]
+material_override = SubResource("ShaderMaterial_ebans")
+
+[node name="leaves" parent="." index="1"]
+material_override = SubResource("ShaderMaterial_1wm8x")

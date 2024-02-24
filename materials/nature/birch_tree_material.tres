@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://ds7r7drk2iyf6" path="res://textures/nature/birch/BirchBase_1K-JPG_Color.jpg" id="5_ol2ah"]
 
 [sub_resource type="Gradient" id="Gradient_ha7j6"]
-offsets = PackedFloat32Array(0, 0.281481)
+offsets = PackedFloat32Array(0, 0.344828)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_v6ufg"]
-frequency = 0.0083
+frequency = 0.0075
 offset = Vector3(295.45, 0, 0)
 fractal_type = 2
 fractal_weighted_strength = 1.0
