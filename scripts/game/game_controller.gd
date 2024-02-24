@@ -6,17 +6,15 @@ var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
 @onready var _collision_map = $Terrain/Collisionmap
 @onready var _clip_map = $Terrain/Clipmap
-@onready var resource_instancer = $ResourceInstancer
+@onready var _resource_instancer = $ResourceInstancer
 
 var _chat_instance : Control
 var _player_list_instance : Control
 var _authorized_player : Player
 
-var tree_preload = preload("res://scenes/nature/trees/birch_tree_3.tscn")
 var noise : FastNoiseLite = preload('res://world/heightmap/resource_noise.tres')
 var resource_data : Dictionary = {}
 var radius : float = 200.0
-var points : Array = []
 
 func _ready():
 	# Steamwork connections
@@ -145,9 +143,8 @@ func generate_local_resources():
 	for x in range(_authorized_player_position.x-(radius*0.5), _authorized_player_position.x+(radius*0.5)):
 		for z in range(_authorized_player_position.z-(radius*0.5), _authorized_player_position.z+(radius*0.5)):
 			var height = noise.get_noise_2d(x, z) * 100
-			points.append(height)
 			if height > 0.3 && !resource_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
-				var tree = resource_instancer.instantiate_tree()
+				var tree = _resource_instancer.instantiate_resource(height*100)
 				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
 				resource_data[tree.position] = tree
 	

@@ -117,14 +117,16 @@ transform = Transform3D(0.801618, 0.5194, -0.296027, 0.014201, 0.478481, 0.87798
 light_color = Color(0.713726, 0.721569, 0.721569, 1)
 light_energy = 3.0
 light_angular_distance = 0.5
+light_bake_mode = 0
+shadow_bias = 0.5
 shadow_blur = 0.5
-directional_shadow_split_1 = 0.107
+directional_shadow_split_1 = 0.052
 directional_shadow_split_2 = 0.159
 directional_shadow_split_3 = 0.511
 directional_shadow_blend_splits = true
 directional_shadow_fade_start = 0.0
-directional_shadow_max_distance = 85.2
-directional_shadow_pancake_size = 33.0
+directional_shadow_max_distance = 420.0
+directional_shadow_pancake_size = 26.5
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
