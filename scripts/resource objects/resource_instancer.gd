@@ -2,10 +2,10 @@ extends Node3D
 
 #-------------------- Trees ---------------------------#
 var birch_tree = [
-	preload("res://scenes/resourceobjects/nature/trees/birch_tree_1.tscn"),
-	preload("res://scenes/resourceobjects/nature/trees/birch_tree_2.tscn"),
-	preload("res://scenes/resourceobjects/nature/trees/birch_tree_3.tscn"),
-	preload("res://scenes/resourceobjects/nature/trees/birch_tree_4.tscn")
+	preload("res://scenes/resourceobjects/nature/trees/birch_tree_1.tscn")
+	#preload("res://scenes/resourceobjects/nature/trees/birch_tree_2.tscn"),
+	#preload("res://scenes/resourceobjects/nature/trees/birch_tree_3.tscn"),
+	#preload("res://scenes/resourceobjects/nature/trees/birch_tree_4.tscn")
 ]
 var pine_tree = [
 	preload("res://scenes/resourceobjects/nature/trees/pine_tree_1.tscn"),
@@ -29,9 +29,9 @@ var trees = [
 #------------------------------------------------------#
 
 var weights : Dictionary = {
-	birch_tree : 10,
-	pine_tree : 0.1,
-	tall_pine_tree : 1
+	birch_tree : 10
+	#pine_tree : 0.1,
+	#tall_pine_tree : 1
 }
 
 var _is_initialized : bool = false
