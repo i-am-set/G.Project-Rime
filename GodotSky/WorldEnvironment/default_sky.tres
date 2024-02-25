@@ -1,0 +1,105 @@
+[gd_resource type="Sky" load_steps=14 format=3 uid="uid://bq7217qbtqsdc"]
+
+[ext_resource type="Shader" path="res://GodotSky/Shaders/GodotSky.gdshader" id="1_m15bb"]
+[ext_resource type="Texture2D" uid="uid://dnj6ylyuxc6w3" path="res://GodotSky/Textures/scatteringLUT.HDR" id="2_egvtl"]
+[ext_resource type="Texture2D" uid="uid://cnl852air6g7q" path="res://GodotSky/Textures/StaticCloudsAlpha.tga" id="2_ltl7w"]
+[ext_resource type="Texture2D" uid="uid://chk144tfviq2e" path="res://GodotSky/Textures/StaticCloudsXY.tga" id="3_w7nlt"]
+[ext_resource type="Texture2D" uid="uid://bru7upxvlt3kp" path="res://GodotSky/Textures/Stars_Noise.TGA" id="5_d6fjt"]
+[ext_resource type="Texture2D" uid="uid://besoril5mkfd6" path="res://GodotSky/Textures/starmap_8k.jpg" id="5_gw02q"]
+
+[sub_resource type="Gradient" id="Gradient_t43f0"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0.125, 0.95)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bopgb"]
+noise_type = 2
+frequency = 0.021
+fractal_octaves = 4
+fractal_gain = 0.547
+fractal_weighted_strength = 0.58
+cellular_distance_function = 3
+cellular_jitter = 0.7
+cellular_return_type = 3
+domain_warp_enabled = true
+domain_warp_amplitude = 6.0
+domain_warp_frequency = 1.0
+domain_warp_fractal_octaves = 7
+domain_warp_fractal_lacunarity = 5.0
+domain_warp_fractal_gain = 2.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dmhbf"]
+invert = true
+seamless = true
+seamless_blend_skirt = 0.401
+color_ramp = SubResource("Gradient_t43f0")
+noise = SubResource("FastNoiseLite_bopgb")
+
+[sub_resource type="Gradient" id="Gradient_vtmka"]
+interpolation_mode = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w5yig"]
+noise_type = 4
+seed = 34
+frequency = 0.042
+fractal_octaves = 3
+fractal_lacunarity = 1.605
+fractal_gain = 2.397
+fractal_weighted_strength = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lxafx"]
+seamless = true
+seamless_blend_skirt = 0.061
+color_ramp = SubResource("Gradient_vtmka")
+noise = SubResource("FastNoiseLite_w5yig")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s44jw"]
+shader = ExtResource("1_m15bb")
+shader_parameter/baseColor = Color(0.204346, 0.344014, 0.5625, 1)
+shader_parameter/scatterColor = Color(1, 1, 1, 1)
+shader_parameter/scatterColor2 = Color(1, 1, 1, 1)
+shader_parameter/bAnimClouds = false
+shader_parameter/bAnimStars = true
+shader_parameter/cloudType = 1
+shader_parameter/sunRadius = 0.0003
+shader_parameter/sunEdgeBlur = 3600.0
+shader_parameter/sunDiscColor = Color(0.746119, 0.650687, 0.537445, 0.994682)
+shader_parameter/sunGlowColor = Color(1, 0.955033, 0.827864, 1)
+shader_parameter/sunlightColor = null
+shader_parameter/sunGlowIntensity = 0.45
+shader_parameter/moonRadius = 0.0003
+shader_parameter/moonEdgeBlur = 10000.0
+shader_parameter/moonGlowColor = Color(1, 1, 1, 0)
+shader_parameter/moonLightColor = null
+shader_parameter/moonGlowIntensity = 0.8
+shader_parameter/baseCloudColor = Color(1, 1, 1, 1)
+shader_parameter/cloudDensity = 4.25
+shader_parameter/cloudEdge = 0.0
+shader_parameter/cloudCoverage = 0.404
+shader_parameter/cloudDirection = Vector2(1, 1)
+shader_parameter/mgSize = 0.92
+shader_parameter/cloudAlpha = 1.0
+shader_parameter/cloudSpeed = 0.0003
+shader_parameter/absorption = 5.0
+shader_parameter/henyeyGreensteinLevel = 0.69
+shader_parameter/dynamicCloudBrightness = 0.9
+shader_parameter/horizonUVCurve = 0.5
+shader_parameter/horizonFogColor = Color(0.704798, 0.756786, 0.766622, 1)
+shader_parameter/horizonAlpha = 1.0
+shader_parameter/horizonSize = 3.0
+shader_parameter/starColor = Color(0.43, 0.55, 0.91, 1)
+shader_parameter/starBrightness = 0.2
+shader_parameter/twinkleSpeed = 0.025
+shader_parameter/twinkleScale = 4.0
+shader_parameter/starResolution = 1.0
+shader_parameter/starSpeed = 0.002
+shader_parameter/scatteringLUT = ExtResource("2_egvtl")
+shader_parameter/cloudTexture = ExtResource("2_ltl7w")
+shader_parameter/cloudTexture2 = ExtResource("3_w7nlt")
+shader_parameter/cloudNoise = SubResource("NoiseTexture2D_dmhbf")
+shader_parameter/weatherMap = SubResource("NoiseTexture2D_lxafx")
+shader_parameter/starTexture = ExtResource("5_gw02q")
+shader_parameter/starNoise = ExtResource("5_d6fjt")
+
+[resource]
+sky_material = SubResource("ShaderMaterial_s44jw")
+process_mode = 3

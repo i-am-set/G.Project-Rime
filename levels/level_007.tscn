@@ -1,16 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://hwcfodjh80hl"]
+[gd_scene load_steps=15 format=3 uid="uid://hwcfodjh80hl"]
 
-[ext_resource type="PackedScene" uid="uid://btv0a42cgxt8g" path="res://levels/WE_test.tscn" id="1_c8imp"]
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_k660m"]
+[ext_resource type="PackedScene" uid="uid://1gfropwtqfbn" path="res://GodotSky/GodotSky.tscn" id="2_ji8xb"]
 [ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="2_wlrhx"]
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_26von"]
 [ext_resource type="PackedScene" uid="uid://c7xublrnupds4" path="res://world/collisionmap/collisionmap.tscn" id="5_yn4mj"]
 [ext_resource type="PackedScene" uid="uid://b11lm75hfbnky" path="res://world/clipmap/clipmap.tscn" id="6_lyg2o"]
 [ext_resource type="PackedScene" uid="uid://bm3se7nbvev48" path="res://world/clipmap/clipmap_partition.tscn" id="7_bw2i8"]
 [ext_resource type="PackedScene" uid="uid://diatixhqy12pa" path="res://scenes/resource_instancer.tscn" id="8_qnyvl"]
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_uvt27"]
-auto_exposure_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_gd0ev"]
 material = ExtResource("2_wlrhx")
@@ -107,21 +104,8 @@ buffer = PackedFloat32Array(-1.91705, 0, 1.11219, -11.352, 0, 2.21631, 0, 0, -1.
 [node name="Game" type="Node3D"]
 script = ExtResource("1_k660m")
 
-[node name="WorldEnvironment" parent="." instance=ExtResource("1_c8imp")]
-camera_attributes = SubResource("CameraAttributesPractical_uvt27")
-
-[node name="DirectionalLight3D" parent="WorldEnvironment" index="0"]
-transform = Transform3D(0.801618, 0.5194, -0.296027, 0.014201, 0.478481, 0.877983, 0.597667, -0.708011, 0.376183, 0, 2.38245, 0)
-light_energy = 3.0
-light_bake_mode = 0
-shadow_blur = 1.55
-directional_shadow_split_1 = 0.172
-directional_shadow_split_2 = 0.305
-directional_shadow_split_3 = 0.756
-directional_shadow_blend_splits = true
-directional_shadow_fade_start = 1.0
-directional_shadow_max_distance = 74.2
-directional_shadow_pancake_size = 0.1
+[node name="GodotSky" parent="." instance=ExtResource("2_ji8xb")]
+timeOfDay = 1281.23
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
@@ -145,5 +129,3 @@ multimesh = SubResource("MultiMesh_g3xta")
 visible = false
 
 [node name="ResourceInstancer" parent="." instance=ExtResource("8_qnyvl")]
-
-[editable path="WorldEnvironment"]

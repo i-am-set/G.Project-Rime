@@ -1,0 +1,19 @@
+[gd_resource type="Environment" load_steps=2 format=3 uid="uid://wwq6f40kybqq"]
+
+[ext_resource type="Sky" uid="uid://bq7217qbtqsdc" path="res://GodotSky/WorldEnvironment/default_sky.tres" id="1_o86xx"]
+
+[resource]
+background_mode = 2
+sky = ExtResource("1_o86xx")
+ambient_light_source = 3
+ambient_light_sky_contribution = 0.5
+ambient_light_energy = 8.93
+reflected_light_source = 2
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_min_cell_size = 1.95313
+fog_light_energy = 0.02
+fog_density = 0.0046
+volumetric_fog_enabled = true
+volumetric_fog_density = -0.004608
+volumetric_fog_temporal_reprojection_enabled = false

@@ -71,7 +71,9 @@ func instantiate_resource(height_seed : int) -> Node3D:
 func tree_parameters(tree) -> Node3D:
 	var first_child = tree.get_child(0)
 	var first_child_material = first_child.material_override
+	var LOD_range = Global.RENDER_DISTANCE*6
 	first_child_material = first_child_material.duplicate()
+	first_child.lod_bias = 1
 	var tree_shader = first_child_material
 	for child in tree.get_children():
 		child.lod_bias = 0.25
