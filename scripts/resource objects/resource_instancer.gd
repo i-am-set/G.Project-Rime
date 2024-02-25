@@ -75,9 +75,7 @@ func tree_parameters(tree) -> Node3D:
 	first_child_material = first_child_material.duplicate()
 	first_child.lod_bias = 1
 	var tree_shader = first_child_material
-	for child in tree.get_children():
-		child.lod_bias = 0.25
-		child.show()
+	first_child.lod_bias = 0.25
 	tree_shader.set_shader_parameter("tree_base_height", _rng_base.randf_range(0.1, 1.2))
 	tree_shader.set_shader_parameter("tree_base_darkness", _rng_base.randf_range(0.1, 0.2))
 	tree_shader.set_shader_parameter("uv1_offset", Vector3(_rng_base.randf_range(1, 20),1 ,1))

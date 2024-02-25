@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://t603geqlbkvr"
+path="res://.godot/imported/tree_roots.obj-f9f2958219b8478ea5fb34fb6eb7729d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tree_roots.obj-f9f2958219b8478ea5fb34fb6eb7729d.mesh"]
+
+source_file="res://meshes/del_tree_roots/tree_roots.obj"
+dest_files=["res://.godot/imported/tree_roots.obj-f9f2958219b8478ea5fb34fb6eb7729d.mesh", "res://.godot/imported/tree_roots.obj-f9f2958219b8478ea5fb34fb6eb7729d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

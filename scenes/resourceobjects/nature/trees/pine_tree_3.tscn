@@ -1,59 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://c1dlr7f6rsat0"]
+[gd_scene load_steps=4 format=3 uid="uid://c1dlr7f6rsat0"]
 
 [ext_resource type="PackedScene" uid="uid://c8s1g3kcelrwn" path="res://meshes/nature/trees/pine_model_3.glb" id="1_wffph"]
-[ext_resource type="Shader" path="res://shaders/tree_shader.gdshader" id="2_nbcs1"]
-[ext_resource type="Texture2D" uid="uid://d1c23vhs2sfsg" path="res://textures/nature/birch/Birch_1K-JPG_Color.jpg" id="3_uw0vi"]
-[ext_resource type="Texture2D" uid="uid://dg77ws0megj1l" path="res://textures/nature/birch/Birch_1K-JPG_NormalGL.jpg" id="4_ll51d"]
-[ext_resource type="Texture2D" uid="uid://dj277dkl1rpo7" path="res://textures/nature/birch/Birch_1K-JPG_Roughness.jpg" id="5_q33pn"]
-[ext_resource type="Shader" path="res://shaders/leaf_shader.gdshader" id="6_u87in"]
-[ext_resource type="Texture2D" uid="uid://vumnicjktnyy" path="res://meshes/nature/pinetree_branch_hd.png" id="7_sg1tl"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_tfb5t"]
-frequency = 0.0055
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3pdg4"]
-noise = SubResource("FastNoiseLite_tfb5t")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mdqd0"]
-render_priority = 0
-shader = ExtResource("2_nbcs1")
-shader_parameter/albedo = Color(0.431373, 0.431373, 0.431373, 1)
-shader_parameter/tree_base_height = 0.115
-shader_parameter/tree_base_darkness = 16.82
-shader_parameter/roughness = 1.0
-shader_parameter/normal_scale = null
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = null
-shader_parameter/sway_strength = 0.05
-shader_parameter/sway_phase_len = 8.0
-shader_parameter/texture_albedo = ExtResource("3_uw0vi")
-shader_parameter/tree_base_texture = ExtResource("3_uw0vi")
-shader_parameter/tree_base_noise_texture = SubResource("NoiseTexture2D_3pdg4")
-shader_parameter/texture_roughness = ExtResource("5_q33pn")
-shader_parameter/texture_normal = ExtResource("4_ll51d")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wvdyf"]
-render_priority = 0
-shader = ExtResource("6_u87in")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/roughness = 1.0
-shader_parameter/uv1_scale = Vector3(1, 1, 1)
-shader_parameter/uv1_offset = Vector3(0, 0, 0)
-shader_parameter/uv2_scale = Vector3(1, 1, 1)
-shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/sway_strength = 0.05
-shader_parameter/sway_phase_len = 8.0
-shader_parameter/texture_albedo = ExtResource("7_sg1tl")
+[ext_resource type="Material" uid="uid://c2nkb05uya11k" path="res://materials/nature/pine_tree_material.tres" id="2_hftrm"]
+[ext_resource type="Material" path="res://materials/nature/pine_leaves_material.tres" id="3_5taxs"]
 
 [node name="pine_model_3" instance=ExtResource("1_wffph")]
 
-[node name="!tree" parent="." index="0"]
-visible = false
-material_override = SubResource("ShaderMaterial_mdqd0")
-lod_bias = 0.1
+[node name="tree_002" parent="." index="0"]
+material_override = ExtResource("2_hftrm")
 
 [node name="leaves" parent="." index="1"]
-visible = false
-material_override = SubResource("ShaderMaterial_wvdyf")
+material_override = ExtResource("3_5taxs")
 cast_shadow = 0
 lod_bias = 0.1

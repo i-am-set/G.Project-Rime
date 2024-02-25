@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bsb1a3wit1va8"]
+
+[ext_resource type="Shader" path="res://shaders/leaf_shader.gdshader" id="1_673j7"]
+[ext_resource type="Texture2D" uid="uid://vumnicjktnyy" path="res://meshes/nature/pinetree_branch_hd.png" id="2_h2nje"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_673j7")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/roughness = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/sway_strength = 0.05
+shader_parameter/sway_phase_len = 8.0
+shader_parameter/texture_albedo = ExtResource("2_h2nje")
