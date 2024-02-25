@@ -42,7 +42,9 @@ shader_parameter/texture_albedo = ExtResource("8_8je02")
 [node name="tall_pine_model_2" instance=ExtResource("1_vdml2")]
 
 [node name="tree_001" parent="." index="0"]
+visible = false
 material_override = SubResource("ShaderMaterial_ebans")
 
 [node name="leaves" parent="." index="1"]
+visible = false
 material_override = SubResource("ShaderMaterial_1wm8x")

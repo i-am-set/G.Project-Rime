@@ -56,7 +56,6 @@ func instantiate_resource(height_seed : int) -> Node3D:
 			var rand_resource = _rng_base.randi_range(0, resource.size()-1)
 			var resource_instance = resource[rand_resource].instantiate()
 			var resource_scale = _rng_base.randf_range(0.8, 2.0)
-		
 			resource_instance.scale = Vector3(resource_scale, resource_scale, resource_scale)
 			resource_instance.rotation = Vector3(deg_to_rad(_rng_base.randi_range(-2, 2)), deg_to_rad(_rng_base.randi_range(0, 359)), deg_to_rad(_rng_base.randi_range(-2, 2)))
 			
@@ -70,9 +69,13 @@ func instantiate_resource(height_seed : int) -> Node3D:
 	return null
 
 func tree_parameters(tree) -> Node3D:
-	tree.get_child(0).material_override = tree.get_child(0).material_override.duplicate()
-	var tree_shader = tree.get_child(0).material_override
-	tree.get_child(0).lod_bias = 0.25
+	var first_child = tree.get_child(0)
+	var first_child_material = first_child.material_override
+	first_child_material = first_child_material.duplicate()
+	var tree_shader = first_child_material
+	for child in tree.get_children():
+		child.lod_bias = 0.25
+		child.show()
 	tree_shader.set_shader_parameter("tree_base_height", _rng_base.randf_range(0.1, 1.2))
 	tree_shader.set_shader_parameter("tree_base_darkness", _rng_base.randf_range(0.1, 0.2))
 	tree_shader.set_shader_parameter("uv1_offset", Vector3(_rng_base.randf_range(1, 20),1 ,1))

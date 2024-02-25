@@ -128,11 +128,11 @@ common/physics_ticks_per_second=40
 
 [rendering]
 
+lights_and_shadows/directional_shadow/size=2048
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
 lights_and_shadows/directional_shadow/16_bits=false
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=5
 reflections/reflection_atlas/reflection_size=1024
-textures/default_filters/anisotropic_filtering_level=4
 textures/default_filters/texture_mipmap_bias=-1.0
 anti_aliasing/quality/msaa_3d=1
 anti_aliasing/quality/screen_space_aa=1
@@ -169,9 +169,9 @@ sway_speed={
 }
 fade_distance_max={
 "type": "float",
-"value": 75.0
+"value": 90.0
 }
 fade_distance_min={
 "type": "float",
-"value": 95.0
+"value": 75.0
 }

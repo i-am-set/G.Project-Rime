@@ -14,7 +14,8 @@ var _authorized_player : Player
 
 var noise : FastNoiseLite = preload('res://world/heightmap/resource_noise.tres')
 var resource_data : Dictionary = {}
-var radius : float = 200.0
+var is_generating_resources : bool = false
+var generation_cycle : int
 
 func _ready():
 	# Steamwork connections
@@ -76,7 +77,9 @@ func _physics_process(delta):
 	# Do stuff every 40 global ticks
 	if Global.GLOBAL_TICK % 40 == 0:
 		get_lobby_members()
-		generate_local_resources()
+		if !is_generating_resources:
+			is_generating_resources = true
+			generate_local_resources()
 
 
 func _input(event):
@@ -139,23 +142,33 @@ func attach_player_to_world(player_instance: Node3D):
 
 func generate_local_resources():
 	var _authorized_player_position = _authorized_player.position
-	
-	for x in range(_authorized_player_position.x-(radius*0.5), _authorized_player_position.x+(radius*0.5)):
-		for z in range(_authorized_player_position.z-(radius*0.5), _authorized_player_position.z+(radius*0.5)):
+	var _authorized_player_resource_spawn_radius = _authorized_player._resource_spawn_radius
+	var _authorized_player_resource_spawn_radius_half = _authorized_player_resource_spawn_radius*0.5
+
+	for x in range(_authorized_player_position.x-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.x+(_authorized_player_resource_spawn_radius_half)):
+		for z in range(_authorized_player_position.z-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.z+(_authorized_player_resource_spawn_radius_half)):
 			var height = noise.get_noise_2d(x, z) * 100
 			if height > 0.3 && !resource_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
 				var tree = _resource_instancer.instantiate_resource(height*100)
 				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
 				resource_data[tree.position] = tree
+				generation_cycle += 1
+				if generation_cycle >= 5:
+					generation_cycle = 0
+					await get_tree().process_frame
 	
 	for resource_location in resource_data:
 		if resource_data[resource_location] == null:
 			continue
 		var distance = Vector2(resource_location.x, resource_location.z).distance_to(Vector2(_authorized_player_position.x, _authorized_player_position.z))
-		if distance < radius and resource_data[resource_location].get_parent() == null:
+		if distance < _authorized_player_resource_spawn_radius and resource_data[resource_location].get_parent() == null:
 			add_child(resource_data[resource_location])
-		elif distance >= radius and resource_data[resource_location].get_parent() != null:
+		elif distance >= _authorized_player_resource_spawn_radius and resource_data[resource_location].get_parent() != null:
 			remove_child(resource_data[resource_location])
+		
+	
+	is_generating_resources = false
+
 
 func replenish_resources():
 	var tempNode

@@ -36,7 +36,6 @@ shader_parameter/texture_normal = ExtResource("4_ll51d")
 render_priority = 0
 shader = ExtResource("6_u87in")
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/point_size = 1.0
 shader_parameter/roughness = 1.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
@@ -49,10 +48,12 @@ shader_parameter/texture_albedo = ExtResource("7_sg1tl")
 [node name="pine_model_3" instance=ExtResource("1_wffph")]
 
 [node name="!tree" parent="." index="0"]
+visible = false
 material_override = SubResource("ShaderMaterial_mdqd0")
 lod_bias = 0.1
 
 [node name="leaves" parent="." index="1"]
+visible = false
 material_override = SubResource("ShaderMaterial_wvdyf")
 cast_shadow = 0
 lod_bias = 0.1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://dmoiaguo7sf33"]
 
-[ext_resource type="PackedScene" uid="uid://qg71sy3deqho" path="res://meshes/nature/trees/tall_pine_model_1.glb" id="1_q5a18"]
+[ext_resource type="PackedScene" uid="uid://j2jrrwu6hj5r" path="res://meshes/nature/trees/tall_pine_model_1.glb" id="1_q5a18"]
 [ext_resource type="Shader" path="res://shaders/tree_shader.gdshader" id="2_nmgv1"]
 [ext_resource type="Texture2D" uid="uid://dy66mgbs1v1ca" path="res://textures/nature/pine/Pine_1K-JPG_Color.jpg" id="3_lr4oe"]
 [ext_resource type="Texture2D" uid="uid://q41258iqao71" path="res://textures/nature/pine/Pine_1K-JPG_NormalGL.jpg" id="4_ojrbw"]
@@ -42,9 +42,11 @@ shader_parameter/texture_albedo = ExtResource("7_ic7m0")
 [node name="tall_pine_model_1" instance=ExtResource("1_q5a18")]
 
 [node name="tree_001" parent="." index="0"]
+visible = false
 material_override = SubResource("ShaderMaterial_k8kto")
 
 [node name="leaves" parent="." index="1"]
+visible = false
 material_override = SubResource("ShaderMaterial_8alec")
 cast_shadow = 0
 lod_bias = 0.1

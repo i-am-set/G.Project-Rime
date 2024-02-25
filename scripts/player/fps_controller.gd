@@ -26,6 +26,7 @@ var _camera_rotation : Vector3
 var _cached_position : Vector3
 var _cached_rotation : Vector3
 var _steam_ID : int
+var _resource_spawn_radius : int
 
 var _current_rotation : float
 
@@ -88,6 +89,8 @@ func _rotate_camera(sens_mod: float = 1.0) -> void:
 func _ready():
 	capture_mouse()
 	
+	set_settings()
+	
 	Global.player = self
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -98,6 +101,12 @@ func _ready():
 	
 	if CAMERA_CONTROLLER != null:
 		CAMERA_CONTROLLER.fov = 75.0
+
+func set_settings():
+	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
+	RenderingServer.global_shader_parameter_set("fade_distance_min", Global.RENDER_DISTANCE*9)
+	CAMERA_CONTROLLER.far = Global.RENDER_DISTANCE*12
+	_resource_spawn_radius = (Global.RENDER_DISTANCE*24)+20
 
 func _physics_process(delta):
 	if _is_authorized_user:

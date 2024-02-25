@@ -6,5 +6,6 @@
 [node name="birch_tree_2" instance=ExtResource("1_actnr")]
 
 [node name="tree_001" parent="." index="0"]
+visible = false
 material_override = ExtResource("2_x4ynt")
 lod_bias = 0.1
