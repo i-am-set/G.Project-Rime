@@ -1,7 +1,4 @@
-res://world/clipmap/clipmap_partition.tscn
-res://world/heightmap/resource_noise.tres
-res://GodotSky/WorldEnvironment/default_sky.tres
-res://GodotSky/WorldEnvironment/default_environment.tres
+res://GodotSky/GodotSky.tscn
 res://GodotSky/Presets/default/baseCloudColor.tres
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/horizonFogColor.tres
@@ -11,6 +8,9 @@ res://GodotSky/Presets/default/overcastCloudColor.tres
 res://GodotSky/Presets/default/sunLight.tres
 res://GodotSky/Presets/default/sunDiscColor.tres
 res://GodotSky/Presets/default/sunGlowColor.tres
+res://world/heightmap/resource_noise.tres
+res://GodotSky/WorldEnvironment/default_sky.tres
+res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/grid.tres
 res://world/clipmap/clipmap.gdshader
 res://materials/nature/clipmap_snow_material.tres
@@ -18,10 +18,10 @@ res://shaders/tree_shader.gdshader
 res://materials/nature/birch_tree_material.tres
 res://materials/nature/pine_tree_material.tres
 res://shaders/leaf_shader.gdshader
-res://levels/level_007.tscn
+res://GodotSky/Scripts/GodotSky.gd
 res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
+res://levels/level_007.tscn
 res://scenes/resource_instancer.tscn
-res://GodotSky/GodotSky.tscn
-res://GodotSky/Scripts/GodotSky.gd
+res://environment/WE_test.tres

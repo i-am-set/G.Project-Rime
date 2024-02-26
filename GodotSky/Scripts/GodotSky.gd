@@ -83,7 +83,7 @@ func updateSky():
 			skyMaterial.set_shader_parameter("cloudType",0)
 		"2D Dynamic":
 			skyMaterial.set_shader_parameter("cloudType",1)
-			self.environment.volumetric_fog_density = remap(cloudCoverage,0.5,1.0,0.0,0.024)
+			#self.environment.volumetric_fog_density = remap(cloudCoverage,0.5,1.0,0.0,0.024)
 	
 	skyMaterial.set_shader_parameter("cloudDensity",skyPreset.cloudDensity)
 	skyMaterial.set_shader_parameter("mgSize",skyPreset.cloudGlow)
