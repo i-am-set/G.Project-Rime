@@ -43,16 +43,16 @@ func updateLights():
 	moonPosition = moonRoot.global_position.y / 2.0 + 0.5
 	sun.light_color = skyPreset.sunLightColor.gradient.sample(sunPosition)
 	
-	sun.shadow_enabled = sunShadow
+	#sun.shadow_enabled = sunShadow
 	moon.light_color = skyPreset.moonLightColor.gradient.sample(sunPosition)
 	
-	moon.shadow_enabled = moonShadow
+	#moon.shadow_enabled = moonShadow
 	match cloudType:
 		"Static":
 			sun.light_energy = clamp(skyPreset.sunLightIntensity.sample(sunPosition),0.0,1.0)
 			moon.light_energy = clamp(skyPreset.moonLightIntensity.sample(sunPosition),0.0,1.0)
 		"2D Dynamic":
-			sun.light_energy = clamp(skyPreset.sunLightIntensity.sample(sunPosition) * (1.0 - (cloudCoverage + 0.2)),0.0,1.0)
+			sun.light_energy = 10*clamp(skyPreset.sunLightIntensity.sample(sunPosition) * (1.0 - (cloudCoverage + 0.2)),0.0,1.0)
 			moon.light_energy = clamp(skyPreset.moonLightIntensity.sample(sunPosition)  * (1.0 - (cloudCoverage + 0.2)),0.0,1.0)
 
 # Update rotation of sun and moon
