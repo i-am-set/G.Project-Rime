@@ -1,4 +1,4 @@
-res://levels/level_007.tscn
+res://GodotSky/GodotSky.tscn
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
 res://GodotSky/Presets/default/overcastCloudColor.tres
@@ -8,6 +8,7 @@ res://GodotSky/Presets/default/sunDiscColor.tres
 res://GodotSky/Presets/default/sunGlowColor.tres
 res://GodotSky/Presets/default/moonLight.tres
 res://GodotSky/Presets/default/moonGlowColor.tres
+res://GodotSky/Presets/sky_default.tres
 res://world/heightmap/resource_noise.tres
 res://shaders/tree_shader.gdshader
 res://materials/nature/birch_tree_material.tres
@@ -15,14 +16,18 @@ res://materials/nature/pine_tree_material.tres
 res://shaders/leaf_shader.gdshader
 res://world/clipmap/clipmap.gdshader
 res://materials/nature/clipmap_snow_material.tres
+res://GodotSky/Shaders/GodotSky.gdshader
 res://GodotSky/WorldEnvironment/default_sky.tres
 res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/grid.tres
 res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
+res://levels/level_007.tscn
 res://scenes/resource_instancer.tscn
-res://GodotSky/GodotSky.tscn
-res://GodotSky/Presets/sky_default.tres
-res://GodotSky/Shaders/GodotSky.gdshader
-res://GodotSky/Scripts/GodotSky.gd
+res://scenes/resourceobjects/nature/trees/birch_tree_1.tscn
+res://scenes/resourceobjects/nature/trees/pine_tree_1.tscn
+res://scripts/resource objects/resource_instancer.gd
+res://scenes/resourceobjects/nature/trees/tall_pine_tree_1.tscn
+res://scripts/game/game_controller.gd
+res://world/clipmap/clipmap_partition.tscn

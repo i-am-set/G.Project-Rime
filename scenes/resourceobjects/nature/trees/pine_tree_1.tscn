@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://pe43ik36sqp5"]
 
 [ext_resource type="PackedScene" uid="uid://bnhftemlfod2x" path="res://meshes/nature/trees/pine_model_1.glb" id="1_av73n"]
-[ext_resource type="Material" path="res://materials/nature/pine_tree_material.tres" id="2_ibpxb"]
-[ext_resource type="Material" path="res://materials/nature/pine_leaves_material.tres" id="3_l8di1"]
+[ext_resource type="Material" uid="uid://c2nkb05uya11k" path="res://materials/nature/pine_tree_material.tres" id="2_ibpxb"]
+[ext_resource type="Material" uid="uid://bsb1a3wit1va8" path="res://materials/nature/pine_leaves_material.tres" id="3_l8di1"]
 
 [node name="pine_model_1" instance=ExtResource("1_av73n")]
 

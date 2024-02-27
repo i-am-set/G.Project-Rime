@@ -148,7 +148,7 @@ func generate_local_resources():
 	for x in range(_authorized_player_position.x-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.x+(_authorized_player_resource_spawn_radius_half)):
 		for z in range(_authorized_player_position.z-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.z+(_authorized_player_resource_spawn_radius_half)):
 			var height = noise.get_noise_2d(x, z) * 100
-			if height > 0.3 && !resource_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
+			if height > 0.4 && !resource_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
 				var tree = _resource_instancer.instantiate_resource(height*100)
 				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
 				resource_data[tree.position] = tree

@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "a0JN4H+qjMk/iL/an0sX3EtZ8Slfjq+g5OzOCpicYydvj4nJ7v3Ot/2rBc+TvOmJes6O60xvhFT+4tS63PfsrA==",
+  "dgSpecHash": "LN05WBcy7UdEzmyyaIxL5j/IVeu7wcVf/xFK4DNyhRGNCQ+4CXX9V/Lpfvrd94dqyLHLOC/b8mHHz80W6kcGrg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+  "projectFilePath": "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\sethg\\.nuget\\packages\\godot.sourcegenerators\\4.2.1\\godot.sourcegenerators.4.2.1.nupkg.sha512",
-    "C:\\Users\\sethg\\.nuget\\packages\\godotsharp\\4.2.1\\godotsharp.4.2.1.nupkg.sha512",
-    "C:\\Users\\sethg\\.nuget\\packages\\godotsharpeditor\\4.2.1\\godotsharpeditor.4.2.1.nupkg.sha512",
-    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.27\\microsoft.netcore.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.27\\microsoft.windowsdesktop.app.ref.6.0.27.nupkg.sha512",
-    "C:\\Users\\sethg\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.27\\microsoft.aspnetcore.app.ref.6.0.27.nupkg.sha512"
+    "C:\\Users\\SethLaptop\\.nuget\\packages\\godot.sourcegenerators\\4.2.1\\godot.sourcegenerators.4.2.1.nupkg.sha512",
+    "C:\\Users\\SethLaptop\\.nuget\\packages\\godotsharp\\4.2.1\\godotsharp.4.2.1.nupkg.sha512",
+    "C:\\Users\\SethLaptop\\.nuget\\packages\\godotsharpeditor\\4.2.1\\godotsharpeditor.4.2.1.nupkg.sha512",
+    "C:\\Users\\SethLaptop\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.23\\microsoft.netcore.app.ref.6.0.23.nupkg.sha512",
+    "C:\\Users\\SethLaptop\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.23\\microsoft.windowsdesktop.app.ref.6.0.23.nupkg.sha512",
+    "C:\\Users\\SethLaptop\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.23\\microsoft.aspnetcore.app.ref.6.0.23.nupkg.sha512"
   ],
   "logs": []
 }
