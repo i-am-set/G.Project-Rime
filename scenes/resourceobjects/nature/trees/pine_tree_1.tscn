@@ -11,4 +11,3 @@ material_override = ExtResource("2_ibpxb")
 
 [node name="leaves" parent="." index="1"]
 material_override = ExtResource("3_l8di1")
-cast_shadow = 0

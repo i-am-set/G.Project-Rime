@@ -1,8 +1,9 @@
-res://materials/nature
-C:/Users/SethLaptop/wkspaces/!Builds
-C:/Users/SethLaptop/wkspaces
 res://scenes/resourceobjects/nature/trees
 res://shaders
+res://scenes/resourceobjects/nature/clutter
+res://materials/nature
+C:/Program Files (x86)/Godot_v4.2.1-stable_mono_win64
+C:/Users/sethg/AppData/Local/Programs/Microsoft VS Code
 res://meshes/nature
 res://world/clipmap
 res://materials

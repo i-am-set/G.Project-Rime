@@ -26,9 +26,10 @@ C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Proj
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.AssemblyInfoInputs.cache
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.AssemblyInfo.cs
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.csproj.CoreCompileInputs.cache
-C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.csproj.CopyComplete
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.dll
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\refint\Godot FPS Project.dll
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.pdb
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.genruntimeconfig.cache
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\ref\Godot FPS Project.dll
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FPS Project.sourcelink.json
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\Debug\Godot FP.981EA926.Up2Date

@@ -1,4 +1,5 @@
 extends Node
+class_name _Global
 
 var debug # Reference to DebugPanel for debug property assignment
 var player # Reference to PlayerController
@@ -81,3 +82,6 @@ func repair_globals():
 		MOUSE_CAPTURED = true
 	elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 		MOUSE_CAPTURED = false
+
+func get_render_distance() -> int:
+	return RENDER_DISTANCE

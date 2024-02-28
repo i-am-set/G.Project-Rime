@@ -64,7 +64,7 @@ func _ready():
 		_authorized_player = player_instance
 		attach_player_to_world(player_instance)
 		add_child(player_instance)
-		player_instance.global_transform.origin = Vector3(5, 10, 0)
+		player_instance.global_transform.origin = Vector3(5, 20, 0)
 		print("self created")
 	
 	noise.seed = Global.WORLD_SEED
@@ -150,6 +150,7 @@ func generate_local_resources():
 			var height = noise.get_noise_2d(x, z) * 100
 			if height > 0.4 && !resource_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
 				var tree = _resource_instancer.instantiate_resource(height*100)
+				#var tree = _resource_instancer.InstantiateResource(height*100)
 				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
 				resource_data[tree.position] = tree
 				generation_cycle += 1
@@ -165,7 +166,10 @@ func generate_local_resources():
 			add_child(resource_data[resource_location])
 		elif distance >= _authorized_player_resource_spawn_radius and resource_data[resource_location].get_parent() != null:
 			remove_child(resource_data[resource_location])
-		
+		generation_cycle += 1
+		if generation_cycle >= 5:
+			generation_cycle = 0
+			await get_tree().process_frame
 	
 	is_generating_resources = false
 

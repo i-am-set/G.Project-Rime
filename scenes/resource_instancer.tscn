@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://diatixhqy12pa"]
 
-[ext_resource type="Script" path="res://scripts/resource objects/resource_instancer.gd" id="1_kdcsx"]
+[ext_resource type="Script" path="res://scripts/resource_objects/resource_instancer.gd" id="1_pxper"]
 
 [node name="ResourceInstancer" type="Node3D"]
-script = ExtResource("1_kdcsx")
+script = ExtResource("1_pxper")

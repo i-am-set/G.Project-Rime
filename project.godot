@@ -125,10 +125,11 @@ mouse_click={
 [physics]
 
 common/physics_ticks_per_second=40
+3d/physics_engine="JoltPhysics3D"
 
 [rendering]
 
-lights_and_shadows/directional_shadow/size=2048
+lights_and_shadows/directional_shadow/size=8192
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 reflections/reflection_atlas/reflection_size=1024
@@ -148,7 +149,7 @@ clipmap_position={
 }
 amplitude={
 "type": "float",
-"value": 8.0
+"value": 16.0
 }
 lod_step={
 "type": "float",
@@ -156,11 +157,11 @@ lod_step={
 }
 normalmap={
 "type": "sampler2D",
-"value": "res://Snow010A_1K-PNG_NormalGL.png"
+"value": "res://textures/nature/snow/Snow010A_1K-JPG_NormalDX.jpg"
 }
 heightmap={
 "type": "sampler2D",
-"value": "res://world/heightmap/heightmap.png"
+"value": "res://world/heightmap/noiseTexture2.png"
 }
 sway_speed={
 "type": "float",
@@ -173,4 +174,8 @@ fade_distance_max={
 fade_distance_min={
 "type": "float",
 "value": 75.0
+}
+amplitude_mask_heightmap={
+"type": "sampler2D",
+"value": "res://world/heightmap/noiseTexture2.png"
 }

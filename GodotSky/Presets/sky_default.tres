@@ -16,13 +16,13 @@
 [resource]
 script = ExtResource("7_uf1wl")
 sunRadius = 0.0003
-sunEdgeBlur = 3600.0
+sunEdgeBlur = 2450.0
 sunLightIntensity = ExtResource("11_lhpra")
 sunGlowIntensity = 0.45
 moonRadius = 0.0003
 moonEdgeBlur = 10000.0
 moonLightIntensity = ExtResource("6_c4cjh")
-moonGlowIntensity = 0.8
+moonGlowIntensity = 0.0
 horizonSize = 3.0
 horizonAlpha = 1.0
 cloudSpeed = 0.0003
@@ -32,7 +32,7 @@ cloudGlow = 0.92
 cloudLightAbsorption = 5.0
 cloudBrightness = 0.9
 cloudUvCurvature = 0.5
-cloudEdge = 0.0
+cloudEdge = 0.5
 anisotropy = 0.69
 starColor = Color(0.43, 0.55, 0.91, 1)
 starBrightness = 0.2

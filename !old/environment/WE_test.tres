@@ -1,0 +1,29 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://dsay4gdr8k6ur"]
+
+[ext_resource type="Texture2D" uid="uid://b1jvh1ehiaebt" path="res://textures/industrial_sunset_puresky_4k.hdr" id="1_17rwc"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_cmrwf"]
+panorama = ExtResource("1_17rwc")
+
+[sub_resource type="Sky" id="Sky_0poj2"]
+sky_material = SubResource("PanoramaSkyMaterial_cmrwf")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_0poj2")
+ambient_light_source = 3
+tonemap_mode = 2
+tonemap_exposure = 0.32
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_cascades = 3
+sdfgi_min_cell_size = 0.798633
+sdfgi_cascade0_distance = 51.1125
+sdfgi_max_distance = 408.9
+glow_enabled = true
+glow_strength = 1.25
+glow_blend_mode = 0
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.721569, 0.870588, 0.94902, 1)
+volumetric_fog_ambient_inject = 1.45

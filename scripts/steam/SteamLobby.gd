@@ -136,14 +136,14 @@ func leave_lobby():
 		Global.LOBBY_MEMBERS.clear()
 
 
-func generate_height_map(seed : int) -> NoiseTexture2D:
+func generate_height_map(seed : int, frequency : float) -> NoiseTexture2D:
 	var texture = NoiseTexture2D.new()
 	var fastNoiseLite = FastNoiseLite.new()
 	texture.width = 512
 	texture.height = 512
 	texture.seamless = true
 	fastNoiseLite.seed = seed
-	fastNoiseLite.frequency = 0.0075
+	fastNoiseLite.frequency = frequency
 	fastNoiseLite.fractal_octaves = 5
 	texture.noise = fastNoiseLite
 	
@@ -151,10 +151,11 @@ func generate_height_map(seed : int) -> NoiseTexture2D:
 
 
 func initialize_game(seed):
-	var texture = generate_height_map(seed)
+	var texture = generate_height_map(seed, 0.0075)
+	var textureAmp = generate_height_map(seed, 0.0050)
 	# Cement changes
 	Global.WORLD_SEED = seed
-	Heightmap.set_height_map(texture)
+	Heightmap.set_height_map(texture, textureAmp)
 	# Await processing
 	await get_tree().process_frame
 
@@ -503,4 +504,4 @@ func process_data(packet_data : Dictionary):
 		if packet_data["message"] == "start_game":
 			await initialize_game(int(Steam.getLobbyData(Global.LOBBY_ID, "world_seed")))
 			Steam.setLobbyData(Global.LOBBY_ID, "is_started", "true")
-			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
+			await get_tree().change_scene_to_file("res://scenes/level_007.tscn")

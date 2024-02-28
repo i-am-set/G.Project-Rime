@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c2ph3gmv8qdh2" path="res://meshes/nature/trees/pine_model_4.glb" id="1_syohq"]
 [ext_resource type="Material" uid="uid://c2nkb05uya11k" path="res://materials/nature/pine_tree_material.tres" id="2_llhs3"]
-[ext_resource type="Material" path="res://materials/nature/pine_leaves_material.tres" id="3_83hca"]
+[ext_resource type="Material" uid="uid://bsb1a3wit1va8" path="res://materials/nature/pine_leaves_material.tres" id="3_83hca"]
 
 [node name="pine_model_4" instance=ExtResource("1_syohq")]
 
@@ -11,5 +11,4 @@ material_override = ExtResource("2_llhs3")
 
 [node name="leaves" parent="." index="1"]
 material_override = ExtResource("3_83hca")
-cast_shadow = 0
 lod_bias = 0.1

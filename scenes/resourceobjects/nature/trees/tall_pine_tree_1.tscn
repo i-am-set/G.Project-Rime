@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://j2jrrwu6hj5r" path="res://meshes/nature/trees/tall_pine_model_1.glb" id="1_q5a18"]
 [ext_resource type="Material" uid="uid://bnywi5e0vvxx6" path="res://materials/nature/tall_pine_tree_material.tres" id="2_88rgg"]
-[ext_resource type="Material" uid="uid://bsb1a3wit1va8" path="res://materials/nature/pine_leaves_material.tres" id="3_swjsu"]
+[ext_resource type="Material" uid="uid://buxmxjdtln8n" path="res://materials/nature/tall_pine_leaves_material.tres" id="3_c7c0y"]
 
 [node name="tall_pine_model_1" instance=ExtResource("1_q5a18")]
 
@@ -10,6 +10,5 @@
 material_override = ExtResource("2_88rgg")
 
 [node name="leaves" parent="." index="1"]
-material_override = ExtResource("3_swjsu")
-cast_shadow = 0
+material_override = ExtResource("3_c7c0y")
 lod_bias = 0.1

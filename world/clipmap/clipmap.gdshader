@@ -10,13 +10,11 @@ uniform float roughness : hint_range(0,1);
 uniform sampler2D texture_normal : hint_roughness_normal,filter_linear_mipmap,repeat_enable;
 uniform float normal_map_scale = 1.0;
 
-uniform sampler2D parallax_map_texture;
-uniform float parallax_map_scale = 0.1;
-
 uniform float subsurface_scattering_scale = 0.5;
 
 global uniform sampler2D heightmap;
 global uniform sampler2D normalmap;
+global uniform sampler2D amplitude_mask_heightmap;
 global uniform float amplitude;
 global uniform vec3 clipmap_position;
 global uniform float clipmap_partition_length;
@@ -74,7 +72,8 @@ float true_round(float value){
 
 float get_height(vec3 world_vertex){
 	vec2 heightmap_position  = (world_vertex.xz + 0.5)/float(textureSize(heightmap,0).x);
-	return texture(heightmap, heightmap_position ).r * amplitude;
+	float amplitudeValue = texture(amplitude_mask_heightmap, heightmap_position).r;
+	return texture(heightmap, heightmap_position ).r * amplitude * amplitudeValue;
 }
 
 void vertex(){
@@ -108,9 +107,6 @@ void vertex(){
 }
 
 void fragment() {
-	//// Parallax Mapping
-	//vec2 offset = texture(parallax_map_texture, UV).rg;
-	//offset = (offset * 2.0 - 1.0) * parallax_map_scale;
 	vec2 base_uv = UV;
 
 	// Rughness
@@ -119,14 +115,14 @@ void fragment() {
 	ROUGHNESS = roughness_tex * roughness;
 	
 	// Normal Map
-	NORMAL_MAP = textureNoTile(texture_normal, base_uv).rgb;
+	NORMAL_MAP = texture(texture_normal, base_uv).rgb;
 	NORMAL_MAP_DEPTH = normal_map_scale;
 	
 	// Subsurface Scattering
 	SSS_STRENGTH = subsurface_scattering_scale;
 	
 	// Albedo
-	vec4 albedo_tex = textureNoTile(texture_albedo, base_uv);
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	ALBEDO = albedo_tex.rgb * albedo.rgb; 
 	
 	// fade logic

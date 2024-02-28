@@ -2,8 +2,9 @@
 
 shader_type spatial;
 render_mode blend_mix,depth_draw_always,cull_disabled;
-uniform vec4 albedo : source_color;
+uniform vec4 albedo : source_color = vec4(112, 112, 112, 255);
 uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform vec4 backlight : source_color;
 uniform float roughness : hint_range(0,1);
 uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;
@@ -25,17 +26,13 @@ void vertex() {
 	VERTEX.z += sin(VERTEX.z * sway_phase_len * 0.9123 + TIME * sway_speed * 1.3123) * strength;
 }
 
-
-
-
-
-
 void fragment() {
 	vec2 base_uv = UV;       
 	vec4 albedo_tex = texture(texture_albedo,base_uv);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
 	ALPHA = albedo_tex.a;
 	ALPHA_SCISSOR_THRESHOLD = 0.1;
+	BACKLIGHT = backlight.rgb;
 	if (!FRONT_FACING) {
 		NORMAL = -NORMAL;
 	}
