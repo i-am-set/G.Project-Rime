@@ -89,7 +89,7 @@ enum ScatterType { BOX, SPHERE }
 		if value:
 			var i := get_node(value)
 			if i and i.mesh:
-				print("[MultiMeshScatter]: Mesh added. You can safely remove the MeshInstance3D.")
+				print_debug("[MultiMeshScatter]: Mesh added. You can safely remove the MeshInstance3D.")
 				multimesh.mesh = i.mesh
 				mesh_instance = null
 
@@ -205,7 +205,7 @@ enum ScatterType { BOX, SPHERE }
 	set(value):
 		use_vertex_colors = value
 		if value:
-			print("[MultiMeshScatter]: Enabling vertex color checks, from now on you will need to manually update the scattering in Advanced Settings > Debug > Manual Update.")
+			print_debug("[MultiMeshScatter]: Enabling vertex color checks, from now on you will need to manually update the scattering in Advanced Settings > Debug > Manual Update.")
 		_update()
 
 ## Scatter threshold for the red channel.

@@ -159,10 +159,6 @@ normalmap={
 "type": "sampler2D",
 "value": "res://textures/nature/snow/Snow010A_1K-JPG_NormalDX.jpg"
 }
-heightmap={
-"type": "sampler2D",
-"value": "res://world/heightmap/noiseTexture2.png"
-}
 sway_speed={
 "type": "float",
 "value": 1.0
@@ -175,7 +171,11 @@ fade_distance_min={
 "type": "float",
 "value": 75.0
 }
+heightmap={
+"type": "sampler2D",
+"value": "res://world/heightmap/heightmap.png"
+}
 amplitude_mask_heightmap={
 "type": "sampler2D",
-"value": "res://world/heightmap/noiseTexture2.png"
+"value": "res://world/heightmap/heightmap.png"
 }

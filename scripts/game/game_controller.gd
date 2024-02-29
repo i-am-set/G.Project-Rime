@@ -37,7 +37,7 @@ func _ready():
 	if Global.LOBBY_MEMBERS.size() > 1:
 		for this_member in Global.LOBBY_MEMBERS:
 			if this_member['steam_id'] != Global.STEAM_ID:
-				print("creating player %s" %this_member['steam_id'])
+				print_debug("creating player %s" %this_member['steam_id'])
 				var player_instance = _player_node.instantiate()
 				player_instance._steam_ID = this_member['steam_id']
 				player_instance._deauthorize_user()
@@ -46,7 +46,7 @@ func _ready():
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(-5, 10, 0)
 			else:
-				print("creating self with friends")
+				print_debug("creating self with friends")
 				var player_instance = _player_node.instantiate()
 				player_instance._steam_ID = this_member['steam_id']
 				player_instance._authorize_user()
@@ -56,7 +56,7 @@ func _ready():
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(5, 10, 0)
 	else:
-		print("creating self alone")
+		print_debug("creating self alone")
 		var player_instance = _player_node.instantiate()
 		player_instance._steam_ID = Global.STEAM_ID
 		player_instance._authorize_user()
@@ -65,7 +65,7 @@ func _ready():
 		attach_player_to_world(player_instance)
 		add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(5, 20, 0)
-		print("self created")
+		print_debug("self created")
 	
 	noise.seed = Global.WORLD_SEED
 
@@ -90,7 +90,7 @@ func display_message(message):
 	_chat_instance.display_message(message)
 
 func make_p2p_handshake() -> void:
-	print("Sending P2P handshake to the lobby")
+	print_debug("Sending P2P handshake to the lobby")
 	send_p2p_packet(0, {"message": "handshake", "from": Global.STEAM_ID})
 
 func get_lobby_members() -> void:
@@ -145,20 +145,24 @@ func generate_local_resources():
 	var _authorized_player_resource_spawn_radius = _authorized_player._resource_spawn_radius
 	var _authorized_player_resource_spawn_radius_half = _authorized_player_resource_spawn_radius*0.5
 	
-	#resource_data = _resource_instancer._csharp_caller.IterateThroughTrees(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
+	resource_data = _resource_instancer._csharp_caller.IterateThroughTrees(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
 	
 	 #opt - make sure this is the fastest option ^
-	for x in range(_authorized_player_position.x-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.x+(_authorized_player_resource_spawn_radius_half)):
-		for z in range(_authorized_player_position.z-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.z+(_authorized_player_resource_spawn_radius_half)):
-			var height = noise.get_noise_2d(x, z) * 100
-			if height > 0.4 && !resource_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
-				var tree = _resource_instancer.instantiate_resource(height*100)
-				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
-				resource_data[tree.position] = tree
-				generation_cycle += 1
-				if generation_cycle >= 5:
-					generation_cycle = 0
-					await get_tree().process_frame
+	#for x in range(_authorized_player_position.x-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.x+(_authorized_player_resource_spawn_radius_half)):
+		#for z in range(_authorized_player_position.z-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.z+(_authorized_player_resource_spawn_radius_half)):
+			#var height = noise.get_noise_2d(x, z) * 100
+			#var heightmapY = Heightmap.get_height(x, z)
+			#if height <= 0.4:
+				#continue
+			#elif height > 0.4 && !resource_data.has(Vector3(x, heightmapY, z)):
+				#var resource = _resource_instancer.instantiate_resource(height*100)
+				#var resourcePosition = Vector3(x, heightmapY, z)
+				#resource.position = resourcePosition
+				#resource_data[resourcePosition] = resource
+				#generation_cycle += 1
+				#if generation_cycle >= 5:
+					#generation_cycle = 0
+					#await get_tree().process_frame
 	
 	for resource_location in resource_data:
 		if resource_data[resource_location] == null:
@@ -174,7 +178,6 @@ func generate_local_resources():
 			await get_tree().process_frame
 	
 	is_generating_resources = false
-
 
 func replenish_resources():
 	var tempNode
@@ -198,7 +201,7 @@ func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_sta
 	# chat_state change made
 	if chat_state == 1:
 		if making_change_id != Global.STEAM_ID:
-				print("creating player %s" %making_change_id)
+				print_debug("creating player %s" %making_change_id)
 				var player_instance = _player_node.instantiate()
 				player_instance._steam_ID = making_change_id
 				player_instance._deauthorize_user()
@@ -257,7 +260,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			Steam.CHAT_ROOM_ENTER_RESPONSE_MEMBER_BLOCKED_YOU: fail_reason = "A user in the lobby has blocked you from joining."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_YOU_BLOCKED_MEMBER: fail_reason = "A user you have blocked is in the lobby."
 
-		print("Failed to join lobby: %s" % fail_reason)
+		print_debug("Failed to join lobby: %s" % fail_reason)
 
 func _on_lobby_message(result, user, message, type):
 	# Sender and their message
@@ -265,7 +268,7 @@ func _on_lobby_message(result, user, message, type):
 	display_message(str(sender) + " : " + str(message))
 
 func _on_lobby_data_update(success, this_lobby_id, this_member_id, key):
-	print("Success: " + str(success) + ", Lobby ID: " + str(this_lobby_id) + ", Member ID: " + str(this_member_id) + ", Key: " + str(key))
+	print_debug("Success: " + str(success) + ", Lobby ID: " + str(this_lobby_id) + ", Member ID: " + str(this_member_id) + ", Key: " + str(key))
 
 
 #############################
@@ -326,7 +329,7 @@ func read_p2p_packet() -> void:
 		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
 
 		if this_packet.is_empty() or this_packet == null:
-			print("WARNING: read an empty packet with non-zero size!")
+			print_debug("WARNING: read an empty packet with non-zero size!")
 		# Get the remote user's ID
 		var packet_sender: int = this_packet['steam_id_remote']
 		# Make the packet data readable
@@ -334,7 +337,7 @@ func read_p2p_packet() -> void:
 		# Decompress the array before turning it into a useable dictionary
 		var readable_data: Dictionary = bytes_to_var(packet_code.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
 		# Print the packet to output
-		print("Packet: %s" % readable_data)
+		print_debug("Packet: %s" % readable_data)
 
 		# Append logic here to deal with packet data
 		process_data(readable_data)

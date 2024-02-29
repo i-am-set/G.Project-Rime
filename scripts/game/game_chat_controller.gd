@@ -1,12 +1,10 @@
 extends Control
 
-@onready var steamName = $SteamName
 @onready var chat = $Chat
 @onready var chatGetType = $Chat/ChatType
 @onready var chatOutput = $Chat/ChatOutput
 @onready var chatInput = $Chat/SendMessage/LineEdit
 @onready var sendMessage = $Chat/SendMessage
-@onready var playerList = $Players/PlayerList
 @onready var chatHideTimer = $ChatHideTimer
 
 var _chat_type : String = "GLOBAL"

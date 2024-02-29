@@ -177,7 +177,7 @@ func read_all_p2p_packets(read_count: int = 0):
 
 
 func make_p2p_handshake() -> void:
-	print("Sending P2P handshake to the lobby")
+	print_debug("Sending P2P handshake to the lobby")
 
 	send_p2p_packet(0, {"message": "handshake", "from": Global.STEAM_ID})
 
@@ -204,7 +204,7 @@ func _on_lobby_created(connect: int, this_lobby_id: int) -> void:
 
 		## Allow P2P connections to fallback to being relayed through Steam if needed
 		#var set_relay: bool = Steam.allowP2PPacketRelay(true)on_lobbyon_lobby
-		#print("Allowing Steam to be relay backup: %s" % set_relay)
+		#print_debug("Allowing Steam to be relay backup: %s" % set_relay)
 
 func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, response: int) -> void:
 	# If joining was successful
@@ -247,7 +247,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			Steam.CHAT_ROOM_ENTER_RESPONSE_MEMBER_BLOCKED_YOU: fail_reason = "A user in the lobby has blocked you from joining."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_YOU_BLOCKED_MEMBER: fail_reason = "A user you have blocked is in the lobby."
 
-		print("Failed to join this chat room: %s" % fail_reason)
+		print_debug("Failed to join this chat room: %s" % fail_reason)
 
 		#Reopen the lobby list
 		lobbyPopup.show()
@@ -264,7 +264,7 @@ func _on_lobby_join_Requested(this_lobby_id: int, friend_id: int) -> void:
 
 
 func _on_lobby_data_update(success, this_lobby_id, this_member_id, key):
-	print("Success: " + str(success) + ", Lobby ID: " + str(this_lobby_id) + ", Member ID: " + str(this_member_id) + ", Key: " + str(key))
+	print_debug("Success: " + str(success) + ", Lobby ID: " + str(this_lobby_id) + ", Member ID: " + str(this_member_id) + ", Key: " + str(key))
 
 
 func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_state):
@@ -287,9 +287,9 @@ func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_sta
 
 
 func _on_lobby_match_list(these_lobbies: Array) -> void:
-	print("started list")
+	print_debug("started list")
 	for this_lobby in these_lobbies:
-		print(this_lobby)
+		print_debug(this_lobby)
 		# Pull lobby data from Steam
 		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
 
@@ -324,7 +324,7 @@ func _on_lobby_message(result, user, message, type):
 func _on_p2p_session_request(remote_id: int) -> void:
 	# Get the requester's name
 	var this_requester: String = Steam.getFriendPersonaName(remote_id)
-	print("%s is requesting a P2P session" % this_requester)
+	print_debug("%s is requesting a P2P session" % this_requester)
 
 	# Accept the P2P session; can apply logic to deny this request if needed
 	Steam.acceptP2PSessionWithUser(remote_id)
@@ -336,31 +336,31 @@ func _on_p2p_session_request(remote_id: int) -> void:
 func _on_p2p_session_connect_fail(steam_id: int, session_error: int) -> void:
 	# If no error was given
 	if session_error == 0:
-		print("WARNING: Session failure with %s: no error given" % steam_id)
+		print_debug("WARNING: Session failure with %s: no error given" % steam_id)
 
 	# Else if target user was not running the same game
 	elif session_error == 1:
-		print("WARNING: Session failure with %s: target user not running the same game" % steam_id)
+		print_debug("WARNING: Session failure with %s: target user not running the same game" % steam_id)
 
 	# Else if local user doesn't own app / game
 	elif session_error == 2:
-		print("WARNING: Session failure with %s: local user doesn't own app / game" % steam_id)
+		print_debug("WARNING: Session failure with %s: local user doesn't own app / game" % steam_id)
 
 	# Else if target user isn't connected to Steam
 	elif session_error == 3:
-		print("WARNING: Session failure with %s: target user isn't connected to Steam" % steam_id)
+		print_debug("WARNING: Session failure with %s: target user isn't connected to Steam" % steam_id)
 
 	# Else if connection timed out
 	elif session_error == 4:
-		print("WARNING: Session failure with %s: connection timed out" % steam_id)
+		print_debug("WARNING: Session failure with %s: connection timed out" % steam_id)
 
 	# Else if unused
 	elif session_error == 5:
-		print("WARNING: Session failure with %s: unused" % steam_id)
+		print_debug("WARNING: Session failure with %s: unused" % steam_id)
 
 	# Else no known error
 	else:
-		print("WARNING: Session failure with %s: unknown error %s" % [steam_id, session_error])
+		print_debug("WARNING: Session failure with %s: unknown error %s" % [steam_id, session_error])
 
 func _on_lobby_invite(inviter, lobby, game):
 	display_message(str(inviter) + str(lobby) + str(game))
@@ -369,7 +369,7 @@ func _on_lobby_invite(inviter, lobby, game):
 	## Set distance to worldwide
 	#Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 #
-	#print("Requesting a lobby list")
+	#print_debug("Requesting a lobby list")
 	#Steam.requestLobbyList()
 
 
@@ -377,7 +377,7 @@ func _on_lobby_invite(inviter, lobby, game):
 #func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 	## Make sure you're in a lobby and this user is valid or Steam might spam your console log
 	#if lobby_id > 0:
-		#print("A user (%s) had information change, update the lobby list" % this_steam_id)
+		#print_debug("A user (%s) had information change, update the lobby list" % this_steam_id)
 #
 		## Update the player list
 		#get_lobby_members()
@@ -481,7 +481,7 @@ func read_p2p_packet() -> void:
 		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
 
 		if this_packet.is_empty() or this_packet == null:
-			print("WARNING: read an empty packet with non-zero size!")
+			print_debug("WARNING: read an empty packet with non-zero size!")
 
 		# Get the remote user's ID
 		var packet_sender: int = this_packet['steam_id_remote']
@@ -493,7 +493,7 @@ func read_p2p_packet() -> void:
 		var readable_data: Dictionary = bytes_to_var(packet_code.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
 
 		# Print the packet to output
-		print("Packet: %s" % readable_data)
+		print_debug("Packet: %s" % readable_data)
 
 		# Append logic here to deal with packet data
 		process_data(readable_data)

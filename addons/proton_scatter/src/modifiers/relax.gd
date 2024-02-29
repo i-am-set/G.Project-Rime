@@ -155,7 +155,7 @@ func compute_closest(transforms) -> PackedVector3Array:
 	rd.compute_list_bind_compute_pipeline(compute_list, pipeline)
 	rd.compute_list_bind_uniform_set(compute_list, uniform_set, 0)
 	# each workgroup computes 64 vectors
-#	print("Dispatching workgroups: ", padded_num_vecs/64)
+#	print_debug("Dispatching workgroups: ", padded_num_vecs/64)
 	rd.compute_list_dispatch(compute_list, padded_num_vecs/64, 1, 1)
 	rd.compute_list_end()
 	# Submit to GPU and wait for sync

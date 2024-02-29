@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://vumnicjktnyy"
-path.s3tc="res://.godot/imported/pinetree_branch_hd.png-dfe7deab19e0560442691c77aa08c4e5.s3tc.ctex"
+path.s3tc="res://.godot/imported/pinetree_branch_hd.png-e970ed97d96ee5e264b52bc6358e4bed.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://meshes/nature/pinetree_branch_hd.png"
-dest_files=["res://.godot/imported/pinetree_branch_hd.png-dfe7deab19e0560442691c77aa08c4e5.s3tc.ctex"]
+source_file="res://textures/nature/pine/pinetree_branch_hd.png"
+dest_files=["res://.godot/imported/pinetree_branch_hd.png-e970ed97d96ee5e264b52bc6358e4bed.s3tc.ctex"]
 
 [params]
 

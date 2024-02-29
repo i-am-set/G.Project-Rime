@@ -26,17 +26,30 @@ var trees = [
 ]
 
 #-------------------- Grass Tufts ---------------------#
-# todo - add in node implimentation
-# todo - add collision to to nodes
 # todo - make stone nodes and think of other types of nodes, maybe metal of some sort of that would make sense
-
+var flint_node = [
+	preload("res://scenes/resourceobjects/nature/nodes/flint_node_1.tscn"),
+	preload("res://scenes/resourceobjects/nature/nodes/flint_node_2.tscn"),
+	preload("res://scenes/resourceobjects/nature/nodes/flint_node_3.tscn")
+]
+var stone_node = [
+	preload("res://scenes/resourceobjects/nature/nodes/stone_node_1.tscn"),
+	preload("res://scenes/resourceobjects/nature/nodes/stone_node_2.tscn"),
+	preload("res://scenes/resourceobjects/nature/nodes/stone_node_3.tscn")
+]
+var nodes = [
+	flint_node,
+	stone_node
+]
 
 #------------------------------------------------------#
 
 var weights : Dictionary = {
 	birch_tree : 3,
 	pine_tree : 0.5,
-	tall_pine_tree : 10
+	tall_pine_tree : 10,
+	stone_node : 0.2,
+	flint_node : 0.1
 }
 
 var _is_initialized : bool = false

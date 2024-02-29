@@ -131,7 +131,7 @@ func _on_save_preset(path) -> void:
 func _on_load_full_preset(path: String) -> void:
 	var preset_scene: PackedScene = load(path)
 	if not preset_scene:
-		print("Could not find preset ", path)
+		print_debug("Could not find preset ", path)
 		return
 
 	var preset = preset_scene.instantiate()

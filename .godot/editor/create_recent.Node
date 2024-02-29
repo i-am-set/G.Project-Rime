@@ -1,7 +1,8 @@
-Node3D
-Node
 StaticBody3D
 CollisionShape3D
+CollisionPolygon3D
+Node3D
+Node
 MeshInstance3D
 ScatterItem
 ProtonScatter
@@ -11,4 +12,3 @@ Sprite2D
 Sprite3D
 GPUParticles3D
 Timer
-TextEdit

@@ -1,3 +1,4 @@
+res://scenes/fps_controller.tscn
 res://world/heightmap/resource_noise.tres
 res://shaders/tree_shader.gdshader
 res://materials/nature/birch_tree_material.tres
@@ -5,6 +6,9 @@ res://materials/nature/pine_tree_material.tres
 res://shaders/leaf_shader.gdshader
 res://materials/nature/pine_leaves_material.tres
 res://materials/nature/tall_pine_leaves_material.tres
+res://shaders/default_object_shader.gdshader
+res://materials/nature/flint_node_material.tres
+res://materials/nature/stone_node_material.tres
 res://GodotSky/Shaders/GodotSky.gdshader
 res://GodotSky/WorldEnvironment/default_sky.tres
 res://GodotSky/WorldEnvironment/default_environment.tres
@@ -21,14 +25,13 @@ res://GodotSky/Presets/sky_default.tres
 res://materials/grid.tres
 res://world/clipmap/clipmap.gdshader
 res://materials/nature/clipmap_snow_material.tres
-res://shaders/default_object_shader.gdshader
-res://materials/nature/flint_node_material.tres
-res://scenes/resourceobjects/nature/nodes/flint_node_2.tscn
-res://scenes/resourceobjects/nature/nodes/flint_node_3.tscn
-res://scenes/level_007.tscn
-res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
+res://scenes/level_007.tscn
 res://scenes/resource_instancer.tscn
 res://GodotSky/GodotSky.tscn
-res://scripts/resource_objects/resource_instancer.gd
+res://scenes/resourceobjects/nature/nodes/stone_node_2.tscn
+res://world/heightmap/Heightmap.gd
+res://world/clipmap/clipmap_partition.tscn
+res://scripts/steam/SteamLobby.gd
+res://scripts/game/game_controller.gd

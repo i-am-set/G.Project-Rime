@@ -59,10 +59,10 @@ func _input(event):
 		tree.mesh = BoxMesh.new()
 		tree.global_position = Vector3(self.global_position.x, Heightmap.get_height(self.global_position.x, self.global_position.z), self.global_position.z)
 		get_parent().add_child(tree)
-		print(Heightmap.get_height(self.global_position.x, self.global_position.z))
-		print("scroll up")
+		print_debug(Heightmap.get_height(self.global_position.x, self.global_position.z))
+		print_debug("scroll up")
 	if event.is_action_pressed("ui_scroll_down"):
-		print("scroll down")
+		print_debug("scroll down")
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mouse_click"):

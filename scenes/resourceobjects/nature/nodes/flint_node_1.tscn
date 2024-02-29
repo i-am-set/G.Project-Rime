@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bse3viock311u"]
+[gd_scene load_steps=8 format=3 uid="uid://bse3viock311u"]
 
 [ext_resource type="PackedScene" uid="uid://4qm7twyxtc0p" path="res://meshes/nature/nodes/flint_node_model_1.glb" id="1_e6ddm"]
 [ext_resource type="Shader" path="res://shaders/default_object_shader.gdshader" id="2_8suri"]
@@ -20,7 +20,16 @@ shader_parameter/texture_albedo = ExtResource("3_bglo3")
 shader_parameter/texture_roughness = ExtResource("5_6bykl")
 shader_parameter/texture_normal = ExtResource("4_qr8vn")
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_51bwc"]
+points = PackedVector3Array(0.840433, 2.34854, -0.0612513, -2.73256, -0.17957, 0.0188132, -2.64401, -0.616568, -0.432021, -0.862729, 3.15106, -1.09737, 0.171383, -1.12941, -2.28103, 0.550586, -0.0282949, 0.762924, -1.89953, 2.4936, 0.602618, -0.274153, 1.0131, -2.56779, 1.41311, 0.794088, -1.3163, -0.717795, -1.46694, -0.0501983, -2.15103, 1.37104, -1.16324, -1.67333, -0.975997, -1.76062, -2.27842, 0.64297, 0.908336, 1.4361, -0.172503, -0.87669, 0.673914, 2.32853, -1.53375, -0.124404, 1.4571, 0.971369, -0.641529, 3.30142, -0.2129, -2.0417, 2.78211, -0.0661912, -1.31025, -0.618094, 0.756183, 0.104061, -1.44821, -0.578623, -1.29389, 1.73709, -1.9634, 0.459258, 0.794107, -2.49044, -2.72367, 1.23703, 0.238133, 1.11095, 1.15899, 0.291735, -1.53751, -1.44759, -0.205794, -0.568385, -0.529255, -2.56702, -2.42551, -0.769107, 0.237725, -0.269245, -1.29844, -2.22041, 0.0214031, 2.04567, 0.744757, 1.42511, 1.30893, -0.581511, 0.98927, -0.393904, -1.84053, -0.199532, 2.85742, -1.46655)
+
 [node name="flint_node_1" instance=ExtResource("1_e6ddm")]
 
 [node name="Cube_001" parent="." index="0"]
 material_override = SubResource("ShaderMaterial_yyo6r")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_51bwc")
