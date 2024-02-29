@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://hwcfodjh80hl"]
+[gd_scene load_steps=18 format=3 uid="uid://hwcfodjh80hl"]
 
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_fhji4"]
 [ext_resource type="PackedScene" uid="uid://1gfropwtqfbn" path="res://GodotSky/GodotSky.tscn" id="2_gdmhl"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://b11lm75hfbnky" path="res://world/clipmap/clipmap.tscn" id="6_1ei4r"]
 [ext_resource type="PackedScene" uid="uid://bm3se7nbvev48" path="res://world/clipmap/clipmap_partition.tscn" id="7_kakbe"]
 [ext_resource type="PackedScene" uid="uid://diatixhqy12pa" path="res://scenes/resource_instancer.tscn" id="8_i66or"]
+[ext_resource type="PackedScene" uid="uid://bse3viock311u" path="res://scenes/resourceobjects/nature/nodes/flint_node_1.tscn" id="9_n26jn"]
+[ext_resource type="PackedScene" uid="uid://57ikoo52mmcg" path="res://scenes/resourceobjects/nature/nodes/flint_node_2.tscn" id="10_4towe"]
+[ext_resource type="PackedScene" uid="uid://mhndawbysv7u" path="res://scenes/resourceobjects/nature/nodes/flint_node_3.tscn" id="11_d7p00"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gd0ev"]
 material = ExtResource("3_s5dox")
@@ -105,7 +108,7 @@ buffer = PackedFloat32Array(-1.91705, 0, 1.11219, -11.352, 0, 2.21631, 0, 0, -1.
 script = ExtResource("1_fhji4")
 
 [node name="GodotSky" parent="." instance=ExtResource("2_gdmhl")]
-timeOfDay = 348.11
+timeOfDay = 1607.9
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
@@ -132,3 +135,12 @@ multimesh = SubResource("MultiMesh_g3xta")
 visible = false
 
 [node name="ResourceInstancer" parent="." instance=ExtResource("8_i66or")]
+
+[node name="flint_node_1" parent="." instance=ExtResource("9_n26jn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 8.71299, -3)
+
+[node name="flint_node_2" parent="." instance=ExtResource("10_4towe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.82968, 8.71299, 0)
+
+[node name="flint_node_3" parent="." instance=ExtResource("11_d7p00")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.71299, 1.83869)

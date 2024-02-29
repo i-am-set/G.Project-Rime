@@ -144,13 +144,15 @@ func generate_local_resources():
 	var _authorized_player_position = _authorized_player.position
 	var _authorized_player_resource_spawn_radius = _authorized_player._resource_spawn_radius
 	var _authorized_player_resource_spawn_radius_half = _authorized_player_resource_spawn_radius*0.5
-
+	
+	#resource_data = _resource_instancer._csharp_caller.IterateThroughTrees(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
+	
+	 #opt - make sure this is the fastest option ^
 	for x in range(_authorized_player_position.x-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.x+(_authorized_player_resource_spawn_radius_half)):
 		for z in range(_authorized_player_position.z-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.z+(_authorized_player_resource_spawn_radius_half)):
 			var height = noise.get_noise_2d(x, z) * 100
 			if height > 0.4 && !resource_data.has(Vector3(x, Heightmap.get_height(x, z), z)):
 				var tree = _resource_instancer.instantiate_resource(height*100)
-				#var tree = _resource_instancer.InstantiateResource(height*100)
 				tree.position = Vector3(x, Heightmap.get_height(x, z), z)
 				resource_data[tree.position] = tree
 				generation_cycle += 1
@@ -163,9 +165,9 @@ func generate_local_resources():
 			continue
 		var distance = Vector2(resource_location.x, resource_location.z).distance_to(Vector2(_authorized_player_position.x, _authorized_player_position.z))
 		if distance < _authorized_player_resource_spawn_radius and resource_data[resource_location].get_parent() == null:
-			add_child(resource_data[resource_location])
+			_resource_instancer.add_child(resource_data[resource_location])
 		elif distance >= _authorized_player_resource_spawn_radius and resource_data[resource_location].get_parent() != null:
-			remove_child(resource_data[resource_location])
+			_resource_instancer.remove_child(resource_data[resource_location])
 		generation_cycle += 1
 		if generation_cycle >= 5:
 			generation_cycle = 0

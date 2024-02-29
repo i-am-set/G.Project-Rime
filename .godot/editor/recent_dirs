@@ -1,7 +1,8 @@
-res://scenes/resourceobjects/nature/trees
-res://shaders
-res://scenes/resourceobjects/nature/clutter
+res://scenes/resourceobjects/nature/nodes
 res://materials/nature
+res://shaders
+res://scenes/resourceobjects/nature/trees
+res://scenes/resourceobjects/nature/clutter
 C:/Program Files (x86)/Godot_v4.2.1-stable_mono_win64
 C:/Users/sethg/AppData/Local/Programs/Microsoft VS Code
 res://meshes/nature

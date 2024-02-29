@@ -1,5 +1,7 @@
 extends Node3D
 
+@onready var _csharp_caller = $CSharpCaller
+
 #-------------------- Trees ---------------------------#
 var birch_tree = [
 	preload("res://scenes/resourceobjects/nature/trees/birch_tree_1.tscn"),
@@ -24,7 +26,9 @@ var trees = [
 ]
 
 #-------------------- Grass Tufts ---------------------#
-
+# todo - add in node implimentation
+# todo - add collision to to nodes
+# todo - make stone nodes and think of other types of nodes, maybe metal of some sort of that would make sense
 
 
 #------------------------------------------------------#

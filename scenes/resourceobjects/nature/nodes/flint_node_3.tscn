@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://mhndawbysv7u"]
+
+[ext_resource type="PackedScene" uid="uid://bg7l723g1f0u2" path="res://meshes/nature/nodes/flint_node_model_3.glb" id="1_ikbou"]
+[ext_resource type="Material" uid="uid://8p6iuy532jm" path="res://materials/nature/flint_node_material.tres" id="2_gots5"]
+
+[node name="flint_node_3" instance=ExtResource("1_ikbou")]
+
+[node name="Cube_001" parent="." index="0"]
+material_override = ExtResource("2_gots5")

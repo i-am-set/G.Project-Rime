@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://diatixhqy12pa"]
+[gd_scene load_steps=3 format=3 uid="uid://diatixhqy12pa"]
 
 [ext_resource type="Script" path="res://scripts/resource_objects/resource_instancer.gd" id="1_pxper"]
+[ext_resource type="Script" path="res://scripts/resource_objects/CallResourceInstancer.cs" id="2_0ua84"]
 
 [node name="ResourceInstancer" type="Node3D"]
 script = ExtResource("1_pxper")
+
+[node name="CSharpCaller" type="Node3D" parent="."]
+script = ExtResource("2_0ua84")
