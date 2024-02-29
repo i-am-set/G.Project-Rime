@@ -103,10 +103,9 @@ func get_copy():
 func copy_from(source) -> void:
 	thickness = source.thickness
 	if source.curve:
-		curve = source.curve.duplicate() # TODO, update signals
+		curve = source.curve.duplicate()
 
 
-# TODO: create points in the middle of the path
 func create_point(position: Vector3) -> void:
 	if not curve:
 		curve = Curve3D.new()
@@ -152,7 +151,7 @@ func get_closed_edges(shape_t: Transform3D) -> Array[PackedVector2Array]:
 	var edges: Array[PackedVector2Array] = []
 	var polyline := PackedVector2Array()
 	var shape_t_inverse := shape_t.affine_inverse()
-	var points := curve.tessellate(5, 5) # TODO: find optimal values
+	var points := curve.tessellate(5, 5) 
 
 	for p in points:
 		p *= shape_t_inverse # Apply the shape node transform

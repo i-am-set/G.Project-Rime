@@ -113,7 +113,6 @@ func update_cache() -> void:
 	if not _local_cache_changed:
 		return
 
-	# TODO: Save large files on a thread
 	var err = ResourceSaver.save(_local_cache, cache_file)
 	_local_cache_changed = false
 

@@ -1,4 +1,4 @@
-res://scenes/fps_controller.tscn
+res://scenes/resource_instancer.tscn
 res://world/heightmap/resource_noise.tres
 res://GodotSky/Shaders/GodotSky.gdshader
 res://GodotSky/WorldEnvironment/default_sky.tres
@@ -22,13 +22,5 @@ res://materials/nature/pine_tree_material.tres
 res://shaders/leaf_shader.gdshader
 res://materials/nature/pine_leaves_material.tres
 res://materials/nature/tall_pine_leaves_material.tres
-res://!old/environment/WE_test.tres
-res://scenes/level_007.tscn
-res://world/clipmap/clipmap_partition.tscn
-res://visual/materials/grid.tres
-res://meshes/weapons/weapon.tscn
-res://scenes/mainmenu.tscn
-res://scenes/resource_instancer.tscn
-res://GodotSky/GodotSky.tscn
-res://scripts/steam/SteamLobby.gd
-res://world/heightmap/Heightmap.gd
+res://scripts/resource_objects/resource_instancer.gd
+res://scenes/resourceobjects/nature/trees/birch_tree_1.tscn

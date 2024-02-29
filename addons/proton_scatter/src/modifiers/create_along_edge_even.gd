@@ -5,7 +5,6 @@ extends "base_modifier.gd"
 const Util := preload("../common/util.gd")
 
 
-# TODO :
 # + change alignement parameters to something more usable and intuitive
 # + Use the curve up vector, default to local Y+ when not available
 @export var spacing := 1.0

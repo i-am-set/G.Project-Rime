@@ -288,14 +288,14 @@ func forward_3d_gui_input(viewport_camera: Camera3D, event: InputEvent) -> bool:
 	var point_local_position: Vector3 = shape_node.get_global_transform().affine_inverse() * click_world_position
 
 	if _gizmo_panel.is_create_mode_enabled():
-		shape.create_point(point_local_position) # TODO: add undo redo
+		shape.create_point(point_local_position)
 		shape_node.update_gizmos()
 		return true
 
 	elif _gizmo_panel.is_delete_mode_enabled():
 		var index = shape.get_closest_to(point_local_position)
 		if index != -1:
-			shape.remove_point(index) # TODO: add undo redo
+			shape.remove_point(index)
 			shape_node.update_gizmos()
 			return true
 

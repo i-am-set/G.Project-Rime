@@ -30,7 +30,6 @@ func get_open_edges(_shape_t: Transform3D) -> Array[Curve3D]:
 
 
 # Returns a copy of this shape.
-# TODO: check later when Godot4 enters beta if we can get rid of this and use
 # the built-in duplicate() method properly.
 func get_copy() -> Resource:
 	return null

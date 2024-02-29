@@ -33,7 +33,6 @@ func resize(count: int) -> void:
 		remove(current_count - count)
 
 
-# TODO: Faster algorithm probably exists for this, research an alternatives
 # if this ever becomes a performance bottleneck.
 func shuffle(random_seed := 0) -> void:
 	var n = list.size()

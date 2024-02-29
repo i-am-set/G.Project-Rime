@@ -22,7 +22,6 @@ func _init():
 	var handle_icon = preload("./icons/main_handle.svg")
 	var secondary_handle_icon = preload("./icons/secondary_handle.svg")
 
-	# TODO: Replace hardcoded colors by a setting fetch
 	create_material("primary", Color(1, 0.4, 0))
 	create_material("secondary", Color(0.4, 0.7, 1.0))
 	create_material("tertiary", Color(Color.STEEL_BLUE, 0.2))

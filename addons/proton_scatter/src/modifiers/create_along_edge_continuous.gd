@@ -50,7 +50,6 @@ func _init() -> void:
 		before creating the new transforms.")
 
 
-# TODO: Use dichotomic search instead of fixed step length?
 func _process_transforms(transforms, domain, seed) -> void:
 	var new_transforms: Array[Transform3D] = []
 	var curves: Array[Curve3D] = domain.get_edges()

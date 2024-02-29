@@ -6,7 +6,6 @@ extends "base_modifier.gd"
 # support both 2D and 3D space.
 # Reference: https://www.youtube.com/watch?v=7WcmyxyFO7o
 
-# TODO: This doesn't work if the valid space isn't one solid space
 # (fails to fill the full domain if it's made of discrete, separate shapes)
 
 
@@ -153,7 +152,6 @@ func _init_grid() -> void:
 
 # Starting point must be inside the domain, or we run the risk to never generate
 # any valid point later on
-# TODO: Domain may have islands, so we should use multiple starting points
 func _get_starting_point() -> Transform3D:
 	var point: Vector3 = _bounds.center
 

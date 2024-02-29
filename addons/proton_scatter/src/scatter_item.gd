@@ -46,19 +46,19 @@ const ScatterUtil := preload('./common/scatter_util.gd')
 @export var override_process_material: Material:
 	set(val):
 		override_process_material = val
-		ScatterUtil.request_parent_to_rebuild(self) # TODO - No need for a full rebuild here
+		ScatterUtil.request_parent_to_rebuild(self)
 
 @export var override_cast_shadow: GeometryInstance3D.ShadowCastingSetting = GeometryInstance3D.SHADOW_CASTING_SETTING_ON:
 	set(val):
 		override_cast_shadow = val
-		ScatterUtil.request_parent_to_rebuild(self) # TODO - Only change the multimesh flag instead
+		ScatterUtil.request_parent_to_rebuild(self) 
 
 @export_group("Visibility range", "visibility_range_")
 @export var visibility_range_begin : float = 0
 @export var visibility_range_begin_margin : float = 0
 @export var visibility_range_end : float = 0
 @export var visibility_range_end_margin : float = 0
-#TODO what is a nicer way to expose this?
+
 @export_enum("Disabled:0", "Self:1") var visibility_range_fade_mode = 0
 
 @export_group("Level Of Detail", "lod_")

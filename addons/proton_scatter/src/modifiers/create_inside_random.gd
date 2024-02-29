@@ -33,7 +33,6 @@ func _init() -> void:
 		valid space, like a curved and narrow path.")
 
 
-# TODO:
 # + Multithreading
 # + Spatial partionning to discard areas outside the domain earlier
 func _process_transforms(transforms, domain, random_seed) -> void:
@@ -50,7 +49,7 @@ func _process_transforms(transforms, domain, random_seed) -> void:
 	var t: Transform3D
 	var pos: Vector3
 	var new_transforms: Array[Transform3D] = []
-	var max_retries = amount * 10 # TODO: expose this parameter?
+	var max_retries = amount * 10
 	var tries := 0
 
 	while new_transforms.size() != amount:

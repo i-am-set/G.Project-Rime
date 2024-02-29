@@ -16,7 +16,7 @@ func _init() -> void:
 	display_name = "Clusterize"
 	category = "Edit"
 	global_reference_frame_available = true
-	local_reference_frame_available = false # TODO, enable this and handle this case
+	local_reference_frame_available = false
 	individual_instances_reference_frame_available = false
 
 	documentation.add_paragraph(
@@ -71,7 +71,6 @@ func _process_transforms(transforms, domain, _seed) -> void:
 	var image: Image
 
 	# Wait for a frame or risk the whole editor to freeze because of get_image()
-	# TODO: Check if more safe guards are required here.
 	await domain.get_root().get_tree().process_frame
 
 	if texture is Texture2D:

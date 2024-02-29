@@ -87,7 +87,6 @@ var chunk_dimensions := Vector3.ONE * 15.0:
 			push_warning("ProtonScatter warning: Please select a ProtonScatter node as a parent dependency.")
 			return
 
-		# TODO: Check for cyclic dependency
 
 		scatter_parent = val
 		_dependency_parent = node

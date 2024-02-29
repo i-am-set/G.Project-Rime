@@ -58,7 +58,7 @@ func _physics_process(_delta: float) -> void:
 	var steps = min(_max_queries_per_frame, _queries.size())
 	for i in steps:
 		var q = _queries.pop_back()
-		var hit := _space_state.intersect_ray(q) # TODO: Add support for other operations
+		var hit := _space_state.intersect_ray(q) 
 		_results.push_back(hit)
 
 	if _queries.is_empty():

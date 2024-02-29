@@ -16,7 +16,6 @@ var _editor_plugin: EditorPlugin
 
 
 func _init():
-	# TODO: Replace hardcoded colors by a setting fetch
 	create_custom_material("line", Color(0.2, 0.4, 0.8))
 	add_material("loading", LoadingAnimation)
 

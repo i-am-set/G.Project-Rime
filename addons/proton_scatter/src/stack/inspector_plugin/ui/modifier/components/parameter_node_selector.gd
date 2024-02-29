@@ -49,7 +49,7 @@ func _populate_tree() -> void:
 	_tree.clear()
 	var scene_root: Node = get_tree().get_edited_scene_root()
 
-	var tmp = EditorPlugin.new() # TODO: check if this works in release builds
+	var tmp = EditorPlugin.new() 
 	var gui: Control = tmp.get_editor_interface().get_base_control()
 	var editor_theme = gui.get_theme()
 	tmp.queue_free()

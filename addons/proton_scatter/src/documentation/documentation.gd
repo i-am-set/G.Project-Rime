@@ -3,7 +3,6 @@ extends PopupPanel
 
 
 # Formats and displays the DocumentationData provided by other parts of the addon
-# TODO: Adjust title font size based on the editor font size / scaling
 
 
 const DocumentationInfo = preload("./documentation_info.gd")

@@ -1,7 +1,6 @@
 @tool
 extends "base_modifier.gd"
 
-# TODO: This modifier has the same shortcomings as offset_rotation, but in every reference frame.
 
 
 @export var position_step := Vector3.ZERO

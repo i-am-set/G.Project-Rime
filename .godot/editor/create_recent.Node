@@ -1,3 +1,5 @@
+StaticBody3D
+CollisionShape3D
 MeshInstance3D
 ScatterItem
 ProtonScatter
@@ -6,9 +8,7 @@ MultiMeshInstance3D
 Node3D
 Sprite2D
 Sprite3D
-CollisionShape3D
 GPUParticles3D
-StaticBody3D
 Timer
 TextEdit
 Panel
