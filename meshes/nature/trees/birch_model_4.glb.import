@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/birch_model_4.glb-8cfe5ebbe2dd0d9bbd17fa1ad27
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="StaticBody3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/birch_model_1.glb-b911948a08d72d58e333b4c6676
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="StaticBody3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
@@ -29,6 +29,13 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={}
+_subresources={
+"materials": {
+"@MATERIAL:0": {
+"use_external/enabled": true,
+"use_external/path": "res://materials/nature/birch_tree_material.tres"
+}
+}
+}
 gltf/naming_version=1
 gltf/embedded_image_handling=1

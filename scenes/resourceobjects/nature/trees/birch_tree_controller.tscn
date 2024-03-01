@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://ct74rawgcqcgh"]
+
+[ext_resource type="Script" path="res://scripts/resource_objects/ResourceController.cs" id="1_t1ob2"]
+[ext_resource type="PackedScene" uid="uid://b0guic57kx6nm" path="res://scenes/resourceobjects/nature/trees/_birch_tree_1.tscn" id="2_mfe18"]
+[ext_resource type="PackedScene" uid="uid://td3ilxceucti" path="res://scenes/resourceobjects/nature/trees/_birch_tree_2.tscn" id="3_2cea1"]
+[ext_resource type="PackedScene" uid="uid://d2krxxj704hv3" path="res://scenes/resourceobjects/nature/trees/_birch_tree_3.tscn" id="4_vr0e7"]
+[ext_resource type="PackedScene" uid="uid://jne0pnu0idax" path="res://scenes/resourceobjects/nature/trees/_birch_tree_4.tscn" id="5_a0kg4"]
+
+[node name="birch_tree_controller" type="Node3D" node_paths=PackedStringArray("children")]
+script = ExtResource("1_t1ob2")
+children = [NodePath("birch_tree_1"), NodePath("birch_tree_2"), NodePath("birch_tree_3"), NodePath("birch_tree_4")]
+
+[node name="birch_tree_1" parent="." instance=ExtResource("2_mfe18")]
+visible = false
+
+[node name="birch_tree_2" parent="." instance=ExtResource("3_2cea1")]
+visible = false
+
+[node name="birch_tree_3" parent="." instance=ExtResource("4_vr0e7")]
+visible = false
+
+[node name="birch_tree_4" parent="." instance=ExtResource("5_a0kg4")]
+visible = false

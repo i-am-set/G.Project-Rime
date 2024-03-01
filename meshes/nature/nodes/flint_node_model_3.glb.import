@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/flint_node_model_3.glb-e9939a9847c68d87caa1c7
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="StaticBody3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

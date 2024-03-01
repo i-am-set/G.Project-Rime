@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://csxawqbjowfs3"]
+
+[ext_resource type="Script" path="res://scripts/resource_objects/ResourceController.cs" id="1_cfnmn"]
+[ext_resource type="PackedScene" uid="uid://c3xw6kevds8i6" path="res://scenes/resourceobjects/nature/nodes/_stone_node_1.tscn" id="2_tl7qv"]
+[ext_resource type="PackedScene" uid="uid://bpx8l2ptsbjp3" path="res://scenes/resourceobjects/nature/nodes/_stone_node_2.tscn" id="3_653ik"]
+[ext_resource type="PackedScene" uid="uid://8wj2v82sdonx" path="res://scenes/resourceobjects/nature/nodes/_stone_node_3.tscn" id="4_45oec"]
+
+[node name="stone_node_controller" type="Node3D" node_paths=PackedStringArray("children")]
+script = ExtResource("1_cfnmn")
+children = [NodePath("stone_node_1"), NodePath("stone_node_2"), NodePath("stone_node_3")]
+
+[node name="stone_node_1" parent="." instance=ExtResource("2_tl7qv")]
+visible = false
+
+[node name="stone_node_2" parent="." instance=ExtResource("3_653ik")]
+visible = false
+
+[node name="stone_node_3" parent="." instance=ExtResource("4_45oec")]
+visible = false

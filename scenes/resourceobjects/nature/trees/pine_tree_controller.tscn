@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2gwvvrqh3ycs"]
+
+[ext_resource type="PackedScene" uid="uid://pe43ik36sqp5" path="res://scenes/resourceobjects/nature/trees/_pine_tree_1.tscn" id="1_c88as"]
+[ext_resource type="Script" path="res://scripts/resource_objects/ResourceController.cs" id="1_vcwkr"]
+[ext_resource type="PackedScene" uid="uid://epcrbtmu35di" path="res://scenes/resourceobjects/nature/trees/_pine_tree_2.tscn" id="2_tt0u7"]
+[ext_resource type="PackedScene" uid="uid://c1dlr7f6rsat0" path="res://scenes/resourceobjects/nature/trees/_pine_tree_3.tscn" id="3_spniq"]
+[ext_resource type="PackedScene" uid="uid://cevpg4tr6d46g" path="res://scenes/resourceobjects/nature/trees/_pine_tree_4.tscn" id="4_ovoot"]
+
+[node name="pine_tree_controller" type="Node3D" node_paths=PackedStringArray("children")]
+script = ExtResource("1_vcwkr")
+children = [NodePath("pine_model_1"), NodePath("pine_model_2"), NodePath("pine_model_3"), NodePath("pine_model_4")]
+
+[node name="pine_model_1" parent="." instance=ExtResource("1_c88as")]
+visible = false
+
+[node name="pine_model_2" parent="." instance=ExtResource("2_tt0u7")]
+visible = false
+
+[node name="pine_model_3" parent="." instance=ExtResource("3_spniq")]
+visible = false
+
+[node name="pine_model_4" parent="." instance=ExtResource("4_ovoot")]
+visible = false

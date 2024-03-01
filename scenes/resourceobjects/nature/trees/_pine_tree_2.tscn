@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://epcrbtmu35di"]
+
+[ext_resource type="PackedScene" uid="uid://c2gt0ddh141ml" path="res://meshes/nature/trees/pine_model_2.glb" id="1_oje2m"]
+[ext_resource type="Material" uid="uid://c2nkb05uya11k" path="res://materials/nature/pine_tree_material.tres" id="2_ptren"]
+[ext_resource type="Material" uid="uid://bsb1a3wit1va8" path="res://materials/nature/pine_leaves_material.tres" id="3_dq3jq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vc2ux"]
+height = 3.25
+radius = 0.125
+
+[node name="pine_model_2" instance=ExtResource("1_oje2m")]
+collision_layer = 0
+
+[node name="!tree" parent="." index="0"]
+material_override = ExtResource("2_ptren")
+
+[node name="leaves" parent="." index="1"]
+material_override = ExtResource("3_dq3jq")
+cast_shadow = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59925, 0)
+shape = SubResource("CylinderShape3D_vc2ux")

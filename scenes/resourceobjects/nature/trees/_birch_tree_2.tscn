@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://td3ilxceucti"]
+
+[ext_resource type="PackedScene" uid="uid://b1eymhbtimoau" path="res://meshes/nature/trees/birch_model_2.glb" id="1_actnr"]
+[ext_resource type="Material" uid="uid://dg0d7hgeoqydn" path="res://materials/nature/birch_tree_material.tres" id="2_x4ynt"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_a6c2l"]
+height = 3.25
+radius = 0.25
+
+[node name="birch_tree_2" instance=ExtResource("1_actnr")]
+collision_layer = 0
+
+[node name="tree_001" parent="." index="0"]
+material_override = ExtResource("2_x4ynt")
+lod_bias = 0.1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59925, -0.106512)
+shape = SubResource("CylinderShape3D_a6c2l")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://ur03cepnijx5"]
+
+[ext_resource type="Script" path="res://scripts/resource_objects/ResourceController.cs" id="1_oh54x"]
+[ext_resource type="PackedScene" uid="uid://dmoiaguo7sf33" path="res://scenes/resourceobjects/nature/trees/_tall_pine_tree_1.tscn" id="2_bto58"]
+[ext_resource type="PackedScene" uid="uid://6b410v2gv4fo" path="res://scenes/resourceobjects/nature/trees/_tall_pine_tree_2.tscn" id="3_fuxev"]
+
+[node name="tall_pine_tree_controller" type="Node3D" node_paths=PackedStringArray("children")]
+script = ExtResource("1_oh54x")
+children = [NodePath("tall_pine_model_1"), NodePath("tall_pine_model_2")]
+
+[node name="tall_pine_model_1" parent="." instance=ExtResource("2_bto58")]
+visible = false
+
+[node name="tall_pine_model_2" parent="." instance=ExtResource("3_fuxev")]
+visible = false

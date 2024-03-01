@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://6b410v2gv4fo"]
+
+[ext_resource type="PackedScene" uid="uid://iw1drp4nv1sv" path="res://meshes/nature/trees/tall_pine_model_2.glb" id="1_vdml2"]
+[ext_resource type="Material" uid="uid://bnywi5e0vvxx6" path="res://materials/nature/tall_pine_tree_material.tres" id="2_mwbli"]
+[ext_resource type="Material" uid="uid://buxmxjdtln8n" path="res://materials/nature/tall_pine_leaves_material.tres" id="3_45b5o"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_25ul8"]
+height = 3.25
+radius = 0.6
+
+[node name="tall_pine_model_2" instance=ExtResource("1_vdml2")]
+collision_layer = 0
+
+[node name="tree_002" parent="." index="0"]
+material_override = ExtResource("2_mwbli")
+
+[node name="leaves" parent="." index="1"]
+material_override = ExtResource("3_45b5o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59925, 0)
+shape = SubResource("CylinderShape3D_25ul8")

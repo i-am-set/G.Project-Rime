@@ -74,7 +74,7 @@ public partial class ResourceInstancer : Node3D
 				var resourceScale = rngBase.RandfRange(0.8f, 2.0f);
 				resourceInstance.Scale = new Vector3(resourceScale, resourceScale, resourceScale);
 				resourceInstance.Rotation = new Vector3(DegToRad(rngBase.RandiRange(-2, 2)), DegToRad(rngBase.RandiRange(0, 359)), DegToRad(rngBase.RandiRange(-2, 2)));
-                
+				
 				if (trees.Contains(resource.Key))
 				{
 					return TreeParameters(resourceInstance);

@@ -4,6 +4,9 @@ var _player_node = preload("res://scenes/fps_controller.tscn")
 var _chat = preload("res://scenes/game_chat_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
+var thread1 : Thread
+var mutex : Mutex
+
 @onready var _collision_map = $Terrain/Collisionmap
 @onready var _clip_map = $Terrain/Clipmap
 @onready var _resource_instancer = $ResourceInstancer
@@ -18,6 +21,8 @@ var is_generating_resources : bool = false
 var generation_cycle : int
 
 func _ready():
+	mutex = Mutex.new()
+	thread1 = Thread.new()
 	# Steamwork connections
 	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
@@ -79,7 +84,9 @@ func _physics_process(delta):
 		get_lobby_members()
 		if !is_generating_resources:
 			is_generating_resources = true
-			generate_local_resources()
+			var _authorized_player_position = _authorized_player.position
+			#thread1.start(generate_local_resources.bind(_authorized_player_position))
+			generate_local_resources(_authorized_player_position)
 
 
 func _input(event):
@@ -140,12 +147,11 @@ func attach_player_to_world(player_instance: Node3D):
 	_collision_map.physics_body = player_instance
 	_clip_map.player_character = player_instance
 
-func generate_local_resources():
-	var _authorized_player_position = _authorized_player.position
+func generate_local_resources(_authorized_player_position):
 	var _authorized_player_resource_spawn_radius = _authorized_player._resource_spawn_radius
 	var _authorized_player_resource_spawn_radius_half = _authorized_player_resource_spawn_radius*0.5
 	
-	resource_data = _resource_instancer._csharp_caller.IterateThroughTrees(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
+	resource_data = _resource_instancer._csharp_caller.IterateThroughResources(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
 	
 	 #opt - make sure this is the fastest option ^
 	#for x in range(_authorized_player_position.x-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.x+(_authorized_player_resource_spawn_radius_half)):
@@ -164,18 +170,21 @@ func generate_local_resources():
 					#generation_cycle = 0
 					#await get_tree().process_frame
 	
-	for resource_location in resource_data:
-		if resource_data[resource_location] == null:
-			continue
-		var distance = Vector2(resource_location.x, resource_location.z).distance_to(Vector2(_authorized_player_position.x, _authorized_player_position.z))
-		if distance < _authorized_player_resource_spawn_radius and resource_data[resource_location].get_parent() == null:
-			_resource_instancer.add_child(resource_data[resource_location])
-		elif distance >= _authorized_player_resource_spawn_radius and resource_data[resource_location].get_parent() != null:
-			_resource_instancer.remove_child(resource_data[resource_location])
-		generation_cycle += 1
-		if generation_cycle >= 5:
-			generation_cycle = 0
-			await get_tree().process_frame
+	_resource_instancer._csharp_caller.ReseatResources(resource_data, _authorized_player_position, _authorized_player_resource_spawn_radius)
+	
+	#for resource_location in resource_data:
+		#var node = resource_data[resource_location]
+		#if node == null:
+			#continue
+		#var distance = Vector2(resource_location.x, resource_location.z).distance_to(Vector2(_authorized_player_position.x, _authorized_player_position.z))
+		#if distance < _authorized_player_resource_spawn_radius and node.get_parent() == null:
+			#_resource_instancer.add_child(node)
+		#elif distance >= _authorized_player_resource_spawn_radius and node.get_parent() != null:
+			#_resource_instancer.remove_child(node)
+		#generation_cycle += 1
+		#if generation_cycle >= 5:
+			#generation_cycle = 0
+			#await get_tree().process_frame
 	
 	is_generating_resources = false
 
@@ -352,3 +361,6 @@ func process_data(packet_data : Dictionary):
 					player_instance.global_position = packet_data["player_position"]
 				if packet_data.has("player_rotation"):
 					player_instance.rotation = packet_data["player_rotation"]
+
+func _exit_tree():
+	thread1.wait_to_finish()

@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi60mxmfdf32h"]
+
+[ext_resource type="Script" path="res://scripts/resource_objects/ResourceController.cs" id="1_vyyal"]
+[ext_resource type="PackedScene" uid="uid://bse3viock311u" path="res://scenes/resourceobjects/nature/nodes/_flint_node_1.tscn" id="2_51vou"]
+[ext_resource type="PackedScene" uid="uid://57ikoo52mmcg" path="res://scenes/resourceobjects/nature/nodes/_flint_node_2.tscn" id="3_bhnob"]
+[ext_resource type="PackedScene" uid="uid://mhndawbysv7u" path="res://scenes/resourceobjects/nature/nodes/_flint_node_3.tscn" id="4_n000x"]
+
+[node name="flint_node_controller" type="Node3D" node_paths=PackedStringArray("children")]
+script = ExtResource("1_vyyal")
+children = [NodePath("flint_node_1"), NodePath("flint_node_2"), NodePath("flint_node_3")]
+
+[node name="flint_node_1" parent="." instance=ExtResource("2_51vou")]
+visible = false
+
+[node name="flint_node_2" parent="." instance=ExtResource("3_bhnob")]
+visible = false
+
+[node name="flint_node_3" parent="." instance=ExtResource("4_n000x")]
+visible = false

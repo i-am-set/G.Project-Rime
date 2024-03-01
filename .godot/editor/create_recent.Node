@@ -1,9 +1,9 @@
-StaticBody3D
-CollisionShape3D
-CollisionPolygon3D
 Node3D
-Node
+CollisionShape3D
+StaticBody3D
 MeshInstance3D
+CollisionPolygon3D
+Node
 ScatterItem
 ProtonScatter
 Marker3D
