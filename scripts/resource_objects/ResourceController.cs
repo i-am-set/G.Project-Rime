@@ -5,6 +5,8 @@ public partial class ResourceController : Node3D
 	[Export]
 	public StaticBody3D[] children;
 
+	public PackedScene _packedScene;
+
 	public int currentResource = 0;
 
 	public void ShowResource(int child)

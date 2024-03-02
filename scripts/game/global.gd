@@ -25,6 +25,7 @@ var WORLD_SEED = 0
 var WORLD_HEIGHT_MAP = null
 # Options Variables
 var RENDER_DISTANCE = 10
+var LOD_BIAS = 0.25
 
 func _ready():
 	var INIT = Steam.steamInit()
