@@ -105,7 +105,7 @@ func _ready():
 func set_settings():
 	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
 	RenderingServer.global_shader_parameter_set("fade_distance_min", Global.RENDER_DISTANCE*9)
-	CAMERA_CONTROLLER.far = Global.RENDER_DISTANCE*12
+	#CAMERA_CONTROLLER.far = Global.RENDER_DISTANCE*12 # opt - see if this would have even helped performance; can't use it with the skybox
 	_resource_spawn_radius = (Global.RENDER_DISTANCE*24)+20
 
 func _physics_process(delta):

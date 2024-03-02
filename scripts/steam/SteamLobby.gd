@@ -229,6 +229,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		if Steam.getLobbyData(this_lobby_id, "is_started") == "true":
 			await initialize_game(int(Steam.getLobbyData(this_lobby_id, "world_seed")))
 			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
+			# bug - multiplayer lobby joining game on lobby join AND seed is broken
 		
 	# Else it failed for some reason
 	else:

@@ -24,7 +24,7 @@ var GLOBAL_TICK = 0
 var WORLD_SEED = 0
 var WORLD_HEIGHT_MAP = null
 # Options Variables
-var RENDER_DISTANCE = 12
+var RENDER_DISTANCE = 10
 
 func _ready():
 	var INIT = Steam.steamInit()

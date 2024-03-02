@@ -465,6 +465,8 @@ _data = {
 length = 0.75
 
 [node name="FPSController" type="CharacterBody3D" node_paths=PackedStringArray("VISOR", "CAMERA_CONTROLLER", "ANIMATIONPLAYER", "CROUCH_SHAPECAST", "PLAYERSTATEMACHINE", "USERINTERFACE", "WEAPONVIEWPORT")]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_k00bc")
 VISOR = NodePath("CollisionShape3D/Visor")
 MOUSE_SENSITIVITY = 1.0
@@ -495,7 +497,6 @@ transform = Transform3D(1, 0, 0, 0, 0.997564, 0.0697565, 0, -0.0697565, 0.997564
 [node name="Camera3D" type="Camera3D" parent="CameraController"]
 unique_name_in_owner = true
 cull_mask = 1048573
-far = 140.0
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="CameraController/Camera3D"]
 visible = false
@@ -515,7 +516,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true

@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 var image: Image = load(ProjectSettings.get_setting("shader_globals/heightmap").value).get_image()

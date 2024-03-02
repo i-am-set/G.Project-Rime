@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8k603xutcxip"]
+
+[ext_resource type="PackedScene" uid="uid://dx4ied81ektfn" path="res://meshes/utility/skybox_mesh.glb" id="1_2hkqq"]
+[ext_resource type="Texture2D" uid="uid://dtqy36uq5ku48" path="res://textures/nature/utility/pinetree_skybox.png" id="2_s4456"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rddug"]
+transparency = 1
+albedo_texture = ExtResource("2_s4456")
+
+[node name="skybox_scene" instance=ExtResource("1_2hkqq")]
+
+[node name="skybox" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_rddug")
+transparency = 0.5

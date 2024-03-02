@@ -4,12 +4,11 @@ var _player_node = preload("res://scenes/fps_controller.tscn")
 var _chat = preload("res://scenes/game_chat_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
-var thread1 : Thread
-var mutex : Mutex
-
 @onready var _collision_map = $Terrain/Collisionmap
 @onready var _clip_map = $Terrain/Clipmap
 @onready var _resource_instancer = $ResourceInstancer
+@onready var _skybox = $skybox_scene
+@onready var _grass_instancer = $GrassInstancer
 
 var _chat_instance : Control
 var _player_list_instance : Control
@@ -21,8 +20,6 @@ var is_generating_resources : bool = false
 var generation_cycle : int
 
 func _ready():
-	mutex = Mutex.new()
-	thread1 = Thread.new()
 	# Steamwork connections
 	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
@@ -73,21 +70,27 @@ func _ready():
 		print_debug("self created")
 	
 	noise.seed = Global.WORLD_SEED
+	_grass_instancer.player_node = _authorized_player
 
 func _physics_process(delta):
+	var _authorized_player_position = _authorized_player.position
+	
 	# If the player is connected, read packets
 	if Global.LOBBY_ID > 0:
 		read_all_p2p_packets()
+	
+	translate_skybox(_authorized_player_position)
 	
 	# Do stuff every 40 global ticks
 	if Global.GLOBAL_TICK % 40 == 0:
 		get_lobby_members()
 		if !is_generating_resources:
 			is_generating_resources = true
-			var _authorized_player_position = _authorized_player.position
-			#thread1.start(generate_local_resources.bind(_authorized_player_position))
 			generate_local_resources(_authorized_player_position)
 
+func translate_skybox(_authorized_player_position):
+	if _authorized_player_position != null:
+		_skybox.position = Vector3(_authorized_player_position.x, -14, _authorized_player_position.z)
 
 func _input(event):
 	if Input.is_action_just_pressed("ui_scroll_up"):
@@ -150,7 +153,7 @@ func attach_player_to_world(player_instance: Node3D):
 func generate_local_resources(_authorized_player_position):
 	var _authorized_player_resource_spawn_radius = _authorized_player._resource_spawn_radius
 	var _authorized_player_resource_spawn_radius_half = _authorized_player_resource_spawn_radius*0.5
-	
+
 	resource_data = _resource_instancer._csharp_caller.IterateThroughResources(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
 	
 	 #opt - make sure this is the fastest option ^
@@ -362,5 +365,5 @@ func process_data(packet_data : Dictionary):
 				if packet_data.has("player_rotation"):
 					player_instance.rotation = packet_data["player_rotation"]
 
-func _exit_tree():
-	thread1.wait_to_finish()
+#func _exit_tree():
+	#thread1.wait_to_finish()
