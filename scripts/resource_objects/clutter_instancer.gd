@@ -2,7 +2,7 @@
 extends Node3D
  # todo - see if you can get the location of all of these multimeshes so you can 'harvest' them in runtime
 # opt - strip this script of everything unused; didn't fully skim it or use the collision part
-@export var _is_initialized : bool = false
+var _is_initialized : bool = false
 @export var player_node: Node3D
 @export var instance_amount : int = 100  # Number of instances to generate
 @export var generate_colliders: bool = false

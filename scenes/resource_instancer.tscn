@@ -1,31 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://diatixhqy12pa"]
+[gd_scene load_steps=3 format=3 uid="uid://diatixhqy12pa"]
 
 [ext_resource type="Script" path="res://scripts/resource_objects/resource_instancer.gd" id="1_pxper"]
 [ext_resource type="Script" path="res://scripts/resource_objects/CallResourceInstancer.cs" id="2_0ua84"]
 
-[sub_resource type="CSharpScript" id="CSharpScript_30bak"]
-script/source = "using Godot;
-using System;
-
-public partial class StartResourceIsntancer : Node3D
-{
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-}
-"
-
 [node name="ResourceInstancer" type="Node3D"]
 script = ExtResource("1_pxper")
-
-[node name="CSharpStarter" type="Node3D" parent="."]
-script = SubResource("CSharpScript_30bak")
 
 [node name="CSharpCaller" type="Node3D" parent="."]
 script = ExtResource("2_0ua84")

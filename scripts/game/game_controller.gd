@@ -154,40 +154,9 @@ func generate_local_resources(_authorized_player_position):
 	var _authorized_player_resource_spawn_radius = _authorized_player._resource_spawn_radius
 	var _authorized_player_resource_spawn_radius_half = _authorized_player_resource_spawn_radius*0.5
 	
-	resource_data = await _resource_instancer._csharp_caller.IterateThroughResources(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
+	resource_data = _resource_instancer._csharp_caller.IterateThroughResources(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
 	
-	##opt - make sure this is the fastest option ^
-	#for x in range(_authorized_player_position.x-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.x+(_authorized_player_resource_spawn_radius_half)):
-		#for z in range(_authorized_player_position.z-(_authorized_player_resource_spawn_radius_half), _authorized_player_position.z+(_authorized_player_resource_spawn_radius_half)):
-			#var height = noise.get_noise_2d(x, z) * 100
-			#var heightmapY = Heightmap.get_height(x, z)
-			#if height <= 0.4:
-				#continue
-			#elif height > 0.4 && !resource_data.has(Vector3(x, heightmapY, z)):
-				#var resource = _resource_instancer._csharp_caller.InstantiateResource(height*100, _resource_instancer)
-				#var resourcePosition = Vector3(x, heightmapY, z)
-				#resource.position = resourcePosition
-				#resource_data[resourcePosition] = resource
-			#generation_cycle += 1
-			#if generation_cycle >= 5:
-				#generation_cycle = 0
-				#await get_tree().process_frame
-	
-	await _resource_instancer._csharp_caller.ReseatResources(resource_data, _authorized_player_position, _authorized_player_resource_spawn_radius)
-	
-	#for resource_location in resource_data:
-		#var node = resource_data[resource_location]
-		#if node == null:
-			#continue
-		#var distance = Vector2(resource_location.x, resource_location.z).distance_to(Vector2(_authorized_player_position.x, _authorized_player_position.z))
-		#if distance < _authorized_player_resource_spawn_radius and node.get_parent() == null:
-			#_resource_instancer.add_child(node)
-		#elif distance >= _authorized_player_resource_spawn_radius and node.get_parent() != null:
-			#_resource_instancer.remove_child(node)
-		#generation_cycle += 1
-		#if generation_cycle >= 5:
-			#generation_cycle = 0
-			#await get_tree().process_frame
+	_resource_instancer._csharp_caller.ReseatResources(resource_data, _authorized_player_position, _authorized_player_resource_spawn_radius)
 	
 	is_generating_resources = false
 

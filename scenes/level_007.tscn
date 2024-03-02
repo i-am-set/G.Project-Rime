@@ -109,7 +109,7 @@ buffer = PackedFloat32Array(-1.91705, 0, 1.11219, -11.352, 0, 2.21631, 0, 0, -1.
 script = ExtResource("1_fhji4")
 
 [node name="GodotSky" parent="." instance=ExtResource("2_gdmhl")]
-timeOfDay = 991.595
+timeOfDay = 1357.42
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
@@ -143,11 +143,11 @@ visible = false
 
 [node name="GrassInstancer" type="Marker3D" parent="." node_paths=PackedStringArray("player_node")]
 script = ExtResource("10_ypipo")
-_is_initialized = true
 player_node = NodePath(".")
 instance_amount = 20
 pos_randomize = 30.0
 instance_min_scale = 0.01
+instance_spacing = 20
 scale_randomize = 2.405
 rot_y_randomize = 67.89
 rot_x_randomize = 0.1
