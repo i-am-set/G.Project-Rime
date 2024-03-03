@@ -1,4 +1,3 @@
-@tool
 extends Node3D
  # todo - see if you can get the location of all of these multimeshes so you can 'harvest' them in runtime
 # opt - strip this script of everything unused; didn't fully skim it or use the collision part
@@ -60,9 +59,10 @@ func create_multimesh():
  
 func _process(delta):
 	#on each update, move the center to player
-	if player_node != null && _is_initialized:
-		self.global_position = Vector3(player_node.global_position.x,0.0,player_node.global_position.z).snapped(Vector3(1,0,1));
-		multi_mesh_instance.multimesh = distribute_meshes()
+	if Global.GLOBAL_TICK % 40 == 0:
+		if player_node != null && _is_initialized:
+			self.global_position = Vector3(player_node.global_position.x,0.0,player_node.global_position.z).snapped(Vector3(1,0,1));
+			multi_mesh_instance.multimesh = distribute_meshes()
  
 func distribute_meshes():
 	randomize()
@@ -118,7 +118,7 @@ func distribute_meshes():
  
 		# Set the instance data
 		multi_mesh.set_instance_transform(i, t.scaled_local(sc))
- 
+
 		#Collisions
 		if generate_colliders:
 			if first_update:

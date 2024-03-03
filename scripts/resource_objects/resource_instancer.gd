@@ -1,7 +1,7 @@
 extends Node3D
 
 @onready var _csharp_caller = $CSharpCaller
-
+# opt - move this to the .cs script
 #-------------------- Trees ---------------------------#
 var birch_tree = preload("res://scenes/resourceobjects/nature/trees/birch_tree_controller.tscn")
 
@@ -15,7 +15,7 @@ var trees = [
 	tall_pine_tree
 ]
 
-#-------------------- Grass Tufts ---------------------#
+#-------------------- Nodes ---------------------#
 # todo - make stone nodes and think of other types of nodes, maybe metal of some sort if that would make sense
 var flint_node = preload("res://scenes/resourceobjects/nature/nodes/flint_node_controller.tscn")
 
@@ -26,6 +26,13 @@ var nodes = [
 	stone_node
 ]
 
+#-------------------- Shrubs ---------------------#
+var twig_shrub = preload("res://scenes/resourceobjects/nature/shrub/twig_shrub_1.tscn")
+
+var shrubs = [
+	twig_shrub
+]
+
 #------------------------------------------------------#
 
 var weights : Dictionary = {
@@ -33,7 +40,8 @@ var weights : Dictionary = {
 	pine_tree : 0.5,
 	tall_pine_tree : 10,
 	stone_node : 0.2,
-	flint_node : 0.1
+	flint_node : 0.1,
+	twig_shrub : 0.3
 }
 
 var _is_initialized : bool = false
@@ -48,41 +56,3 @@ func initiate_weight_system():
 		for resource in weights:
 			_total_weight += weights[resource]
 		_is_initialized = true
-
-##moved to CallResourceInstancer.cs
-#func instantiate_resource(height_seed : int) -> Node3D:
-	#_rng_base.seed = height_seed
-	#var dice_roll = _rng_base.randf_range(0, _total_weight)
-	#
-	#for resource in weights:
-		#if weights[resource] >= dice_roll:
-			#var rand_resource = 0
-			#var resource_instance = resource.instantiate()
-			#var resource_scale = _rng_base.randf_range(0.8, 2.0)
-			#rand_resource = _rng_base.randi_range(0, resource_instance.children.size()-1)
-			#resource_instance.ShowResource(rand_resource)
-			#resource_instance.scale = Vector3(resource_scale, resource_scale, resource_scale)
-			#resource_instance.rotation = Vector3(deg_to_rad(_rng_base.randi_range(-2, 2)), deg_to_rad(_rng_base.randi_range(0, 359)), deg_to_rad(_rng_base.randi_range(-2, 2)))
-			#
-			#if trees.has(resource):
-				#return tree_parameters(resource_instance, rand_resource)
-			#
-			#return resource_instance
-		#dice_roll -= weights[resource]
-	#
-	#printerr("failed to roll a resource")
-	#return null
-#
- ##moved to CallResourceInstancer.cs
-#func tree_parameters(tree, tree_number) -> Node3D:
-	#var first_child = tree.get_child(tree_number).get_child(0)
-	#var first_child_material = first_child.material_override
-	##var LOD_range = Global.RENDER_DISTANCE*6
-	#first_child_material = first_child_material.duplicate()
-	#first_child.lod_bias = 0.2
-	#first_child_material.set_shader_parameter("tree_base_height", _rng_base.randf_range(0.1, 1.2))
-	#first_child_material.set_shader_parameter("tree_base_darkness", _rng_base.randf_range(0.1, 0.2))
-	#first_child_material.set_shader_parameter("uv1_offset", Vector3(_rng_base.randf_range(1, 20),1 ,1))
-	#first_child.material_override = first_child_material
-	#
-	#return tree
