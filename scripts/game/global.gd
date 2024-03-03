@@ -11,13 +11,13 @@ var OWNED = false
 var ONLINE = false
 var STEAM_ID = 0
 var STEAM_NAME = ""
-# Lobby Variables
+# Lobby Variables 
 var DATA
 var LOBBY_ID = 0
 var LOBBY_MAX_MEMBERS = 4
 var LOBBY_MEMBERS = []
 var LOBBY_INVITE_ARG = false
-var LOBBY_PEER_INSTANCES = {}
+var LOBBY_PEER_INSTANCES = {} 
 var MOUSE_CAPTURED = false
 var GLOBAL_TICK = 0
 # World Variables

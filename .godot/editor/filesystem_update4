@@ -38,3 +38,5 @@ res://scripts/resource_objects/CallResourceInstancer.cs
 res://scripts/resource_objects/ResourceController.cs
 res://scripts/resource_objects/ResourceInstancer.cs
 res://scripts/resource_objects/clutter_instancer.gd
+res://scripts/game/global.gd
+res://!old/environment/WE_test.tres

@@ -7,17 +7,13 @@ var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 @onready var _collision_map = $Terrain/Collisionmap
 @onready var _clip_map = $Terrain/Clipmap
 @onready var _resource_instancer = $ResourceInstancer
+@onready var _resource_instancer_csharp_caller = $ResourceInstancer/CSharpCaller
 @onready var _skybox = $skybox_scene
 @onready var _grass_instancer = $GrassInstancer
 
 var _chat_instance : Control
 var _player_list_instance : Control
 var _authorized_player : Player
-
-var noise : FastNoiseLite = preload('res://world/heightmap/resource_noise.tres')
-var resource_data : Dictionary = {}
-var is_generating_resources : bool = false
-var generation_cycle : int
 
 func _ready():
 	# Steamwork connections
@@ -69,7 +65,7 @@ func _ready():
 		player_instance.global_transform.origin = Vector3(5, 20, 0)
 		print_debug("self created")
 	
-	noise.seed = Global.WORLD_SEED
+	_resource_instancer_csharp_caller.noise.seed = Global.WORLD_SEED
 	_grass_instancer.player_node = _authorized_player
 
 func _physics_process(delta):
@@ -80,13 +76,11 @@ func _physics_process(delta):
 		read_all_p2p_packets()
 	
 	translate_skybox(_authorized_player_position)
+	send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player._resource_spawn_radius)
 	
 	# Do stuff every 40 global ticks
 	if Global.GLOBAL_TICK % 40 == 0:
 		get_lobby_members()
-		if !is_generating_resources:
-			is_generating_resources = true
-			generate_local_resources(_authorized_player_position)
 
 func translate_skybox(_authorized_player_position):
 	if _authorized_player_position != null:
@@ -150,26 +144,21 @@ func attach_player_to_world(player_instance: Node3D):
 	_collision_map.physics_body = player_instance
 	_clip_map.player_character = player_instance
 
-func generate_local_resources(_authorized_player_position):
-	var _authorized_player_resource_spawn_radius = _authorized_player._resource_spawn_radius
-	var _authorized_player_resource_spawn_radius_half = _authorized_player_resource_spawn_radius*0.5
-	
-	resource_data = _resource_instancer._csharp_caller.IterateThroughResources(_authorized_player_position, _authorized_player_resource_spawn_radius_half, noise, resource_data)
-	
-	_resource_instancer._csharp_caller.ReseatResources(resource_data, _authorized_player_position, _authorized_player_resource_spawn_radius)
-	
-	is_generating_resources = false
+# opt - Within this .cs script, there is a "cachedPosition" variable that could theoretically eat up memory forever; impliment a simple clearer every x seconds/minutes or do a distance calc every x seconds/minutes
+func send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player_resource_spawn_radius):
+	_resource_instancer_csharp_caller.authorizedPlayerPosition = _authorized_player_position
+	_resource_instancer_csharp_caller.authorizedPlayerResourceSpawnRadius = _authorized_player_resource_spawn_radius
 
-func replenish_resources():
-	var tempNode
-	for node in resource_data:
-		if resource_data.has(tempNode):
-			resource_data.erase(tempNode)
-		remove_child(resource_data[node])
-		resource_data[node].queue_free()
-		tempNode = node
-	if resource_data.has(tempNode):
-		resource_data.erase(tempNode)
+#func replenish_resources():
+	#var tempNode
+	#for node in resource_data:
+		#if resource_data.has(tempNode):
+			#resource_data.erase(tempNode)
+		#remove_child(resource_data[node])
+		#resource_data[node].queue_free()
+		#tempNode = node
+	#if resource_data.has(tempNode):
+		#resource_data.erase(tempNode)
 
 #######################
 ### Steam Callbacks ###
