@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3hrswaixh50b"
-path.s3tc="res://.godot/imported/shrub_bush.png-248139c979bef7b8f06b25bdf121fdd4.s3tc.ctex"
+uid="uid://deqsm8lx117pu"
+path.s3tc="res://.godot/imported/shrub_bush1.png-39c90e115effc7c3bf30b27a90a65f7c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/nature/shrub/shrub_bush.png"
-dest_files=["res://.godot/imported/shrub_bush.png-248139c979bef7b8f06b25bdf121fdd4.s3tc.ctex"]
+source_file="res://textures/nature/shrub/shrub_bush1.png"
+dest_files=["res://.godot/imported/shrub_bush1.png-39c90e115effc7c3bf30b27a90a65f7c.s3tc.ctex"]
 
 [params]
 

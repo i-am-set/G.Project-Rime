@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://hwcfodjh80hl"]
+[gd_scene load_steps=16 format=3 uid="uid://hwcfodjh80hl"]
 
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_fhji4"]
 [ext_resource type="PackedScene" uid="uid://1gfropwtqfbn" path="res://GodotSky/GodotSky.tscn" id="2_gdmhl"]
@@ -9,9 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://bm3se7nbvev48" path="res://world/clipmap/clipmap_partition.tscn" id="7_kakbe"]
 [ext_resource type="PackedScene" uid="uid://diatixhqy12pa" path="res://scenes/resource_instancer.tscn" id="8_i66or"]
 [ext_resource type="PackedScene" uid="uid://b8k603xutcxip" path="res://scenes/utility/skybox_scene.tscn" id="9_b8it0"]
-[ext_resource type="Script" path="res://scripts/resource_objects/clutter_instancer.gd" id="10_ypipo"]
-[ext_resource type="ArrayMesh" uid="uid://8j7ckn1wqi4h" path="res://meshes/nature/clutter/clutter_grass_1.obj" id="11_7tr5t"]
-[ext_resource type="Material" uid="uid://bnp8m2njv656s" path="res://materials/nature/grass_clutter_material.tres" id="12_v6bnf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gd0ev"]
 material = ExtResource("3_s5dox")
@@ -109,7 +106,7 @@ buffer = PackedFloat32Array(-1.91705, 0, 1.11219, -11.352, 0, 2.21631, 0, 0, -1.
 script = ExtResource("1_fhji4")
 
 [node name="GodotSky" parent="." instance=ExtResource("2_gdmhl")]
-timeOfDay = 1417.11
+timeOfDay = 1704.81
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
@@ -140,17 +137,3 @@ visible = false
 [node name="ResourceInstancer" parent="." instance=ExtResource("8_i66or")]
 
 [node name="skybox_scene" parent="." instance=ExtResource("9_b8it0")]
-
-[node name="GrassInstancer" type="Marker3D" parent="." node_paths=PackedStringArray("player_node")]
-script = ExtResource("10_ypipo")
-player_node = NodePath(".")
-instance_amount = 30
-pos_randomize = 30.0
-instance_min_scale = 0.01
-instance_spacing = 20
-scale_randomize = 2.405
-rot_y_randomize = 67.89
-rot_x_randomize = 0.1
-rot_z_randomize = 0.1
-instance_mesh = ExtResource("11_7tr5t")
-instance_mesh_material = ExtResource("12_v6bnf")

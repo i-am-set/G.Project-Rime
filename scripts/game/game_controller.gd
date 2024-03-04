@@ -66,7 +66,7 @@ func _ready():
 		print_debug("self created")
 	
 	_resource_instancer_csharp_caller.noise.seed = Global.WORLD_SEED
-	_grass_instancer.player_node = _authorized_player
+	#_grass_instancer.player_node = _authorized_player
 
 func _physics_process(delta):
 	var _authorized_player_position = _authorized_player.position

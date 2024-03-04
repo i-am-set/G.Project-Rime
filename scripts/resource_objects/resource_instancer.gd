@@ -41,7 +41,7 @@ var weights : Dictionary = {
 	tall_pine_tree : 10,
 	stone_node : 0.2,
 	flint_node : 0.1,
-	twig_shrub : 0.3
+	twig_shrub : 0.1
 }
 
 var _is_initialized : bool = false
