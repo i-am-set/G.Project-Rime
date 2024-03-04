@@ -9,8 +9,8 @@
 render_priority = 0
 shader = ExtResource("1_uo4n7")
 shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/roughness = 0.5
-shader_parameter/normal_map_scale = 3.0
+shader_parameter/roughness = 0.45
+shader_parameter/normal_map_scale = 1.0
 shader_parameter/subsurface_scattering_scale = 0.3
 shader_parameter/texture_albedo = ExtResource("2_me466")
 shader_parameter/texture_roughness = ExtResource("4_q1iws")

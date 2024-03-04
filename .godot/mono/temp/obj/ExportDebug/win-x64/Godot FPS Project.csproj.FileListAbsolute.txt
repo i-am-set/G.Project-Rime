@@ -229,7 +229,6 @@ C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.AssemblyInfoInputs.cache
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.AssemblyInfo.cs
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.csproj.CoreCompileInputs.cache
-C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.csproj.CopyComplete
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.dll
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\refint\Godot FPS Project.dll
 C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.pdb
@@ -474,3 +473,5 @@ C:\Users\SethLaptop\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win
 C:\Users\SethLaptop\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.pdb
 C:\Users\SethLaptop\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.genruntimeconfig.cache
 C:\Users\SethLaptop\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\ref\Godot FPS Project.dll
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FPS Project.sourcelink.json
+C:\Users\sethg\wkspaces\G.Project-Rime\.godot\mono\temp\obj\ExportDebug\win-x64\Godot FP.981EA926.Up2Date

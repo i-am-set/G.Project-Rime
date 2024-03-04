@@ -10,33 +10,45 @@ public partial class CallResourceInstancer : Node3D
     private int tick = 0;
     private Node Heightmap;
     private Node Global;
-    private Vector3 authorizedPlayerPosition;
-    private int authorizedPlayerResourceSpawnRadius;
+    private Vector3 authorizedPlayerPosition = new();
+    private int authorizedPlayerResourceSpawnRadius = 10;
+    private int authorizedPlayerResourceSpawnRadiusHalf = 5;
     private System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData = new();
     private FastNoiseLite noise = (FastNoiseLite)GD.Load("res://world/heightmap/resource_noise.tres");
     private bool isGeneratingResources = false;
+
+    private int currentX, currentZ;
+    private const int positionsPerFrame = 100;
 
     public override void _Ready()
     {
         Heightmap = GetNode<Node>("/root/Heightmap");
         Global = GetNode<Node>("/root/Global");
+        
+        currentX = (int)(authorizedPlayerPosition.X - authorizedPlayerResourceSpawnRadiusHalf);
+        currentZ = (int)(authorizedPlayerPosition.Z - authorizedPlayerResourceSpawnRadiusHalf);
     }
 
-    public override void _PhysicsProcess(double delta)
+    public override void _Process(double delta)
     {
-        if (!isGeneratingResources)
-        {
-            if ((int)Global.Get("Global") % 40 == 0)
-            {
-                isGeneratingResources = true;
-                GenerateLocalResources();
-            }
-        }
+        GenerateLocalResources();
     }
+
+    // public override void _PhysicsProcess(double delta)
+    // {
+    //     if (!isGeneratingResources)
+    //     {
+    //         if ((int)Global.Get("Global") % 40 == 0)
+    //         {
+    //             isGeneratingResources = true;
+    //             GenerateLocalResources();
+    //         }
+    //     }
+    // }
 
     private void GenerateLocalResources()
     {   
-        resourceData = IterateThroughResources(authorizedPlayerPosition, (float)(authorizedPlayerResourceSpawnRadius * 0.5), noise, resourceData);
+        resourceData = IterateThroughResources(authorizedPlayerPosition, authorizedPlayerResourceSpawnRadiusHalf, noise, resourceData);
         
         ReseatResources(resourceData, authorizedPlayerPosition, authorizedPlayerResourceSpawnRadius);
         
@@ -47,30 +59,41 @@ public partial class CallResourceInstancer : Node3D
     {
         Vector2 cachedPosition = new();
         Vector3 resourcePosition = new();
-        for (int x = (int)(authorizedPlayerPosition.X-(authorizedPlayerResourceSpawnRadiusHalf)); x < (int)(authorizedPlayerPosition.X+(authorizedPlayerResourceSpawnRadiusHalf)); x++)
+
+        for (int i = 0; i < positionsPerFrame; i++)
         {
-            for (int z = (int)(authorizedPlayerPosition.Z-(authorizedPlayerResourceSpawnRadiusHalf)); z < (int)(authorizedPlayerPosition.Z+(authorizedPlayerResourceSpawnRadiusHalf)); z++)
+            cachedPosition.X = currentX;
+            cachedPosition.Y = currentZ;
+            if (!cachedPositions.Contains(cachedPosition))
             {
-                cachedPosition.X = x;
-                cachedPosition.Y = z;
-                if (cachedPositions.Contains(cachedPosition))
-                {
-                    continue;
-                }
                 cachedPositions.Add(cachedPosition);
-                float height = noise.GetNoise2D(x, z) * 100;
-                float heightmapY = (float)Heightmap.Call("get_height", x, z);
+                float height = noise.GetNoise2D(currentX, currentZ) * 100;
+                float heightmapY = (float)Heightmap.Call("get_height", currentX, currentZ);
                 if (height > 0.425)
                 {
-                    resourcePosition.X = x;
+                    resourcePosition.X = currentX;
                     resourcePosition.Y = heightmapY;
-                    resourcePosition.Z = z;
+                    resourcePosition.Z = currentZ;
                     if (!resourceData.ContainsKey(resourcePosition))
                     {
                         Node3D resource = InstantiateResource((ulong)(height * 100), GetParent());
                         resource.Position = resourcePosition;
                         resourceData[resourcePosition] = resource;
                     }
+                }
+            }
+
+            // Update currentX and currentZ for the next frame
+            currentZ++;
+            if (currentZ >= authorizedPlayerPosition.Z + authorizedPlayerResourceSpawnRadiusHalf)
+            {
+                currentZ = (int)(authorizedPlayerPosition.Z - authorizedPlayerResourceSpawnRadiusHalf);
+                currentX++;
+                if (currentX >= authorizedPlayerPosition.X + authorizedPlayerResourceSpawnRadiusHalf)
+                {
+                    // We've finished processing the entire area
+                    // Reset currentX and currentZ to the start of the area
+                    currentX = (int)(authorizedPlayerPosition.X - authorizedPlayerResourceSpawnRadiusHalf);
                 }
             }
         }

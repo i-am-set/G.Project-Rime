@@ -76,10 +76,10 @@ func _physics_process(delta):
 		read_all_p2p_packets()
 	
 	translate_skybox(_authorized_player_position)
-	send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player._resource_spawn_radius)
 	
 	# Do stuff every 40 global ticks
 	if Global.GLOBAL_TICK % 40 == 0:
+		send_players_data_to_resource_instancer(_authorized_player.position, _authorized_player._resource_spawn_radius)
 		get_lobby_members()
 
 func translate_skybox(_authorized_player_position):
@@ -148,6 +148,7 @@ func attach_player_to_world(player_instance: Node3D):
 func send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player_resource_spawn_radius):
 	_resource_instancer_csharp_caller.authorizedPlayerPosition = _authorized_player_position
 	_resource_instancer_csharp_caller.authorizedPlayerResourceSpawnRadius = _authorized_player_resource_spawn_radius
+	_resource_instancer_csharp_caller.authorizedPlayerResourceSpawnRadiusHalf = _authorized_player_resource_spawn_radius*0.5
 
 #func replenish_resources():
 	#var tempNode
