@@ -1,14 +1,130 @@
-[gd_scene load_steps=16 format=3 uid="uid://hwcfodjh80hl"]
+[gd_scene load_steps=36 format=3 uid="uid://hwcfodjh80hl"]
 
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_fhji4"]
 [ext_resource type="PackedScene" uid="uid://1gfropwtqfbn" path="res://GodotSky/GodotSky.tscn" id="2_gdmhl"]
+[ext_resource type="Material" uid="uid://bnp8m2njv656s" path="res://materials/nature/grass_clutter_material.tres" id="3_8xglm"]
 [ext_resource type="Material" uid="uid://cn1gsy15bkaff" path="res://materials/grid.tres" id="3_s5dox"]
 [ext_resource type="Texture2D" uid="uid://ivvpsi314b34" path="res://textures/grid.jpg" id="4_omkk6"]
 [ext_resource type="PackedScene" uid="uid://c7xublrnupds4" path="res://world/collisionmap/collisionmap.tscn" id="5_ckhxw"]
 [ext_resource type="PackedScene" uid="uid://b11lm75hfbnky" path="res://world/clipmap/clipmap.tscn" id="6_1ei4r"]
+[ext_resource type="Shader" path="res://shaders/grass_shader.gdshader" id="6_p6p0x"]
+[ext_resource type="Texture2D" uid="uid://e621iecxk2wr" path="res://textures/nature/clutter/twig_clutter_1.png" id="7_e6s6r"]
 [ext_resource type="PackedScene" uid="uid://bm3se7nbvev48" path="res://world/clipmap/clipmap_partition.tscn" id="7_kakbe"]
 [ext_resource type="PackedScene" uid="uid://diatixhqy12pa" path="res://scenes/resource_instancer.tscn" id="8_i66or"]
+[ext_resource type="Texture2D" uid="uid://cq8nimyekb7ek" path="res://textures/nature/clutter/twig_clutter_2.png" id="8_l68o0"]
 [ext_resource type="PackedScene" uid="uid://b8k603xutcxip" path="res://scenes/utility/skybox_scene.tscn" id="9_b8it0"]
+[ext_resource type="Shader" uid="uid://dwvyd6l34gxfr" path="res://shaders/clutter_placing_shader.tres" id="10_5awyc"]
+[ext_resource type="ArrayMesh" uid="uid://8j7ckn1wqi4h" path="res://meshes/nature/clutter/clutter_grass_1.obj" id="11_7l4ad"]
+
+[sub_resource type="Gradient" id="Gradient_5txv0"]
+offsets = PackedFloat32Array(0.550218, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3ufrc"]
+frequency = 0.05
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1wpdb"]
+color_ramp = SubResource("Gradient_5txv0")
+noise = SubResource("FastNoiseLite_3ufrc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vpa03"]
+shader = ExtResource("10_5awyc")
+shader_parameter/instance_rows = 75.0
+shader_parameter/instance_rot_randomize = 2.5
+shader_parameter/instance_spacing = 1.25
+shader_parameter/instance_scale_x = 1.0
+shader_parameter/instance_scale_y = 1.0
+shader_parameter/instance_scale_z = 1.0
+shader_parameter/instance_scale_randomize = 1.0
+shader_parameter/instance_pos_randomize = 10.0
+shader_parameter/instance_scale_min = 1.0
+shader_parameter/instance_scale_max = 2.0
+shader_parameter/_coverage_altitude = 10.0
+shader_parameter/_coverage_range = 100.0
+shader_parameter/_slope_coverage = 0.5
+shader_parameter/clumping_strength = 25.0
+shader_parameter/terrain_normal_basis = null
+shader_parameter/instance_orient_to_normal = false
+shader_parameter/instance_orientation_influence = 1.0
+shader_parameter/map_clumpmap = SubResource("NoiseTexture2D_1wpdb")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khn3l"]
+render_priority = 0
+shader = ExtResource("6_p6p0x")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_scissor_threshold = 0.5
+shader_parameter/roughness = 1.0
+shader_parameter/texture_albedo = ExtResource("7_e6s6r")
+
+[sub_resource type="Gradient" id="Gradient_jssg3"]
+offsets = PackedFloat32Array(0.532751, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pifn8"]
+frequency = 0.0083
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_830u4"]
+color_ramp = SubResource("Gradient_jssg3")
+noise = SubResource("FastNoiseLite_pifn8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s4vfb"]
+shader = ExtResource("10_5awyc")
+shader_parameter/instance_rows = 25.0
+shader_parameter/instance_rot_randomize = 2.5
+shader_parameter/instance_spacing = 3.0
+shader_parameter/instance_scale_x = 1.0
+shader_parameter/instance_scale_y = 1.0
+shader_parameter/instance_scale_z = 1.0
+shader_parameter/instance_scale_randomize = 1.0
+shader_parameter/instance_pos_randomize = 5.0
+shader_parameter/instance_scale_min = 0.5
+shader_parameter/instance_scale_max = 1.5
+shader_parameter/_coverage_altitude = 10.0
+shader_parameter/_coverage_range = 100.0
+shader_parameter/_slope_coverage = 0.5
+shader_parameter/clumping_strength = 0.0
+shader_parameter/terrain_normal_basis = null
+shader_parameter/instance_orient_to_normal = false
+shader_parameter/instance_orientation_influence = 1.0
+shader_parameter/map_clumpmap = SubResource("NoiseTexture2D_830u4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y2580"]
+render_priority = 0
+shader = ExtResource("6_p6p0x")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_scissor_threshold = 0.5
+shader_parameter/roughness = 1.0
+shader_parameter/texture_albedo = ExtResource("8_l68o0")
+
+[sub_resource type="Gradient" id="Gradient_sl55x"]
+offsets = PackedFloat32Array(0.200873, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0mmop"]
+seed = 4
+frequency = 0.0688
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_72rrr"]
+color_ramp = SubResource("Gradient_sl55x")
+noise = SubResource("FastNoiseLite_0mmop")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g4vs6"]
+shader = ExtResource("10_5awyc")
+shader_parameter/instance_rows = 25.0
+shader_parameter/instance_rot_randomize = 2.5
+shader_parameter/instance_spacing = 5.0
+shader_parameter/instance_scale_x = 1.0
+shader_parameter/instance_scale_y = 1.0
+shader_parameter/instance_scale_z = 1.0
+shader_parameter/instance_scale_randomize = 1.0
+shader_parameter/instance_pos_randomize = 5.0
+shader_parameter/instance_scale_min = 1.0
+shader_parameter/instance_scale_max = 2.5
+shader_parameter/_coverage_altitude = 10.0
+shader_parameter/_coverage_range = 100.0
+shader_parameter/_slope_coverage = 0.5
+shader_parameter/clumping_strength = 64.452
+shader_parameter/terrain_normal_basis = null
+shader_parameter/instance_orient_to_normal = false
+shader_parameter/instance_orientation_influence = 1.0
+shader_parameter/map_clumpmap = SubResource("NoiseTexture2D_72rrr")
 
 [sub_resource type="BoxMesh" id="BoxMesh_gd0ev"]
 material = ExtResource("3_s5dox")
@@ -106,10 +222,39 @@ buffer = PackedFloat32Array(-1.91705, 0, 1.11219, -11.352, 0, 2.21631, 0, 0, -1.
 script = ExtResource("1_fhji4")
 
 [node name="GodotSky" parent="." instance=ExtResource("2_gdmhl")]
-timeOfDay = 1807.7
+timeOfDay = 1195.19
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
+
+[node name="ClutterEmitters" type="Node3D" parent="."]
+
+[node name="GrassClutterEmitter" type="GPUParticles3D" parent="ClutterEmitters"]
+material_override = ExtResource("3_8xglm")
+amount = 5625
+explosiveness = 1.0
+interpolate = false
+fract_delta = false
+process_material = SubResource("ShaderMaterial_vpa03")
+draw_pass_1 = ExtResource("11_7l4ad")
+
+[node name="TwigClutterEmitter1" type="GPUParticles3D" parent="ClutterEmitters"]
+material_override = SubResource("ShaderMaterial_khn3l")
+amount = 625
+explosiveness = 1.0
+interpolate = false
+fract_delta = false
+process_material = SubResource("ShaderMaterial_s4vfb")
+draw_pass_1 = ExtResource("11_7l4ad")
+
+[node name="TwigClutterEmitter2" type="GPUParticles3D" parent="ClutterEmitters"]
+material_override = SubResource("ShaderMaterial_y2580")
+amount = 625
+explosiveness = 1.0
+interpolate = false
+fract_delta = false
+process_material = SubResource("ShaderMaterial_g4vs6")
+draw_pass_1 = ExtResource("11_7l4ad")
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)

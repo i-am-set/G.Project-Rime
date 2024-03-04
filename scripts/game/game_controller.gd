@@ -7,9 +7,8 @@ var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 @onready var _collision_map = $Terrain/Collisionmap
 @onready var _clip_map = $Terrain/Clipmap
 @onready var _resource_instancer = $ResourceInstancer
-@onready var _resource_instancer_csharp_caller = $ResourceInstancer/CSharpCaller
 @onready var _skybox = $skybox_scene
-@onready var _grass_instancer = $GrassInstancer
+@onready var _clutter_emitters = $ClutterEmitters
 
 var _chat_instance : Control
 var _player_list_instance : Control
@@ -65,7 +64,7 @@ func _ready():
 		player_instance.global_transform.origin = Vector3(5, 20, 0)
 		print_debug("self created")
 	
-	_resource_instancer_csharp_caller.noise.seed = Global.WORLD_SEED
+	_resource_instancer.noise.seed = Global.WORLD_SEED
 	#_grass_instancer.player_node = _authorized_player
 
 func _physics_process(delta):
@@ -75,16 +74,12 @@ func _physics_process(delta):
 	if Global.LOBBY_ID > 0:
 		read_all_p2p_packets()
 	
-	translate_skybox(_authorized_player_position)
+	move_objects_to_player(_authorized_player_position)
 	
 	# Do stuff every 40 global ticks
 	if Global.GLOBAL_TICK % 40 == 0:
-		send_players_data_to_resource_instancer(_authorized_player.position, _authorized_player._resource_spawn_radius)
+		send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player._resource_spawn_radius)
 		get_lobby_members()
-
-func translate_skybox(_authorized_player_position):
-	if _authorized_player_position != null:
-		_skybox.position = Vector3(_authorized_player_position.x, -14, _authorized_player_position.z)
 
 func _input(event):
 	if Input.is_action_just_pressed("ui_scroll_up"):
@@ -146,9 +141,14 @@ func attach_player_to_world(player_instance: Node3D):
 
 # opt - Within this .cs script, there is a "cachedPosition" variable that could theoretically eat up memory forever; impliment a simple clearer every x seconds/minutes or do a distance calc every x seconds/minutes
 func send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player_resource_spawn_radius):
-	_resource_instancer_csharp_caller.authorizedPlayerPosition = _authorized_player_position
-	_resource_instancer_csharp_caller.authorizedPlayerResourceSpawnRadius = _authorized_player_resource_spawn_radius
-	_resource_instancer_csharp_caller.authorizedPlayerResourceSpawnRadiusHalf = _authorized_player_resource_spawn_radius*0.5
+	_resource_instancer.authorizedPlayerPosition = _authorized_player_position
+	_resource_instancer.authorizedPlayerResourceSpawnRadius = _authorized_player_resource_spawn_radius
+	_resource_instancer.authorizedPlayerResourceSpawnRadiusHalf = _authorized_player_resource_spawn_radius*0.5
+
+func move_objects_to_player(_authorized_player_position):
+	if _authorized_player_position != null:
+		_skybox.position = Vector3(_authorized_player_position.x, -14, _authorized_player_position.z)
+		_clutter_emitters.position = _authorized_player_position
 
 #func replenish_resources():
 	#var tempNode

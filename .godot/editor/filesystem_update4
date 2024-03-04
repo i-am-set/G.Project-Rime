@@ -33,9 +33,14 @@ res://scenes/mainmenu.tscn
 res://scenes/level_007.tscn
 res://scenes/resource_instancer.tscn
 res://GodotSky/GodotSky.tscn
+res://world/clipmap/clipmap_partition.tscn
 res://scripts/resource_objects/CallResourceInstancer.cs
 res://scripts/resource_objects/ResourceController.cs
 res://scripts/resource_objects/ResourceInstancer.cs
-res://world/clipmap/clipmap_partition.tscn
 res://scripts/game/game_controller.gd
-res://scripts/game/global.gd
+res://scripts/resource_objects/resource_instancer.gd
+res://shaders/clutter_placing_shader.tres
+res://materials/nature/grass_clutter_material.tres
+res://addons/proton_scatter/demos/assets/materials/m_grass.tres
+res://addons/proton_scatter/demos/assets/materials/grass.gdshader
+res://scripts/steam/SteamLobby.gd

@@ -12,8 +12,8 @@ global uniform float sway_speed;
 
 void vertex() {
 	ROUGHNESS=roughness;
-	VERTEX.x += sin(NODE_POSITION_WORLD.x + TIME * (0.75*sway_speed) + UV.y) * ( 1.0 - UV.y) * 0.05;
-	VERTEX.z += cos(NODE_POSITION_WORLD.z + TIME * (0.45*sway_speed) + UV.y) * ( 1.0 - UV.y) * 0.05;
+	VERTEX.x += sin(NODE_POSITION_WORLD.x + TIME * (0.75*sway_speed) + UV.y) * ( 1.0 - UV.y) * 0.02;
+	VERTEX.z += cos(NODE_POSITION_WORLD.z + TIME * (0.45*sway_speed) + UV.y) * ( 1.0 - UV.y) * 0.02;
 }
 
 void fragment() {

@@ -1,50 +1,89 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 public partial class ResourceInstancer : Node3D
 {
-	// Trees
-	private static PackedScene[] birchTree = new PackedScene[]
-	{
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/birch_tree_1.tscn"),
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/birch_tree_2.tscn"),
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/birch_tree_3.tscn"),
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/birch_tree_4.tscn")
-	};
+    // #-------------------- Trees ---------------------------#
+	private static readonly PackedScene birchTree = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/birch_tree_controller.tscn");
 
-	private static PackedScene[] pineTree = new PackedScene[]
-	{
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/pine_tree_1.tscn"),
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/pine_tree_2.tscn"),
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/pine_tree_3.tscn"),
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/pine_tree_4.tscn")
-	};
+	private static readonly PackedScene pineTree = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/pine_tree_controller.tscn");
 	
-	private static PackedScene[] tallPineTree = new PackedScene[]
-	{
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/tall_pine_tree_1.tscn"),
-		GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/tall_pine_tree_2.tscn")
-	};
+	private static readonly PackedScene tallPineTree = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/tall_pine_tree_controller.tscn");
 
-	private Array[] trees = new Array[]
+	private readonly PackedScene[] trees = new PackedScene[]
 	{
 		birchTree,
 		pineTree,
 		tallPineTree
 	};
 
-	private Dictionary<PackedScene[], float> weights = new Dictionary<PackedScene[], float>()
+	// #-------------------- Nodes ---------------------#
+	private static readonly PackedScene flintNode = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/nodes/flint_node_controller.tscn");
+
+	private static readonly PackedScene stoneNode = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/nodes/stone_node_controller.tscn");
+	
+	private readonly PackedScene[] nodes = new PackedScene[]
+	{
+		flintNode,
+		stoneNode
+	};
+
+	// #-------------------- Shrubs ---------------------#
+	private static readonly PackedScene twigShrub = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/shrub/twig_shrub_1.tscn");
+
+	private readonly PackedScene[] shrubs = new PackedScene[]
+	{
+		twigShrub
+	};
+
+	// #------------------------------------------------------#
+
+	private readonly System.Collections.Generic.Dictionary<PackedScene, float> weights = new()
 	{
 		{ birchTree, 3.0f },
 		{ pineTree, 0.5f },
-		{ tallPineTree, 10.0f }
+		{ tallPineTree, 10.0f },
+		{ flintNode, 0.2f },
+		{ stoneNode, 0.1f },
+		{ twigShrub, 0.1f }
 	};
 
-	private bool isInitialized = false;
+    private HashSet<Vector2> cachedPositions = new();
+    private int tick = 0;
+    private Node Heightmap;
+    private Node Global;
+    private Vector3 authorizedPlayerPosition = new();
+    private int authorizedPlayerResourceSpawnRadius = 10;
+    private int authorizedPlayerResourceSpawnRadiusHalf = 5;
+    private System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData = new();
+    private FastNoiseLite noise = (FastNoiseLite)GD.Load("res://world/heightmap/resource_noise.tres");
+    private bool isGeneratingResources = false;
+
+    private int currentX, currentZ;
+    private const int positionsPerFrame = 150;
+
+    private bool isInitialized = false;
 	private float totalWeight = 0;
-	private RandomNumberGenerator rngBase = new RandomNumberGenerator();
+	private RandomNumberGenerator rngBase = new();
+
+
+    public override void _Ready()
+    {
+        Heightmap = GetNode<Node>("/root/Heightmap");
+        Global = GetNode<Node>("/root/Global");
+        
+        InitiateWeightSystem();
+
+        currentX = (int)(authorizedPlayerPosition.X - authorizedPlayerResourceSpawnRadiusHalf);
+        currentZ = (int)(authorizedPlayerPosition.Z - authorizedPlayerResourceSpawnRadiusHalf);
+    }
+
+    public override void _Process(double delta)
+    {
+        GenerateLocalResources();
+    }
 
 	private void InitiateWeightSystem()
 	{
@@ -58,57 +97,143 @@ public partial class ResourceInstancer : Node3D
 		}
 	}
 
-	public Node3D InstantiateResource(int heightSeed)
-	{
-		InitiateWeightSystem();
+    private void GenerateLocalResources()
+    {   
+        resourceData = IterateThroughResources(authorizedPlayerPosition, authorizedPlayerResourceSpawnRadiusHalf, noise, resourceData);
+        
+        ReseatResources(resourceData, authorizedPlayerPosition, authorizedPlayerResourceSpawnRadius);
+        
+        isGeneratingResources = false;
+    }
 
-		rngBase.Seed = (ulong)heightSeed;
-		var diceRoll = rngBase.RandfRange(0, totalWeight);
+    private System.Collections.Generic.Dictionary<Vector3, Node3D> IterateThroughResources(Vector3 authorizedPlayerPosition, float authorizedPlayerResourceSpawnRadiusHalf, Noise noise, System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData)
+    {
+        Vector2 cachedPosition = new();
+        Vector3 resourcePosition = new();
 
-		foreach (var resource in weights)
-		{
-			if (weights[resource.Key] >= diceRoll)
-			{
-				var randResource = rngBase.RandiRange(0, resource.Key.Length - 1);
-				var resourceInstance = (Node3D)resource.Key[randResource].Instantiate();
-				var resourceScale = rngBase.RandfRange(0.8f, 2.0f);
-				resourceInstance.Scale = new Vector3(resourceScale, resourceScale, resourceScale);
-				resourceInstance.Rotation = new Vector3(DegToRad(rngBase.RandiRange(-2, 2)), DegToRad(rngBase.RandiRange(0, 359)), DegToRad(rngBase.RandiRange(-2, 2)));
-				
-				if (trees.Contains(resource.Key))
+        for (int i = 0; i < positionsPerFrame; i++)
+        {
+            cachedPosition.X = currentX;
+            cachedPosition.Y = currentZ;
+            if (!cachedPositions.Contains(cachedPosition))
+            {
+                cachedPositions.Add(cachedPosition);
+                float height = noise.GetNoise2D(currentX, currentZ) * 100;
+                float heightmapY = (float)Heightmap.Call("get_height", currentX, currentZ);
+                if (height > 0.425)
+                {
+                    resourcePosition.X = currentX;
+                    resourcePosition.Y = heightmapY;
+                    resourcePosition.Z = currentZ;
+                    if (!resourceData.ContainsKey(resourcePosition))
+                    {
+                        Node3D resource = InstantiateResource((ulong)(height * 100), GetParent());
+                        resource.Position = resourcePosition;
+                        resourceData[resourcePosition] = resource;
+                    }
+                }
+            }
+
+            // Update currentX and currentZ for the next frame
+            currentZ++;
+            if (currentZ >= authorizedPlayerPosition.Z + authorizedPlayerResourceSpawnRadiusHalf)
+            {
+                currentZ = (int)(authorizedPlayerPosition.Z - authorizedPlayerResourceSpawnRadiusHalf);
+                currentX++;
+                if (currentX >= authorizedPlayerPosition.X + authorizedPlayerResourceSpawnRadiusHalf)
+                {
+                    // We've finished processing the entire area
+                    // Reset currentX and currentZ to the start of the area
+                    currentX = (int)(authorizedPlayerPosition.X - authorizedPlayerResourceSpawnRadiusHalf);
+                }
+            }
+        }
+
+        return resourceData;
+    }
+
+    private Node3D InstantiateResource(ulong heightSeed, Node parent)
+    {
+        rngBase.Seed = heightSeed;
+        float diceRoll = rngBase.RandfRange(0, totalWeight);
+        
+        foreach (var resource in weights)
+        {
+            float weight = (float)weights[resource.Key];
+            if (weight >= diceRoll)
+            {
+                PackedScene currentResource = (PackedScene)resource.Key;
+                Node3D resourceInstance = (Node3D)currentResource.Instantiate();
+                float resourceScale = rngBase.RandfRange(0.4f, 2.5f);
+                int childrenCount = resourceInstance.GetChildren().Count;
+                int randResource = rngBase.RandiRange(0, childrenCount - 1);
+
+                resourceInstance.Call("ShowResource", randResource);
+                resourceInstance.Scale = new Vector3(resourceScale, resourceScale, resourceScale);
+                resourceInstance.Rotation = new Vector3(Mathf.DegToRad(rngBase.RandiRange(-5, 5)), Mathf.DegToRad(rngBase.RandiRange(0, 359)), Mathf.DegToRad(rngBase.RandiRange(-5, 5)));
+
+                if (trees.Contains(resource.Key))
 				{
-					return TreeParameters(resourceInstance);
+					return TreeParameters(resourceInstance, randResource, rngBase);
 				}
 
-				return resourceInstance;
-			}
-			diceRoll -= weights[resource.Key];
-		}
+                return resourceInstance;
+            }
+            diceRoll -= weight;
+        }
 
-		GD.PrintErr("Failed to roll a resource");
-		return null;
-	}
+        GD.PrintErr("failed to roll a resource");
 
-	private Node3D TreeParameters(Node3D tree)
-	{
-		// var Global = GetNode("/root/Global");
-		// var firstChild = tree.GetChild(0);
-		// var firstChildName = firstChild.GetPath();
-		// var firstChildMaterial = GetNode<MeshInstance3D>(firstChildName).MaterialOverride;
-		// var LODRange = (int)Global.Call("get_render_distance") * 6;
-		// firstChildMaterial = (ShaderMaterial)firstChildMaterial.Duplicate();
-		// var treeShader = (ShaderMaterial)firstChildMaterial;
-		// firstChildMaterial.Set("lod_bias", 0.25f);
-		// treeShader.SetShaderParameter("tree_base_height", rngBase.RandfRange(0.1f, 1.2f));
-		// treeShader.SetShaderParameter("tree_base_darkness", rngBase.RandfRange(0.1f, 0.2f));
-		// treeShader.SetShaderParameter("uv1_offset", new Vector3(rngBase.RandfRange(1, 20), 1, 1));
+        return null;
+    }
 
-		return tree;
-	}
+    private Node3D TreeParameters(Node3D tree, int treeNumber, RandomNumberGenerator rngBase)
+    {
+        MeshInstance3D firstChild = (MeshInstance3D)tree.GetChild(treeNumber).GetChild(0);
+		Material firstChildMaterial = firstChild.MaterialOverride;
+		// float LODBias = (float)Global.Get("LOD_BIAS");
+		firstChildMaterial = (ShaderMaterial)firstChildMaterial.Duplicate();
+		var treeShader = (ShaderMaterial)firstChildMaterial;
+		firstChildMaterial.Set("lod_bias", 0.2);
+		treeShader.SetShaderParameter("tree_base_height", rngBase.RandfRange(0.1f, 1.2f));
+		treeShader.SetShaderParameter("tree_base_darkness", rngBase.RandfRange(0.1f, 0.2f));
+		treeShader.SetShaderParameter("uv1_offset", new Vector3(rngBase.RandfRange(1, 20), 1, 1));
+        firstChild.MaterialOverride = firstChildMaterial;
 
-	private float DegToRad(float inputDegrees)
-	{
-		float outputRadians = (float)((Math.PI / 180) * inputDegrees);
-		return outputRadians;
-	}
+        return tree;
+    }
+
+    private void ReseatResources(System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData, Vector3 _authorizedPlayerPosition, int _authorizedPlayerResourceSpawnRadius)
+    {
+        Vector2 playerPos2D = new(_authorizedPlayerPosition.X, _authorizedPlayerPosition.Z);
+        float spawnRadiusSquared = _authorizedPlayerResourceSpawnRadius * _authorizedPlayerResourceSpawnRadius;
+        foreach (KeyValuePair<Vector3, Node3D> entry in resourceData)
+        {
+            Vector3 resourceLocation = entry.Key;
+            Node node = entry.Value;
+            if (node == null)
+            {
+                continue;
+            }
+            float distanceSquared = new Vector2(resourceLocation.X, resourceLocation.Z).DistanceSquaredTo(playerPos2D);
+            if (distanceSquared < spawnRadiusSquared && node.GetParent() == null)
+            {
+                GetParent().AddChild(node);
+            }
+            else if (distanceSquared >= spawnRadiusSquared && node.GetParent() != null)
+            {
+                GetParent().RemoveChild(node);
+            }
+        }
+    }
+    
+    // public override void _PhysicsProcess(double delta)
+    // {
+    //     tick++;
+    //     if (tick >= 240)
+    //     {
+    //         tick = 0;
+    //         cachedPositions.Clear();
+    //     }
+    // }
 }
