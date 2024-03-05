@@ -32,7 +32,7 @@ uniform sampler2D map_clumpmap;
 float get_height(vec2 pos){
 	vec2 heightmap_position  = (pos + 0.5)/float(textureSize(heightmap,0).x);
 	float amplitudeValue = texture(amplitude_mask_heightmap, heightmap_position).r;
-	return (texture(heightmap, heightmap_position ).r * amplitude * amplitudeValue)-0.4;
+	return (texture(heightmap, heightmap_position ).r * amplitude * amplitudeValue)-0.45;
 }
 
 vec3 unpack_normalmap(vec3 rgb) {

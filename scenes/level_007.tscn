@@ -40,7 +40,7 @@ shader_parameter/instance_scale_min = 1.0
 shader_parameter/instance_scale_max = 2.0
 shader_parameter/_coverage_altitude = 10.0
 shader_parameter/_coverage_range = 100.0
-shader_parameter/_slope_coverage = 0.5
+shader_parameter/_slope_coverage = 0.15
 shader_parameter/clumping_strength = 25.0
 shader_parameter/terrain_normal_basis = null
 shader_parameter/instance_orient_to_normal = false
@@ -222,7 +222,7 @@ buffer = PackedFloat32Array(-1.91705, 0, 1.11219, -11.352, 0, 2.21631, 0, 0, -1.
 script = ExtResource("1_fhji4")
 
 [node name="GodotSky" parent="." instance=ExtResource("2_gdmhl")]
-timeOfDay = 1195.19
+timeOfDay = 1402.64
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5

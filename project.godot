@@ -150,7 +150,7 @@ clipmap_position={
 }
 amplitude={
 "type": "float",
-"value": 16.0
+"value": 32.0
 }
 lod_step={
 "type": "float",
