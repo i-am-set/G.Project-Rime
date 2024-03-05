@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://griq2xudost0"]
 
 [ext_resource type="Shader" path="res://shaders/bush_shader.gdshader" id="1_evntj"]
-[ext_resource type="Texture2D" uid="uid://deqsm8lx117pu" path="res://textures/nature/shrub/shrub_bush1.png" id="2_1587f"]
+[ext_resource type="Texture2D" uid="uid://deqsm8lx117pu" path="res://textures/nature/shrub/shrub_bush_1.png" id="2_hjplx"]
 
 [sub_resource type="Gradient" id="Gradient_122hb"]
 offsets = PackedFloat32Array(0, 0.50655, 1)
@@ -32,6 +32,6 @@ shader_parameter/wind_direction = Vector2(1, -0.5)
 shader_parameter/wind_speed = 0.5
 shader_parameter/wind_strength = 0.15
 shader_parameter/noise_scale = 6.0
-shader_parameter/texture_albedo = ExtResource("2_1587f")
+shader_parameter/texture_albedo = ExtResource("2_hjplx")
 shader_parameter/texture_gradient = SubResource("GradientTexture1D_i0bw2")
 shader_parameter/texture_noise = SubResource("NoiseTexture2D_7l0n1")

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://q36ln1k5m86c"]
+
+[ext_resource type="Script" path="res://scripts/resource_objects/ResourceController.cs" id="1_wlmxq"]
+[ext_resource type="PackedScene" uid="uid://bawj0dgo6yse8" path="res://scenes/resourceobjects/nature/shrub/poor_twig_shrub_1.tscn" id="2_iryal"]
+
+[node name="poor_twig_shrub_controller" type="Node3D" node_paths=PackedStringArray("children")]
+script = ExtResource("1_wlmxq")
+children = [NodePath("twig_shrub_2")]
+
+[node name="twig_shrub_2" parent="." instance=ExtResource("2_iryal")]

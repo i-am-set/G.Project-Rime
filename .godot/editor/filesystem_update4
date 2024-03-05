@@ -31,3 +31,14 @@ res://GodotSky/GodotSky.tscn
 res://world/clipmap/clipmap_partition.tscn
 res://scripts/resource_objects/ResourceController.cs
 res://scripts/resource_objects/ResourceInstancer.cs
+res://scripts/steam/SteamLobby.gd
+res://world/heightmap/Heightmap.gd
+res://scenes/resourceobjects/nature/shrub/twig_shrub_1.tscn
+res://materials/nature/twig_shrub_material.tres
+res://addons/proton_scatter/demos/assets/materials/m_bush.tres
+res://scenes/resourceobjects/nature/shrub/twig_shrub_2.tscn
+res://scenes/resourceobjects/nature/nodes/flint_node_controller.tscn
+res://materials/nature/flint_node_material.tres
+res://scenes/resourceobjects/nature/shrub/rich_twig_shrub_1.tscn
+res://scenes/resourceobjects/nature/shrub/poor_twig_shrub_1.tscn
+res://scenes/resourceobjects/nature/shrub/rich_twig_shrub_controller.tscn

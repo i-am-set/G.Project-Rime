@@ -31,11 +31,14 @@ public partial class ResourceInstancer : Node3D
 	};
 
 	// #-------------------- Shrubs ---------------------#
-	private static readonly PackedScene twigShrub = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/shrub/twig_shrub_1.tscn");
+	private static readonly PackedScene richTwigShrub = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/shrub/rich_twig_shrub_controller.tscn");
+
+	private static readonly PackedScene poorTwigShrub = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/shrub/poor_twig_shrub_controller.tscn");
 
 	private readonly PackedScene[] shrubs = new PackedScene[]
 	{
-		twigShrub
+		richTwigShrub,
+        poorTwigShrub
 	};
 
 	// #------------------------------------------------------#
@@ -47,7 +50,8 @@ public partial class ResourceInstancer : Node3D
 		{ tallPineTree, 10.0f },
 		{ flintNode, 0.2f },
 		{ stoneNode, 0.1f },
-		{ twigShrub, 0.1f }
+		{ richTwigShrub, 0.3f },
+        { poorTwigShrub, 0.1f }
 	};
 
     private HashSet<Vector2> cachedPositions = new();

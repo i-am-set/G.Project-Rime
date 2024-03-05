@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfl75ncem7g8"]
+
+[ext_resource type="PackedScene" uid="uid://cyw7df8te8bb8" path="res://scenes/resourceobjects/nature/shrub/rich_twig_shrub_1.tscn" id="1_nkgvf"]
+[ext_resource type="Script" path="res://scripts/resource_objects/ResourceController.cs" id="1_rsg7j"]
+
+[node name="rich_twig_shrub_controller" type="Node3D" node_paths=PackedStringArray("children")]
+script = ExtResource("1_rsg7j")
+children = [NodePath("twig_shrub")]
+
+[node name="twig_shrub" parent="." instance=ExtResource("1_nkgvf")]

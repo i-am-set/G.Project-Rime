@@ -3,17 +3,17 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dw774cmci6nih"
-path="res://.godot/imported/twig_shrub_1.glb-027d096098db64be52793d147f58aa81.scn"
+uid="uid://d0hr0ds0v74gq"
+path="res://.godot/imported/twig_shrub_3.glb-a10744a9ea32e5a3667e4dd9fa8c9c63.scn"
 
 [deps]
 
-source_file="res://meshes/nature/shrubs/twig_shrub_1.glb"
-dest_files=["res://.godot/imported/twig_shrub_1.glb-027d096098db64be52793d147f58aa81.scn"]
+source_file="res://meshes/shrubs/twig_shrub_3.glb"
+dest_files=["res://.godot/imported/twig_shrub_3.glb-a10744a9ea32e5a3667e4dd9fa8c9c63.scn"]
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="StaticBody3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
