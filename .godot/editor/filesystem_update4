@@ -1,4 +1,4 @@
-res://scenes/resourceobjects/nature/nodes/flint_node_controller.tscn
+res://scenes/maingame/world.tscn
 res://GodotSky/Shaders/GodotSky.gdshader
 res://GodotSky/WorldEnvironment/default_sky.tres
 res://GodotSky/WorldEnvironment/default_environment.tres
@@ -30,5 +30,8 @@ res://scenes/mainmenu.tscn
 res://scenes/level_007.tscn
 res://scenes/resource_instancer.tscn
 res://GodotSky/GodotSky.tscn
+res://scenes/resourceobjects/nature/nodes/flint_node_controller.tscn
 res://scripts/resource_objects/ResourceController.cs
 res://scripts/resource_objects/ResourceInstancer.cs
+res://scripts/world_generation/MapDisplay.cs
+res://scripts/world_generation/MapGenerator.cs
