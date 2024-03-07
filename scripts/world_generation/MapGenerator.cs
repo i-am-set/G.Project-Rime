@@ -19,13 +19,29 @@ public partial class MapGenerator : Node3D
     public float lacunarity;
 
     [Export]
+    public int seed;
+
+    [Export]
     public bool autoUpdate;
 
     public void GenerateMap()
     {
-        float[,] noiseMap = MapNoise.GenerateNoiseMap(mapWidth, mapHeight, noiseScale, octaves, persistance, lacunarity);
+        FastNoiseLite perlinNoise = MapNoise.GenerateNoiseMap(noiseScale, octaves, persistance, lacunarity, seed);
+
+        for (int i = 0; i < mapWidth; i++)
+        {
+            float noiseValue = perlinNoise.GetNoise2D(i, 1);
+
+            
+        }
 
         MapDisplay display = (MapDisplay)GetNode("MapDisplay");
-        display.DrawNoiseMap(noiseMap);
+        display.DrawNoiseMap(mapWidth, mapHeight, perlinNoise);
+    }
+
+    public void RandomizeSeed()
+    {
+        Random rnd = new Random();
+        seed = rnd.Next(0, 999999999);
     }
 }

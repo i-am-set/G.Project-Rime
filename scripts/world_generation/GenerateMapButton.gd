@@ -2,16 +2,20 @@
 extends Node
 
 @export var MapGenerator : Node3D
-@export var mybutton: bool:
+@export var generateMap: bool:
 	set(value):
-		mybutton = false
+		generateMap = false
 		MapGenerator.GenerateMap()
+@export var randomizeSeed: bool:
+	set(value):
+		randomizeSeed = false
+		MapGenerator.RandomizeSeed()
 
 var tick : int = 0
 
 func _physics_process(delta):
 	tick += 1
-	if tick >= 40:
+	if tick >= 5:
 		tick = 0
 		if MapGenerator.autoUpdate == true:
 			MapGenerator.GenerateMap()

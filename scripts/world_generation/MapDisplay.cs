@@ -4,29 +4,15 @@ using System;
 [Tool]
 public partial class MapDisplay : MeshInstance3D
 {
-    public void DrawNoiseMap(float[,] noiseMap)
+    public void DrawNoiseMap(int mapWidth, int mapHeight, FastNoiseLite perlinNoise)
     {
-        int width = noiseMap.GetLength(0);
-        int height = noiseMap.GetLength(1);
-
-        Image img = Image.Create(width, height, false, Image.Format.Rgba8);
-        
-
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                float noiseValue = noiseMap[x, y];
-                byte colorValue = (byte)(noiseValue * 255);
-                img.SetPixel(x, y, new Color(colorValue, colorValue, colorValue));
-            }
-        }
+        Image img = perlinNoise.GetImage(mapWidth, mapHeight, false, false, false);        
 
         StandardMaterial3D standardMaterial3D = new();
         ImageTexture texture = ImageTexture.CreateFromImage(img);
         standardMaterial3D.AlbedoTexture = texture;
         PlaneMesh planeMesh = new();
-        planeMesh.Size = new Vector2(width, height);
+        planeMesh.Size = new Vector2(mapWidth, mapHeight);
         this.Mesh = planeMesh;
         this.MaterialOverride = standardMaterial3D;
     }

@@ -1,3 +1,7 @@
+res://scripts/resource_objects/ResourceController.cs
+res://scripts/resource_objects/ResourceInstancer.cs
+res://scripts/world_generation/MapDisplay.cs
+res://scripts/world_generation/MapGenerator.cs
 res://scenes/maingame/world.tscn
 res://GodotSky/Shaders/GodotSky.gdshader
 res://GodotSky/WorldEnvironment/default_sky.tres
@@ -24,3 +28,4 @@ res://shaders/tree_shader.gdshader
 res://shaders/leaf_shader.gdshader
 res://addons/proton_scatter/demos/assets/materials/grass.gdshader
 res://shaders/bush_shader.gdshader
+res://scripts/world_generation/GenerateMapButton.gd
