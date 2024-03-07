@@ -7,5 +7,14 @@ extends Node
 		mybutton = false
 		MapGenerator.GenerateMap()
 
+var tick : int = 0
+
+func _physics_process(delta):
+	tick += 1
+	if tick >= 40:
+		tick = 0
+		if MapGenerator.autoUpdate == true:
+			MapGenerator.GenerateMap()
+
 func _ready():
 	MapGenerator.GenerateMap()

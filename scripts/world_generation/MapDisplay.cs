@@ -9,7 +9,8 @@ public partial class MapDisplay : MeshInstance3D
         int width = noiseMap.GetLength(0);
         int height = noiseMap.GetLength(1);
 
-        Image img = new();
+        Image img = Image.Create(width, height, false, Image.Format.Rgba8);
+        
 
         for (int y = 0; y < height; y++)
         {
