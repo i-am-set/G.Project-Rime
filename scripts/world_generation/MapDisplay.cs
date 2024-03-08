@@ -18,8 +18,7 @@ public partial class MapDisplay : MeshInstance3D
 
     public void DrawMesh(MeshData meshData, ImageTexture texture)
     {
-
-        shaderMaterial.SetShaderParameter("texture_albedo", texture);
+        // shaderMaterial.SetShaderParameter("texture_albedo", texture);
 		this.Mesh = meshData.CreateMesh();
         this.MaterialOverride = shaderMaterial;
     }

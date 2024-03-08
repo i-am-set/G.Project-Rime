@@ -4,6 +4,8 @@ var _player_node = preload("res://scenes/fps_controller.tscn")
 var _chat = preload("res://scenes/game_chat_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
+@export var infinite_terrain : Node3D
+
 var _chat_instance : Control
 var _player_list_instance : Control
 var _authorized_player : Player
@@ -56,6 +58,7 @@ func _ready():
 		player_instance.global_transform.origin = Vector3(5, 20, 0)
 		print_debug("self created")
 	
+	infinite_terrain.viewer = _authorized_player;
 
 func _physics_process(delta):
 	var _authorized_player_position = _authorized_player.position

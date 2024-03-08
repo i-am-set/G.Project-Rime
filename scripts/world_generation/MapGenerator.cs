@@ -1,6 +1,9 @@
 using Godot;
 using System;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 [Tool]
 public partial class MapGenerator : Node3D
@@ -9,8 +12,8 @@ public partial class MapGenerator : Node3D
     [Export] public DrawMode drawMode;
 
     public const int mapChunkSize = 241;
-    private int _levelOfDetail;
-    [Export(PropertyHint.Range, "0, 6")] public int levelOfDetail { get { return _levelOfDetail; } set { _levelOfDetail = value; FlagNeedsUpdate(); } }
+    private int _editorPreviewLOD;
+    [Export(PropertyHint.Range, "0, 6")] public int editorPreviewLOD { get { return _editorPreviewLOD; } set { _editorPreviewLOD = value; FlagNeedsUpdate(); } }
     private float _noiseScale;
     [Export] public float noiseScale { get { return _noiseScale; } set { _noiseScale = value; FlagNeedsUpdate(); } }
 
@@ -23,6 +26,8 @@ public partial class MapGenerator : Node3D
 
     private int _seed;
     [Export] public int seed { get { return _seed; } set { _seed = value; FlagNeedsUpdate(); } }
+    private Vector2 _offset;
+    [Export] public Vector2 offset { get { return _offset; } set { _offset = value; FlagNeedsUpdate(); } }
 
     private float _meshHeightMultiplier;
     [Export(PropertyHint.Range, "1, 50")] public float meshHeightMultiplier { get { return _meshHeightMultiplier; } set { _meshHeightMultiplier = value; FlagNeedsUpdate(); } }
@@ -32,23 +37,83 @@ public partial class MapGenerator : Node3D
 
     [Export] public TerrainType[] regions;
 
-    public void DrawMapInEditor()
-    {
-        MapData mapData = GenerateMapData();
+    Queue<MapThreadInfo<MapData>> mapDataThreadInfoQueue = new Queue<MapThreadInfo<MapData>>();
+	Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
 
-        MapDisplay display = (MapDisplay)GetNode("MapDisplay");
-        if (drawMode == DrawMode.NoiseMap){
-            display.DrawTexture(TextureGenerator.TextureFromHeightMap(mapData.perlinNoise, mapChunkSize, mapChunkSize));
-        } else if (drawMode == DrawMode.ColorMap){
-            display.DrawTexture(TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
-        } else if (drawMode == DrawMode.Mesh){
-            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, levelOfDetail), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+    // public void DrawMapInEditor()
+    // {
+    //     MapData mapData = GenerateMapData(Vector2.Zero);
+
+    //     MapDisplay display = (MapDisplay)GetNode("MapDisplay");
+    //     if (drawMode == DrawMode.NoiseMap){
+    //         display.DrawTexture(TextureGenerator.TextureFromHeightMap(mapData.perlinNoise, mapChunkSize, mapChunkSize));
+    //     } else if (drawMode == DrawMode.ColorMap){
+    //         display.DrawTexture(TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+    //     } else if (drawMode == DrawMode.Mesh){
+    //         display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, editorPreviewLOD), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+    //     }
+    // }
+
+    // #---------------------MAP THREADING----------------------------#
+    public void RequestMapData(Vector2 center, Action<MapData> callback)
+    {
+        ThreadStart threadStart = delegate {
+            MapDataThread(center, callback);
+        };
+
+        new Thread(threadStart).Start();
+    }
+
+    private void MapDataThread(Vector2 center, Action<MapData> callback)
+    {
+        MapData mapData = GenerateMapData(center);
+        lock(mapDataThreadInfoQueue){
+            mapDataThreadInfoQueue.Enqueue(new MapThreadInfo<MapData>(callback, mapData));
         }
     }
 
-    private MapData GenerateMapData()
+    // #---------------------MESH THREADING----------------------------#
+    public void RequestMeshData(MapData mapData, int lod, Action<MeshData> callback)
     {
-        FastNoiseLite perlinNoise = MapNoise.GenerateNoiseMap(noiseScale, octaves, persistance, lacunarity, seed);
+        ThreadStart threadStart = delegate {
+            MeshDataThread(mapData, lod, callback);
+        };
+
+        new Thread(threadStart).Start();
+    }
+
+    private void MeshDataThread(MapData mapData, int lod, Action<MeshData> callback)
+    {
+        MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, lod);
+        lock(meshDataThreadInfoQueue){
+            meshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshData>(callback, meshData));
+        }
+    }
+
+    public override void _Process(double delta)
+    {
+        if (mapDataThreadInfoQueue.Count > 0)
+        {
+            for (int i = 0; i < mapDataThreadInfoQueue.Count; i++)
+            {
+                MapThreadInfo<MapData> threadInfo = mapDataThreadInfoQueue.Dequeue();
+                threadInfo.callback(threadInfo.parameter);
+            }
+        }
+
+        if (meshDataThreadInfoQueue.Count > 0)
+        {
+            for (int i = 0; i < meshDataThreadInfoQueue.Count; i++)
+            {
+                MapThreadInfo<MeshData> threadInfo = meshDataThreadInfoQueue.Dequeue();
+                threadInfo.callback(threadInfo.parameter);
+            }
+        }
+    }
+
+    MapData GenerateMapData(Vector2 center)
+    {
+        FastNoiseLite perlinNoise = MapNoise.GenerateNoiseMap(noiseScale, octaves, persistance, lacunarity, seed, center + offset);
 
         Color[] colorMap = new Color[mapChunkSize * mapChunkSize];
         for (int x = 0; x < mapChunkSize; x++){
@@ -68,7 +133,7 @@ public partial class MapGenerator : Node3D
 
     public void RandomizeSeed()
     {
-        Random rnd = new Random();
+        Random rnd = new();
         seed = rnd.Next(0, 999999999);
     }
 
@@ -76,14 +141,25 @@ public partial class MapGenerator : Node3D
     {
         needsUpdating = true;
     }
+
+    struct MapThreadInfo<T> {
+        public readonly Action<T> callback;
+        public readonly T parameter;
+
+        public MapThreadInfo(Action<T> callback, T parameter)
+        {
+            this.callback = callback;
+            this.parameter = parameter;
+        }
+    }
 }
 
 [Tool]
 public partial class MapData : Resource
 {
-    [Export] public FastNoiseLite perlinNoise { get; set; }
+    public FastNoiseLite perlinNoise { get; set; }
 
-    [Export] public Color[] colorMap { get; set; }
+    public Color[] colorMap { get; set; }
 
     public MapData(FastNoiseLite perlinNoise, Color[] colorMap)
     {
