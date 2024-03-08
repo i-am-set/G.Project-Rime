@@ -24,11 +24,3 @@ res://shaders/leaf_shader.gdshader
 res://addons/proton_scatter/demos/assets/materials/grass.gdshader
 res://shaders/default_object_shader.gdshader
 res://shaders/bush_shader.gdshader
-res://scripts/world_generation/generate_map_button.gd
-res://scripts/resource_objects/ResourceController.cs
-res://scripts/resource_objects/ResourceInstancer.cs
-res://scripts/world_generation/InfiniteTerrain.cs
-res://scripts/world_generation/LODInfo.cs
-res://scripts/world_generation/MapDisplay.cs
-res://scripts/world_generation/MapGenerator.cs
-res://scripts/world_generation/TerrainType.cs

@@ -40,19 +40,19 @@ public partial class MapGenerator : Node3D
     Queue<MapThreadInfo<MapData>> mapDataThreadInfoQueue = new Queue<MapThreadInfo<MapData>>();
 	Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
 
-    // public void DrawMapInEditor()
-    // {
-    //     MapData mapData = GenerateMapData(Vector2.Zero);
+    public void DrawMapInEditor()
+    {
+        MapData mapData = GenerateMapData(Vector2.Zero);
 
-    //     MapDisplay display = (MapDisplay)GetNode("MapDisplay");
-    //     if (drawMode == DrawMode.NoiseMap){
-    //         display.DrawTexture(TextureGenerator.TextureFromHeightMap(mapData.perlinNoise, mapChunkSize, mapChunkSize));
-    //     } else if (drawMode == DrawMode.ColorMap){
-    //         display.DrawTexture(TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
-    //     } else if (drawMode == DrawMode.Mesh){
-    //         display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, editorPreviewLOD), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
-    //     }
-    // }
+        MapDisplay display = (MapDisplay)GetNode("MapDisplay");
+        if (drawMode == DrawMode.NoiseMap){
+            display.DrawTexture(TextureGenerator.TextureFromHeightMap(mapData.perlinNoise, mapChunkSize, mapChunkSize));
+        } else if (drawMode == DrawMode.ColorMap){
+            display.DrawTexture(TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+        } else if (drawMode == DrawMode.Mesh){
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, editorPreviewLOD), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+        }
+    }
 
     // #---------------------MAP THREADING----------------------------#
     public void RequestMapData(Vector2 center, Action<MapData> callback)
