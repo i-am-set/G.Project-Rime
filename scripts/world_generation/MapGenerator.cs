@@ -8,7 +8,7 @@ public partial class MapGenerator : Node3D
     public enum DrawMode {NoiseMap, ColorMap, Mesh}
     [Export] public DrawMode drawMode;
 
-    const int mapChunkSize = 241;
+    public const int mapChunkSize = 241;
     private int _levelOfDetail;
     [Export(PropertyHint.Range, "0, 6")] public int levelOfDetail { get { return _levelOfDetail; } set { _levelOfDetail = value; FlagNeedsUpdate(); } }
     private float _noiseScale;
@@ -32,7 +32,21 @@ public partial class MapGenerator : Node3D
 
     [Export] public TerrainType[] regions;
 
-    public void GenerateMap()
+    public void DrawMapInEditor()
+    {
+        MapData mapData = GenerateMapData();
+
+        MapDisplay display = (MapDisplay)GetNode("MapDisplay");
+        if (drawMode == DrawMode.NoiseMap){
+            display.DrawTexture(TextureGenerator.TextureFromHeightMap(mapData.perlinNoise, mapChunkSize, mapChunkSize));
+        } else if (drawMode == DrawMode.ColorMap){
+            display.DrawTexture(TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+        } else if (drawMode == DrawMode.Mesh){
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, levelOfDetail), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+        }
+    }
+
+    private MapData GenerateMapData()
     {
         FastNoiseLite perlinNoise = MapNoise.GenerateNoiseMap(noiseScale, octaves, persistance, lacunarity, seed);
 
@@ -49,14 +63,7 @@ public partial class MapGenerator : Node3D
             }
         }
 
-        MapDisplay display = (MapDisplay)GetNode("MapDisplay");
-        if (drawMode == DrawMode.NoiseMap){
-            display.DrawTexture(TextureGenerator.TextureFromHeightMap(perlinNoise, mapChunkSize, mapChunkSize));
-        } else if (drawMode == DrawMode.ColorMap){
-            display.DrawTexture(TextureGenerator.TextureFromColorMap(colorMap, mapChunkSize, mapChunkSize));
-        } else if (drawMode == DrawMode.Mesh){
-            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, levelOfDetail), TextureGenerator.TextureFromColorMap(colorMap, mapChunkSize, mapChunkSize));
-        }
+        return new MapData(perlinNoise, colorMap);
     }
 
     public void RandomizeSeed()
@@ -68,5 +75,19 @@ public partial class MapGenerator : Node3D
     private void FlagNeedsUpdate()
     {
         needsUpdating = true;
+    }
+}
+
+[Tool]
+public partial class MapData : Resource
+{
+    [Export] public FastNoiseLite perlinNoise { get; set; }
+
+    [Export] public Color[] colorMap { get; set; }
+
+    public MapData(FastNoiseLite perlinNoise, Color[] colorMap)
+    {
+        this.perlinNoise = perlinNoise;
+        this.colorMap = colorMap;
     }
 }
