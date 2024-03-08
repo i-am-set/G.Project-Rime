@@ -147,8 +147,8 @@ func send_players_data_to_resource_instancer(_authorized_player_position, _autho
 
 func move_objects_to_player(_authorized_player_position):
 	if _authorized_player_position != null:
-		_skybox.position = Vector3(_authorized_player_position.x, -14, _authorized_player_position.z)
-		_clutter_emitters.position = _authorized_player_position
+		#_skybox.position = Vector3(_authorized_player_position.x, -14, _authorized_player_position.z)
+		#_clutter_emitters.position = _authorized_player_position
 
 #func replenish_resources():
 	#var tempNode

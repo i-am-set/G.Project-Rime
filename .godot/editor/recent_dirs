@@ -1,3 +1,5 @@
+res://materials
+res://scripts/world_generation
 res://scenes/maingame
 res://scenes/resourceobjects/nature/shrub
 C:/Users/sethg/wkspaces/!Exports/G.Project-Rime Export 2
@@ -13,7 +15,6 @@ C:/Program Files (x86)/Godot_v4.2.1-stable_mono_win64
 C:/Users/sethg/AppData/Local/Programs/Microsoft VS Code
 res://meshes/nature
 res://world/clipmap
-res://materials
 res://
 res://world/heightmap
 res://scenes

@@ -8,6 +8,12 @@
 
 config_version=5
 
+[MonoCustomResourceRegistry]
+
+ClassPrefix=""
+SearchType=0
+ResourceScriptDirectories=["res://"]
+
 [application]
 
 config/name="G.Project-Rime"
@@ -129,7 +135,6 @@ common/physics_ticks_per_second=40
 
 [rendering]
 
-lights_and_shadows/directional_shadow/size=2048
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 reflections/reflection_atlas/reflection_size=1024

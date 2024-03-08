@@ -140,7 +140,7 @@ buffer = PackedFloat32Array(-1.91705, 0, 1.11219, -11.352, 0, 2.21631, 0, 0, -1.
 script = ExtResource("1_fhji4")
 
 [node name="GodotSky" parent="." instance=ExtResource("2_gdmhl")]
-timeOfDay = 754.9
+timeOfDay = 787.52
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5

@@ -1,2 +1,3 @@
+TerrainType
 Environment
 StandardMaterial3D

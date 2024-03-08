@@ -4,16 +4,23 @@ using System;
 [Tool]
 public partial class MapDisplay : MeshInstance3D
 {
-    public void DrawNoiseMap(int mapWidth, int mapHeight, FastNoiseLite perlinNoise)
-    {
-        Image img = perlinNoise.GetImage(mapWidth, mapHeight, false, false, false);        
+    [Export] ShaderMaterial shaderMaterial;
 
-        StandardMaterial3D standardMaterial3D = new();
-        ImageTexture texture = ImageTexture.CreateFromImage(img);
-        standardMaterial3D.AlbedoTexture = texture;
+    public void DrawTexture(ImageTexture texture)
+    {
+        shaderMaterial.SetShaderParameter("texture_albedo", texture);
         PlaneMesh planeMesh = new();
-        planeMesh.Size = new Vector2(mapWidth, mapHeight);
+        Texture2D tempTex = texture;
+        planeMesh.Size = new Vector2(tempTex.GetWidth(), tempTex.GetHeight());
         this.Mesh = planeMesh;
-        this.MaterialOverride = standardMaterial3D;
+        this.MaterialOverride = shaderMaterial;
+    }
+
+    public void DrawMesh(MeshData meshData, ImageTexture texture)
+    {
+
+        shaderMaterial.SetShaderParameter("texture_albedo", texture);
+		this.Mesh = meshData.CreateMesh();
+        this.MaterialOverride = shaderMaterial;
     }
 }
