@@ -1,10 +1,10 @@
+CollisionShape3D
 StaticBody3D
 MeshInstance3D
 Sprite3D
 Sprite2D
 Node
 Node3D
-CollisionShape3D
 GPUParticles3D
 Timer
 MultiMeshInstance3D

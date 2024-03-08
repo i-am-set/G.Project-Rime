@@ -39,3 +39,4 @@ res://scenes/resource_instancer.tscn
 res://GodotSky/GodotSky.tscn
 res://scenes/resourceobjects/nature/nodes/flint_node_controller.tscn
 res://scripts/game/game_controller.gd
+res://scripts/steam/SteamLobby.gd

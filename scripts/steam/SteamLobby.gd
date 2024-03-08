@@ -505,4 +505,4 @@ func process_data(packet_data : Dictionary):
 		if packet_data["message"] == "start_game":
 			await initialize_game(int(Steam.getLobbyData(Global.LOBBY_ID, "world_seed")))
 			Steam.setLobbyData(Global.LOBBY_ID, "is_started", "true")
-			await get_tree().change_scene_to_file("res://scenes/level_007.tscn")
+			await get_tree().change_scene_to_file("res://scenes/maingame/world.tscn")

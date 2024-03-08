@@ -4,12 +4,6 @@ var _player_node = preload("res://scenes/fps_controller.tscn")
 var _chat = preload("res://scenes/game_chat_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
-@onready var _collision_map = $Terrain/Collisionmap
-@onready var _clip_map = $Terrain/Clipmap
-@onready var _resource_instancer = $ResourceInstancer
-@onready var _skybox = $skybox_scene
-@onready var _clutter_emitters = $ClutterEmitters
-
 var _chat_instance : Control
 var _player_list_instance : Control
 var _authorized_player : Player
@@ -49,7 +43,6 @@ func _ready():
 				player_instance._authorize_user()
 				player_instance.VISOR.visible = false
 				_authorized_player = player_instance
-				attach_player_to_world(player_instance)
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(5, 10, 0)
 	else:
@@ -59,13 +52,10 @@ func _ready():
 		player_instance._authorize_user()
 		player_instance.VISOR.visible = false
 		_authorized_player = player_instance
-		attach_player_to_world(player_instance)
 		add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(5, 20, 0)
 		print_debug("self created")
 	
-	_resource_instancer.noise.seed = Global.WORLD_SEED
-	#_grass_instancer.player_node = _authorized_player
 
 func _physics_process(delta):
 	var _authorized_player_position = _authorized_player.position
@@ -74,11 +64,8 @@ func _physics_process(delta):
 	if Global.LOBBY_ID > 0:
 		read_all_p2p_packets()
 	
-	move_objects_to_player(_authorized_player_position)
-	
 	# Do stuff every 40 global ticks
 	if Global.GLOBAL_TICK % 40 == 0:
-		send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player._resource_spawn_radius)
 		get_lobby_members()
 
 func _input(event):
@@ -134,32 +121,6 @@ func read_all_p2p_packets(read_count: int = 0):
 	if Steam.getAvailableP2PPacketSize(0) > 0:
 		read_p2p_packet()
 		read_all_p2p_packets(read_count + 1)
-
-func attach_player_to_world(player_instance: Node3D):
-	_collision_map.physics_body = player_instance
-	_clip_map.player_character = player_instance
-
-# opt - Within this .cs script, there is a "cachedPosition" variable that could theoretically eat up memory forever; impliment a simple clearer every x seconds/minutes or do a distance calc every x seconds/minutes
-func send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player_resource_spawn_radius):
-	_resource_instancer.authorizedPlayerPosition = _authorized_player_position
-	_resource_instancer.authorizedPlayerResourceSpawnRadius = _authorized_player_resource_spawn_radius
-	_resource_instancer.authorizedPlayerResourceSpawnRadiusHalf = _authorized_player_resource_spawn_radius*0.5
-
-func move_objects_to_player(_authorized_player_position):
-	if _authorized_player_position != null:
-		#_skybox.position = Vector3(_authorized_player_position.x, -14, _authorized_player_position.z)
-		#_clutter_emitters.position = _authorized_player_position
-
-#func replenish_resources():
-	#var tempNode
-	#for node in resource_data:
-		#if resource_data.has(tempNode):
-			#resource_data.erase(tempNode)
-		#remove_child(resource_data[node])
-		#resource_data[node].queue_free()
-		#tempNode = node
-	#if resource_data.has(tempNode):
-		#resource_data.erase(tempNode)
 
 #######################
 ### Steam Callbacks ###
@@ -323,6 +284,3 @@ func process_data(packet_data : Dictionary):
 					player_instance.global_position = packet_data["player_position"]
 				if packet_data.has("player_rotation"):
 					player_instance.rotation = packet_data["player_rotation"]
-
-#func _exit_tree():
-	#thread1.wait_to_finish()
