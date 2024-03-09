@@ -5,6 +5,8 @@ using System.Collections.Generic;
 [Tool]
 public partial class InfiniteTerrain : Node3D
 {
+	const float scale = 1.0f;
+
 	const float viewerMoveThresholdForChunkUpdate = 25f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
 
@@ -36,7 +38,7 @@ public partial class InfiniteTerrain : Node3D
 
     public override void _Process(double delta)
     {
-        viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z);
+        viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
 
 		if ((viewerPositionOld - viewerPosition).LengthSquared() > sqrViewerMoveThresholdForChunkUpdate){
 			viewerPositionOld = viewerPosition;
@@ -95,7 +97,8 @@ public partial class InfiniteTerrain : Node3D
             meshObject = new MeshInstance3D
             {
 				MaterialOverride = (Material)shaderMaterial.Duplicate(),
-                Position = positionV3,
+                Position = positionV3 * scale,
+				Scale = Vector3.One * scale,
                 Visible = false,
             };
             parent.AddChild(meshObject);

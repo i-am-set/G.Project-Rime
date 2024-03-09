@@ -24,3 +24,9 @@ res://shaders/leaf_shader.gdshader
 res://addons/proton_scatter/demos/assets/materials/grass.gdshader
 res://shaders/default_object_shader.gdshader
 res://shaders/bush_shader.gdshader
+res://scenes/fps_controller.tscn
+res://meshes/weapons/weapon.tscn
+res://scenes/mainmenu.tscn
+res://scenes/level_007.tscn
+res://scenes/resource_instancer.tscn
+res://GodotSky/GodotSky.tscn
