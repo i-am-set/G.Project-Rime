@@ -30,7 +30,9 @@ public partial class MapGenerator : Node3D
     [Export] public Vector2 offset { get { return _offset; } set { _offset = value; FlagNeedsUpdate(); } }
 
     private float _meshHeightMultiplier;
-    [Export(PropertyHint.Range, "1, 50")] public float meshHeightMultiplier { get { return _meshHeightMultiplier; } set { _meshHeightMultiplier = value; FlagNeedsUpdate(); } }
+    [Export(PropertyHint.Range, "1, 50")] public float meshHeightMultiplier { get { return _meshHeightMultiplier; } set { _meshHeightMultiplier = value; FlagNeedsUpdate(); } } 
+    private Curve _meshHeightCurve;
+    [Export] public Curve meshHeightCurve { get { return _meshHeightCurve; } set { _meshHeightCurve = value; FlagNeedsUpdate(); } } 
 
     [Export] public bool autoUpdate;
     public bool needsUpdating = false;
@@ -50,7 +52,7 @@ public partial class MapGenerator : Node3D
         } else if (drawMode == DrawMode.ColorMap){
             display.DrawTexture(TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
         } else if (drawMode == DrawMode.Mesh){
-            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, editorPreviewLOD), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, meshHeightCurve, editorPreviewLOD), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
         }
     }
 
@@ -84,7 +86,7 @@ public partial class MapGenerator : Node3D
 
     private void MeshDataThread(MapData mapData, int lod, Action<MeshData> callback)
     {
-        MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, lod);
+        MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, meshHeightCurve, lod);
         lock(meshDataThreadInfoQueue){
             meshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshData>(callback, meshData));
         }

@@ -3,7 +3,9 @@ using Godot;
 [Tool]
 public static class MeshGenerator
 {
-	public static MeshData GenerateTerrainMesh(FastNoiseLite perlinNoise, int width, int height, float heightMultiplier, int levelOfDetail) {
+	public static MeshData GenerateTerrainMesh(FastNoiseLite perlinNoise, int width, int height, float heightMultiplier, Curve _heightCurve, int levelOfDetail) {
+		Curve heightCurve = (Curve)_heightCurve.Duplicate();
+
 		float topLeftX = (width - 1) / -2f;
 		float topLeftZ = (height - 1) / 2f;
 
@@ -12,11 +14,21 @@ public static class MeshGenerator
 
 		MeshData meshData = new MeshData (verticesPerLine, verticesPerLine);
 		int vertexIndex = 0;
+		float _vertexHeight;
+
+		float minM = 1;
+		float maxM = -1;
 
 		for (int y = 0; y < height; y += meshSimplificationIncrement) {
 			for (int x = 0; x < width; x += meshSimplificationIncrement) {
-
-				meshData.vertices [vertexIndex] = new Vector3 (topLeftX + x, perlinNoise.GetNoise2D(x, y) * heightMultiplier, topLeftZ - y);
+				float normalizedNoise = (perlinNoise.GetNoise2D(x, y) + 1.0f) / 2.0f;
+				if (normalizedNoise < minM){
+					minM = normalizedNoise;
+				} else if (normalizedNoise > maxM) {
+					maxM = normalizedNoise;
+				}
+				_vertexHeight =  heightCurve.Sample(normalizedNoise) * heightMultiplier;
+				meshData.vertices [vertexIndex] = new Vector3 (topLeftX + x, _vertexHeight, topLeftZ - y);
 				meshData.uvs [vertexIndex] = new Vector2 (x / (float)width, y / (float)height);
 
 				if (x < width - 1 && y < height - 1) {
@@ -27,6 +39,8 @@ public static class MeshGenerator
 				vertexIndex++;
 			}
 		}
+		GD.Print(maxM);
+		GD.Print(minM);
 
 		meshData.CalculateNormals();
 

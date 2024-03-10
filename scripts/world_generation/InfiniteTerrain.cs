@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [Tool]
 public partial class InfiniteTerrain : Node3D
 {
-	const float scale = 1.0f;
+	const float scale = 3.0f;
 
 	const float viewerMoveThresholdForChunkUpdate = 25f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
@@ -80,8 +80,12 @@ public partial class InfiniteTerrain : Node3D
         Vector2 chunkPosition;
         Aabb Bounds;
 
+		StaticBody3D staticBody;
+		CollisionShape3D meshCollider;
+
 		LODInfo[] detailLevels;
 		LODMesh[] lodMeshes;
+		LODMesh collisionLODMesh;
 
 		MapData mapData;
 		bool mapDataReceived;
@@ -101,11 +105,18 @@ public partial class InfiniteTerrain : Node3D
 				Scale = Vector3.One * scale,
                 Visible = false,
             };
+			staticBody = new();
+			meshObject.AddChild(staticBody);
+			meshCollider = new();
+			staticBody.AddChild(meshCollider);
             parent.AddChild(meshObject);
 
 			lodMeshes = new LODMesh[detailLevels.Length];
 			for (int i = 0; i < detailLevels.Length; i++){
 				lodMeshes[i] = new LODMesh(detailLevels[i].lod, UpdateTerrainChunk);
+				if (detailLevels[i].useForCollider) {
+					collisionLODMesh = lodMeshes[i];
+				}
 			}
 
 			mapGenerator.RequestMapData(chunkPosition, OnMapDataReceived);
@@ -115,11 +126,11 @@ public partial class InfiniteTerrain : Node3D
 			this.mapData = mapData;
 			mapDataReceived = true;
 
-			ImageTexture texture = TextureGenerator.TextureFromColorMap(mapData.colorMap, MapGenerator.mapChunkSize, MapGenerator.mapChunkSize);
-			ShaderMaterial tempMaterial = (ShaderMaterial)meshObject.MaterialOverride;
-			tempMaterial.SetShaderParameter("texture_albedo", texture);
+			// ImageTexture texture = TextureGenerator.TextureFromColorMap(mapData.colorMap, MapGenerator.mapChunkSize, MapGenerator.mapChunkSize);
+			// ShaderMaterial tempMaterial = (ShaderMaterial)meshObject.MaterialOverride;
+			// tempMaterial.SetShaderParameter("texture_albedo", texture);
 
-			meshObject.MaterialOverride = tempMaterial;
+			// meshObject.MaterialOverride = tempMaterial;
 
 			UpdateTerrainChunk();
 		}
@@ -147,6 +158,14 @@ public partial class InfiniteTerrain : Node3D
 							meshObject.Mesh = lodMesh.mesh;
 						} else if (!lodMesh.hasRequestedMesh){
 							lodMesh.RequestMesh(mapData);
+						}
+					}
+
+					if (lodIndex == 0) {
+						if (collisionLODMesh.hasMesh) {
+							meshCollider.Shape = collisionLODMesh.mesh.CreateTrimeshShape();
+						} else if (!collisionLODMesh.hasRequestedMesh) {
+							collisionLODMesh.RequestMesh(mapData);
 						}
 					}
 				}
