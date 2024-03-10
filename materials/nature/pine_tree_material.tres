@@ -1,9 +1,9 @@
 [gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://c2nkb05uya11k"]
 
 [ext_resource type="Shader" path="res://shaders/tree_shader.gdshader" id="1_r2qe0"]
-[ext_resource type="Texture2D" uid="uid://dy66mgbs1v1ca" path="res://textures/nature/pine/Pine_1K-JPG_Color.jpg" id="2_r1nh5"]
-[ext_resource type="Texture2D" uid="uid://q41258iqao71" path="res://textures/nature/pine/Pine_1K-JPG_NormalGL.jpg" id="3_u3iw1"]
-[ext_resource type="Texture2D" uid="uid://ce2yyap265544" path="res://textures/nature/pine/Pine_1K-JPG_Roughness.jpg" id="4_dnv87"]
+[ext_resource type="Texture2D" uid="uid://dy66mgbs1v1ca" path="res://textures/nature/resource/pine/Pine_1K-JPG_Color.jpg" id="2_r1nh5"]
+[ext_resource type="Texture2D" uid="uid://q41258iqao71" path="res://textures/nature/resource/pine/Pine_1K-JPG_NormalGL.jpg" id="3_u3iw1"]
+[ext_resource type="Texture2D" uid="uid://ce2yyap265544" path="res://textures/nature/resource/pine/Pine_1K-JPG_Roughness.jpg" id="4_dnv87"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tfb5t"]
 frequency = 0.0055

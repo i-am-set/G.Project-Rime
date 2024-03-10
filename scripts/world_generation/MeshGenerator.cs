@@ -16,17 +16,9 @@ public static class MeshGenerator
 		int vertexIndex = 0;
 		float _vertexHeight;
 
-		float minM = 1;
-		float maxM = -1;
-
 		for (int y = 0; y < height; y += meshSimplificationIncrement) {
 			for (int x = 0; x < width; x += meshSimplificationIncrement) {
 				float normalizedNoise = (perlinNoise.GetNoise2D(x, y) + 1.0f) / 2.0f;
-				if (normalizedNoise < minM){
-					minM = normalizedNoise;
-				} else if (normalizedNoise > maxM) {
-					maxM = normalizedNoise;
-				}
 				_vertexHeight =  heightCurve.Sample(normalizedNoise) * heightMultiplier;
 				meshData.vertices [vertexIndex] = new Vector3 (topLeftX + x, _vertexHeight, topLeftZ - y);
 				meshData.uvs [vertexIndex] = new Vector2 (x / (float)width, y / (float)height);
@@ -39,8 +31,7 @@ public static class MeshGenerator
 				vertexIndex++;
 			}
 		}
-		GD.Print(maxM);
-		GD.Print(minM);
+
 
 		meshData.CalculateNormals();
 

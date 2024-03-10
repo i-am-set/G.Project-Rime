@@ -1,7 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://de5qery2n65xa"]
 
 [ext_resource type="PackedScene" uid="uid://hlng1kvuxc0l" path="res://meshes/nature/clutter/clutter_grass_1.glb" id="1_18exe"]
-[ext_resource type="Texture2D" uid="uid://cynhank37p3db" path="res://textures/nature/pine/pinetree_branch.png" id="2_slnt5"]
+[ext_resource type="Texture2D" uid="uid://cynhank37p3db" path="res://textures/nature/resource/pine/pinetree_branch.png" id="2_slnt5"]
+
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_soyjl"]
 transparency = 2

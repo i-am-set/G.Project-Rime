@@ -126,12 +126,6 @@ public partial class InfiniteTerrain : Node3D
 			this.mapData = mapData;
 			mapDataReceived = true;
 
-			// ImageTexture texture = TextureGenerator.TextureFromColorMap(mapData.colorMap, MapGenerator.mapChunkSize, MapGenerator.mapChunkSize);
-			// ShaderMaterial tempMaterial = (ShaderMaterial)meshObject.MaterialOverride;
-			// tempMaterial.SetShaderParameter("texture_albedo", texture);
-
-			// meshObject.MaterialOverride = tempMaterial;
-
 			UpdateTerrainChunk();
 		}
 

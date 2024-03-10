@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://buxmxjdtln8n"]
 
 [ext_resource type="Shader" path="res://shaders/leaf_shader.gdshader" id="1_aqcyn"]
-[ext_resource type="Texture2D" uid="uid://vumnicjktnyy" path="res://textures/nature/pine/pinetree_branch_hd.png" id="2_f40l5"]
+[ext_resource type="Texture2D" uid="uid://vumnicjktnyy" path="res://textures/nature/resource/pine/pinetree_branch_hd.png" id="2_f40l5"]
 
 [resource]
 render_priority = 0

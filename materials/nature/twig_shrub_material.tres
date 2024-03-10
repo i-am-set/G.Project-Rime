@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=7 format=3 uid="uid://griq2xudost0"]
 
 [ext_resource type="Shader" path="res://shaders/bush_shader.gdshader" id="1_evntj"]
-[ext_resource type="Texture2D" uid="uid://deqsm8lx117pu" path="res://textures/nature/shrub/shrub_bush_1.png" id="2_hjplx"]
+[ext_resource type="Texture2D" uid="uid://deqsm8lx117pu" path="res://textures/nature/resource/shrub/shrub_bush_1.png" id="2_hjplx"]
 
 [sub_resource type="Gradient" id="Gradient_122hb"]
 offsets = PackedFloat32Array(0, 0.50655, 1)

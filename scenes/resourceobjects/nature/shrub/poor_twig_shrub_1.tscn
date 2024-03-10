@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d0hr0ds0v74gq" path="res://meshes/shrubs/twig_shrub_3.glb" id="1_ulh22"]
 [ext_resource type="Shader" path="res://shaders/bush_shader.gdshader" id="2_51kh0"]
-[ext_resource type="Texture2D" uid="uid://cq8nimyekb7ek" path="res://textures/nature/shrub/shrub_bush_2.png" id="3_m41dr"]
+[ext_resource type="Texture2D" uid="uid://cq8nimyekb7ek" path="res://textures/nature/resource/shrub/shrub_bush_2.png" id="3_m41dr"]
 
 [sub_resource type="Gradient" id="Gradient_80wku"]
 offsets = PackedFloat32Array(0, 0.50655, 1)

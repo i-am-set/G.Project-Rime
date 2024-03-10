@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://4qm7twyxtc0p" path="res://meshes/nature/nodes/flint_node_model_1.glb" id="1_e6ddm"]
 [ext_resource type="Shader" path="res://shaders/default_object_shader.gdshader" id="2_8suri"]
-[ext_resource type="Texture2D" uid="uid://cdu4prj5k0u8t" path="res://textures/nature/flint/Rock013_1K-JPG_Color.jpg" id="3_bglo3"]
-[ext_resource type="Texture2D" uid="uid://uvhp6wu4kk2i" path="res://textures/nature/flint/Rock013_1K-JPG_NormalGL.jpg" id="4_qr8vn"]
-[ext_resource type="Texture2D" uid="uid://cdo5c5l2q0cec" path="res://textures/nature/flint/Rock013_1K-JPG_Roughness.jpg" id="5_6bykl"]
+[ext_resource type="Texture2D" uid="uid://cdu4prj5k0u8t" path="res://textures/nature/resource/flint/Rock013_1K-JPG_Color.jpg" id="3_bglo3"]
+[ext_resource type="Texture2D" uid="uid://uvhp6wu4kk2i" path="res://textures/nature/resource/flint/Rock013_1K-JPG_NormalGL.jpg" id="4_qr8vn"]
+[ext_resource type="Texture2D" uid="uid://cdo5c5l2q0cec" path="res://textures/nature/resource/flint/Rock013_1K-JPG_Roughness.jpg" id="5_6bykl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yyo6r"]
 render_priority = 0

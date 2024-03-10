@@ -1,9 +1,9 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://dowqjt7wv7gro"]
 
 [ext_resource type="Shader" path="res://world/clipmap/clipmap.gdshader" id="1_uo4n7"]
-[ext_resource type="Texture2D" uid="uid://dpgcpnnku2nb" path="res://textures/nature/snow/Snow010A_1K-JPG_Color.jpg" id="2_me466"]
-[ext_resource type="Texture2D" uid="uid://c5ys4utdtltr8" path="res://textures/nature/snow/Snow010A_1K-JPG_NormalDX.jpg" id="3_0key1"]
-[ext_resource type="Texture2D" uid="uid://bouqcydnwr4v5" path="res://textures/nature/snow/Snow010A_1K-JPG_Roughness.jpg" id="4_q1iws"]
+[ext_resource type="Texture2D" uid="uid://dpgcpnnku2nb" path="res://textures/nature/ground/snow/Snow010A_1K-JPG_Color.jpg" id="2_me466"]
+[ext_resource type="Texture2D" uid="uid://c5ys4utdtltr8" path="res://textures/nature/ground/snow/Snow010A_1K-JPG_NormalDX.jpg" id="3_0key1"]
+[ext_resource type="Texture2D" uid="uid://bouqcydnwr4v5" path="res://textures/nature/ground/snow/Snow010A_1K-JPG_Roughness.jpg" id="4_q1iws"]
 
 [resource]
 render_priority = 0
