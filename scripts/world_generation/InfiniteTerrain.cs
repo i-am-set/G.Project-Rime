@@ -181,6 +181,7 @@ public partial class InfiniteTerrain : Node3D
 	partial class LODMesh : Resource {
 
 		public Mesh mesh;
+		public MeshData meshData;
 		public bool hasRequestedMesh;
 		public bool hasMesh;
 		int lod;
@@ -191,8 +192,9 @@ public partial class InfiniteTerrain : Node3D
 			this.updateCallback = updateCallback;
 		}
 
-		private void OnMeshDataReceived(MeshData meshData) {
-			mesh = meshData.CreateMesh();
+		private void OnMeshDataReceived(MeshData tempMeshData) {
+			meshData = tempMeshData;
+			mesh = tempMeshData.CreateMesh();
 			hasMesh = true;
 
 			updateCallback();
