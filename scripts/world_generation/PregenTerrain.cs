@@ -1,9 +1,8 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
 [Tool]
-public partial class InfiniteTerrain : Node3D
+public partial class PregenTerrain : Node3D
 {
 	const float scale = 1.0f;
 
@@ -20,6 +19,7 @@ public partial class InfiniteTerrain : Node3D
 	Vector2 viewerPositionOld;
 	static MapGenerator mapGenerator;
     int chunkSize;
+	[Export(PropertyHint.Range, "1, 10")] public int worldSize = 3;
     int chunksVisibleInViewDst;
 
     Dictionary<Vector2, TerrainChunk> TerrainChunkDictionary = new();
@@ -32,6 +32,8 @@ public partial class InfiniteTerrain : Node3D
 		maxViewDst = detailLevels[detailLevels.Length-1].visibleDstThreshold;
         chunkSize = MapGenerator.mapChunkSize - 1;
         chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
+
+		GenerateWorld();
 
 		UpdateVisibleChunks();
     }
@@ -46,6 +48,17 @@ public partial class InfiniteTerrain : Node3D
 		}
     }
 
+	void GenerateWorld()
+	{
+		for (int i = 0; i < worldSize; i++){
+			for (int j = 0; j < worldSize; j++){
+				Vector2 chunkCoord = new(i, j);
+
+				TerrainChunkDictionary.Add(chunkCoord, new TerrainChunk(chunkCoord, chunkSize, detailLevels, this, shaderMaterial));
+			}
+		}
+	}
+
     void UpdateVisibleChunks()
     {
         foreach (var terrainChunk in TerrainChunksVisibleLastUpdate)
@@ -59,15 +72,13 @@ public partial class InfiniteTerrain : Node3D
 
         for (int yOffset = -chunksVisibleInViewDst; yOffset <= chunksVisibleInViewDst; yOffset++){
             for (int xOffset = -chunksVisibleInViewDst; xOffset <= chunksVisibleInViewDst; xOffset++){
-                Vector2 viewedChunkCoord = new Vector2(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
+                Vector2 viewedChunkCoord = new(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
 				
                 if (TerrainChunkDictionary.ContainsKey(viewedChunkCoord)){
                     TerrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk();
                     if (TerrainChunkDictionary[viewedChunkCoord].IsVisible()){
                         TerrainChunksVisibleLastUpdate.Add(TerrainChunkDictionary[viewedChunkCoord]);
                     }
-                }else{
-                    TerrainChunkDictionary.Add(viewedChunkCoord, new TerrainChunk(viewedChunkCoord, chunkSize, detailLevels, this, shaderMaterial));
                 }
             }
         }

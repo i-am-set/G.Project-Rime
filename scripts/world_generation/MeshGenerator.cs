@@ -1,9 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 [Tool]
 public static class MeshGenerator
 {
-	public static MeshData GenerateTerrainMesh(FastNoiseLite perlinNoise, int width, int height, float heightMultiplier, Curve _heightCurve, int levelOfDetail, Vector2 chunkPosition, ResourceChunkInstancer resourceChunkInstancer) {
+	public static MeshData GenerateTerrainMesh(FastNoiseLite perlinNoise, int width, int height, float heightMultiplier, Curve _heightCurve, int levelOfDetail, Vector2 chunkPosition, float scale, ResourceChunkInstancer resourceChunkInstancer) {
 		Curve heightCurve = (Curve)_heightCurve.Duplicate();
 
 		float topLeftX = (width - 1) / -2f;
@@ -11,6 +14,8 @@ public static class MeshGenerator
 
 		int meshSimplificationIncrement = (levelOfDetail == 0) ? 1 : levelOfDetail * 2;
 		int verticesPerLine = (width-1) / meshSimplificationIncrement + 1;
+
+    	HashSet<Vector3> chunkPositions = new();
 
 		MeshData meshData = new MeshData (verticesPerLine, verticesPerLine);
 		int vertexIndex = 0;
@@ -32,14 +37,17 @@ public static class MeshGenerator
 			}
 		}
 
-		// for (int y = 0; y < height; y += 2) {
-		// 	for (int x = 0; x < width; x += 2) {
-		// 		float normalizedNoise = (perlinNoise.GetNoise2D(x, y) + 1.0f) / 2.0f;
-		// 		_vertexHeight =  heightCurve.Sample(normalizedNoise) * heightMultiplier;
-		// 		resourceChunkInstancer.GenerateLocalResources(new Vector3 ((topLeftX + x) + chunkPosition.X, _vertexHeight, (topLeftZ - y)+chunkPosition.Y)*3);
-		// 	}
-		// }
-
+		if (levelOfDetail <= 2){
+			chunkPositions.Clear();
+			for (int y = 0; y < height; y += 2) {
+				for (int x = 0; x < width; x += 2) {
+					float normalizedNoise = (perlinNoise.GetNoise2D(x, y) + 1.0f) / 2.0f;
+					_vertexHeight = heightCurve.Sample(normalizedNoise) * heightMultiplier;
+					chunkPositions.Add(new Vector3 ((topLeftX + x) + chunkPosition.X, _vertexHeight, (topLeftZ - y)+chunkPosition.Y)*scale);
+				}
+			}
+			resourceChunkInstancer.queuedChunk.Enqueue(chunkPositions);
+		}
 
 		meshData.CalculateNormals();
 

@@ -6,4 +6,5 @@
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312808, 0)
+visibility_range_end = 350.0
 mesh = SubResource("BoxMesh_ao88q")

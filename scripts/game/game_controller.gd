@@ -55,7 +55,7 @@ func _ready():
 		player_instance.VISOR.visible = false
 		_authorized_player = player_instance
 		add_child(player_instance)
-		player_instance.global_transform.origin = Vector3(5, 300, 0)
+		player_instance.global_transform.origin = Vector3(5, 50, 0)
 		print_debug("self created")
 	
 	infinite_terrain.viewer = _authorized_player;

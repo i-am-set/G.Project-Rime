@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -55,19 +56,18 @@ public partial class ResourceChunkInstancer : Node3D
         { poorTwigShrub, 0.1f }
 	};
 
-    private HashSet<Vector2> cachedPositions = new();
     private int tick = 0;
     private Vector3 authorizedPlayerPosition = new();
     private int authorizedPlayerResourceSpawnRadius = 10;
     private int authorizedPlayerResourceSpawnRadiusHalf = 5;
-    private System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData = new();
     private FastNoiseLite noise = (FastNoiseLite)GD.Load("res://world/heightmap/resource_noise.tres");
     private PackedScene testObject = (PackedScene)GD.Load("res://scenes/test_object.tscn");
     private bool isGeneratingResources = false;
 
-    Queue<Vector3> queuedResourcePositions = new Queue<Vector3>();
-    private int currentX, currentZ;
-    private const int positionsPerFrame = 50;
+    private System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData = new();
+    public Queue<HashSet<Vector3>> queuedChunk = new();
+    private HashSet<Vector3> currentChunk = new();
+    private const int positionsPerFrame = 75;
 
     private bool isInitialized = false;
 	private float totalWeight = 0;
@@ -79,9 +79,16 @@ public partial class ResourceChunkInstancer : Node3D
         InitiateWeightSystem();
     }
 
-    // public override void _Process(double delta){
-    //     GenerateLocalResources();
-    // }
+    public override void _Process(double delta){
+        if (currentChunk.Count <= 0){
+            if (queuedChunk.Count > 0){
+                currentChunk = queuedChunk.Dequeue();
+            } else {
+                return;
+            }
+        }
+        GenerateLocalResources();
+    }
 
 	private void InitiateWeightSystem()
 	{
@@ -95,63 +102,31 @@ public partial class ResourceChunkInstancer : Node3D
 		}
 	}
 
-    public void GenerateLocalResources(Vector3 resourcePosition){   
-        resourceData = IterateThroughResources(authorizedPlayerPosition, authorizedPlayerResourceSpawnRadiusHalf, noise, resourceData, resourcePosition);
-        
-        isGeneratingResources = false;
+    public void GenerateLocalResources(){   
+        resourceData = IterateThroughResources(resourceData);
     }
 
-    private System.Collections.Generic.Dictionary<Vector3, Node3D> IterateThroughResources(Vector3 authorizedPlayerPosition, float authorizedPlayerResourceSpawnRadiusHalf, Noise noise, System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData, Vector3 resourcePosition){
-        Node3D resource = (Node3D)testObject.Instantiate();
-        CallDeferred("add_child", resource);
-        resource.Position = resourcePosition;
-
-        // Vector2 cachedPosition = new();
-        // Vector3 resourcePosition = new();
-
-        // for (int i = 0; i < positionsPerFrame; i++)
-        // {
-        //     cachedPosition.X = currentX;
-        //     cachedPosition.Y = currentZ;
-        //     if (!cachedPositions.Contains(cachedPosition))
-        //     {
-        //         cachedPositions.Add(cachedPosition);
-        //         float height = noise.GetNoise2D(currentX, currentZ) * 100;
-        //         float heightmapY = (float)Heightmap.Call("get_height", currentX, currentZ);
-        //         if (height > 0.425)
-        //         {
-        //             resourcePosition.X = currentX;
-        //             resourcePosition.Y = heightmapY;
-        //             resourcePosition.Z = currentZ;
-        //             if (!resourceData.ContainsKey(resourcePosition))
-        //             {
-        //                 Node3D resource = InstantiateResource((ulong)(height * 100), GetParent());
-        //                 resource.Position = resourcePosition;
-        //                 resourceData[resourcePosition] = resource;
-        //             }
-        //         }
-        //     }
-
-        //     // Update currentX and currentZ for the next frame
-        //     currentZ++;
-        //     if (currentZ >= authorizedPlayerPosition.Z + authorizedPlayerResourceSpawnRadiusHalf)
-        //     {
-        //         currentZ = (int)(authorizedPlayerPosition.Z - authorizedPlayerResourceSpawnRadiusHalf);
-        //         currentX++;
-        //         if (currentX >= authorizedPlayerPosition.X + authorizedPlayerResourceSpawnRadiusHalf)
-        //         {
-        //             // We've finished processing the entire area
-        //             // Reset currentX and currentZ to the start of the area
-        //             currentX = (int)(authorizedPlayerPosition.X - authorizedPlayerResourceSpawnRadiusHalf);
-        //         }
-        //     }
-        // }
+    private System.Collections.Generic.Dictionary<Vector3, Node3D> IterateThroughResources(System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData){
+        for (int i = 0; i < positionsPerFrame; i++){
+            if (currentChunk.Count > 0){
+                Vector3 resourcePosition = currentChunk.First();
+                float mappedNoise = noise.GetNoise2D(resourcePosition.X, resourcePosition.Z) * 100;
+                if (mappedNoise > 0.325){
+                    if (!resourceData.ContainsKey(resourcePosition)){
+                        Node3D resource = InstantiateResource((ulong)(mappedNoise * 100), GetParent());
+                        CallDeferred("add_child", resource);
+                        resource.Position = resourcePosition;
+                        resourceData[resourcePosition] = resource;
+                    }
+                }
+                currentChunk.Remove(resourcePosition);
+            }
+        }
 
         return resourceData;
     }
 
-    private Node3D InstantiateResource(ulong heightSeed, Node parent)
-    {
+    private Node3D InstantiateResource(ulong heightSeed, Node parent){
         rngBase.Seed = heightSeed;
         float diceRoll = rngBase.RandfRange(0, totalWeight);
         

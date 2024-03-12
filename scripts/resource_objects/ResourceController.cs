@@ -1,5 +1,6 @@
 using Godot;
 
+[Tool]
 public partial class ResourceController : Node3D
 {
 	[Export]

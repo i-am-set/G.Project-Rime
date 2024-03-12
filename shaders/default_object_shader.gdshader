@@ -14,8 +14,8 @@ uniform float metallic;
 uniform sampler2D texture_normal : hint_roughness_normal,filter_linear_mipmap,repeat_enable;
 uniform float normal_scale : hint_range(-16,16);
 
-global uniform float fade_distance_min;
-global uniform float fade_distance_max;
+//global uniform float fade_distance_min;
+//global uniform float fade_distance_max;
 
 
 
@@ -32,13 +32,13 @@ void fragment() {
 	NORMAL_MAP = texture(texture_normal,base_uv).rgb;
 	NORMAL_MAP_DEPTH = normal_scale;
 	
-	// fade logic
-	{
-		float fade_length = length(VERTEX);
-		const vec3 magic = vec3(0.06711056f, 0.00583715f, 52.9829189f);
-		float fade = clamp(smoothstep(fade_distance_max, fade_distance_min, fade_length), 0.0, 1.0);
-		if (fade < 0.001 || fade < fract(magic.z * fract(dot(FRAGCOORD.xy, magic.xy)))) {
-			discard;
-		}
-	}
+	//// fade logic
+	//{
+		//float fade_length = length(VERTEX);
+		//const vec3 magic = vec3(0.06711056f, 0.00583715f, 52.9829189f);
+		//float fade = clamp(smoothstep(fade_distance_max, fade_distance_min, fade_length), 0.0, 1.0);
+		//if (fade < 0.001 || fade < fract(magic.z * fract(dot(FRAGCOORD.xy, magic.xy)))) {
+			//discard;
+		//}
+	//}
 }

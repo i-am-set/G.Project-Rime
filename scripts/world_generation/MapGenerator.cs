@@ -58,7 +58,7 @@ public partial class MapGenerator : Node3D
         } else if (drawMode == DrawMode.ColorMap){
             display.DrawTexture(TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
         } else if (drawMode == DrawMode.Mesh){
-            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, meshHeightCurve, editorPreviewLOD, new Vector2(0, 0), resourceChunkInstancer), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
+            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, meshHeightCurve, editorPreviewLOD, new Vector2(0, 0), 1.0f, resourceChunkInstancer), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
         }
     }
 
@@ -81,18 +81,18 @@ public partial class MapGenerator : Node3D
     }
 
     // #---------------------MESH THREADING----------------------------#
-    public void RequestMeshData(MapData mapData, int lod, Vector2 chunkPosition, Action<MeshData> callback)
+    public void RequestMeshData(MapData mapData, int lod, Vector2 chunkPosition, float scale, Action<MeshData> callback)
     {
         ThreadStart threadStart = delegate {
-            MeshDataThread(mapData, lod, chunkPosition, callback);
+            MeshDataThread(mapData, lod, chunkPosition, scale, callback);
         };
 
         new Thread(threadStart).Start();
     }
 
-    private void MeshDataThread(MapData mapData, int lod, Vector2 chunkPosition, Action<MeshData> callback)
+    private void MeshDataThread(MapData mapData, int lod, Vector2 chunkPosition, float scale, Action<MeshData> callback)
     {
-        MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, meshHeightCurve, lod, chunkPosition, resourceChunkInstancer);
+        MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, meshHeightCurve, lod, chunkPosition, scale, resourceChunkInstancer);
         lock(meshDataThreadInfoQueue){
             meshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshData>(callback, meshData));
         }
