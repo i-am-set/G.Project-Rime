@@ -124,6 +124,7 @@ public partial class InfiniteTerrain : Node3D
 
 		private void OnMapDataReceived(MapData mapData){
 			this.mapData = mapData;
+			// resourceChunkInstancer.QueueResourcePosition(mapData.perlinNoise, chunkSize);
 			mapDataReceived = true;
 
 			UpdateTerrainChunk();
@@ -151,7 +152,7 @@ public partial class InfiniteTerrain : Node3D
 							previousLODIndex = lodIndex;
 							meshObject.Mesh = lodMesh.mesh;
 						} else if (!lodMesh.hasRequestedMesh){
-							lodMesh.RequestMesh(mapData);
+							lodMesh.RequestMesh(mapData, chunkPosition);
 						}
 					}
 
@@ -159,7 +160,7 @@ public partial class InfiniteTerrain : Node3D
 						if (collisionLODMesh.hasMesh) {
 							meshCollider.Shape = collisionLODMesh.mesh.CreateTrimeshShape();
 						} else if (!collisionLODMesh.hasRequestedMesh) {
-							collisionLODMesh.RequestMesh(mapData);
+							collisionLODMesh.RequestMesh(mapData, chunkPosition);
 						}
 					}
 				}
@@ -200,9 +201,9 @@ public partial class InfiniteTerrain : Node3D
 			updateCallback();
 		}
 
-		public void RequestMesh(MapData mapData){
+		public void RequestMesh(MapData mapData, Vector2 chunkPosition){
 			hasRequestedMesh = true;
-			mapGenerator.RequestMeshData(mapData, lod, OnMeshDataReceived);
+			mapGenerator.RequestMeshData(mapData, lod, chunkPosition, OnMeshDataReceived);
 		}
 	}
 }

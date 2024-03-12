@@ -1,3 +1,4 @@
+res://scenes
 res://materials
 res://scripts/world_generation
 res://scenes/maingame
@@ -17,6 +18,5 @@ res://meshes/nature
 res://world/clipmap
 res://
 res://world/heightmap
-res://scenes
 res://world/collisionmap
 res://scripts

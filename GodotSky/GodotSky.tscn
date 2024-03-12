@@ -21,7 +21,6 @@ cloudCoverage = 0.0
 animateStaticClouds = false
 
 [node name="SunMoon" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Sun" type="MeshInstance3D" parent="SunMoon"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
