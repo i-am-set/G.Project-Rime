@@ -93,7 +93,7 @@ public partial class PregenTerrain : Node3D
         Vector2 chunkPosition;
         Aabb Bounds;
 
-		StaticBody3D staticBody;
+		public StaticBody3D staticBody;
 		CollisionShape3D meshCollider;
 
 		LODInfo[] detailLevels;
@@ -182,6 +182,7 @@ public partial class PregenTerrain : Node3D
         }
 
         public void SetVisible(bool visible){
+			staticBody.SetCollisionLayerValue(1, visible);
             meshObject.Visible = visible;
         }
 

@@ -69,7 +69,7 @@ lod = 4
 visibleDstThreshold = 600.0
 useForCollider = false
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_b3qvn"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_jk4p1"]
 size = Vector2(241, 241)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("infinite_terrain")]
@@ -103,12 +103,12 @@ script = ExtResource("6_wx3wc")
 detailLevels = [SubResource("Resource_naaya"), SubResource("Resource_i6chj"), SubResource("Resource_pvqi2")]
 viewer = NodePath("../../Marker3D")
 shaderMaterial = ExtResource("4_5r3nd")
-worldSize = 9
+worldSize = 4
 
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_b3qvn")
+mesh = SubResource("PlaneMesh_jk4p1")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 
@@ -116,4 +116,4 @@ shaderMaterial = ExtResource("4_5r3nd")
 script = ExtResource("9_8y3m7")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 234.83, 0, 218.218)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 390.187, 9.15527e-05, 454.516)

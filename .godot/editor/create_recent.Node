@@ -1,6 +1,6 @@
+Node3D
 CollisionShape3D
 StaticBody3D
-Node3D
 MeshInstance3D
 Sprite2D
 Marker3D
