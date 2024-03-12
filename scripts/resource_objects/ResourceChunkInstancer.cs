@@ -65,9 +65,10 @@ public partial class ResourceChunkInstancer : Node3D
     private bool isGeneratingResources = false;
 
     private System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData = new();
-    public Queue<HashSet<Vector3>> queuedChunk = new();
+    public Queue<ChunkData> queuedChunk = new();
     private HashSet<Vector3> currentChunk = new();
-    private const int positionsPerFrame = 75;
+    private StaticBody3D currentChunkStaticBody = new();
+    private const int positionsPerFrame = 200;
 
     private bool isInitialized = false;
 	private float totalWeight = 0;
@@ -82,7 +83,9 @@ public partial class ResourceChunkInstancer : Node3D
     public override void _Process(double delta){
         if (currentChunk.Count <= 0){
             if (queuedChunk.Count > 0){
-                currentChunk = queuedChunk.Dequeue();
+                ChunkData chunkData = queuedChunk.Dequeue();
+                currentChunk = chunkData.Positions;
+                currentChunkStaticBody = chunkData.Body;
             } else {
                 return;
             }
@@ -114,7 +117,7 @@ public partial class ResourceChunkInstancer : Node3D
                 if (mappedNoise > 0.325){
                     if (!resourceData.ContainsKey(resourcePosition)){
                         Node3D resource = InstantiateResource((ulong)(mappedNoise * 100), GetParent());
-                        CallDeferred("add_child", resource);
+                        currentChunkStaticBody.CallDeferred("add_child", resource);
                         resource.Position = resourcePosition;
                         resourceData[resourcePosition] = resource;
                     }

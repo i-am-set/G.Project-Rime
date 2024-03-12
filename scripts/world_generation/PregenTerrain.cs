@@ -38,7 +38,7 @@ public partial class PregenTerrain : Node3D
 		UpdateVisibleChunks();
     }
 
-    public override void _Process(double delta)
+    public override void _PhysicsProcess(double delta)
     {
         viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
 
@@ -57,6 +57,8 @@ public partial class PregenTerrain : Node3D
 				TerrainChunkDictionary.Add(chunkCoord, new TerrainChunk(chunkCoord, chunkSize, detailLevels, this, shaderMaterial));
 			}
 		}
+
+
 	}
 
     void UpdateVisibleChunks()
@@ -162,7 +164,7 @@ public partial class PregenTerrain : Node3D
 							previousLODIndex = lodIndex;
 							meshObject.Mesh = lodMesh.mesh;
 						} else if (!lodMesh.hasRequestedMesh){
-							lodMesh.RequestMesh(mapData, chunkPosition, scale);
+							lodMesh.RequestMesh(mapData, chunkPosition, scale, staticBody);
 						}
 					}
 
@@ -170,7 +172,7 @@ public partial class PregenTerrain : Node3D
 						if (collisionLODMesh.hasMesh) {
 							meshCollider.Shape = collisionLODMesh.mesh.CreateTrimeshShape();
 						} else if (!collisionLODMesh.hasRequestedMesh) {
-							collisionLODMesh.RequestMesh(mapData, chunkPosition, scale);
+							collisionLODMesh.RequestMesh(mapData, chunkPosition, scale, staticBody);
 						}
 					}
 				}
@@ -211,9 +213,9 @@ public partial class PregenTerrain : Node3D
 			updateCallback();
 		}
 
-		public void RequestMesh(MapData mapData, Vector2 chunkPosition, float scale){
+		public void RequestMesh(MapData mapData, Vector2 chunkPosition, float scale, StaticBody3D staticBody){
 			hasRequestedMesh = true;
-			mapGenerator.RequestMeshData(mapData, lod, chunkPosition, scale, OnMeshDataReceived);
+			mapGenerator.RequestMeshData(mapData, lod, chunkPosition, scale, staticBody, OnMeshDataReceived);
 		}
 	}
 }

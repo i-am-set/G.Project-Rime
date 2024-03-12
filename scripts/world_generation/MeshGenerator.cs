@@ -6,7 +6,7 @@ using Godot;
 [Tool]
 public static class MeshGenerator
 {
-	public static MeshData GenerateTerrainMesh(FastNoiseLite perlinNoise, int width, int height, float heightMultiplier, Curve _heightCurve, int levelOfDetail, Vector2 chunkPosition, float scale, ResourceChunkInstancer resourceChunkInstancer) {
+	public static MeshData GenerateTerrainMesh(FastNoiseLite perlinNoise, int width, int height, float heightMultiplier, Curve _heightCurve, int levelOfDetail, Vector2 chunkPosition, float scale, StaticBody3D staticBody, ResourceChunkInstancer resourceChunkInstancer) {
 		Curve heightCurve = (Curve)_heightCurve.Duplicate();
 
 		float topLeftX = (width - 1) / -2f;
@@ -43,10 +43,10 @@ public static class MeshGenerator
 				for (int x = 0; x < width; x += 2) {
 					float normalizedNoise = (perlinNoise.GetNoise2D(x, y) + 1.0f) / 2.0f;
 					_vertexHeight = heightCurve.Sample(normalizedNoise) * heightMultiplier;
-					chunkPositions.Add(new Vector3 ((topLeftX + x) + chunkPosition.X, _vertexHeight, (topLeftZ - y)+chunkPosition.Y)*scale);
+					chunkPositions.Add(new Vector3 ((topLeftX + x), _vertexHeight, (topLeftZ - y))*scale);
 				}
 			}
-			resourceChunkInstancer.queuedChunk.Enqueue(chunkPositions);
+			resourceChunkInstancer.queuedChunk.Enqueue(new ChunkData(chunkPositions, staticBody));
 		}
 
 		meshData.CalculateNormals();
@@ -111,4 +111,16 @@ public class MeshData
 		arrayMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, arrays);
 		return arrayMesh;
 	}
+}
+
+public struct ChunkData
+{
+    public HashSet<Vector3> Positions { get; set; }
+    public StaticBody3D Body { get; set; }
+
+    public ChunkData(HashSet<Vector3> positions, StaticBody3D body)
+    {
+        Positions = positions;
+        Body = body;
+    }
 }
