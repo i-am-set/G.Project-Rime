@@ -37,17 +37,17 @@ public static class MeshGenerator
 			}
 		}
 
-		if (levelOfDetail <= 10){
-			chunkPositions.Clear();
-			for (int y = 0; y < height; y += 2) {
-				for (int x = 0; x < width; x += 2) {
-					float normalizedNoise = (perlinNoise.GetNoise2D(x, y) + 1.0f) / 2.0f;
-					_vertexHeight = heightCurve.Sample(normalizedNoise) * heightMultiplier;
-					chunkPositions.Add(new Vector3 ((topLeftX + x), _vertexHeight, (topLeftZ - y))*scale);
-				}
-			}
-			resourceChunkInstancer.queuedChunk.Enqueue(new ChunkData(chunkPositions, staticBody));
-		}
+		// if (levelOfDetail <= 10){
+		// 	chunkPositions.Clear();
+		// 	for (int y = 0; y < height; y += 2) {
+		// 		for (int x = 0; x < width; x += 2) {
+		// 			float normalizedNoise = (perlinNoise.GetNoise2D(x, y) + 1.0f) / 2.0f;
+		// 			_vertexHeight = heightCurve.Sample(normalizedNoise) * heightMultiplier;
+		// 			chunkPositions.Add(new Vector3 ((topLeftX + x), _vertexHeight, (topLeftZ - y)));
+		// 		}
+		// 	}
+		// 	resourceChunkInstancer.queuedChunk.Enqueue(new ChunkData(chunkPositions, staticBody));
+		// }
 
 		meshData.CalculateNormals();
 

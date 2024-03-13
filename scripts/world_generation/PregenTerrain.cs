@@ -1,10 +1,11 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 [Tool]
 public partial class PregenTerrain : Node3D
 {
-	const float scale = 1.0f;
+	const float scale = 3.0f;
 
 	const float viewerMoveThresholdForChunkUpdate = 25f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
@@ -50,6 +51,7 @@ public partial class PregenTerrain : Node3D
 
 	void GenerateWorld()
 	{
+		// generate terrain
 		for (int i = 0; i < worldSize; i++){
 			for (int j = 0; j < worldSize; j++){
 				Vector2 chunkCoord = new(i, j);
@@ -58,7 +60,13 @@ public partial class PregenTerrain : Node3D
 			}
 		}
 
-
+		// generate resources
+		foreach (KeyValuePair<Vector2, TerrainChunk> entry in TerrainChunkDictionary){
+			Vector3[] terrainChunkVertices = entry.Value.GetCollisionLODMeshVertices();
+			for (int i = 0; i < terrainChunkVertices.Length; i++){
+				GD.Print(terrainChunkVertices[i]);
+			}
+		}
 	}
 
     void UpdateVisibleChunks()
@@ -98,7 +106,7 @@ public partial class PregenTerrain : Node3D
 
 		LODInfo[] detailLevels;
 		LODMesh[] lodMeshes;
-		LODMesh collisionLODMesh;
+		public LODMesh collisionLODMesh;
 
 		MapData mapData;
 		bool mapDataReceived;
@@ -181,6 +189,13 @@ public partial class PregenTerrain : Node3D
 			}
         }
 
+		public Vector3[] GetCollisionLODMeshVertices(){
+			if(collisionLODMesh.hasMesh){
+				return collisionLODMesh.meshData.vertices;
+			}
+			return null;
+		}
+
         public void SetVisible(bool visible){
 			staticBody.SetCollisionLayerValue(1, visible);
             meshObject.Visible = visible;
@@ -192,7 +207,7 @@ public partial class PregenTerrain : Node3D
     }
 
 	[Tool]
-	partial class LODMesh : Resource {
+	public partial class LODMesh : Resource {
 
 		public Mesh mesh;
 		public MeshData meshData;

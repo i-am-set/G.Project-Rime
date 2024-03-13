@@ -69,7 +69,7 @@ lod = 4
 visibleDstThreshold = 600.0
 useForCollider = false
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_aojjp"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_vn3ij"]
 size = Vector2(241, 241)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("infinite_terrain")]
@@ -108,7 +108,7 @@ worldSize = 4
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_aojjp")
+mesh = SubResource("PlaneMesh_vn3ij")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 
@@ -116,4 +116,4 @@ shaderMaterial = ExtResource("4_5r3nd")
 script = ExtResource("9_8y3m7")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 197.415, 6.10351e-05, 258.067)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 240.362, 6.10351e-05, 534.218)
