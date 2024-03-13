@@ -103,14 +103,14 @@ public partial class ResourceInstancer : Node3D
 
     private void GenerateLocalResources()
     {   
-        resourceData = IterateThroughResources(authorizedPlayerPosition, authorizedPlayerResourceSpawnRadiusHalf, noise, resourceData);
+        resourceData = IterateThroughResources(authorizedPlayerPosition, authorizedPlayerResourceSpawnRadiusHalf, resourceData);
         
         ReseatResources(resourceData, authorizedPlayerPosition, authorizedPlayerResourceSpawnRadius);
         
         isGeneratingResources = false;
     }
 
-    private System.Collections.Generic.Dictionary<Vector3, Node3D> IterateThroughResources(Vector3 authorizedPlayerPosition, float authorizedPlayerResourceSpawnRadiusHalf, Noise noise, System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData)
+    private System.Collections.Generic.Dictionary<Vector3, Node3D> IterateThroughResources(Vector3 authorizedPlayerPosition, float authorizedPlayerResourceSpawnRadiusHalf, System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData)
     {
         Vector2 cachedPosition = new();
         Vector3 resourcePosition = new();

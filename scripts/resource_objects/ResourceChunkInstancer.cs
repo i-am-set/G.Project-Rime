@@ -68,7 +68,7 @@ public partial class ResourceChunkInstancer : Node3D
     public Queue<ChunkData> queuedChunk = new();
     private HashSet<Vector3> currentChunk = new();
     private StaticBody3D currentChunkStaticBody = new();
-    private const int positionsPerFrame = 200;
+    private const int positionsPerFrame = 150;
 
     private bool isInitialized = false;
 	private float totalWeight = 0;
@@ -80,7 +80,7 @@ public partial class ResourceChunkInstancer : Node3D
         InitiateWeightSystem();
     }
 
-    public override void _Process(double delta){
+    public override void _PhysicsProcess(double delta){
         if (currentChunk.Count <= 0){
             if (queuedChunk.Count > 0){
                 ChunkData chunkData = queuedChunk.Dequeue();
@@ -117,6 +117,7 @@ public partial class ResourceChunkInstancer : Node3D
                 if (mappedNoise > 0.325){
                     if (!resourceData.ContainsKey(resourcePosition)){
                         Node3D resource = InstantiateResource((ulong)(mappedNoise * 100), GetParent());
+                        // Node3D resource = (Node3D)testObject.Instantiate();
                         currentChunkStaticBody.CallDeferred("add_child", resource);
                         resource.Position = resourcePosition;
                         resourceData[resourcePosition] = resource;

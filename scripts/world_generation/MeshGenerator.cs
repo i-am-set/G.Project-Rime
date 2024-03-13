@@ -37,7 +37,7 @@ public static class MeshGenerator
 			}
 		}
 
-		if (levelOfDetail <= 2){
+		if (levelOfDetail <= 10){
 			chunkPositions.Clear();
 			for (int y = 0; y < height; y += 2) {
 				for (int x = 0; x < width; x += 2) {
