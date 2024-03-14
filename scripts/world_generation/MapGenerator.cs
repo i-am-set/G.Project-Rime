@@ -11,9 +11,10 @@ public partial class MapGenerator : Node3D
     public enum DrawMode {NoiseMap, ColorMap, Mesh}
     [Export] public DrawMode drawMode;
 
-    public const int mapChunkSize = 241;
+	[Export(PropertyHint.Range, "0, 8")]public int chunkSizeIndex;
+    public int mapChunkSize{get { return MeshGenerator.supportedChunkSizes[chunkSizeIndex]+1; } }
     private int _editorPreviewLOD;
-    [Export(PropertyHint.Range, "0, 6")] public int editorPreviewLOD { get { return _editorPreviewLOD; } set { _editorPreviewLOD = value; FlagNeedsUpdate(); } }
+    [Export(PropertyHint.Range, "0, 4")] public int editorPreviewLOD { get { return _editorPreviewLOD; } set { _editorPreviewLOD = value; FlagNeedsUpdate(); } }
     private float _noiseScale;
     [Export] public float noiseScale { get { return _noiseScale; } set { _noiseScale = value; FlagNeedsUpdate(); } }
 

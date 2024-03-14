@@ -5,11 +5,11 @@ using System.Collections.Generic;
 [Tool]
 public partial class PregenTerrain : Node3D
 {
-	const float scale = 3.0f;
+	const float scale = 24.0f;
 
 	const float viewerMoveThresholdForChunkUpdate = 25f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
-	const float colliderGenerationDistanceThreshold = 5;
+	const float colliderGenerationDistanceThreshold = 130;
 
 	[Export] public int colliderLODIndex;
 	[Export] public LODInfo[] detailLevels;
@@ -33,7 +33,7 @@ public partial class PregenTerrain : Node3D
 		mapGenerator = (MapGenerator)GetParent();
 
 		maxViewDst = detailLevels[detailLevels.Length-1].visibleDstThreshold;
-        chunkSize = MapGenerator.mapChunkSize - 1;
+        chunkSize = mapGenerator.mapChunkSize - 1;
         chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
 
 		GenerateWorld();
@@ -63,21 +63,22 @@ public partial class PregenTerrain : Node3D
 
 	void GenerateWorld()
 	{
+		int interation = 0;
 		// generate terrain
 		for (int i = 0; i < worldSize; i++){
 			for (int j = 0; j < worldSize; j++){
 				Vector2 chunkCoord = new(i, j);
 
-				TerrainChunkDictionary.Add(chunkCoord, new TerrainChunk(chunkCoord, chunkSize, detailLevels, colliderLODIndex, this, shaderMaterial));
+				TerrainChunkDictionary.Add(chunkCoord, new TerrainChunk(chunkCoord, chunkSize, detailLevels, colliderLODIndex, this, shaderMaterial, interation += 1));
 			}
 		}
 
 		// generate resources
 		foreach (KeyValuePair<Vector2, TerrainChunk> entry in TerrainChunkDictionary){
-			Vector3[] terrainChunkVertices = entry.Value.GetCollisionLODMeshVertices();
-			for (int i = 0; i < terrainChunkVertices.Length; i++){
-				GD.Print(terrainChunkVertices[i]);
-			}
+			// Vector3[] terrainChunkVertices = entry.Value.GetCollisionLODMeshVertices();
+			// for (int i = 0; i < terrainChunkVertices.Length; i++){
+			// 	GD.Print(terrainChunkVertices[i]);
+			// }
 		}
 	}
 
@@ -115,6 +116,7 @@ public partial class PregenTerrain : Node3D
 
 		public StaticBody3D staticBody;
 		CollisionShape3D meshCollider;
+		int chunkNumber;
 
 		LODInfo[] detailLevels;
 		LODMesh[] lodMeshes;
@@ -125,9 +127,10 @@ public partial class PregenTerrain : Node3D
 		int previousLODIndex = -1;
 		bool hasSetCollider;
 
-        public TerrainChunk(Vector2 coord, int size, LODInfo[] detailLevels, int colliderLODIndex, Node parent, ShaderMaterial shaderMaterial){
+        public TerrainChunk(Vector2 coord, int size, LODInfo[] detailLevels, int colliderLODIndex, Node parent, ShaderMaterial shaderMaterial, int chunkNum){
 			this.detailLevels = detailLevels;
 			this.colliderLODIndex = colliderLODIndex;
+			this.chunkNumber = chunkNum;
 
             chunkPosition = coord * size;
             Bounds = new Aabb(new Vector3(chunkPosition.X, 0, chunkPosition.Y), new Vector3(size, size, size));
@@ -204,6 +207,10 @@ public partial class PregenTerrain : Node3D
 					if (!lodMeshes[colliderLODIndex].hasRequestedMesh){
 						lodMeshes[colliderLODIndex].RequestMesh(mapData, chunkPosition, scale, staticBody);
 					}
+				}
+				
+				if(chunkNumber == 1){
+					GD.Print(sqrDistanceFromViewerToEdge, " ------- ", colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold);
 				}
 
 				if (sqrDistanceFromViewerToEdge < colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold){

@@ -55,25 +55,22 @@ color = Color(0.215686, 0.207843, 0.192157, 1)
 script = ExtResource("7_fwpux")
 lod = 0
 visibleDstThreshold = 200.0
-useForCollider = false
 ExportedSqrVisibleDstThreshold = 40000.0
 
 [sub_resource type="Resource" id="Resource_i6chj"]
 script = ExtResource("7_fwpux")
 lod = 1
 visibleDstThreshold = 400.0
-useForCollider = true
 ExportedSqrVisibleDstThreshold = 160000.0
 
 [sub_resource type="Resource" id="Resource_pvqi2"]
 script = ExtResource("7_fwpux")
 lod = 4
 visibleDstThreshold = 600.0
-useForCollider = false
 ExportedSqrVisibleDstThreshold = 360000.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_32hw4"]
-size = Vector2(241, 241)
+[sub_resource type="PlaneMesh" id="PlaneMesh_nxm0g"]
+size = Vector2(49, 49)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("infinite_terrain")]
 script = ExtResource("1_beekf")
@@ -111,12 +108,13 @@ worldSize = 4
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_32hw4")
+mesh = SubResource("PlaneMesh_nxm0g")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 
 [node name="ResourceChunkInstancer" type="Node3D" parent="MapGenerator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 276.758, -0.00012207, 882.453)
 script = ExtResource("9_8y3m7")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1837.03, -0.000305176, 613.769)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1164.44, -0.000305175, 1851.23)

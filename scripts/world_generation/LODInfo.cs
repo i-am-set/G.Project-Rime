@@ -5,11 +5,9 @@ using System;
 [GlobalClass]
 public partial class LODInfo : Resource
 {
-    [Export] public int lod { get; set; }
+    [Export(PropertyHint.Range, "0, 4")] public int lod { get; set; } // the max of the range is MeshGenerator.numSupportedLODs-1
 
     [Export] public float visibleDstThreshold { get; set; }
-
-    [Export] public bool useForCollider { get; set; }
 
     public float SqrVisibleDstThreshold{ get {return visibleDstThreshold * visibleDstThreshold;} }
 

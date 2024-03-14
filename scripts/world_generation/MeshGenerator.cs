@@ -6,6 +6,9 @@ using Godot;
 [Tool]
 public static class MeshGenerator
 {
+	public const int numSupportedLODs = 5;
+	public static readonly int[] supportedChunkSizes = {48,72,96,120,144,168,192,216,240};
+
 	public static MeshData GenerateTerrainMesh(FastNoiseLite perlinNoise, int width, int height, float heightMultiplier, Curve _heightCurve, int levelOfDetail, Vector2 chunkPosition, float scale, StaticBody3D staticBody, ResourceChunkInstancer resourceChunkInstancer) {
 		Curve heightCurve = (Curve)_heightCurve.Duplicate();
 

@@ -30,7 +30,7 @@ public partial class InfiniteTerrain : Node3D
 		mapGenerator = (MapGenerator)GetParent();
 
 		maxViewDst = detailLevels[detailLevels.Length-1].visibleDstThreshold;
-        chunkSize = MapGenerator.mapChunkSize - 1;
+        chunkSize = mapGenerator.mapChunkSize - 1;
         chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
 
 		UpdateVisibleChunks();
@@ -112,12 +112,6 @@ public partial class InfiniteTerrain : Node3D
             parent.AddChild(meshObject);
 
 			lodMeshes = new LODMesh[detailLevels.Length];
-			for (int i = 0; i < detailLevels.Length; i++){
-				lodMeshes[i] = new LODMesh(detailLevels[i].lod, UpdateTerrainChunk);
-				if (detailLevels[i].useForCollider) {
-					collisionLODMesh = lodMeshes[i];
-				}
-			}
 
 			mapGenerator.RequestMapData(chunkPosition, OnMapDataReceived);
         }
