@@ -57,7 +57,6 @@ public partial class PregenTerrain : Node3D
 
 		if ((viewerPositionOld - viewerPosition).LengthSquared() > sqrViewerMoveThresholdForChunkUpdate){
 			viewerPositionOld = viewerPosition;
-			GD.Print("printed");
         	UpdateVisibleChunks();
 		}
     }
@@ -71,14 +70,18 @@ public partial class PregenTerrain : Node3D
 				Vector2 chunkCoord = new(i, j);
 
 				TerrainChunkDictionary.Add(chunkCoord, new TerrainChunk(chunkCoord, chunkSize, detailLevels, colliderLODIndex, this, shaderMaterial, interation += 1));
-			}
-		}
 
-		// generate resources
-		foreach (KeyValuePair<Vector2, TerrainChunk> entry in TerrainChunkDictionary){
-			Vector3[] terrainChunkVertices = entry.Value.GetCollisionLODMeshVertices();
-			for (int i = 0; i < terrainChunkVertices.Length; i++){
-				GD.Print(terrainChunkVertices[i]);
+				// generate resources
+				Vector3[] terrainChunkVertices = TerrainChunkDictionary[chunkCoord].GetCollisionLODMeshVertices();
+				if (terrainChunkVertices == null){
+					GD.Print(TerrainChunkDictionary[chunkCoord].chunkNumber);
+					break;
+				}
+				
+				for (int k = 0; k < terrainChunkVertices.Length; k++)
+				{
+					GD.Print(terrainChunkVertices[j]);
+				}
 			}
 		}
 	}
@@ -117,7 +120,7 @@ public partial class PregenTerrain : Node3D
 
 		public StaticBody3D staticBody;
 		CollisionShape3D meshCollider;
-		int chunkNumber;
+		public int chunkNumber;
 
 		LODInfo[] detailLevels;
 		LODMesh[] lodMeshes;
@@ -226,8 +229,8 @@ public partial class PregenTerrain : Node3D
 			if (lodMeshes[colliderLODIndex].hasMesh){
 				return lodMeshes[colliderLODIndex].meshData.vertices;
 			}
-			GD.Print("bad");
-			return lodMeshes[colliderLODIndex].meshData.vertices;
+			
+			return null;
 		}
 
         public void SetVisible(bool visible){
