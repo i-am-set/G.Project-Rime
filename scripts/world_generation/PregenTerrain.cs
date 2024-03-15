@@ -5,11 +5,11 @@ using System.Collections.Generic;
 [Tool]
 public partial class PregenTerrain : Node3D
 {
-	const float scale = 24.0f;
+	const float scale = 4.0f;
 
-	const float viewerMoveThresholdForChunkUpdate = 25f;
+	const float viewerMoveThresholdForChunkUpdate = 5f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
-	const float colliderGenerationDistanceThreshold = 130;
+	const float colliderGenerationDistanceThreshold = 35;
 
 	[Export] public int colliderLODIndex;
 	[Export] public LODInfo[] detailLevels;
@@ -57,6 +57,7 @@ public partial class PregenTerrain : Node3D
 
 		if ((viewerPositionOld - viewerPosition).LengthSquared() > sqrViewerMoveThresholdForChunkUpdate){
 			viewerPositionOld = viewerPosition;
+			GD.Print("printed");
         	UpdateVisibleChunks();
 		}
     }
@@ -202,15 +203,10 @@ public partial class PregenTerrain : Node3D
 		public void UpdateCollisionMesh(){
 			if(!hasSetCollider){
 				float sqrDistanceFromViewerToEdge = Bounds.Position.DistanceSquaredTo(new Vector3(viewerPosition.X, 0, viewerPosition.Y));
-
 				if (sqrDistanceFromViewerToEdge < detailLevels[colliderLODIndex].SqrVisibleDstThreshold){
 					if (!lodMeshes[colliderLODIndex].hasRequestedMesh){
 						lodMeshes[colliderLODIndex].RequestMesh(mapData, chunkPosition, scale, staticBody);
 					}
-				}
-				
-				if(chunkNumber == 1){
-					GD.Print(sqrDistanceFromViewerToEdge, " ------- ", colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold);
 				}
 
 				if (sqrDistanceFromViewerToEdge < colliderGenerationDistanceThreshold * colliderGenerationDistanceThreshold){
