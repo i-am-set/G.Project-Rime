@@ -22,7 +22,7 @@ public partial class PregenTerrain : Node3D
 	Vector2 viewerPositionOld;
 	static MapGenerator mapGenerator;
     int chunkSize;
-	[Export(PropertyHint.Range, "1, 10")] public int worldSize = 3;
+	[Export(PropertyHint.Range, "1, 50")] public int worldSize = 3;
     int chunksVisibleInViewDst;
 
     Dictionary<Vector2, TerrainChunk> TerrainChunkDictionary = new();
@@ -76,10 +76,10 @@ public partial class PregenTerrain : Node3D
 
 		// generate resources
 		foreach (KeyValuePair<Vector2, TerrainChunk> entry in TerrainChunkDictionary){
-			// Vector3[] terrainChunkVertices = entry.Value.GetCollisionLODMeshVertices();
-			// for (int i = 0; i < terrainChunkVertices.Length; i++){
-			// 	GD.Print(terrainChunkVertices[i]);
-			// }
+			Vector3[] terrainChunkVertices = entry.Value.GetCollisionLODMeshVertices();
+			for (int i = 0; i < terrainChunkVertices.Length; i++){
+				GD.Print(terrainChunkVertices[i]);
+			}
 		}
 	}
 
@@ -219,15 +219,15 @@ public partial class PregenTerrain : Node3D
 		}
 
 		public Vector3[] GetCollisionLODMeshVertices(){
-			if (!lodMeshes[colliderLODIndex].hasRequestedMesh){
-				lodMeshes[colliderLODIndex].RequestMesh(mapData, chunkPosition, scale, staticBody);
-			}
+			// if (!lodMeshes[colliderLODIndex].hasRequestedMesh){
+			// 	lodMeshes[colliderLODIndex].RequestMesh(mapData, chunkPosition, scale, staticBody);
+			// }
 
 			if (lodMeshes[colliderLODIndex].hasMesh){
 				return lodMeshes[colliderLODIndex].meshData.vertices;
 			}
-
-			return null;
+			GD.Print("bad");
+			return lodMeshes[colliderLODIndex].meshData.vertices;
 		}
 
         public void SetVisible(bool visible){
