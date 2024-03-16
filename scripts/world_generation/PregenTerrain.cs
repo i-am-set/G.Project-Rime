@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 [Tool]
@@ -51,8 +52,7 @@ public partial class PregenTerrain : Node3D
 		}
 	}
 
-    public override void _PhysicsProcess(double delta)
-    {
+    public override void _PhysicsProcess(double delta){
         viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
 
 		if ((viewerPositionOld - viewerPosition).LengthSquared() > sqrViewerMoveThresholdForChunkUpdate){
@@ -61,27 +61,14 @@ public partial class PregenTerrain : Node3D
 		}
     }
 
-	void GenerateWorld()
-	{
+	// generate world
+	void GenerateWorld(){
 		int interation = 0;
-		// generate terrain
 		for (int i = 0; i < worldSize; i++){
 			for (int j = 0; j < worldSize; j++){
 				Vector2 chunkCoord = new(i, j);
-
-				TerrainChunkDictionary.Add(chunkCoord, new TerrainChunk(chunkCoord, chunkSize, detailLevels, colliderLODIndex, this, shaderMaterial, interation += 1));
-
-				// generate resources
-				Vector3[] terrainChunkVertices = TerrainChunkDictionary[chunkCoord].GetCollisionLODMeshVertices();
-				if (terrainChunkVertices == null){
-					GD.Print(TerrainChunkDictionary[chunkCoord].chunkNumber);
-					break;
-				}
-				
-				for (int k = 0; k < terrainChunkVertices.Length; k++)
-				{
-					GD.Print(terrainChunkVertices[j]);
-				}
+				TerrainChunk terrainChunk = new TerrainChunk(chunkCoord, chunkSize, detailLevels, colliderLODIndex, this, shaderMaterial, interation += 1);
+				TerrainChunkDictionary.Add(chunkCoord, terrainChunk);
 			}
 		}
 	}
@@ -115,7 +102,7 @@ public partial class PregenTerrain : Node3D
     public class TerrainChunk
     {
         MeshInstance3D meshObject;
-        Vector2 chunkPosition;
+        public Vector2 chunkPosition;
         Aabb Bounds;
 
 		public StaticBody3D staticBody;
@@ -221,16 +208,26 @@ public partial class PregenTerrain : Node3D
 			}
 		}
 
-		public Vector3[] GetCollisionLODMeshVertices(){
-			// if (!lodMeshes[colliderLODIndex].hasRequestedMesh){
-			// 	lodMeshes[colliderLODIndex].RequestMesh(mapData, chunkPosition, scale, staticBody);
-			// }
-
-			if (lodMeshes[colliderLODIndex].hasMesh){
-				return lodMeshes[colliderLODIndex].meshData.vertices;
+		// generate resources
+		void GenerateResources(){
+			Vector3[] terrainChunkVertices = GetCollisionLODMeshVertices();
+			if (terrainChunkVertices == null){
+				GD.Print(chunkNumber, " ------ ", chunkPosition);
+				return;
 			}
 			
-			return null;
+			for (int i = 0; i < terrainChunkVertices.Length; i++)
+			{
+				// GD.Print(terrainChunkVertices[i]);
+			}
+		}
+
+		Vector3[] GetCollisionLODMeshVertices(){
+		if (lodMeshes[colliderLODIndex].hasMesh){
+			return lodMeshes[colliderLODIndex].meshData.vertices;
+		}
+		
+		return null;
 		}
 
         public void SetVisible(bool visible){
