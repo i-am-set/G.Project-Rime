@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Intrinsics;
 
 [Tool]
 public partial class PregenTerrain : Node3D
@@ -32,7 +34,7 @@ public partial class PregenTerrain : Node3D
 	// bool hasWorldBeenGenerated = false;
 
     Dictionary<Vector2, TerrainChunk> TerrainChunkDictionary = new();
-    List<TerrainChunk> TerrainChunksVisibleLastUpdate = new();
+    static List<TerrainChunk> visibleTerrainChunks = new();
 
     // public override void _Ready(){
 	void StartWorld(){
@@ -57,7 +59,7 @@ public partial class PregenTerrain : Node3D
 		}
 
 		if (viewerPosition != viewerPositionOld){
-			foreach (TerrainChunk chunk in TerrainChunksVisibleLastUpdate){
+			foreach (TerrainChunk chunk in visibleTerrainChunks){
 				chunk.UpdateCollisionMesh();
 			}
 		}
@@ -84,13 +86,12 @@ public partial class PregenTerrain : Node3D
 		}
 	}
 
-    void UpdateVisibleChunks()
-    {
-        foreach (var terrainChunk in TerrainChunksVisibleLastUpdate)
-        {
-            terrainChunk.SetVisible(false);
-        }
-        TerrainChunksVisibleLastUpdate.Clear();
+    void UpdateVisibleChunks(){
+		HashSet<Vector2> alreadyUpdatedChunkCoords = new();
+		for (int i = visibleTerrainChunks.Count-1; i >= 0; i--){
+			alreadyUpdatedChunkCoords.Add(visibleTerrainChunks[i].coord);
+			visibleTerrainChunks[i].UpdateTerrainChunk();
+		}
 		
         int currentChunkCoordX = Mathf.RoundToInt(viewerPosition.X / chunkSize);
         int currentChunkCoordY = Mathf.RoundToInt(viewerPosition.Y / chunkSize);
@@ -98,23 +99,23 @@ public partial class PregenTerrain : Node3D
         for (int yOffset = -chunksVisibleInViewDst; yOffset <= chunksVisibleInViewDst; yOffset++){
             for (int xOffset = -chunksVisibleInViewDst; xOffset <= chunksVisibleInViewDst; xOffset++){
                 Vector2 viewedChunkCoord = new(currentChunkCoordX + xOffset, currentChunkCoordY + yOffset);
-				
-                if (TerrainChunkDictionary.ContainsKey(viewedChunkCoord)){
-                    TerrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk();
-                    if (TerrainChunkDictionary[viewedChunkCoord].IsVisible()){
-                        TerrainChunksVisibleLastUpdate.Add(TerrainChunkDictionary[viewedChunkCoord]);
-                    }
-                }
+				if (!alreadyUpdatedChunkCoords.Contains(viewedChunkCoord)){
+					if (TerrainChunkDictionary.ContainsKey(viewedChunkCoord)){
+						TerrainChunkDictionary[viewedChunkCoord].UpdateTerrainChunk();
+					}
+				}
             }
         }
     }
 
 	[Tool]
-    public class TerrainChunk
-    {
+    public class TerrainChunk{
+		public Vector2 coord;
+
         MeshInstance3D meshObject;
 		Node3D resourceParent;
         public Vector2 chunkPosition;
+		Vector3[] chunkVertices;
         Aabb Bounds;
 
 		public StaticBody3D staticBody;
@@ -132,6 +133,7 @@ public partial class PregenTerrain : Node3D
 		bool hasFullyGenerated = false;
 
         public TerrainChunk(Vector2 coord, int size, LODInfo[] detailLevels, int colliderLODIndex, Node parent, ShaderMaterial shaderMaterial, int chunkNum){
+			this.coord = coord;
 			this.detailLevels = detailLevels;
 			this.colliderLODIndex = colliderLODIndex;
 			this.chunkNumber = chunkNum;
@@ -182,6 +184,8 @@ public partial class PregenTerrain : Node3D
 
 			if (mapDataReceived) {
 				float viewerDstFromNearestEdge = Bounds.Position.DistanceTo(new Vector3(viewerPosition.X, 0, viewerPosition.Y));
+
+				bool wasVisible = IsVisible();
 				bool visible = viewerDstFromNearestEdge <= maxViewDst;
 				if (!hasFullyGenerated){
 					lodMeshes[colliderLODIndex].RequestMesh(mapData, chunkPosition, scale, staticBody);
@@ -207,9 +211,21 @@ public partial class PregenTerrain : Node3D
 							lodMesh.RequestMesh(mapData, chunkPosition, scale, staticBody);
 						}
 					}
+
 				}
 
-				SetVisible(visible);
+				if (wasVisible != visible) {
+					if (visible) {
+						visibleTerrainChunks.Add(this);
+						if (hasFullyGenerated){
+							resourceChunkInstancer.ReseatResources(chunkVertices, resourceParent);
+						}
+					} else {
+						visibleTerrainChunks.Remove(this);
+						resourceChunkInstancer.DisplaceResource(chunkVertices);
+					}
+					SetVisible (visible);
+				}
 			}
         }
 
@@ -233,14 +249,14 @@ public partial class PregenTerrain : Node3D
 
 		// generate resources
 		void GenerateResources(){
-			Vector3[] terrainChunkVertices = GetCollisionLODMeshVertices();
-			if (terrainChunkVertices == null){
+			chunkVertices = GetCollisionLODMeshVertices();
+			if (chunkVertices == null){
 				GD.Print(chunkNumber, " ------ ", chunkPosition, " : Failed to find Vertices");
 				return;
 			}
 			GD.Print(chunkNumber, " =========== ", chunkPosition, " : Generating Resources");
-			for (int i = 0; i < terrainChunkVertices.Length; i++){
-				resourceChunkInstancer.GenerateLocalResources(new Vector3(terrainChunkVertices[i].X + chunkPosition.X, terrainChunkVertices[i].Y, terrainChunkVertices[i].Z + chunkPosition.Y)*scale, resourceParent);
+			for (int i = 0; i < chunkVertices.Length; i++){
+				resourceChunkInstancer.GenerateLocalResources(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale);
 			}
 		}
 

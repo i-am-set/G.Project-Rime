@@ -64,7 +64,8 @@ public partial class ResourceChunkInstancer : Node3D
     private PackedScene testObject = (PackedScene)GD.Load("res://scenes/test_object.tscn");
     private bool isGeneratingResources = false;
 
-    private System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData = new();
+    private System.Collections.Generic.Dictionary<Vector3, PackedScene> resourceData = new();
+    private System.Collections.Generic.Dictionary<Vector3, Node3D> seatedResourcesData = new();
     private const int positionsPerFrame = 150;
 
     private bool isInitialized = false;
@@ -93,18 +94,18 @@ public partial class ResourceChunkInstancer : Node3D
 		}
 	}
 
-    public void GenerateLocalResources(Vector3 resourcePosition, Node3D resourceParent){   
-        resourceData = IterateThroughResources(resourceData, resourcePosition, resourceParent);
+    public void GenerateLocalResources(Vector3 resourcePosition){   
+        resourceData = IterateThroughResources(resourceData, resourcePosition);
+        GD.Print(resourceData.Count, " resources");
     }
 
-    private System.Collections.Generic.Dictionary<Vector3, Node3D> IterateThroughResources(System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData, Vector3 resourcePosition, Node3D resourceParent){
+    private System.Collections.Generic.Dictionary<Vector3, PackedScene> IterateThroughResources(System.Collections.Generic.Dictionary<Vector3, PackedScene> resourceData, Vector3 resourcePosition){
         float mappedNoise = noise.GetNoise2D(resourcePosition.X, resourcePosition.Z) * 100;
         if (mappedNoise > 0.125){
             if (!resourceData.ContainsKey(resourcePosition)){
-                // Node3D resource = InstantiateResource((ulong)(mappedNoise * 100), GetParent());
-                Node3D resource = (Node3D)testObject.Instantiate();
-                resourceParent.CallDeferred("add_child", resource);
-                resource.Position = resourcePosition;
+                PackedScene resource = RollResource((ulong)(mappedNoise * 100));
+                // Node3D resource = (Node3D)testObject.Instantiate();
+                // resourceParent.CallDeferred("add_child", resource);
                 resourceData[resourcePosition] = resource;
             }
         }
@@ -112,31 +113,30 @@ public partial class ResourceChunkInstancer : Node3D
         return resourceData;
     }
 
-    private Node3D InstantiateResource(ulong heightSeed, Node parent){
+    private PackedScene RollResource(ulong heightSeed){
         rngBase.Seed = heightSeed;
         float diceRoll = rngBase.RandfRange(0, totalWeight);
         
-        foreach (var resource in weights)
-        {
+        foreach (var resource in weights){
             float weight = (float)weights[resource.Key];
             if (weight >= diceRoll)
             {
-                PackedScene currentResource = (PackedScene)resource.Key;
-                Node3D resourceInstance = (Node3D)currentResource.Instantiate();
-                float resourceScale = rngBase.RandfRange(0.4f, 2.5f);
-                int childrenCount = resourceInstance.GetChildren().Count;
-                int randResource = rngBase.RandiRange(0, childrenCount - 1);
+                // PackedScene currentResource = (PackedScene)resource.Key;
+                // Node3D resourceInstance = (Node3D)currentResource.Instantiate();
+                // float resourceScale = rngBase.RandfRange(0.4f, 2.5f);
+                // int childrenCount = resourceInstance.GetChildren().Count;
+                // int randResource = rngBase.RandiRange(0, childrenCount - 1);
 
-                resourceInstance.Call("ShowResource", randResource);
-                resourceInstance.Scale = new Vector3(resourceScale, resourceScale, resourceScale);
-                resourceInstance.Rotation = new Vector3(Mathf.DegToRad(rngBase.RandiRange(-5, 5)), Mathf.DegToRad(rngBase.RandiRange(0, 359)), Mathf.DegToRad(rngBase.RandiRange(-5, 5)));
+                // resourceInstance.Call("ShowResource", randResource);
+                // resourceInstance.Scale = new Vector3(resourceScale, resourceScale, resourceScale);
+                // resourceInstance.Rotation = new Vector3(Mathf.DegToRad(rngBase.RandiRange(-5, 5)), Mathf.DegToRad(rngBase.RandiRange(0, 359)), Mathf.DegToRad(rngBase.RandiRange(-5, 5)));
 
-                if (trees.Contains(resource.Key))
-				{
-					return TreeParameters(resourceInstance, randResource, rngBase);
-				}
+                // if (trees.Contains(resource.Key))
+				// {
+				// 	TreeParameters(resourceInstance, randResource, rngBase);
+				// }
 
-                return resourceInstance;
+                return resource.Key;
             }
             diceRoll -= weight;
         }
@@ -161,26 +161,22 @@ public partial class ResourceChunkInstancer : Node3D
         return tree;
     }
 
-    private void ReseatResources(System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData, Vector3 _authorizedPlayerPosition, int _authorizedPlayerResourceSpawnRadius)
-    {
-        Vector2 playerPos2D = new(_authorizedPlayerPosition.X, _authorizedPlayerPosition.Z);
-        float spawnRadiusSquared = _authorizedPlayerResourceSpawnRadius * _authorizedPlayerResourceSpawnRadius;
-        foreach (KeyValuePair<Vector3, Node3D> entry in resourceData)
-        {
-            Vector3 resourceLocation = entry.Key;
-            Node node = entry.Value;
-            if (node == null)
-            {
-                continue;
+    public void ReseatResources(Vector3[] possibleResourcePositions, Node3D resourceParent){
+        for (int i = 0; i < possibleResourcePositions.Length; i++){
+            if (resourceData.ContainsKey(possibleResourcePositions[i])){
+                Node3D resource = (Node3D)testObject.Instantiate();
+                resourceParent.CallDeferred("add_child", resource);
+                resource.Position = possibleResourcePositions[i];
+                seatedResourcesData[possibleResourcePositions[i]] = resource;
             }
-            float distanceSquared = new Vector2(resourceLocation.X, resourceLocation.Z).DistanceSquaredTo(playerPos2D);
-            if (distanceSquared < spawnRadiusSquared && node.GetParent() == null)
-            {
-                GetParent().AddChild(node);
-            }
-            else if (distanceSquared >= spawnRadiusSquared && node.GetParent() != null)
-            {
-                GetParent().RemoveChild(node);
+        }
+    }
+
+    public void DisplaceResource(Vector3[] possibleResourcePositions){
+        for (int i = 0; i < possibleResourcePositions.Length; i++){
+            if (seatedResourcesData.ContainsKey(possibleResourcePositions[i])){
+                seatedResourcesData[possibleResourcePositions[i]].Position = new Vector3(0, -10000, 0);
+                seatedResourcesData.Remove(possibleResourcePositions[i]);
             }
         }
     }
