@@ -65,9 +65,6 @@ public partial class ResourceChunkInstancer : Node3D
     private bool isGeneratingResources = false;
 
     private System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData = new();
-    public Queue<ChunkData> queuedChunk = new();
-    private HashSet<Vector3> currentChunk = new();
-    private StaticBody3D currentChunkStaticBody = new();
     private const int positionsPerFrame = 150;
 
     private bool isInitialized = false;
@@ -80,18 +77,9 @@ public partial class ResourceChunkInstancer : Node3D
         InitiateWeightSystem();
     }
 
-    public override void _PhysicsProcess(double delta){
-        if (currentChunk.Count <= 0){
-            if (queuedChunk.Count > 0){
-                ChunkData chunkData = queuedChunk.Dequeue();
-                currentChunk = chunkData.Positions;
-                currentChunkStaticBody = chunkData.Body;
-            } else {
-                return;
-            }
-        }
-        GenerateLocalResources();
-    }
+    // public override void _PhysicsProcess(double delta){
+    //     GenerateLocalResources();
+    // }
 
 	private void InitiateWeightSystem()
 	{
@@ -105,25 +93,19 @@ public partial class ResourceChunkInstancer : Node3D
 		}
 	}
 
-    public void GenerateLocalResources(){   
-        resourceData = IterateThroughResources(resourceData);
+    public void GenerateLocalResources(Vector3 resourcePosition, Node3D resourceParent){   
+        resourceData = IterateThroughResources(resourceData, resourcePosition, resourceParent);
     }
 
-    private System.Collections.Generic.Dictionary<Vector3, Node3D> IterateThroughResources(System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData){
-        for (int i = 0; i < positionsPerFrame; i++){
-            if (currentChunk.Count > 0){
-                Vector3 resourcePosition = currentChunk.First();
-                float mappedNoise = noise.GetNoise2D(resourcePosition.X, resourcePosition.Z) * 100;
-                if (mappedNoise > 0.325){
-                    if (!resourceData.ContainsKey(resourcePosition)){
-                        Node3D resource = InstantiateResource((ulong)(mappedNoise * 100), GetParent());
-                        // Node3D resource = (Node3D)testObject.Instantiate();
-                        currentChunkStaticBody.CallDeferred("add_child", resource);
-                        resource.Position = resourcePosition;
-                        resourceData[resourcePosition] = resource;
-                    }
-                }
-                currentChunk.Remove(resourcePosition);
+    private System.Collections.Generic.Dictionary<Vector3, Node3D> IterateThroughResources(System.Collections.Generic.Dictionary<Vector3, Node3D> resourceData, Vector3 resourcePosition, Node3D resourceParent){
+        float mappedNoise = noise.GetNoise2D(resourcePosition.X, resourcePosition.Z) * 100;
+        if (mappedNoise > 0.125){
+            if (!resourceData.ContainsKey(resourcePosition)){
+                // Node3D resource = InstantiateResource((ulong)(mappedNoise * 100), GetParent());
+                Node3D resource = (Node3D)testObject.Instantiate();
+                resourceParent.CallDeferred("add_child", resource);
+                resource.Position = resourcePosition;
+                resourceData[resourcePosition] = resource;
             }
         }
 

@@ -66,7 +66,7 @@ script = ExtResource("7_fwpux")
 lod = 4
 visibleDstThreshold = 150.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_3c1x6"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_srhtp"]
 size = Vector2(49, 49)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain")]
@@ -98,20 +98,19 @@ regions = [SubResource("Resource_rrn6f"), SubResource("Resource_qiy2y"), SubReso
 [node name="PregenTerrain" type="Node3D" parent="MapGenerator" node_paths=PackedStringArray("viewer")]
 script = ExtResource("6_wx3wc")
 detailLevels = [SubResource("Resource_naaya"), SubResource("Resource_i6chj"), SubResource("Resource_pvqi2")]
+worldSize = 10
 viewer = NodePath("../../Marker3D")
 shaderMaterial = ExtResource("4_5r3nd")
-worldSize = 50
 
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_3c1x6")
+mesh = SubResource("PlaneMesh_srhtp")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 
 [node name="ResourceChunkInstancer" type="Node3D" parent="MapGenerator"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 276.758, -0.00012207, 882.453)
 script = ExtResource("9_8y3m7")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.175, 74.0264, 224.107)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 295.763, 74.0264, 459.189)
