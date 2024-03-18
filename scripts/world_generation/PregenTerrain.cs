@@ -36,8 +36,8 @@ public partial class PregenTerrain : Node3D
     Dictionary<Vector2, TerrainChunk> TerrainChunkDictionary = new();
     static List<TerrainChunk> visibleTerrainChunks = new();
 
-    // public override void _Ready(){
-	void StartWorld(){
+    public override void _Ready(){
+	// void StartWorld(){
 		mapGenerator = (MapGenerator)GetParent();
 		resourceChunkInstancer = (ResourceChunkInstancer)mapGenerator.GetNode("ResourceChunkInstancer");
 
@@ -53,10 +53,10 @@ public partial class PregenTerrain : Node3D
 	public override void _Process(double delta){
 		viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
 
-		if (generateWorld){
-			generateWorld = false;
-			StartWorld();
-		}
+		// if (generateWorld){
+		// 	generateWorld = false;
+		// 	StartWorld();
+		// }
 
 		if (viewerPosition != viewerPositionOld){
 			foreach (TerrainChunk chunk in visibleTerrainChunks){
@@ -214,15 +214,23 @@ public partial class PregenTerrain : Node3D
 
 				}
 
+				if(hasFullyGenerated){
+					if (visible){
+						if (hasFullyGenerated){
+							GD.Print("Reseating resource in chunk ", chunkNumber);
+							ReseatResources();
+						}
+					} else {
+						GD.Print("Displacing resource in chunk ", chunkNumber);
+						DisplaceResource();
+					}
+				}
+
 				if (wasVisible != visible) {
 					if (visible) {
 						visibleTerrainChunks.Add(this);
-						if (hasFullyGenerated){
-							resourceChunkInstancer.ReseatResources(chunkVertices, resourceParent);
-						}
 					} else {
 						visibleTerrainChunks.Remove(this);
-						resourceChunkInstancer.DisplaceResource(chunkVertices);
 					}
 					SetVisible (visible);
 				}
@@ -257,6 +265,18 @@ public partial class PregenTerrain : Node3D
 			GD.Print(chunkNumber, " =========== ", chunkPosition, " : Generating Resources");
 			for (int i = 0; i < chunkVertices.Length; i++){
 				resourceChunkInstancer.GenerateLocalResources(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale);
+			}
+		}
+
+		void ReseatResources(){
+        	for (int i = 0; i < chunkVertices.Length; i++){
+            	resourceChunkInstancer.ReseatResources(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale, resourceParent);
+        	}
+    	}
+
+		public void DisplaceResource(){
+			for (int i = 0; i < chunkVertices.Length; i++){
+				resourceChunkInstancer.DisplaceResource(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale);
 			}
 		}
 
