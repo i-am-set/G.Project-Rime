@@ -66,7 +66,7 @@ script = ExtResource("7_fwpux")
 lod = 4
 visibleDstThreshold = 150.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_4vjrl"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_5iimi"]
 size = Vector2(49, 49)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain")]
@@ -74,7 +74,7 @@ script = ExtResource("1_beekf")
 generated_terrain = NodePath("MapGenerator/PregenTerrain")
 
 [node name="GodotSky" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1231.44
+timeOfDay = 1611.93
 rateOfTime = 0.005
 cloudCoverage = 0.5
 
@@ -105,7 +105,7 @@ shaderMaterial = ExtResource("4_5r3nd")
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_4vjrl")
+mesh = SubResource("PlaneMesh_5iimi")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 
@@ -113,4 +113,4 @@ shaderMaterial = ExtResource("4_5r3nd")
 script = ExtResource("9_8y3m7")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1156.2, 74.0264, 1189.82)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 972.41, 74.0264, 1189.82)

@@ -65,6 +65,7 @@ public partial class ResourceChunkInstancer : Node3D
     private bool isGeneratingResources = false;
 
     private System.Collections.Generic.Dictionary<Vector3, PackedScene> resourceData = new();
+    private Queue<ResourceInfo> queuedResourceForReseating = new();
     private System.Collections.Generic.Dictionary<Vector3, Node3D> seatedResourcesData = new();
     private const int positionsPerFrame = 150;
 
@@ -78,9 +79,14 @@ public partial class ResourceChunkInstancer : Node3D
         InitiateWeightSystem();
     }
 
-    // public override void _PhysicsProcess(double delta){
-    //     GenerateLocalResources();
-    // }
+    public override void _PhysicsProcess(double delta){
+        for (int i = 0; i < positionsPerFrame; i++){
+            if (queuedResourceForReseating.Count > 0){
+                ResourceInfo resourceInfo = queuedResourceForReseating.Dequeue();
+                ReseatResource(resourceInfo.position, resourceInfo.parent);
+            }
+        }
+    }
 
 	private void InitiateWeightSystem()
 	{
@@ -94,7 +100,7 @@ public partial class ResourceChunkInstancer : Node3D
 		}
 	}
 
-    public void GenerateLocalResources(Vector3 resourcePosition){   
+    public void RollLocalResources(Vector3 resourcePosition){   
         resourceData = FindResource(resourceData, resourcePosition);
     }
 
@@ -177,7 +183,12 @@ public partial class ResourceChunkInstancer : Node3D
         return tree;
     }
 
-    public void ReseatResources(Vector3 possibleResourcePosition, Node3D resourceParent){
+    public void QueueNextReseatedResource(Vector3 possibleResourcePosition, Node3D resourceParent){
+        ResourceInfo resourceInfo = new ResourceInfo(possibleResourcePosition, resourceParent);
+        queuedResourceForReseating.Enqueue(resourceInfo);
+    }
+
+    void ReseatResource(Vector3 possibleResourcePosition, Node3D resourceParent){
         if (resourceData.ContainsKey(possibleResourcePosition)){
             if(!seatedResourcesData.ContainsKey(possibleResourcePosition)){
                 Node3D resource = InstantiateResource(resourceData[possibleResourcePosition]);
@@ -193,6 +204,17 @@ public partial class ResourceChunkInstancer : Node3D
     public void DisplaceResource(Vector3 possibleResourcePosition){
         if (seatedResourcesData.ContainsKey(possibleResourcePosition)){
             seatedResourcesData[possibleResourcePosition].Position = new Vector3(0, -10000, 0);
+        }
+    }
+
+    struct ResourceInfo {
+        public readonly Vector3 position;
+        public readonly Node3D parent;
+
+        public ResourceInfo(Vector3 position, Node3D parent)
+        {
+            this.position = position;
+            this.parent = parent;
         }
     }
 }

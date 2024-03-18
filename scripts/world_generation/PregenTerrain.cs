@@ -130,7 +130,8 @@ public partial class PregenTerrain : Node3D
 		bool mapDataReceived;
 		int previousLODIndex = -1;
 		bool hasSetCollider;
-		bool hasFullyGenerated = false;
+		bool hasRolledResources = false;
+		bool hasSeatedResources = false;
 
         public TerrainChunk(Vector2 coord, int size, LODInfo[] detailLevels, int colliderLODIndex, Node parent, ShaderMaterial shaderMaterial, int chunkNum){
 			this.coord = coord;
@@ -177,9 +178,9 @@ public partial class PregenTerrain : Node3D
 		}
 
         public void UpdateTerrainChunk(){
-			if (!hasFullyGenerated && lodMeshes[colliderLODIndex].hasMesh){
-				GenerateResources();
-				hasFullyGenerated = true;
+			if (!hasRolledResources && lodMeshes[colliderLODIndex].hasMesh){
+				RollResources();
+				hasRolledResources = true;
 			}
 
 			if (mapDataReceived) {
@@ -187,7 +188,7 @@ public partial class PregenTerrain : Node3D
 
 				bool wasVisible = IsVisible();
 				bool visible = viewerDstFromNearestEdge <= maxViewDst;
-				if (!hasFullyGenerated){
+				if (!hasRolledResources){
 					lodMeshes[colliderLODIndex].RequestMesh(mapData, chunkPosition, scale, staticBody);
 				}
 
@@ -214,15 +215,23 @@ public partial class PregenTerrain : Node3D
 
 				}
 
-				if(hasFullyGenerated){
+				if(hasRolledResources){
 					if (visible){
-						if (hasFullyGenerated){
+						if (!hasSeatedResources){
 							GD.Print("Reseating resource in chunk ", chunkNumber);
 							ReseatResources();
+							hasSeatedResources = true;
+						} else {
+							GD.Print("Chunk ", chunkNumber, "'s resources are already seated...");
 						}
 					} else {
-						GD.Print("Displacing resource in chunk ", chunkNumber);
-						DisplaceResource();
+						if(hasSeatedResources){
+							GD.Print("Displacing resource in chunk ", chunkNumber);
+							DisplaceResource();
+							hasSeatedResources = false;
+						} else {
+							GD.Print("Chunk ", chunkNumber, "'s resources are already displaced...");
+						}
 					}
 				}
 
@@ -255,8 +264,8 @@ public partial class PregenTerrain : Node3D
 			}
 		}
 
-		// generate resources
-		void GenerateResources(){
+	// generate resources
+		void RollResources(){
 			chunkVertices = GetCollisionLODMeshVertices();
 			if (chunkVertices == null){
 				GD.Print(chunkNumber, " ------ ", chunkPosition, " : Failed to find Vertices");
@@ -264,13 +273,13 @@ public partial class PregenTerrain : Node3D
 			}
 			GD.Print(chunkNumber, " =========== ", chunkPosition, " : Generating Resources");
 			for (int i = 0; i < chunkVertices.Length; i++){
-				resourceChunkInstancer.GenerateLocalResources(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale);
+				resourceChunkInstancer.RollLocalResources(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale);
 			}
 		}
 
 		void ReseatResources(){
         	for (int i = 0; i < chunkVertices.Length; i++){
-            	resourceChunkInstancer.ReseatResources(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale, resourceParent);
+            	resourceChunkInstancer.QueueNextReseatedResource(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale, resourceParent);
         	}
     	}
 
@@ -280,6 +289,7 @@ public partial class PregenTerrain : Node3D
 			}
 		}
 
+	// get collisionLODMeshVertices
 		Vector3[] GetCollisionLODMeshVertices(){
 		if (lodMeshes[colliderLODIndex].hasMesh){
 			return lodMeshes[colliderLODIndex].meshData.vertices;
@@ -288,6 +298,7 @@ public partial class PregenTerrain : Node3D
 		return null;
 		}
 
+	// visibility logic
         public void SetVisible(bool visible){
 			staticBody.SetCollisionLayerValue(1, visible);
 			resourceParent.Visible = visible;
