@@ -4,7 +4,7 @@ using Godot;
 public partial class ResourceController : Node3D
 {
 	[Export]
-	public Node3D[] children;
+	public StaticBody3D[] children;
 
 	public PackedScene _packedScene;
 
@@ -15,6 +15,7 @@ public partial class ResourceController : Node3D
 		if (child >= 0 && child <= children.Length)
 		{
 			children[child].Show();
+			children[child].SetCollisionLayerValue(1, true);
 			currentResource = child;
 		}
 		else
@@ -28,6 +29,7 @@ public partial class ResourceController : Node3D
 		if (child >= 0 && child <= children.Length)
 		{
 			children[child].Hide();
+			children[child].SetCollisionLayerValue(1, false);
 			currentResource = 0;
 		}
 		else
@@ -43,6 +45,7 @@ public partial class ResourceController : Node3D
 			if (children[i].Visible)
 			{
 				children[i].Hide();
+				children[i].SetCollisionLayerValue(1, false);
 			}
 		}
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cyw7df8te8bb8"]
 
-[ext_resource type="PackedScene" uid="uid://ceisnsrubj1tx" path="res://meshes/shrubs/twig_shrub_2.glb" id="1_e1tcp"]
+[ext_resource type="PackedScene" uid="uid://ceisnsrubj1tx" path="res://meshes/nature/shrubs/twig_shrub_2.glb" id="1_e1tcp"]
 [ext_resource type="Material" uid="uid://griq2xudost0" path="res://materials/nature/twig_shrub_material.tres" id="2_1rcnf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0utqx"]

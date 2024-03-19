@@ -54,7 +54,7 @@ noise = SubResource("FastNoiseLite_w5yig")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s44jw"]
 shader = ExtResource("1_m15bb")
-shader_parameter/baseColor = Color(0.204346, 0.344014, 0.5625, 1)
+shader_parameter/baseColor = Color(0.376346, 0.466088, 0.670669, 1)
 shader_parameter/scatterColor = Color(1, 1, 1, 1)
 shader_parameter/scatterColor2 = Color(1, 1, 1, 1)
 shader_parameter/bAnimClouds = false
@@ -62,7 +62,7 @@ shader_parameter/bAnimStars = true
 shader_parameter/cloudType = 1
 shader_parameter/sunRadius = 0.0003
 shader_parameter/sunEdgeBlur = 2450.0
-shader_parameter/sunDiscColor = Color(0.737255, 0.694118, 0.603922, 1)
+shader_parameter/sunDiscColor = Color(0.753222, 0.615881, 0.484171, 0.99042)
 shader_parameter/sunGlowColor = Color(1, 1, 1, 1)
 shader_parameter/sunlightColor = null
 shader_parameter/sunGlowIntensity = 0.45
@@ -83,7 +83,7 @@ shader_parameter/absorption = 5.0
 shader_parameter/henyeyGreensteinLevel = 0.69
 shader_parameter/dynamicCloudBrightness = 0.9
 shader_parameter/horizonUVCurve = 0.5
-shader_parameter/horizonFogColor = Color(0.827369, 0.91754, 0.997971, 1)
+shader_parameter/horizonFogColor = Color(0.779615, 0.765107, 0.867403, 1)
 shader_parameter/horizonAlpha = 1.0
 shader_parameter/horizonSize = 3.0
 shader_parameter/starColor = Color(0.43, 0.55, 0.91, 1)

@@ -300,7 +300,6 @@ public partial class PregenTerrain : Node3D
 
 	// visibility logic
         public void SetVisible(bool visible){
-			staticBody.SetCollisionLayerValue(1, visible);
 			resourceParent.Visible = visible;
             meshObject.Visible = visible;
         }
