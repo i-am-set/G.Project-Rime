@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/tall_pine_model_2.glb-efa7b9dba4d8b410474d6c4
 
 [params]
 
-nodes/root_type="StaticBody3D"
+nodes/root_type="Node3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
 nodes/root_scale=1.0

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj": {}
+    "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj": {}
   },
   "projects": {
-    "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj": {
+    "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+        "projectUniqueName": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
         "projectName": "Godot FPS Project",
-        "projectPath": "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+        "projectPath": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
         "packagesPath": "C:\\Users\\sethg\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\.godot\\mono\\temp\\obj\\",
+        "outputPath": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sethg\\AppData\\Roaming\\NuGet\\NuGet.Config"
