@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HckaCpt3a6r2JiX8Q6GAIUyhfUjXVRnExDAxr0Qbz4V57zRcOPDS4n3wLSw9S7ZXCquix5o4fTnEmduyYBSjIA==",
+  "dgSpecHash": "PT1p5LdLqDGq8CPN7EsXrzvfPqK77uw5cAyKLn0DXcyo4T6hl1loXmvosfT2P9KUQYRLIBvsLyKGwk9yb0eJUQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+  "projectFilePath": "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\sethg\\.nuget\\packages\\godot.sourcegenerators\\4.2.1\\godot.sourcegenerators.4.2.1.nupkg.sha512",
     "C:\\Users\\sethg\\.nuget\\packages\\godotsharp\\4.2.1\\godotsharp.4.2.1.nupkg.sha512",

@@ -1,3 +1,4 @@
+res://scenes/maingame/world.tscn
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
 res://GodotSky/Presets/default/overcastCloudColor.tres
@@ -32,6 +33,11 @@ res://shaders/bush_shader.gdshader
 res://materials/nature/twig_shrub_material.tres
 res://world/heightmap/resource_noise.tres
 res://addons/proton_scatter/demos/assets/materials/grass.gdshader
-res://scenes/resourceobjects/nature/trees/col_tall_pine_tree.tscn
-res://scenes/resourceobjects/nature/trees/_tall_pine_tree_1.tscn
-res://scenes/resourceobjects/nature/trees/_tall_pine_tree_2.tscn
+res://scenes/fps_controller.tscn
+res://meshes/weapons/weapon.tscn
+res://scenes/mainmenu.tscn
+res://scenes/level_007.tscn
+res://scenes/resource_instancer.tscn
+res://GodotSky/GodotSky.tscn
+res://scenes/test_object.tscn
+res://scenes/resourceobjects/nature/trees/birch_tree_controller.tscn

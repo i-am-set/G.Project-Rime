@@ -9,10 +9,20 @@ public partial class ResourceChunkInstancer : Node3D
 {
     // #-------------------- Trees ---------------------------#
 	private static readonly PackedScene birchTree = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/birch_tree_controller.tscn");
+	private static readonly PackedScene birchTreeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
+
+    private Queue<StaticBody3D> queuedBirchTreeColliderPool = new();
 
 	private static readonly PackedScene pineTree = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/pine_tree_controller.tscn");
+	private static readonly PackedScene pineTreeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
+
+    private Queue<StaticBody3D> queuedPineTreeColliderPool = new();
 	
 	private static readonly PackedScene tallPineTree = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/tall_pine_tree_controller.tscn");
+	private static readonly PackedScene tallPineTreeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
+
+    private Queue<StaticBody3D> queuedTallPineTreeColliderPool = new();
+
 
 	private readonly PackedScene[] trees = new PackedScene[]
 	{
@@ -23,8 +33,11 @@ public partial class ResourceChunkInstancer : Node3D
 
 	// #-------------------- Nodes ---------------------#
 	private static readonly PackedScene flintNode = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/nodes/flint_node_controller.tscn");
+	private static readonly PackedScene flintNodeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
 
 	private static readonly PackedScene stoneNode = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/nodes/stone_node_controller.tscn");
+	private static readonly PackedScene stoneNodeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
+
 	
 	private readonly PackedScene[] nodes = new PackedScene[]
 	{
@@ -56,6 +69,8 @@ public partial class ResourceChunkInstancer : Node3D
         { poorTwigShrub, 0.1f }
 	};
 
+    private System.Collections.Generic.Dictionary<PackedScene, Queue<StaticBody3D>> colliders = new();
+
     private int tick = 0;
     private Vector3 authorizedPlayerPosition = new();
     private int authorizedPlayerResourceSpawnRadius = 10;
@@ -65,24 +80,28 @@ public partial class ResourceChunkInstancer : Node3D
     private bool isGeneratingResources = false;
 
     private System.Collections.Generic.Dictionary<Vector3, PackedScene> resourceData = new();
+    int resourceDataCountCached = 0;
+    private System.Collections.Generic.Dictionary<PackedScene, Node3D> resourceColliderData = new();
     private Queue<ResourceInfo> queuedResourceForReseating = new();
     private System.Collections.Generic.Dictionary<Vector3, Node3D> seatedResourcesData = new();
-    private const int positionsPerFrame = 150;
+    private const int positionsPerFrame = 5;
 
     private bool isInitialized = false;
 	private float totalWeight = 0;
 	private RandomNumberGenerator rngBase = new();
 
 
-    public override void _Ready()
-    {
+    public override void _Ready(){
         InitiateWeightSystem();
+        InitializeColliderDictionary();
     }
 
     public override void _PhysicsProcess(double delta){
         for (int i = 0; i < positionsPerFrame; i++){
             if (queuedResourceForReseating.Count > 0){
                 ResourceInfo resourceInfo = queuedResourceForReseating.Dequeue();
+                if(resourceData.ContainsKey(resourceInfo.position)){
+                }
                 ReseatResource(resourceInfo.position, resourceInfo.parent);
             }
         }
@@ -100,8 +119,61 @@ public partial class ResourceChunkInstancer : Node3D
 		}
 	}
 
-    public void RollLocalResources(Vector3 resourcePosition){   
+    private void InitializeColliderDictionary(){
+        colliders = new System.Collections.Generic.Dictionary<PackedScene, Queue<StaticBody3D>>(){
+            { birchTree, queuedBirchTreeColliderPool },
+            { pineTree, queuedPineTreeColliderPool },
+            { tallPineTree, queuedTallPineTreeColliderPool },
+            { flintNode, queuedBirchTreeColliderPool },
+            { stoneNode, queuedBirchTreeColliderPool }
+        };
+
+        foreach (var key in colliders.Keys.ToList()){
+            if (key == birchTree){
+                GD.Print("Instancing birch colliders");
+                for (int i = 0; i < 20; i++){
+                    StaticBody3D instance = (StaticBody3D)birchTreeCollider.Instantiate();
+                    colliders[key].Enqueue(instance);
+                }
+            } else if (key == pineTree) {
+                GD.Print("Instancing pine colliders");
+                for (int i = 0; i < 20; i++){
+                    StaticBody3D instance = (StaticBody3D)pineTreeCollider.Instantiate();
+                    colliders[key].Enqueue(instance);
+                }
+            } else if (key == tallPineTree) {
+                GD.Print("Instancing tall pine colliders");
+                for (int i = 0; i < 20; i++){
+                    StaticBody3D instance = (StaticBody3D)tallPineTreeCollider.Instantiate();
+                    colliders[key].Enqueue(instance);
+                }
+            } else if (key == flintNode) {
+                GD.Print("Instancing flint colliders");
+                for (int i = 0; i < 20; i++){
+                    StaticBody3D instance = (StaticBody3D)flintNodeCollider.Instantiate();
+                    colliders[key].Enqueue(instance);
+                }
+            } else if (key == stoneNode) {
+                GD.Print("Instancing stone colliders");
+                for (int i = 0; i < 20; i++){
+                    StaticBody3D instance = (StaticBody3D)stoneNodeCollider.Instantiate();
+                    colliders[key].Enqueue(instance);
+                }
+            } else {
+                GD.Print("Key entry doesn't exist in 'colliders'");
+            }
+        }
+    }
+
+    public bool TryToSetLocalResources(Vector3 resourcePosition){
+        resourceDataCountCached = resourceData.Count;
         resourceData = FindResource(resourceData, resourcePosition);
+        
+        if(resourceDataCountCached != resourceData.Count){
+            return true;
+        }
+
+        return false;
     }
 
     private System.Collections.Generic.Dictionary<Vector3, PackedScene> FindResource(System.Collections.Generic.Dictionary<Vector3, PackedScene> resourceData, Vector3 resourcePosition){
@@ -109,8 +181,6 @@ public partial class ResourceChunkInstancer : Node3D
         if (mappedNoise > 0.125){
             if (!resourceData.ContainsKey(resourcePosition)){
                 PackedScene resource = RollResource((ulong)(mappedNoise * 100));
-                // Node3D resource = (Node3D)testObject.Instantiate();
-                // resourceParent.CallDeferred("add_child", resource);
                 resourceData[resourcePosition] = resource;
             }
         }
@@ -122,25 +192,9 @@ public partial class ResourceChunkInstancer : Node3D
         rngBase.Seed = heightSeed;
         float diceRoll = rngBase.RandfRange(0, totalWeight);
         
-        foreach (var resource in weights){
+        foreach (KeyValuePair<PackedScene, float> resource in weights){
             float weight = (float)weights[resource.Key];
-            if (weight >= diceRoll)
-            {
-                // PackedScene currentResource = (PackedScene)resource.Key;
-                // Node3D resourceInstance = (Node3D)currentResource.Instantiate();
-                // float resourceScale = rngBase.RandfRange(0.4f, 2.5f);
-                // int childrenCount = resourceInstance.GetChildren().Count;
-                // int randResource = rngBase.RandiRange(0, childrenCount - 1);
-
-                // resourceInstance.Call("ShowResource", randResource);
-                // resourceInstance.Scale = new Vector3(resourceScale, resourceScale, resourceScale);
-                // resourceInstance.Rotation = new Vector3(Mathf.DegToRad(rngBase.RandiRange(-5, 5)), Mathf.DegToRad(rngBase.RandiRange(0, 359)), Mathf.DegToRad(rngBase.RandiRange(-5, 5)));
-
-                // if (trees.Contains(resource.Key))
-				// {
-				// 	TreeParameters(resourceInstance, randResource, rngBase);
-				// }
-
+            if (weight >= diceRoll){
                 return resource.Key;
             }
             diceRoll -= weight;
@@ -183,27 +237,27 @@ public partial class ResourceChunkInstancer : Node3D
         return tree;
     }
 
-    public void QueueNextReseatedResource(Vector3 possibleResourcePosition, Node3D resourceParent){
-        ResourceInfo resourceInfo = new ResourceInfo(possibleResourcePosition, resourceParent);
+    public void QueueNextReseatedResource(Vector3 resourcePosition, Node3D resourceParent){
+        ResourceInfo resourceInfo = new ResourceInfo(resourcePosition, resourceParent);
         queuedResourceForReseating.Enqueue(resourceInfo);
     }
 
-    void ReseatResource(Vector3 possibleResourcePosition, Node3D resourceParent){
-        if (resourceData.ContainsKey(possibleResourcePosition)){
-            if(!seatedResourcesData.ContainsKey(possibleResourcePosition)){
-                Node3D resource = InstantiateResource(resourceData[possibleResourcePosition]);
+    void ReseatResource(Vector3 resourcePosition, Node3D resourceParent){
+        if (resourceData.ContainsKey(resourcePosition)){
+            if(!seatedResourcesData.ContainsKey(resourcePosition)){
+                Node3D resource = InstantiateResource(resourceData[resourcePosition]);
                 resourceParent.CallDeferred("add_child", resource);
-                resource.Position = possibleResourcePosition;
-                seatedResourcesData[possibleResourcePosition] = resource;
+                resource.Position = resourcePosition;
+                seatedResourcesData[resourcePosition] = resource;
             } else {
-                seatedResourcesData[possibleResourcePosition].Position = possibleResourcePosition;
+                seatedResourcesData[resourcePosition].Position = resourcePosition;
             }
         }
     }
 
-    public void DisplaceResource(Vector3 possibleResourcePosition){
-        if (seatedResourcesData.ContainsKey(possibleResourcePosition)){
-            seatedResourcesData[possibleResourcePosition].Position = new Vector3(0, -10000, 0);
+    public void DisplaceResource(Vector3 resourcePosition){
+        if (seatedResourcesData.ContainsKey(resourcePosition)){
+            seatedResourcesData[resourcePosition].Position = new Vector3(0, -10000, 0);
         }
     }
 

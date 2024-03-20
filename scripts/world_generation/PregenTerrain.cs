@@ -27,6 +27,7 @@ public partial class PregenTerrain : Node3D
 	[Export] public bool generateWorld = false;
 
     public static Vector2 viewerPosition;
+	public 
 	Vector2 viewerPositionOld;
 	static MapGenerator mapGenerator;
 	static ResourceChunkInstancer resourceChunkInstancer;
@@ -51,22 +52,28 @@ public partial class PregenTerrain : Node3D
     }
 
 	public override void _Process(double delta){
-		viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
+		// List<int> chunksNearPlayer = new();
+		// foreach (TerrainChunk chunk in visibleTerrainChunks){
+		// 	if (chunk.isPlayerClose){
+		// 		chunksNearPlayer.Add(chunk.chunkNumber);
+		// 	}
+		// }
 
 		// if (generateWorld){
 		// 	generateWorld = false;
 		// 	StartWorld();
 		// }
 
+	}
+
+    public override void _PhysicsProcess(double delta){
+        viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
+
 		if (viewerPosition != viewerPositionOld){
 			foreach (TerrainChunk chunk in visibleTerrainChunks){
 				chunk.UpdateCollisionMesh();
 			}
 		}
-	}
-
-    public override void _PhysicsProcess(double delta){
-        viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
 
 		if ((viewerPositionOld - viewerPosition).LengthSquared() > sqrViewerMoveThresholdForChunkUpdate){
 			viewerPositionOld = viewerPosition;
@@ -116,7 +123,10 @@ public partial class PregenTerrain : Node3D
 		Node3D resourceParent;
         public Vector2 chunkPosition;
 		Vector3[] chunkVertices;
+		List<Vector3> chunkResourcePositions = new();
         Aabb Bounds;
+
+		public bool isPlayerClose = false;
 
 		public StaticBody3D staticBody;
 		CollisionShape3D meshCollider;
@@ -194,11 +204,15 @@ public partial class PregenTerrain : Node3D
 
 				if(visible){
 					int lodIndex = 0;
+					isPlayerClose = false;
 
 					for (int i = 0; i < detailLevels.Length-1; i++){
 						if (viewerDstFromNearestEdge > detailLevels[i].visibleDstThreshold) {
 							lodIndex = i + 1;
 						} else {
+							if(detailLevels[i].lod == 0){
+								isPlayerClose = true;
+							}
 							break;
 						}
 					}
@@ -218,7 +232,7 @@ public partial class PregenTerrain : Node3D
 				if(hasRolledResources){
 					if (visible){
 						if (!hasSeatedResources){
-							GD.Print("Reseating resource in chunk ", chunkNumber);
+							// GD.Print("Reseating resource in chunk ", chunkNumber);
 							ReseatResources();
 							hasSeatedResources = true;
 						} else {
@@ -226,7 +240,7 @@ public partial class PregenTerrain : Node3D
 						}
 					} else {
 						if(hasSeatedResources){
-							GD.Print("Displacing resource in chunk ", chunkNumber);
+							// GD.Print("Displacing resource in chunk ", chunkNumber);
 							DisplaceResource();
 							hasSeatedResources = false;
 						} else {
@@ -273,19 +287,25 @@ public partial class PregenTerrain : Node3D
 			}
 			GD.Print(chunkNumber, " =========== ", chunkPosition, " : Generating Resources");
 			for (int i = 0; i < chunkVertices.Length; i++){
-				resourceChunkInstancer.RollLocalResources(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale);
+				bool isViableResourcePosition;
+				Vector3 resourcePosition = new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale;
+				isViableResourcePosition = resourceChunkInstancer.TryToSetLocalResources(resourcePosition);
+
+				if (isViableResourcePosition){
+					chunkResourcePositions.Add(resourcePosition);
+				}
 			}
 		}
 
 		void ReseatResources(){
-        	for (int i = 0; i < chunkVertices.Length; i++){
-            	resourceChunkInstancer.QueueNextReseatedResource(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale, resourceParent);
-        	}
+			foreach (Vector3 resourcePosition in chunkResourcePositions){
+				resourceChunkInstancer.QueueNextReseatedResource(resourcePosition, resourceParent);
+			}
     	}
 
 		public void DisplaceResource(){
-			for (int i = 0; i < chunkVertices.Length; i++){
-				resourceChunkInstancer.DisplaceResource(new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale);
+			foreach (Vector3 resourcePosition in chunkResourcePositions){
+				resourceChunkInstancer.DisplaceResource(resourcePosition);
 			}
 		}
 

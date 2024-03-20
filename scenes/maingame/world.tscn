@@ -66,7 +66,7 @@ script = ExtResource("7_fwpux")
 lod = 4
 visibleDstThreshold = 150.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_gjtk7"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_qy6ye"]
 size = Vector2(49, 49)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain")]
@@ -105,7 +105,7 @@ shaderMaterial = ExtResource("4_5r3nd")
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_gjtk7")
+mesh = SubResource("PlaneMesh_qy6ye")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 
@@ -113,4 +113,4 @@ shaderMaterial = ExtResource("4_5r3nd")
 script = ExtResource("9_8y3m7")
 
 [node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1038.63, 74.0264, 1143.53)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1165.3, 74.0264, 1143.53)
