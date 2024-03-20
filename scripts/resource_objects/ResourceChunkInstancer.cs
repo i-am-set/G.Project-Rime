@@ -274,16 +274,15 @@ public partial class ResourceChunkInstancer : Node3D
     }
     
     public void SetCloseResourcePositions(List<Vector3> givenResourcePositionsCloseToThePlayer){
-        // resourcePositionsCloseToThePlayer = new List<Vector3>(givenResourcePositionsCloseToThePlayer);
         foreach (KeyValuePair<Vector3, StaticBody3D> entry in resourcePositionsWithColliders){
             Vector3 position = entry.Key;
             StaticBody3D body = entry.Value;
+
             if(!givenResourcePositionsCloseToThePlayer.Contains(position)){
-                if (resourceData.ContainsKey(position)){
-                    PackedScene scene = resourceData[position];
-                    if (colliders.ContainsKey(scene)){
+                if (resourceData.TryGetValue(position, out PackedScene scene)){
+                    if (colliders.TryGetValue(scene, out Queue<StaticBody3D> bodies)){
                         body.Position = new Vector3(0, -10000, 0);
-                        colliders[scene].Enqueue(body);
+                        bodies.Enqueue(body);
                     }
                 }
                 resourcePositionsWithColliders.Remove(position);
@@ -292,10 +291,9 @@ public partial class ResourceChunkInstancer : Node3D
 
         foreach (Vector3 position in givenResourcePositionsCloseToThePlayer){
             if (!resourcePositionsWithColliders.ContainsKey(position)){
-                if (resourceData.ContainsKey(position)){
-                    PackedScene scene = resourceData[position];
-                    if (colliders.ContainsKey(scene) && colliders[scene].Count > 0){
-                        StaticBody3D body = colliders[scene].Dequeue();
+                if (resourceData.TryGetValue(position, out PackedScene scene)){
+                    if (colliders.TryGetValue(scene, out Queue<StaticBody3D> bodies) && bodies.Count > 0){
+                        StaticBody3D body = bodies.Dequeue();
                         body.Position = position;
                         resourcePositionsWithColliders[position] = body;
                     } else {
