@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c1fybjmp34efy"]
+
+[ext_resource type="Shader" path="res://scenes/normals_shader.gdshader" id="1_46ors"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_46ors")
+shader_parameter/WorldSpace = true
+shader_parameter/RemapRange = false

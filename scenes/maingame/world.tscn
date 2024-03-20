@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://clnopfwnhl6j4"]
+[gd_scene load_steps=23 format=3 uid="uid://clnopfwnhl6j4"]
 
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_beekf"]
 [ext_resource type="Script" path="res://scripts/world_generation/generate_map_button.gd" id="1_nactg"]
@@ -66,7 +66,9 @@ script = ExtResource("7_fwpux")
 lod = 4
 visibleDstThreshold = 150.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_wvwmu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4uy5s"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4wi0b"]
 size = Vector2(49, 49)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain")]
@@ -100,12 +102,12 @@ script = ExtResource("6_wx3wc")
 detailLevels = [SubResource("Resource_naaya"), SubResource("Resource_i6chj"), SubResource("Resource_pvqi2")]
 worldSize = 10
 viewer = NodePath("../../Marker3D")
-shaderMaterial = ExtResource("4_5r3nd")
+shaderMaterial = SubResource("ShaderMaterial_4uy5s")
 
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_wvwmu")
+mesh = SubResource("PlaneMesh_4wi0b")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 

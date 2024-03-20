@@ -219,7 +219,7 @@ public partial class ResourceChunkInstancer : Node3D
 
     private Node3D InstantiateResource(PackedScene currentResource){
         Node3D resourceInstance = (Node3D)currentResource.Instantiate();
-        float resourceScale = rngBase.RandfRange(0.4f, 2.5f);
+        float resourceScale = rngBase.RandfRange(0.75f, 2.5f);
         int childrenCount = resourceInstance.GetChildren().Count;
         int randResource = rngBase.RandiRange(0, childrenCount - 1);
 
@@ -292,9 +292,10 @@ public partial class ResourceChunkInstancer : Node3D
         foreach (Vector3 position in givenResourcePositionsCloseToThePlayer){
             if (!resourcePositionsWithColliders.ContainsKey(position)){
                 if (resourceData.TryGetValue(position, out PackedScene scene)){
-                    if (colliders.TryGetValue(scene, out Queue<StaticBody3D> bodies) && bodies.Count > 0){
+                    if (colliders.TryGetValue(scene, out Queue<StaticBody3D> bodies) && bodies.Count > 0 && seatedResourcesData.TryGetValue(position, out Node3D resource)){
                         StaticBody3D body = bodies.Dequeue();
                         body.Position = position;
+                        body.Scale = resource.Scale;
                         resourcePositionsWithColliders[position] = body;
                     } else {
                         GD.Print("No available bodies for scene: " + scene);

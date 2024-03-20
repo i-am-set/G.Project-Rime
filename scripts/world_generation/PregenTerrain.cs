@@ -52,7 +52,6 @@ public partial class PregenTerrain : Node3D
     }
 
 	public override void _Process(double delta){
-		resourceChunkInstancer.SetCloseResourcePositions(GetCloseResourcePositions());
 		// if (generateWorld){
 		// 	generateWorld = false;
 		// 	StartWorld();
@@ -65,6 +64,10 @@ public partial class PregenTerrain : Node3D
         viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
 
 		if (viewerPosition != viewerPositionOld){
+			// set colliders close to player
+			resourceChunkInstancer.SetCloseResourcePositions(GetCloseResourcePositions());
+
+			// update terrain mesh collision
 			foreach (TerrainChunk chunk in visibleTerrainChunks){
 				chunk.UpdateCollisionMesh();
 			}
