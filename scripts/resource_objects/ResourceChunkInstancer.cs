@@ -84,6 +84,8 @@ public partial class ResourceChunkInstancer : Node3D
     private System.Collections.Generic.Dictionary<PackedScene, Node3D> resourceColliderData = new();
     private Queue<ResourceInfo> queuedResourceForReseating = new();
     private System.Collections.Generic.Dictionary<Vector3, Node3D> seatedResourcesData = new();
+    private System.Collections.Generic.Dictionary<Vector3, StaticBody3D> resourcePositionsWithColliders = new();
+    private List<Vector3> resourcePositionsCloseToThePlayer = new();
     private const int positionsPerFrame = 5;
 
     private bool isInitialized = false;
@@ -132,32 +134,42 @@ public partial class ResourceChunkInstancer : Node3D
             if (key == birchTree){
                 GD.Print("Instancing birch colliders");
                 for (int i = 0; i < 20; i++){
-                    StaticBody3D instance = (StaticBody3D)birchTreeCollider.Instantiate();
-                    colliders[key].Enqueue(instance);
+                    StaticBody3D body = (StaticBody3D)birchTreeCollider.Instantiate();
+                    CallDeferred("add_child", body);
+                    body.Position = new Vector3(0, -10000, 0);
+                    colliders[key].Enqueue(body);
                 }
             } else if (key == pineTree) {
                 GD.Print("Instancing pine colliders");
                 for (int i = 0; i < 20; i++){
-                    StaticBody3D instance = (StaticBody3D)pineTreeCollider.Instantiate();
-                    colliders[key].Enqueue(instance);
+                    StaticBody3D body = (StaticBody3D)pineTreeCollider.Instantiate();
+                    CallDeferred("add_child", body);
+                    body.Position = new Vector3(0, -10000, 0);
+                    colliders[key].Enqueue(body);
                 }
             } else if (key == tallPineTree) {
                 GD.Print("Instancing tall pine colliders");
                 for (int i = 0; i < 20; i++){
-                    StaticBody3D instance = (StaticBody3D)tallPineTreeCollider.Instantiate();
-                    colliders[key].Enqueue(instance);
+                    StaticBody3D body = (StaticBody3D)tallPineTreeCollider.Instantiate();
+                    CallDeferred("add_child", body);
+                    body.Position = new Vector3(0, -10000, 0);
+                    colliders[key].Enqueue(body);
                 }
             } else if (key == flintNode) {
                 GD.Print("Instancing flint colliders");
                 for (int i = 0; i < 20; i++){
-                    StaticBody3D instance = (StaticBody3D)flintNodeCollider.Instantiate();
-                    colliders[key].Enqueue(instance);
+                    StaticBody3D body = (StaticBody3D)flintNodeCollider.Instantiate();
+                    CallDeferred("add_child", body);
+                    body.Position = new Vector3(0, -10000, 0);
+                    colliders[key].Enqueue(body);
                 }
             } else if (key == stoneNode) {
                 GD.Print("Instancing stone colliders");
                 for (int i = 0; i < 20; i++){
-                    StaticBody3D instance = (StaticBody3D)stoneNodeCollider.Instantiate();
-                    colliders[key].Enqueue(instance);
+                    StaticBody3D body = (StaticBody3D)stoneNodeCollider.Instantiate();
+                    CallDeferred("add_child", body);
+                    body.Position = new Vector3(0, -10000, 0);
+                    colliders[key].Enqueue(body);
                 }
             } else {
                 GD.Print("Key entry doesn't exist in 'colliders'");
@@ -258,6 +270,41 @@ public partial class ResourceChunkInstancer : Node3D
     public void DisplaceResource(Vector3 resourcePosition){
         if (seatedResourcesData.ContainsKey(resourcePosition)){
             seatedResourcesData[resourcePosition].Position = new Vector3(0, -10000, 0);
+        }
+    }
+    
+    public void SetCloseResourcePositions(List<Vector3> givenResourcePositionsCloseToThePlayer){
+        // resourcePositionsCloseToThePlayer = new List<Vector3>(givenResourcePositionsCloseToThePlayer);
+        foreach (KeyValuePair<Vector3, StaticBody3D> entry in resourcePositionsWithColliders){
+            Vector3 position = entry.Key;
+            StaticBody3D body = entry.Value;
+            if(!givenResourcePositionsCloseToThePlayer.Contains(position)){
+                if (resourceData.ContainsKey(position)){
+                    PackedScene scene = resourceData[position];
+                    if (colliders.ContainsKey(scene)){
+                        body.Position = new Vector3(0, -10000, 0);
+                        colliders[scene].Enqueue(body);
+                    }
+                }
+                resourcePositionsWithColliders.Remove(position);
+            }
+        }
+
+        foreach (Vector3 position in givenResourcePositionsCloseToThePlayer){
+            if (!resourcePositionsWithColliders.ContainsKey(position)){
+                if (resourceData.ContainsKey(position)){
+                    PackedScene scene = resourceData[position];
+                    if (colliders.ContainsKey(scene) && colliders[scene].Count > 0){
+                        StaticBody3D body = colliders[scene].Dequeue();
+                        body.Position = position;
+                        resourcePositionsWithColliders[position] = body;
+                    } else {
+                        GD.Print("No available bodies for scene: " + scene);
+                    }
+                } else {
+                    GD.Print("No scene for position: " + position);
+                }
+            }
         }
     }
 

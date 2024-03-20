@@ -52,19 +52,14 @@ public partial class PregenTerrain : Node3D
     }
 
 	public override void _Process(double delta){
-		// List<int> chunksNearPlayer = new();
-		// foreach (TerrainChunk chunk in visibleTerrainChunks){
-		// 	if (chunk.isPlayerClose){
-		// 		chunksNearPlayer.Add(chunk.chunkNumber);
-		// 	}
-		// }
-
+		resourceChunkInstancer.SetCloseResourcePositions(GetCloseResourcePositions());
 		// if (generateWorld){
 		// 	generateWorld = false;
 		// 	StartWorld();
 		// }
-
 	}
+
+    
 
     public override void _PhysicsProcess(double delta){
         viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
@@ -92,6 +87,30 @@ public partial class PregenTerrain : Node3D
 			}
 		}
 	}
+
+	private List<Vector3> GetCloseResourcePositions(){
+        List<Vector3> resourcesNearPlayer = new();
+		for (int i = 0; i < visibleTerrainChunks.Count; i++){
+			if (visibleTerrainChunks[i].isPlayerClose){
+				// resourcesNearPlayer.AddRange(visibleTerrainChunks[i].chunkResourcePositions);
+				List<Vector3> chunkResourcePositions = visibleTerrainChunks[i].chunkResourcePositions;
+				Vector3 cachedViewerPosition = viewer.Position;
+				for (int j = 0; j < chunkResourcePositions.Count; j++){
+					Vector3 closeResourcePosition = chunkResourcePositions[j];
+					int distanceSqr = (int)cachedViewerPosition.DistanceSquaredTo(closeResourcePosition);
+					if (distanceSqr < 100){
+						resourcesNearPlayer.Add(closeResourcePosition);
+					}
+				}
+			}
+		}
+
+		// if(resourcesNearPlayer.Count > 0){
+		// 	GD.Print(String.Join(",", resourcesNearPlayer));
+		// }
+
+		return resourcesNearPlayer;
+    }
 
     void UpdateVisibleChunks(){
 		HashSet<Vector2> alreadyUpdatedChunkCoords = new();
@@ -123,7 +142,7 @@ public partial class PregenTerrain : Node3D
 		Node3D resourceParent;
         public Vector2 chunkPosition;
 		Vector3[] chunkVertices;
-		List<Vector3> chunkResourcePositions = new();
+		public List<Vector3> chunkResourcePositions = new();
         Aabb Bounds;
 
 		public bool isPlayerClose = false;
