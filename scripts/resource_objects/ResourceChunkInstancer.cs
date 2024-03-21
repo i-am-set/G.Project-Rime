@@ -72,6 +72,7 @@ public partial class ResourceChunkInstancer : Node3D
     private System.Collections.Generic.Dictionary<PackedScene, Queue<StaticBody3D>> colliders = new();
 
     private int tick = 0;
+    private int worldSeed = 0;
     private Vector3 authorizedPlayerPosition = new();
     private int authorizedPlayerResourceSpawnRadius = 10;
     private int authorizedPlayerResourceSpawnRadiusHalf = 5;
@@ -96,6 +97,7 @@ public partial class ResourceChunkInstancer : Node3D
 
 
     public override void _Ready(){
+        worldSeed = (int)GetNode<Node>("/root/Global").Get("WORLD_SEED");
         InitializeChunkLoadingSpeed();
         InitiateWeightSystem();
         InitializeColliderDictionary();
@@ -128,8 +130,7 @@ public partial class ResourceChunkInstancer : Node3D
         positionsPerFrame = 5;
     }
 
-	private void InitiateWeightSystem()
-	{
+	private void InitiateWeightSystem(){
 		if (!isWeightSystemInitialized)
 		{
 			foreach (var resource in weights)
@@ -236,8 +237,9 @@ public partial class ResourceChunkInstancer : Node3D
         return null;
     }
 
-    private Node3D InstantiateResource(PackedScene currentResource){
+    private Node3D InstantiateResource(PackedScene currentResource, ulong bitwiseXORSeed){
         Node3D resourceInstance = (Node3D)currentResource.Instantiate();
+        rngBase.Seed = bitwiseXORSeed;
         float resourceScale = rngBase.RandfRange(0.75f, 2.5f);
         int childrenCount = resourceInstance.GetChildren().Count;
         int randResource = rngBase.RandiRange(0, childrenCount - 1);
@@ -276,7 +278,7 @@ public partial class ResourceChunkInstancer : Node3D
     void ReseatResource(Vector3 resourcePosition, Node3D resourceParent){
         if (resourceData.ContainsKey(resourcePosition)){
             if(!seatedResourcesData.ContainsKey(resourcePosition)){
-                Node3D resource = InstantiateResource(resourceData[resourcePosition]);
+                Node3D resource = InstantiateResource(resourceData[resourcePosition], (ulong)((int)resourcePosition.Y ^ (int)resourcePosition.Z));
                 resourceParent.CallDeferred("add_child", resource);
                 resource.Position = resourcePosition;
                 seatedResourcesData[resourcePosition] = resource;
