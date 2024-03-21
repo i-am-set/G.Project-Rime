@@ -151,11 +151,8 @@ func generate_height_map(seed : int, frequency : float) -> NoiseTexture2D:
 
 
 func initialize_game(seed):
-	var texture = generate_height_map(seed, 0.0075)
-	var textureAmp = generate_height_map(seed, 0.0050)
 	# Cement changes
 	Global.WORLD_SEED = seed
-	Heightmap.set_height_map(texture, textureAmp)
 	# Await processing
 	await get_tree().process_frame
 

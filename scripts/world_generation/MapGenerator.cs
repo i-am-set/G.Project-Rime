@@ -25,8 +25,7 @@ public partial class MapGenerator : Node3D
     private float _lacunarity;
     [Export(PropertyHint.Range, "1, 10")] public float lacunarity { get { return _lacunarity; } set { _lacunarity = value; FlagNeedsUpdate(); } }
 
-    private int _seed;
-    [Export] public int seed { get { return _seed; } set { _seed = value; FlagNeedsUpdate(); } }
+    private int seed;
     private Vector2 _offset;
     [Export] public Vector2 offset { get { return _offset; } set { _offset = value; FlagNeedsUpdate(); } }
 
@@ -46,6 +45,7 @@ public partial class MapGenerator : Node3D
 	Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
 
     public override void _Ready(){
+        seed = (int)GetNode<Node>("/root/Global").Get("WORLD_SEED");
         resourceChunkInstancer = (ResourceChunkInstancer)GetNode("ResourceChunkInstancer");
     }
 
