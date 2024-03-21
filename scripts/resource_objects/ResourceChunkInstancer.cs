@@ -86,14 +86,17 @@ public partial class ResourceChunkInstancer : Node3D
     private System.Collections.Generic.Dictionary<Vector3, Node3D> seatedResourcesData = new();
     private System.Collections.Generic.Dictionary<Vector3, StaticBody3D> resourcePositionsWithColliders = new();
     private List<Vector3> resourcePositionsCloseToThePlayer = new();
-    private const int positionsPerFrame = 5;
 
-    private bool isInitialized = false;
+    private static int positionsPerFrame = 5;
+    private Timer initGenerationTimer;
+
+    private bool isWeightSystemInitialized = false;
 	private float totalWeight = 0;
 	private RandomNumberGenerator rngBase = new();
 
 
     public override void _Ready(){
+        InitializeChunkLoadingSpeed();
         InitiateWeightSystem();
         InitializeColliderDictionary();
     }
@@ -109,15 +112,31 @@ public partial class ResourceChunkInstancer : Node3D
         }
     }
 
+    private void InitializeChunkLoadingSpeed(){
+        positionsPerFrame = 500;
+
+        initGenerationTimer = new Timer();
+        AddChild(initGenerationTimer);
+        initGenerationTimer.WaitTime = 5.0f;
+        initGenerationTimer.OneShot = true;
+        Action myAction = () => { SetChunkLoadingSpeed(); };
+        initGenerationTimer.Connect("timeout", Callable.From(myAction));
+        initGenerationTimer.Start();
+    }
+
+    private void SetChunkLoadingSpeed(){
+        positionsPerFrame = 5;
+    }
+
 	private void InitiateWeightSystem()
 	{
-		if (!isInitialized)
+		if (!isWeightSystemInitialized)
 		{
 			foreach (var resource in weights)
 			{
 				totalWeight += weights[resource.Key];
 			}
-			isInitialized = true;
+			isWeightSystemInitialized = true;
 		}
 	}
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://clnopfwnhl6j4"]
+[gd_scene load_steps=22 format=3 uid="uid://clnopfwnhl6j4"]
 
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_beekf"]
 [ext_resource type="Script" path="res://scripts/world_generation/generate_map_button.gd" id="1_nactg"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/world_generation/MapDisplay.cs" id="3_sufe7"]
 [ext_resource type="Material" uid="uid://cokndnhyl7pb3" path="res://materials/world_gen_material.tres" id="4_5r3nd"]
 [ext_resource type="Script" path="res://scripts/world_generation/PregenTerrain.cs" id="6_wx3wc"]
+[ext_resource type="Script" path="res://scripts/world_generation/LODInfo.cs" id="7_s7f0o"]
 [ext_resource type="Script" path="res://scripts/resource_objects/ResourceChunkInstancer.cs" id="9_8y3m7"]
 
 [sub_resource type="Curve" id="Curve_hjld2"]
@@ -50,7 +51,22 @@ name = "MountainTop"
 height = 1.0
 color = Color(0.215686, 0.207843, 0.192157, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_mce62"]
+[sub_resource type="Resource" id="Resource_8v3l0"]
+script = ExtResource("7_s7f0o")
+lod = 0
+visibleDstThreshold = 120.0
+
+[sub_resource type="Resource" id="Resource_hy6ck"]
+script = ExtResource("7_s7f0o")
+lod = 1
+visibleDstThreshold = 200.0
+
+[sub_resource type="Resource" id="Resource_652yt"]
+script = ExtResource("7_s7f0o")
+lod = 4
+visibleDstThreshold = 350.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_o5tu5"]
 size = Vector2(49, 49)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain")]
@@ -58,7 +74,7 @@ script = ExtResource("1_beekf")
 generated_terrain = NodePath("MapGenerator/PregenTerrain")
 
 [node name="GodotSky" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1166.02
+timeOfDay = 1401.97
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
@@ -73,20 +89,23 @@ noiseScale = 0.005
 octaves = 8
 persistance = 0.5
 lacunarity = 2.0
-seed = 123123
 offset = Vector2(0, -18.295)
 meshHeightMultiplier = 30.0
 meshHeightCurve = SubResource("Curve_hjld2")
 autoUpdate = true
 regions = [SubResource("Resource_rrn6f"), SubResource("Resource_qiy2y"), SubResource("Resource_p26xn"), SubResource("Resource_tjvym"), SubResource("Resource_bbt57"), SubResource("Resource_5ytf7")]
 
-[node name="PregenTerrain" type="Node3D" parent="MapGenerator"]
+[node name="PregenTerrain" type="Node3D" parent="MapGenerator" node_paths=PackedStringArray("viewer")]
 script = ExtResource("6_wx3wc")
+detailLevels = Array[Object]([SubResource("Resource_8v3l0"), SubResource("Resource_hy6ck"), SubResource("Resource_652yt")])
+worldSize = 20
+viewer = NodePath("../../Marker3D")
+shaderMaterial = ExtResource("4_5r3nd")
 
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_mce62")
+mesh = SubResource("PlaneMesh_o5tu5")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 

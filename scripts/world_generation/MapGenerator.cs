@@ -25,7 +25,7 @@ public partial class MapGenerator : Node3D
     private float _lacunarity;
     [Export(PropertyHint.Range, "1, 10")] public float lacunarity { get { return _lacunarity; } set { _lacunarity = value; FlagNeedsUpdate(); } }
 
-    private int seed;
+    private int seed = 0;
     private Vector2 _offset;
     [Export] public Vector2 offset { get { return _offset; } set { _offset = value; FlagNeedsUpdate(); } }
 
