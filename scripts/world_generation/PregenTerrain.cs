@@ -45,6 +45,7 @@ public partial class PregenTerrain : Node3D
 	public override void _Ready(){
 	// void StartWorld(){
 		mapGenerator = (MapGenerator)GetParent();
+		GD.Print(mapGenerator.seed);
 		resourceChunkInstancer = (ResourceChunkInstancer)mapGenerator.GetNode("ResourceChunkInstancer");
 
 		maxViewDst = detailLevels[detailLevels.Length-1].visibleDstThreshold;
