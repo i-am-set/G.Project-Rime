@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Intrinsics;
 
-[Tool]
 public partial class PregenTerrain : Node3D
 {
 	const float scale = 4.0f;
@@ -37,7 +36,13 @@ public partial class PregenTerrain : Node3D
     Dictionary<Vector2, TerrainChunk> TerrainChunkDictionary = new();
     static List<TerrainChunk> visibleTerrainChunks = new();
 
-    public override void _Ready(){
+    // public override void _Ready(){
+	// 	if (!Engine.IsEditorHint()){
+	// 		StartWorld();
+    // 	}
+	// }
+
+	public override void _Ready(){
 	// void StartWorld(){
 		mapGenerator = (MapGenerator)GetParent();
 		resourceChunkInstancer = (ResourceChunkInstancer)mapGenerator.GetNode("ResourceChunkInstancer");
@@ -51,12 +56,12 @@ public partial class PregenTerrain : Node3D
 		UpdateVisibleChunks();
     }
 
-	public override void _Process(double delta){
-		// if (generateWorld){
-		// 	generateWorld = false;
-		// 	StartWorld();
-		// }
-	}
+	// public override void _Process(double delta){
+	// 	if (generateWorld){
+	// 		generateWorld = false;
+	// 		StartWorld();
+	// 	}
+	// }
 
     
 

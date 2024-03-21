@@ -1,11 +1,10 @@
-shader_type spatial;
+shader_type spatial; 
 render_mode unshaded;
 
 uniform bool WorldSpace = true; // toggle between world and local space
-uniform bool RemapRange = false; // remap from -1..1 to 0..1
+uniform bool RemapRange = false; // remap from -1..1 to 0..1 
 
-void fragment()
-{
+void fragment() {
     // World space normal
     vec4 Wn = VIEW_MATRIX * vec4( NORMAL, 0.0 );
     if ( WorldSpace == false ) // Local space normal

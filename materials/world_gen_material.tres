@@ -81,7 +81,7 @@ void vertex(){
 
 void fragment(){
 	vec2 base_uv = UV;
-	vec2 snow_uv = base_uv * 300.0;
+	vec2 snow_uv = base_uv * 20.0;
 	
 	//Albedo Values
 	vec3 snow_albedo = textureNoTile(snow_texture,snow_uv).xyz;
@@ -112,7 +112,7 @@ void fragment(){
 	vec3 rocksnow_albedo = mix(rock_albedo, snow_albedo, rock_snow_weight);
 	vec3 rocksnow_normal = mix(rock_normal, snow_normal, rock_snow_weight);
 	vec3 rocksnow_roughness = mix(rock_roughness, snow_roughness, rock_snow_weight);
-	NORMAL = mix(mud_normal, rocksnow_normal, mud_rocksnow_weight);
+	NORMAL_MAP = normalize(mix(mud_normal, rocksnow_normal, mud_rocksnow_weight));
 	ROUGHNESS = mix(mud_roughness, rocksnow_roughness, mud_rocksnow_weight).r * roughness;
 	NORMAL_MAP_DEPTH = normal_map_scale;
 	ALBEDO = mix(mud_albedo, rocksnow_albedo, mud_rocksnow_weight);
@@ -122,7 +122,7 @@ void fragment(){
 render_priority = 0
 shader = SubResource("Shader_xfsc2")
 shader_parameter/roughness = 0.75
-shader_parameter/normal_map_scale = 0.0
+shader_parameter/normal_map_scale = 1.0
 shader_parameter/min_rock_slope = 0.79
 shader_parameter/max_snow_slope = 0.881
 shader_parameter/min_rocksnow_height = -8.0

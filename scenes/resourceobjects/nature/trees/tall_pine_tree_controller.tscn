@@ -9,7 +9,9 @@ script = ExtResource("1_oh54x")
 children = [NodePath("tall_pine_model_1"), NodePath("tall_pine_model_2")]
 
 [node name="tall_pine_model_1" parent="." instance=ExtResource("2_bto58")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.276271, 0)
 visible = false
 
 [node name="tall_pine_model_2" parent="." instance=ExtResource("3_fuxev")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.445393, 0)
 visible = false
