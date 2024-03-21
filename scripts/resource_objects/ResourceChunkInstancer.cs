@@ -72,7 +72,6 @@ public partial class ResourceChunkInstancer : Node3D
     private System.Collections.Generic.Dictionary<PackedScene, Queue<StaticBody3D>> colliders = new();
 
     private int tick = 0;
-    private int worldSeed = 0;
     private Vector3 authorizedPlayerPosition = new();
     private int authorizedPlayerResourceSpawnRadius = 10;
     private int authorizedPlayerResourceSpawnRadiusHalf = 5;
@@ -97,7 +96,6 @@ public partial class ResourceChunkInstancer : Node3D
 
 
     public override void _Ready(){
-        worldSeed = (int)GetNode<Node>("/root/Global").Get("WORLD_SEED");
         InitializeChunkLoadingSpeed();
         InitiateWeightSystem();
         InitializeColliderDictionary();
