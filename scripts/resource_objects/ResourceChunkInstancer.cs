@@ -9,12 +9,12 @@ public partial class ResourceChunkInstancer : Node3D
 {
     // #-------------------- Trees ---------------------------#
 	private static readonly PackedScene birchTree = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/birch_tree_controller.tscn");
-	private static readonly PackedScene birchTreeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
+	private static readonly PackedScene birchTreeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_birch_tree.tscn");
 
     private Queue<StaticBody3D> queuedBirchTreeColliderPool = new();
 
 	private static readonly PackedScene pineTree = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/pine_tree_controller.tscn");
-	private static readonly PackedScene pineTreeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
+	private static readonly PackedScene pineTreeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_pine_tree.tscn");
 
     private Queue<StaticBody3D> queuedPineTreeColliderPool = new();
 	
@@ -33,10 +33,14 @@ public partial class ResourceChunkInstancer : Node3D
 
 	// #-------------------- Nodes ---------------------#
 	private static readonly PackedScene flintNode = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/nodes/flint_node_controller.tscn");
-	private static readonly PackedScene flintNodeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
+	private static readonly PackedScene flintNodeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/nodes/colliders/col_flint_node.tscn");
+
+    private Queue<StaticBody3D> queuedFlintNodeColliderPool = new();
 
 	private static readonly PackedScene stoneNode = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/nodes/stone_node_controller.tscn");
-	private static readonly PackedScene stoneNodeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/trees/colliders/col_tall_pine_tree.tscn");
+	private static readonly PackedScene stoneNodeCollider = GD.Load<PackedScene>("res://scenes/resourceobjects/nature/nodes/colliders/col_stone_node.tscn");
+
+    private Queue<StaticBody3D> queuedStoneNodeColliderPool = new();
 
 	
 	private readonly PackedScene[] nodes = new PackedScene[]
@@ -144,8 +148,8 @@ public partial class ResourceChunkInstancer : Node3D
             { birchTree, queuedBirchTreeColliderPool },
             { pineTree, queuedPineTreeColliderPool },
             { tallPineTree, queuedTallPineTreeColliderPool },
-            { flintNode, queuedBirchTreeColliderPool },
-            { stoneNode, queuedBirchTreeColliderPool }
+            { flintNode, queuedFlintNodeColliderPool },
+            { stoneNode, queuedStoneNodeColliderPool }
         };
 
         foreach (var key in colliders.Keys.ToList()){
@@ -315,6 +319,29 @@ public partial class ResourceChunkInstancer : Node3D
                         StaticBody3D body = bodies.Dequeue();
                         body.Position = position;
                         body.Scale = resource.Scale;
+                        body.Rotation = resource.Rotation;
+                        int bodyChildCount = body.GetChildCount();
+                        if(bodyChildCount > 1){
+                            Godot.Collections.Array<Godot.Node> resourceChildren = resource.GetChildren();
+                            int resourceChildCount = resourceChildren.Count;
+                            if (bodyChildCount == resourceChildCount){
+                                int childIndex = -1;
+                                Godot.Collections.Array<Godot.Node> bodyChildren = body.GetChildren();
+                                Node3D resourceChild; 
+                                CollisionShape3D bodyChild;
+
+                                for (int i = 0; i < resourceChildCount; i++){
+                                    resourceChild = (Node3D)resourceChildren[i];
+                                    bodyChild = (CollisionShape3D)bodyChildren[i];
+
+                                    if (resourceChild.Visible){ childIndex = i;bodyChild.Disabled = false; GD.PrintErr(position); } else { bodyChild.Disabled = true; }
+                                }
+
+                                if(childIndex <= -1){ GD.PrintErr("Zero visible children in ", resource, " : ", scene, " : ", position); }
+                            } else {
+                                GD.PrintErr("dont match");
+                            }
+                        }
                         resourcePositionsWithColliders[position] = body;
                     } else {
                         GD.Print("No available bodies for scene: " + scene);

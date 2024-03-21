@@ -1,17 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://57ikoo52mmcg"]
+[gd_scene load_steps=3 format=3 uid="uid://57ikoo52mmcg"]
 
 [ext_resource type="PackedScene" uid="uid://jxb6fpemp0mu" path="res://meshes/nature/nodes/flint_node_model_2.glb" id="1_e2ifw"]
 [ext_resource type="Material" uid="uid://8p6iuy532jm" path="res://materials/nature/flint_node_material.tres" id="2_qtpsw"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_d5unv"]
-points = PackedVector3Array(-0.134913, 1.17579, -3.49398, -0.277319, 1.31658, 0.803347, -0.628872, 1.31764, 0.814135, -1.1244, -1.15906, 0.0379455, -2.71239, 1.17513, -0.33551, -0.628872, 3.37296, -1.37708, 1.48305, 0.473089, -0.954828, -2.68354, -0.665305, -0.243984, 0.909719, 2.57445, -1.93633, -0.28287, -0.278384, -2.20671, -1.30836, 1.85287, -2.59826, -1.96284, 2.65029, -0.113248, 0.640166, 2.30452, -0.178523, 0.218275, 0.0475204, 0.81141, -2.3946, 0.399657, 0.6004, -0.559411, 2.91466, -2.62847, -1.5868, -0.672745, -1.58095, -0.0664149, -0.932662, -0.744524, 0.690659, 0.759187, -2.83444, -1.40078, 2.57948, 0.306348, 0.63479, 1.94839, -3.06192, -1.26757, -0.526103, 0.751457, 1.46936, 1.24528, -0.607789, -2.36041, 1.31295, -1.30722, -1.23833, 0.970587, -2.73002, -1.32021, 3.10995, -1.37622, 1.04661, -0.150239, -1.23733, 0.633915, -0.156617, 0.377214, 1.26217, 1.17528, -1.93709, 0.904232, 0.96709, 0.226262, -0.698711, 3.13396, -0.467798, -2.17918, -0.867411, 0.313728)
-
 [node name="flint_node_2" instance=ExtResource("1_e2ifw")]
-collision_layer = 0
 
 [node name="Cube_001" parent="." index="0"]
 material_override = ExtResource("2_qtpsw")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_d5unv")

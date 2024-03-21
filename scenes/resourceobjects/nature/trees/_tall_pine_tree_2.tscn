@@ -8,6 +8,8 @@
 
 [node name="tree_002" parent="." index="0"]
 material_override = ExtResource("2_mwbli")
+visibility_range_end = 200.0
 
 [node name="leaves" parent="." index="1"]
 material_override = ExtResource("3_45b5o")
+visibility_range_end = 200.0

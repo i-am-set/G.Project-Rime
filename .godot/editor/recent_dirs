@@ -1,3 +1,5 @@
+res://scenes/resourceobjects/nature/nodes/colliders
+res://scenes/resourceobjects/nature/trees/colliders
 res://
 res://scenes/resourceobjects/nature/trees
 res://scenes
@@ -18,5 +20,3 @@ C:/Users/sethg/AppData/Local/Programs/Microsoft VS Code
 res://meshes/nature
 res://world/clipmap
 res://world/heightmap
-res://world/collisionmap
-res://scripts

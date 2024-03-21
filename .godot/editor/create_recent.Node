@@ -1,8 +1,8 @@
-MeshInstance3D
 StaticBody3D
+CollisionShape3D
+MeshInstance3D
 Node3D
 Marker3D
-CollisionShape3D
 Sprite2D
 Sprite3D
 Node

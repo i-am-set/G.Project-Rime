@@ -8,7 +8,9 @@
 
 [node name="tree_002" parent="." index="0"]
 material_override = ExtResource("2_i3xyf")
+visibility_range_end = 200.0
 
 [node name="leaves" parent="." index="1"]
 material_override = ExtResource("3_vfw2q")
 lod_bias = 0.1
+visibility_range_end = 200.0
