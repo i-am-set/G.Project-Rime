@@ -37,7 +37,7 @@ func _ready():
 				player_instance.strip_into_peer()
 				Global.LOBBY_PEER_INSTANCES[this_member['steam_id']] = player_instance
 				add_child(player_instance)
-				player_instance.global_transform.origin = Vector3(-5, 100, 0)
+				player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 100, Global.SPAWN_POINT.y)
 			else:
 				print_debug("creating self with friends")
 				var player_instance = _player_node.instantiate()
@@ -46,7 +46,7 @@ func _ready():
 				player_instance.VISOR.visible = false
 				_authorized_player = player_instance
 				add_child(player_instance)
-				player_instance.global_transform.origin = Vector3(5, 100, 0)
+				player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 100, Global.SPAWN_POINT.y)
 	else:
 		print_debug("creating self alone")
 		var player_instance = _player_node.instantiate()
@@ -55,7 +55,7 @@ func _ready():
 		player_instance.VISOR.visible = false
 		_authorized_player = player_instance
 		add_child(player_instance)
-		player_instance.global_transform.origin = Vector3(5, 80, 0)
+		player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 80, Global.SPAWN_POINT.y)
 		print_debug("self created")
 	
 	generated_terrain.viewer = _authorized_player;

@@ -80,6 +80,7 @@ public partial class ResourceChunkInstancer : Node3D
     private int authorizedPlayerResourceSpawnRadius = 10;
     private int authorizedPlayerResourceSpawnRadiusHalf = 5;
     private FastNoiseLite noise = (FastNoiseLite)GD.Load("res://world/heightmap/resource_noise.tres");
+    private FastNoiseLite noiseMask = (FastNoiseLite)GD.Load("res://world/heightmap/resource_noise_mask.tres");
     private PackedScene testObject = (PackedScene)GD.Load("res://scenes/test_object.tscn");
     private bool isGeneratingResources = false;
 
@@ -212,6 +213,8 @@ public partial class ResourceChunkInstancer : Node3D
 
     private System.Collections.Generic.Dictionary<Vector3, PackedScene> FindResource(System.Collections.Generic.Dictionary<Vector3, PackedScene> resourceData, Vector3 resourcePosition){
         float mappedNoise = noise.GetNoise2D(resourcePosition.X, resourcePosition.Z) * 100;
+        // float maskedNoise = noiseMask.GetNoise2D(resourcePosition.X, resourcePosition.Z) * 100;
+        // float finalNoise = mappedNoise + maskedNoise;
         if (mappedNoise > 0.125){
             if (!resourceData.ContainsKey(resourcePosition)){
                 PackedScene resource = RollResource((ulong)(mappedNoise * 100));
@@ -264,8 +267,8 @@ public partial class ResourceChunkInstancer : Node3D
 		firstChildMaterial = (ShaderMaterial)firstChildMaterial.Duplicate();
 		var treeShader = (ShaderMaterial)firstChildMaterial;
 		firstChildMaterial.Set("lod_bias", 0.2);
-		treeShader.SetShaderParameter("tree_base_height", rngBase.RandfRange(0.1f, 1.2f));
-		treeShader.SetShaderParameter("tree_base_darkness", rngBase.RandfRange(0.1f, 0.2f));
+		treeShader.SetShaderParameter("tree_base_height", rngBase.RandfRange(0.1f, 1.0f));
+		// treeShader.SetShaderParameter("tree_base_darkness", rngBase.RandfRange(0.1f, 0.2f));
 		treeShader.SetShaderParameter("uv1_offset", new Vector3(rngBase.RandfRange(1, 20), 1, 1));
         firstChild.MaterialOverride = firstChildMaterial;
 

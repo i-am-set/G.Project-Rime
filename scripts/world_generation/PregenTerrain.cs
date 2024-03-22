@@ -19,6 +19,7 @@ public partial class PregenTerrain : Node3D
     int chunksVisibleInViewDst;
     int chunkSize;
 	[Export(PropertyHint.Range, "1, 50")] public int worldSize = 3;
+	private int worldChunkAmount;
 
     [Export] public Node3D viewer;
 	[Export] public ShaderMaterial shaderMaterial;
@@ -26,6 +27,7 @@ public partial class PregenTerrain : Node3D
 	[Export] public bool generateWorld = false;
 
     public static Vector2 viewerPosition;
+	public static Vector2 spawnPoint;
 	public 
 	Vector2 viewerPositionOld;
 	static MapGenerator mapGenerator;
@@ -48,6 +50,7 @@ public partial class PregenTerrain : Node3D
 		GD.Print(mapGenerator.seed);
 		resourceChunkInstancer = (ResourceChunkInstancer)mapGenerator.GetNode("ResourceChunkInstancer");
 
+		worldChunkAmount = worldSize * worldSize;
 		maxViewDst = detailLevels[detailLevels.Length-1].visibleDstThreshold;
         chunkSize = mapGenerator.mapChunkSize - 1;
         chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
@@ -55,6 +58,18 @@ public partial class PregenTerrain : Node3D
 		GenerateWorld();
 
 		UpdateVisibleChunks();
+
+		Vector2 firstChunkPosition = Vector2.Zero;
+		Vector2 lastChunkPosition = Vector2.Zero;
+		foreach (KeyValuePair<Vector2, TerrainChunk> item in TerrainChunkDictionary){
+			if (item.Value.chunkNumber == 1){
+				firstChunkPosition = item.Value.chunkPosition;
+			} else if (item.Value.chunkNumber == worldChunkAmount){
+				lastChunkPosition = item.Value.chunkPosition;
+			}
+		}
+		spawnPoint = (firstChunkPosition + lastChunkPosition) / 2;
+		GetNode<Node>("/root/Global").Set("SPAWN_POINT", spawnPoint);
     }
 
 	// public override void _Process(double delta){

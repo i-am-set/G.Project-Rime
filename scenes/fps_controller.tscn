@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=31 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" path="res://scripts/player/FallingPlayerState.gd" id="14_7wlsx"]
 [ext_resource type="Script" path="res://scripts/player/WeaponViewport.gd" id="15_yu4nu"]
 [ext_resource type="Script" path="res://scripts/player/WeaponCamera.gd" id="16_577f2"]
+[ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u6tj1"]
 
@@ -464,6 +465,10 @@ _data = {
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cvmy6"]
 length = 0.75
 
+[sub_resource type="QuadMesh" id="QuadMesh_chtvq"]
+flip_faces = true
+size = Vector2(2, 2)
+
 [node name="FPSController" type="CharacterBody3D" node_paths=PackedStringArray("VISOR", "CAMERA_CONTROLLER", "ANIMATIONPLAYER", "CROUCH_SHAPECAST", "PLAYERSTATEMACHINE", "USERINTERFACE", "WEAPONVIEWPORT")]
 collision_layer = 2
 collision_mask = 3
@@ -516,7 +521,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -596,7 +601,7 @@ ACCELERATION = 0.075
 [node name="SprintingPlayerState" type="Node" parent="PlayerStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("10_ssjb3")
-SPEED = 7.0
+SPEED = 60.0
 
 [node name="CrouchingPlayerState" type="Node" parent="PlayerStateMachine"]
 script = ExtResource("11_4t53l")
@@ -631,3 +636,9 @@ visible = false
 cull_mask = 1048574
 script = ExtResource("16_577f2")
 MAIN_CAMERA = NodePath("../../../CameraController/Camera3D/WeaponRig")
+
+[node name="PostProcessing" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21163, -0.801684)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_chtvq")
+surface_material_override/0 = ExtResource("17_bjkm5")

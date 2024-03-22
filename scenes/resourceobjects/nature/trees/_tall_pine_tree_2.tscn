@@ -1,15 +1,40 @@
-[gd_scene load_steps=4 format=3 uid="uid://6b410v2gv4fo"]
+[gd_scene load_steps=8 format=3 uid="uid://6b410v2gv4fo"]
 
 [ext_resource type="PackedScene" uid="uid://iw1drp4nv1sv" path="res://meshes/nature/trees/tall_pine_model_2.glb" id="1_vdml2"]
 [ext_resource type="Material" uid="uid://bnywi5e0vvxx6" path="res://materials/nature/tall_pine_tree_material.tres" id="2_mwbli"]
 [ext_resource type="Material" uid="uid://buxmxjdtln8n" path="res://materials/nature/tall_pine_leaves_material.tres" id="3_45b5o"]
+[ext_resource type="Texture2D" uid="uid://df5j8gmx2vfkd" path="res://textures/nature/billboards/billboard_tall_pine_tree.png" id="4_b423j"]
+[ext_resource type="Shader" uid="uid://bacyb7i14jgun" path="res://shaders/billboard_shader.tres" id="4_ckiu2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mrtgc"]
+render_priority = 0
+shader = ExtResource("4_ckiu2")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_hash_scale = 1.0
+shader_parameter/texture_albedo = ExtResource("4_b423j")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_htv7s"]
+size = Vector2(19, 38)
+orientation = 2
 
 [node name="tall_pine_model_2" instance=ExtResource("1_vdml2")]
 
 [node name="tree_002" parent="." index="0"]
 material_override = ExtResource("2_mwbli")
-visibility_range_end = 200.0
+visibility_range_end = 300.0
+visibility_range_end_margin = 20.0
+visibility_range_fade_mode = 1
 
 [node name="leaves" parent="." index="1"]
 material_override = ExtResource("3_45b5o")
-visibility_range_end = 200.0
+visibility_range_end = 300.0
+visibility_range_end_margin = 20.0
+visibility_range_fade_mode = 1
+
+[node name="billboard" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.9753, 0)
+material_override = SubResource("ShaderMaterial_mrtgc")
+visibility_range_begin = 300.0
+visibility_range_begin_margin = 20.0
+visibility_range_fade_mode = 1
+mesh = SubResource("PlaneMesh_htv7s")

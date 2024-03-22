@@ -22,6 +22,7 @@ var MOUSE_CAPTURED = false
 var GLOBAL_TICK = 0
 # World Variables
 var WORLD_SEED = 0
+var SPAWN_POINT = Vector2.ZERO
 var WORLD_HEIGHT_MAP = null
 # Options Variables
 var RENDER_DISTANCE = 10

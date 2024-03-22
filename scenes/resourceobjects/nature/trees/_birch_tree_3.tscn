@@ -1,9 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://d2krxxj704hv3"]
+[gd_scene load_steps=7 format=3 uid="uid://d2krxxj704hv3"]
 
 [ext_resource type="PackedScene" uid="uid://bqd8x8715jg3s" path="res://meshes/nature/trees/birch_model_3.glb" id="1_5o4dx"]
 [ext_resource type="Material" uid="uid://dg0d7hgeoqydn" path="res://materials/nature/birch_tree_material.tres" id="2_qxo2t"]
+[ext_resource type="Texture2D" uid="uid://c7vkg8fbvpjjg" path="res://textures/nature/billboards/billboard_birch_tree.png" id="3_13oru"]
+[ext_resource type="Shader" uid="uid://bacyb7i14jgun" path="res://shaders/billboard_shader.tres" id="3_cte2m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tdqde"]
+render_priority = 0
+shader = ExtResource("3_cte2m")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_hash_scale = 1.0
+shader_parameter/texture_albedo = ExtResource("3_13oru")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4y87b"]
+size = Vector2(19, 38)
+orientation = 2
 
 [node name="birch_tree_3" instance=ExtResource("1_5o4dx")]
 
 [node name="tree_001" parent="." index="0"]
 material_override = ExtResource("2_qxo2t")
+visibility_range_end = 300.0
+visibility_range_end_margin = 20.0
+visibility_range_fade_mode = 1
+
+[node name="billboard" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.9753, 0)
+material_override = SubResource("ShaderMaterial_tdqde")
+visibility_range_begin = 300.0
+visibility_range_begin_margin = 20.0
+visibility_range_fade_mode = 1
+mesh = SubResource("PlaneMesh_4y87b")
