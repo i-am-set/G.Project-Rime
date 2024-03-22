@@ -502,6 +502,7 @@ transform = Transform3D(1, 0, 0, 0, 0.997564, 0.0697565, 0, -0.0697565, 0.997564
 [node name="Camera3D" type="Camera3D" parent="CameraController"]
 unique_name_in_owner = true
 cull_mask = 1048573
+current = true
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="CameraController/Camera3D"]
 visible = false
@@ -634,6 +635,7 @@ script = ExtResource("15_yu4nu")
 [node name="Camera3D" type="Camera3D" parent="WeaponViewport/SubViewport" node_paths=PackedStringArray("MAIN_CAMERA")]
 visible = false
 cull_mask = 1048574
+current = true
 script = ExtResource("16_577f2")
 MAIN_CAMERA = NodePath("../../../CameraController/Camera3D/WeaponRig")
 

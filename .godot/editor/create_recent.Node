@@ -1,3 +1,7 @@
+Decal
+CPUParticles2D
+CPUParticles3D
+GPUParticles3D
 MeshInstance3D
 StaticBody3D
 CollisionShape3D
@@ -6,8 +10,6 @@ Marker3D
 Sprite2D
 Sprite3D
 Node
-GPUParticles3D
 Timer
 MultiMeshInstance3D
 CSGBox3D
-CollisionPolygon3D

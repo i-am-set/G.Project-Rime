@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dea3xq433l3uo"]
+
+[ext_resource type="PackedScene" uid="uid://b53t41450hr4c" path="res://meshes/nature/mountain/mountain_range_skybox_model_1.glb" id="1_y7inc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k1m4s"]
+depth_draw_mode = 1
+albedo_color = Color(0.752941, 0.752941, 0.760784, 1)
+uv1_scale = Vector3(0.015, 0.015, 0.015)
+uv1_triplanar = true
+
+[node name="mountain_range_skybox_model_1" instance=ExtResource("1_y7inc")]
+
+[node name="Plane" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_k1m4s")

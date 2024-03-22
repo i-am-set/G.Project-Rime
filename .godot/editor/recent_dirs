@@ -1,8 +1,9 @@
+res://scenes/utility
+res://
 res://shaders
 res://materials
 res://scenes/resourceobjects/nature/nodes/colliders
 res://scenes/resourceobjects/nature/trees/colliders
-res://
 res://scenes/resourceobjects/nature/trees
 res://scenes
 res://scripts/world_generation
@@ -10,7 +11,6 @@ res://scenes/maingame
 res://scenes/resourceobjects/nature/shrub
 C:/Users/sethg/wkspaces/!Exports/G.Project-Rime Export 2
 res://materials/nature
-res://scenes/utility
 res://scenes/resourceobjects/nature/nodes
 res://scripts/resource_objects
 res://editor

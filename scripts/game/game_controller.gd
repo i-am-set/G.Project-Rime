@@ -5,6 +5,7 @@ var _chat = preload("res://scenes/game_chat_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
 @export var generated_terrain : Node3D
+@export var skybox : Node3D
 
 var _chat_instance : Control
 var _player_list_instance : Control
@@ -62,6 +63,7 @@ func _ready():
 
 func _physics_process(delta):
 	var _authorized_player_position = _authorized_player.position
+	skybox.position = Vector3(_authorized_player_position.x, 10, _authorized_player_position.z);
 	
 	# If the player is connected, read packets
 	if Global.LOBBY_ID > 0:
