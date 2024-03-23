@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1711133846
+::res://::1711214315
 export_presets.cfg::TextFile::-1::1709527592::0::1::::<><>::
 icon.png::CompressedTexture2D::8402074799734168854::1709244751::1709244751::1::::<><>::
 normals_material.tres::ShaderMaterial::6609532676333540698::1710968390::0::1::::<><>::res://scenes/normals_shader.gdshader
@@ -34,7 +34,7 @@ THIRDPARTY.txt::TextFile::-1::1709244750::0::1::::<><>::
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/::1709244751
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/Resources/::1709244751
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/_CodeSignature/::1709244751
-::res://addons/godot-jolt/windows/::1711130522
+::res://addons/godot-jolt/windows/::1711214302
 ::res://addons/godot-multimesh-scatter-main/::1709244751
 ::res://addons/godot-multimesh-scatter-main/addons/::1709244751
 ::res://addons/godot-multimesh-scatter-main/addons/multimesh_scatter/::1709244807
@@ -50,7 +50,7 @@ godotsteam.gdextension::GDExtension::-1::1709244751::0::1::::<><>::
 ::res://addons/godotsteam/osx/libgodotsteam.debug.framework/::1709244751
 ::res://addons/godotsteam/osx/libgodotsteam.framework/::1709244751
 ::res://addons/godotsteam/win32/::1709244751
-::res://addons/godotsteam/win64/::1711130522
+::res://addons/godotsteam/win64/::1711214302
 ::res://addons/proton_scatter/::1709334506
 plugin.cfg::TextFile::-1::1709244751::0::1::::<><>::
 plugin.gd::GDScript::-1::1709244751::0::1::::<>EditorPlugin<>::
@@ -315,7 +315,7 @@ save_preset.gd::GDScript::-1::1709244751::0::1::::<>Window<>::
 save_preset.tscn::PackedScene::-1::1709244751::0::1::::<><>::res://addons/proton_scatter/src/stack/inspector_plugin/ui/presets/save_preset.gd
 ::res://addons/proton_scatter/tests/::1709244751
 unit_testing.tscn::PackedScene::155225341127764101::1709244751::0::1::::<><>::res://addons/proton_scatter/src/scatter.gd<>uid://6xc5b38d25gf::::res://addons/proton_scatter/demos/assets/textures/grid.png<>res://addons/proton_scatter/src/stack/modifier_stack.gd<>res://addons/proton_scatter/src/modifiers/create_inside_random.gd<>res://addons/proton_scatter/src/scatter_item.gd<>res://addons/proton_scatter/src/scatter_shape.gd<>res://addons/proton_scatter/src/shapes/sphere_shape.gd<>res://addons/proton_scatter/src/modifiers/create_inside_grid.gd<>res://addons/proton_scatter/src/modifiers/create_inside_poisson.gd<>res://addons/proton_scatter/src/modifiers/create_along_edge_random.gd<>res://addons/proton_scatter/src/modifiers/create_along_edge_even.gd<>res://addons/proton_scatter/src/shapes/box_shape.gd<>res://addons/proton_scatter/src/shapes/path_shape.gd<>res://addons/proton_scatter/src/modifiers/create_along_edge_continuous.gd<>res://addons/proton_scatter/src/modifiers/offset_scale.gd<>res://addons/proton_scatter/src/modifiers/single_item.gd<>res://addons/proton_scatter/src/modifiers/array.gd<>res://addons/proton_scatter/src/modifiers/randomize_transforms.gd<>res://addons/proton_scatter/src/modifiers/offset_position.gd<>res://addons/proton_scatter/src/modifiers/look_at.gd<>res://addons/proton_scatter/src/modifiers/offset_rotation.gd<>res://addons/proton_scatter/src/modifiers/clusterize.gd<>res://addons/proton_scatter/src/modifiers/project_on_geometry.gd<>res://addons/proton_scatter/src/modifiers/proxy.gd<>res://addons/proton_scatter/src/modifiers/relax.gd<>res://addons/proton_scatter/src/modifiers/remove_outside_shapes.gd<>res://addons/proton_scatter/src/particles/example_random_motion.gdshader
-::res://addons/Todo_Manager/::1711141743
+::res://addons/Todo_Manager/::1711214315
 ColourPicker.gd::GDScript::-1::1709244750::0::1::::<>HBoxContainer<>::
 Current.gd::GDScript::-1::1709244750::0::1::::<>Panel<>::
 Dock.gd::GDScript::-1::1709244750::0::1::::<>Control<>::
@@ -323,7 +323,7 @@ Pattern.gd::GDScript::-1::1709244750::0::1::::<>HBoxContainer<>::
 plugin.cfg::TextFile::-1::1709244750::0::1::::<><>::
 plugin.gd::GDScript::-1::1709244750::0::1::::<>EditorPlugin<>::
 Project.gd::GDScript::-1::1709244750::0::1::::<>Panel<>::
-todo.cfg::TextFile::-1::1711130527::0::1::::<><>::
+todo.cfg::TextFile::-1::1711214315::0::1::::<><>::
 todoItem_class.gd::GDScript::-1::1709244750::0::1::::<>RefCounted<>::
 todo_class.gd::GDScript::-1::1709244750::0::1::::<>RefCounted<>::
 ::res://addons/Todo_Manager/doc/::1709244750
@@ -383,8 +383,8 @@ starmap_8k.jpg::CompressedTexture2D::2705215692772567721::1709244750::1709244750
 Stars_Noise.TGA::CompressedTexture2D::3622898064617848699::1709244750::1709244750::1::::<><>::
 StaticCloudsAlpha.tga::CompressedTexture2D::5710063143071602288::1709244750::1709244750::1::::<><>::
 StaticCloudsXY.tga::CompressedTexture2D::5286439033012208714::1709244750::1709244750::1::::<><>::
-::res://GodotSky/WorldEnvironment/::1711141741
-default_environment.tres::Environment::1590598010687615476::1711141741::0::1::::<><>::uid://bq7217qbtqsdc::::res://GodotSky/WorldEnvironment/default_sky.tres
+::res://GodotSky/WorldEnvironment/::1711143979
+default_environment.tres::Environment::1590598010687615476::1711143979::0::1::::<><>::uid://bq7217qbtqsdc::::res://GodotSky/WorldEnvironment/default_sky.tres
 default_sky.tres::Sky::3577189765013304704::1711133460::0::1::::<><>::res://GodotSky/Shaders/GodotSky.gdshader<>uid://dnj6ylyuxc6w3::::res://GodotSky/Textures/scatteringLUT.HDR<>uid://cnl852air6g7q::::res://GodotSky/Textures/StaticCloudsAlpha.tga<>uid://chk144tfviq2e::::res://GodotSky/Textures/StaticCloudsXY.tga<>uid://bru7upxvlt3kp::::res://GodotSky/Textures/Stars_Noise.TGA<>uid://besoril5mkfd6::::res://GodotSky/Textures/starmap_8k.jpg
 ::res://materials/::1711141535
 grid.tres::ShaderMaterial::5739367904623174735::1711044839::0::1::::<><>::uid://ivvpsi314b34::::res://textures/grid.jpg
@@ -410,7 +410,7 @@ tree_roots.obj::Mesh::1399151988608003643::1709244751::1709244807::1::::<><>::
 ::res://meshes/nature/clutter/::1709247760
 clutter_grass_1.glb::PackedScene::514831478467203325::1709244751::1709247760::1::::<><>::
 clutter_grass_1.obj::Mesh::2336758301725261665::1709244751::1709247753::1::::<><>::
-::res://meshes/nature/mountain/::1711141667
+::res://meshes/nature/mountain/::1711141801
 mountain_range_skybox_model_1.glb::PackedScene::4551095392636749800::1711141799::1711141801::1::::<><>::
 ::res://meshes/nature/nodes/::1710879738
 flint_node_model_1.glb::PackedScene::2069293291937335537::1709244751::1710879738::1::::<><>::
@@ -459,8 +459,8 @@ mainmenu.tscn::PackedScene::2795170943604004317::1711141741::0::1::::<><>::res:/
 normals_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 resource_instancer.tscn::PackedScene::7721941929008140922::1711055640::0::1::::<><>::res://scripts/resource_objects/ResourceInstancer.cs
 test_object.tscn::PackedScene::7210872927431446680::1711141742::0::1::::<><>::
-::res://scenes/maingame/::1711141742
-world.tscn::PackedScene::5572632680217570611::1711141742::0::1::::<><>::res://scripts/game/game_controller.gd<>res://scripts/world_generation/generate_map_button.gd<>uid://1gfropwtqfbn::::res://GodotSky/GodotSky.tscn<>res://scripts/world_generation/MapGenerator.cs<>res://scripts/world_generation/TerrainType.cs<>res://scripts/world_generation/MapDisplay.cs<>uid://cokndnhyl7pb3::::res://materials/world_gen_material.tres<>res://scripts/world_generation/PregenTerrain.cs<>res://scripts/world_generation/LODInfo.cs<>res://scripts/resource_objects/ResourceChunkInstancer.cs<>uid://dea3xq433l3uo::::res://scenes/utility/mountain_range_skybox_scene.tscn
+::res://scenes/maingame/::1711143979
+world.tscn::PackedScene::5572632680217570611::1711143979::0::1::::<><>::res://scripts/game/game_controller.gd<>res://scripts/world_generation/generate_map_button.gd<>uid://1gfropwtqfbn::::res://GodotSky/GodotSky.tscn<>res://scripts/world_generation/MapGenerator.cs<>res://scripts/world_generation/TerrainType.cs<>res://scripts/world_generation/MapDisplay.cs<>uid://cokndnhyl7pb3::::res://materials/world_gen_material.tres<>res://scripts/world_generation/PregenTerrain.cs<>res://scripts/world_generation/LODInfo.cs<>res://scripts/resource_objects/ResourceChunkInstancer.cs<>uid://dea3xq433l3uo::::res://scenes/utility/mountain_range_skybox_scene.tscn<>uid://vumnicjktnyy::::res://textures/nature/resource/pine/pinetree_branch_hd.png
 ::res://scenes/resourceobjects/::1709244751
 ::res://scenes/resourceobjects/nature/::1709507068
 ::res://scenes/resourceobjects/nature/clutter/::1710105503
@@ -546,7 +546,7 @@ MeshGenerator.cs::CSharpScript::-1::1710968496::0::1::::<><>::
 PregenTerrain.cs::CSharpScript::-1::1711083767::0::1::::<>Node3D<>::
 TerrainType.cs::CSharpScript::-1::1709851907::0::1::::TerrainType<>Resource<>::
 TextureGenerator.cs::CSharpScript::-1::1709853334::0::1::::<><>::
-::res://shaders/::1711141742
+::res://shaders/::1711143981
 billboard_shader.tres::Shader::2392010127147596709::1711129483::0::1::::<><>::
 bush_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 clutter_placing_shader.tres::Shader::8748232755687291991::1711129483::0::1::::<><>::
@@ -555,7 +555,7 @@ grass_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 grid.gdshader::Shader::-1::1709244751::0::1::::<><>::
 item_highlighter_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 leaf_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
-player_post_processesing.gdshader::Shader::-1::1711141742::0::1::::<><>::
+player_post_processesing.gdshader::Shader::-1::1711143981::0::1::::<><>::
 tree_shader.gdshader::Shader::-1::1711130318::0::1::::<><>::
 ::res://textures/::1709244752
 grid.jpg::CompressedTexture2D::606165484783000033::1709244751::1709244751::1::::<><>::
