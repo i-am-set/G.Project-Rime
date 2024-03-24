@@ -12,3 +12,5 @@ uv1_triplanar = true
 
 [node name="Plane" parent="." index="0"]
 material_override = SubResource("StandardMaterial3D_k1m4s")
+cast_shadow = 0
+lod_bias = 0.001
