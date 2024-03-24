@@ -56,19 +56,19 @@ color = Color(0.215686, 0.207843, 0.192157, 1)
 [sub_resource type="Resource" id="Resource_8v3l0"]
 script = ExtResource("7_s7f0o")
 lod = 0
-visibleDstThreshold = 50.0
+visibleDstThreshold = 75.0
 
 [sub_resource type="Resource" id="Resource_hy6ck"]
 script = ExtResource("7_s7f0o")
 lod = 1
-visibleDstThreshold = 125.0
+visibleDstThreshold = 100.0
 
 [sub_resource type="Resource" id="Resource_652yt"]
 script = ExtResource("7_s7f0o")
 lod = 4
-visibleDstThreshold = 200.0
+visibleDstThreshold = 150.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_fvan1"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_1t2dx"]
 size = Vector2(49, 49)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain", "skybox")]
@@ -77,7 +77,7 @@ generated_terrain = NodePath("MapGenerator/PregenTerrain")
 skybox = NodePath("mountain_range_skybox_model_1")
 
 [node name="GodotSky" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1593.97
+timeOfDay = 1602.46
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
@@ -100,14 +100,14 @@ regions = [SubResource("Resource_rrn6f"), SubResource("Resource_qiy2y"), SubReso
 [node name="PregenTerrain" type="Node3D" parent="MapGenerator" node_paths=PackedStringArray("viewer")]
 script = ExtResource("6_wx3wc")
 detailLevels = Array[Object]([SubResource("Resource_8v3l0"), SubResource("Resource_hy6ck"), SubResource("Resource_652yt")])
-worldSize = 50
+worldSize = 20
 viewer = NodePath("../../Marker3D")
 shaderMaterial = ExtResource("4_5r3nd")
 
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_fvan1")
+mesh = SubResource("PlaneMesh_1t2dx")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 

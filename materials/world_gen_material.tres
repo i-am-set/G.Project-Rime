@@ -16,6 +16,7 @@ render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_burley,specular_sc
 uniform float roughness : hint_range(0,1);
 uniform float normal_map_scale = 1.0;
 
+uniform vec3 snow_color: source_color = vec3(0.79,0.87,0.95);
 uniform sampler2D snow_texture;
 uniform sampler2D rock_texture;
 uniform sampler2D mud_texture;
@@ -84,7 +85,7 @@ void fragment(){
 	vec2 snow_uv = base_uv * 20.0;
 	
 	//Albedo Values
-	vec3 snow_albedo = textureNoTile(snow_texture,snow_uv).xyz;
+	vec3 snow_albedo = snow_color * textureNoTile(snow_texture,snow_uv).xyz;
 	vec3 rock_albedo = texture(rock_texture,base_uv * 20.0).xyz;
 	vec3 mud_albedo = texture(mud_texture,base_uv * 80.0).xyz;
 	//Normal Values
@@ -123,6 +124,7 @@ render_priority = 0
 shader = SubResource("Shader_xfsc2")
 shader_parameter/roughness = 0.75
 shader_parameter/normal_map_scale = 1.0
+shader_parameter/snow_color = Color(0.721569, 0.870588, 0.952941, 1)
 shader_parameter/min_rock_slope = 0.79
 shader_parameter/max_snow_slope = 0.881
 shader_parameter/min_rocksnow_height = -8.0
