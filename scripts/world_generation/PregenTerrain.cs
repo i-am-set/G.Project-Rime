@@ -7,7 +7,7 @@ using System.Runtime.Intrinsics;
 
 public partial class PregenTerrain : Node3D
 {
-	const float scale = 4.0f;
+	const float scale = 3.0f;
 
 	const float viewerMoveThresholdForChunkUpdate = 5f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;

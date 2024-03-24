@@ -29,13 +29,3 @@ res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
 res://scenes/test_object.tscn
 res://scenes/maingame/world.tscn
-res://scripts/resource_objects/ResourceChunkInstancer.cs
-res://scripts/resource_objects/ResourceController.cs
-res://scripts/resource_objects/ResourceInstancer.cs
-res://scripts/world_generation/InfiniteTerrain.cs
-res://scripts/world_generation/LODInfo.cs
-res://scripts/world_generation/MapDisplay.cs
-res://scripts/world_generation/MapGenerator.cs
-res://scripts/world_generation/PregenTerrain.cs
-res://scripts/world_generation/TerrainType.cs
-res://scenes/utility/mountain_range_skybox_scene.tscn

@@ -56,7 +56,7 @@ func _ready():
 		player_instance.VISOR.visible = false
 		_authorized_player = player_instance
 		add_child(player_instance)
-		player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 80, Global.SPAWN_POINT.y)
+		player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 100, Global.SPAWN_POINT.y)
 		print_debug("self created")
 	
 	generated_terrain.viewer = _authorized_player;
