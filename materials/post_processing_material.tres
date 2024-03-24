@@ -3,7 +3,7 @@
 [ext_resource type="Shader" path="res://shaders/player_post_processesing.gdshader" id="1_e11ls"]
 
 [resource]
-render_priority = 0
+render_priority = 2
 shader = ExtResource("1_e11ls")
 shader_parameter/outlineColor = Color(0, 0, 0, 0.78)
 shader_parameter/depth_threshold = 0.025

@@ -203,7 +203,7 @@ public partial class ResourceChunkInstancer : Node3D
     public bool TryToSetLocalResources(Vector3 resourcePosition){
         resourceDataCountCached = resourceData.Count;
         resourceData = FindResource(resourceData, resourcePosition);
-        
+         
         if(resourceDataCountCached != resourceData.Count){
             return true;
         }

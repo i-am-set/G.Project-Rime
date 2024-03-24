@@ -1,9 +1,9 @@
+MeshInstance3D
 RayCast3D
 Decal
 CPUParticles2D
 CPUParticles3D
 GPUParticles3D
-MeshInstance3D
 StaticBody3D
 CollisionShape3D
 Node3D
@@ -12,4 +12,3 @@ Sprite2D
 Sprite3D
 Node
 Timer
-MultiMeshInstance3D

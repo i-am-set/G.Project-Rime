@@ -1,2 +1,0 @@
-﻿50548
-c:/Program Files (x86)/Godot_v4.2.1-stable_mono_win64/Godot4.2.1.exe

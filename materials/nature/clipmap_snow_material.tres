@@ -5,7 +5,3 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_uo4n7")
-shader_parameter/albedo = null
-shader_parameter/roughness = null
-shader_parameter/normal_map_scale = 1.0
-shader_parameter/subsurface_scattering_scale = 0.5
