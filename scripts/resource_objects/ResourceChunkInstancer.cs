@@ -88,6 +88,9 @@ public partial class ResourceChunkInstancer : Node3D
     int resourceDataCountCached = 0;
     private System.Collections.Generic.Dictionary<PackedScene, Node3D> resourceColliderData = new();
     private Queue<ResourceInfo> queuedResourceForReseating = new();
+    private ResourceInfo nextResourceToReseat;
+    private Queue<Node3D> queuedResourceForDisplacing = new();
+    private Node3D nextResourceToDisplace;
     private System.Collections.Generic.Dictionary<Vector3, Node3D> seatedResourcesData = new();
     private System.Collections.Generic.Dictionary<Vector3, StaticBody3D> resourcePositionsWithColliders = new();
     private List<Vector3> resourcePositionsCloseToThePlayer = new();
@@ -109,10 +112,10 @@ public partial class ResourceChunkInstancer : Node3D
     public override void _PhysicsProcess(double delta){
         for (int i = 0; i < positionsPerFrame; i++){
             if (queuedResourceForReseating.Count > 0){
-                ResourceInfo resourceInfo = queuedResourceForReseating.Dequeue();
-                if(resourceData.ContainsKey(resourceInfo.position)){
+                nextResourceToReseat = queuedResourceForReseating.Dequeue();
+                if(resourceData.ContainsKey(nextResourceToReseat.position)){
                 }
-                ReseatResource(resourceInfo.position, resourceInfo.parent);
+                ReseatResource(nextResourceToReseat.position, nextResourceToReseat.parent);
             }
         }
     }
@@ -295,7 +298,18 @@ public partial class ResourceChunkInstancer : Node3D
 
     public void DisplaceResource(Vector3 resourcePosition){
         if (seatedResourcesData.ContainsKey(resourcePosition)){
-            seatedResourcesData[resourcePosition].Position = new Vector3(0, -10000, 0);
+            Node3D displacedResource = seatedResourcesData[resourcePosition];
+            displacedResource.Position = new Vector3(0, -10000, 0);
+            queuedResourceForDisplacing.Enqueue(displacedResource);
+        }
+    }
+
+    public async void CleanUnusedResourcesFromMemory(){
+        while (queuedResourceForDisplacing.Count > 0){
+            GD.Print("1---------------2");
+            nextResourceToDisplace = queuedResourceForDisplacing.Dequeue();
+            nextResourceToDisplace.QueueFree();
+            await ToSignal(GetTree().CreateTimer(0.1f), "timeout"); // Wait for 0.1 seconds
         }
     }
     

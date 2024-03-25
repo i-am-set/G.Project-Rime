@@ -55,7 +55,7 @@ public partial class InfiniteTerrainGenerator : Node3D
         chunkSize = mapGenerator.mapChunkSize - 1;
         chunksVisibleInViewDst = Mathf.RoundToInt(maxViewDst / chunkSize);
 
-		GenerateWorld();
+		WorldGenerationLogic();
 
 		UpdateVisibleChunks();
 
@@ -83,7 +83,11 @@ public partial class InfiniteTerrainGenerator : Node3D
     
 
     public override void _PhysicsProcess(double delta){
-        viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
+        WorldGenerationLogic();
+    }
+
+	void WorldGenerationLogic(){
+		viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
 
 		if (viewerPosition != viewerPositionOld){
 			// set colliders close to player
@@ -99,7 +103,7 @@ public partial class InfiniteTerrainGenerator : Node3D
 			viewerPositionOld = viewerPosition;
         	UpdateVisibleChunks();
 		}
-    }
+	}
 
 	// generate world
 	void GenerateWorld(){

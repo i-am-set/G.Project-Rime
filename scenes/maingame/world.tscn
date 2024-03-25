@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/world_generation/TerrainType.cs" id="3_f2kf7"]
 [ext_resource type="Script" path="res://scripts/world_generation/MapDisplay.cs" id="3_sufe7"]
 [ext_resource type="Material" uid="uid://cokndnhyl7pb3" path="res://materials/world_gen_material.tres" id="4_5r3nd"]
-[ext_resource type="Script" path="res://scripts/world_generation/PregenTerrain.cs" id="6_wx3wc"]
+[ext_resource type="Script" path="res://scripts/world_generation/InfiniteTerrainGenerator.cs" id="6_gmd1k"]
 [ext_resource type="Script" path="res://scripts/world_generation/LODInfo.cs" id="7_s7f0o"]
 [ext_resource type="Script" path="res://scripts/resource_objects/ResourceChunkInstancer.cs" id="9_8y3m7"]
 [ext_resource type="PackedScene" uid="uid://dea3xq433l3uo" path="res://scenes/utility/mountain_range_skybox_scene.tscn" id="11_bofon"]
@@ -68,16 +68,16 @@ script = ExtResource("7_s7f0o")
 lod = 4
 visibleDstThreshold = 150.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_vw4cb"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_smw6i"]
 size = Vector2(49, 49)
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain", "skybox")]
 script = ExtResource("1_beekf")
-generated_terrain = NodePath("MapGenerator/PregenTerrain")
+generated_terrain = NodePath("MapGenerator/InfiniteTerrainGen")
 skybox = NodePath("mountain_range_skybox_model_1")
 
 [node name="GodotSky" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 924.71
+timeOfDay = 1150.58
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
@@ -97,17 +97,17 @@ meshHeightCurve = SubResource("Curve_hjld2")
 autoUpdate = true
 regions = [SubResource("Resource_rrn6f"), SubResource("Resource_qiy2y"), SubResource("Resource_p26xn"), SubResource("Resource_tjvym"), SubResource("Resource_bbt57"), SubResource("Resource_5ytf7")]
 
-[node name="PregenTerrain" type="Node3D" parent="MapGenerator" node_paths=PackedStringArray("viewer")]
-script = ExtResource("6_wx3wc")
+[node name="InfiniteTerrainGen" type="Node3D" parent="MapGenerator" node_paths=PackedStringArray("viewer")]
+script = ExtResource("6_gmd1k")
 detailLevels = Array[Object]([SubResource("Resource_8v3l0"), SubResource("Resource_hy6ck"), SubResource("Resource_652yt")])
-worldSize = 20
+worldSize = 10
 viewer = NodePath("../../Marker3D")
 shaderMaterial = ExtResource("4_5r3nd")
 
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_vw4cb")
+mesh = SubResource("PlaneMesh_smw6i")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 
