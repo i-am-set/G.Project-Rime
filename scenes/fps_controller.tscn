@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=34 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://scripts/player/WeaponCamera.gd" id="16_577f2"]
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
+[ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u6tj1"]
 
@@ -530,7 +531,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -659,6 +660,7 @@ extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_chtvq")
 surface_material_override/0 = SubResource("ShaderMaterial_jnndc")
 
-[node name="RayCast3D" type="RayCast3D" parent="."]
+[node name="FloorDetector" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0415063, 0)
 target_position = Vector3(0, -0.165, 0)
+script = ExtResource("19_lm36c")

@@ -91,6 +91,8 @@ public partial class ResourceChunkInstancer : Node3D
     private ResourceInfo nextResourceToReseat;
     private Queue<Node3D> queuedResourceForDisplacing = new();
     private Node3D nextResourceToDisplace;
+    private bool isDisplacingResource = false;
+    private const int amountToDisplace = 20;
     private System.Collections.Generic.Dictionary<Vector3, Node3D> seatedResourcesData = new();
     private System.Collections.Generic.Dictionary<Vector3, StaticBody3D> resourcePositionsWithColliders = new();
     private List<Vector3> resourcePositionsCloseToThePlayer = new();
@@ -110,6 +112,7 @@ public partial class ResourceChunkInstancer : Node3D
     }
 
     public override void _PhysicsProcess(double delta){
+        CleanUnusedResourcesFromMemory();
         for (int i = 0; i < positionsPerFrame; i++){
             if (queuedResourceForReseating.Count > 0){
                 nextResourceToReseat = queuedResourceForReseating.Dequeue();
@@ -263,8 +266,7 @@ public partial class ResourceChunkInstancer : Node3D
         return resourceInstance;
     }
 
-    private Node3D TreeParameters(Node3D tree, int treeNumber, RandomNumberGenerator rngBase)
-    {
+    private Node3D TreeParameters(Node3D tree, int treeNumber, RandomNumberGenerator rngBase){
         MeshInstance3D firstChild = (MeshInstance3D)tree.GetChild(treeNumber).GetChild(0);
 		Material firstChildMaterial = firstChild.MaterialOverride;
 		firstChildMaterial = (ShaderMaterial)firstChildMaterial.Duplicate();
@@ -284,7 +286,7 @@ public partial class ResourceChunkInstancer : Node3D
     }
 
     void ReseatResource(Vector3 resourcePosition, Node3D resourceParent){
-        if (resourceData.ContainsKey(resourcePosition)){
+        if (resourceData.ContainsKey(resourcePosition) && resourcePosition.Y > 5){
             if(!seatedResourcesData.ContainsKey(resourcePosition)){
                 Node3D resource = InstantiateResource(resourceData[resourcePosition], (ulong)((int)resourcePosition.Y ^ (int)resourcePosition.Z));
                 resourceParent.CallDeferred("add_child", resource);
@@ -301,15 +303,19 @@ public partial class ResourceChunkInstancer : Node3D
             Node3D displacedResource = seatedResourcesData[resourcePosition];
             displacedResource.Position = new Vector3(0, -10000, 0);
             queuedResourceForDisplacing.Enqueue(displacedResource);
+            seatedResourcesData.Remove(resourcePosition);
         }
     }
 
     public async void CleanUnusedResourcesFromMemory(){
-        while (queuedResourceForDisplacing.Count > 0){
-            GD.Print("1---------------2");
-            nextResourceToDisplace = queuedResourceForDisplacing.Dequeue();
-            nextResourceToDisplace.QueueFree();
-            await ToSignal(GetTree().CreateTimer(0.1f), "timeout"); // Wait for 0.1 seconds
+        if(isDisplacingResource == false && queuedResourceForDisplacing.Count > amountToDisplace){
+            isDisplacingResource = true;
+            for (int i = 0; i < amountToDisplace; i++){
+                nextResourceToDisplace = queuedResourceForDisplacing.Dequeue();
+                nextResourceToDisplace.QueueFree();
+            }
+            await ToSignal(GetTree().CreateTimer(0.05f), "timeout");
+            isDisplacingResource = false;
         }
     }
     

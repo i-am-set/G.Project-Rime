@@ -63,7 +63,7 @@ func _ready():
 
 func _physics_process(delta):
 	var _authorized_player_position = _authorized_player.position
-	skybox.position = Vector3(_authorized_player_position.x, 10, _authorized_player_position.z);
+	skybox.position = Vector3(_authorized_player_position.x, 0, _authorized_player_position.z);
 	
 	# If the player is connected, read packets
 	if Global.LOBBY_ID > 0:
