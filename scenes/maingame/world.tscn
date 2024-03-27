@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://clnopfwnhl6j4"]
+[gd_scene load_steps=31 format=3 uid="uid://clnopfwnhl6j4"]
 
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_beekf"]
 [ext_resource type="Script" path="res://scripts/world_generation/generate_map_button.gd" id="1_nactg"]
@@ -12,7 +12,10 @@
 [ext_resource type="Script" path="res://scripts/resource_objects/ResourceChunkInstancer.cs" id="9_8y3m7"]
 [ext_resource type="PackedScene" uid="uid://dea3xq433l3uo" path="res://scenes/utility/mountain_range_skybox_scene.tscn" id="11_bofon"]
 [ext_resource type="Texture2D" uid="uid://vumnicjktnyy" path="res://textures/nature/resource/pine/pinetree_branch_hd.png" id="12_c6ask"]
-[ext_resource type="Texture2D" uid="uid://sudhfhsu333v" path="res://addons/proton_scatter/demos/assets/textures/t_sand.png" id="12_w6tc7"]
+[ext_resource type="Texture2D" uid="uid://cm7q5u3kq1ebq" path="res://textures/nature/ground/ice/ice_raw_Base_Color.jpg" id="12_hq3je"]
+[ext_resource type="Texture2D" uid="uid://ch0lv4twi6jw8" path="res://textures/nature/ground/ice/ice_raw_Height.png" id="13_isn0k"]
+[ext_resource type="Texture2D" uid="uid://ccfdl7dutavpr" path="res://textures/nature/ground/ice/ice_raw_Normal.jpg" id="14_3l2u2"]
+[ext_resource type="Texture2D" uid="uid://cvf2cm7f6n23" path="res://textures/nature/ground/ice/ice_raw_Roughness.jpg" id="15_eb41i"]
 
 [sub_resource type="Curve" id="Curve_hjld2"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.282828, 0), 0.0, 5.435, 0, 0, Vector2(0.387, 0.162), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
@@ -69,12 +72,23 @@ script = ExtResource("7_s7f0o")
 lod = 4
 visibleDstThreshold = 150.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_up5vt"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_uw5kp"]
 size = Vector2(49, 49)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3t7a"]
-albedo_color = Color(0.54902, 0.741176, 0.898039, 1)
-albedo_texture = ExtResource("12_w6tc7")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dp3sg"]
+albedo_texture = ExtResource("12_hq3je")
+metallic_specular = 0.1
+roughness = 0.12
+roughness_texture = ExtResource("15_eb41i")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_scale = 0.1
+normal_texture = ExtResource("14_3l2u2")
+rim_enabled = true
+heightmap_texture = ExtResource("13_isn0k")
+subsurf_scatter_strength = 1.0
+subsurf_scatter_texture = ExtResource("12_hq3je")
+uv1_scale = Vector3(0.02, 0.02, 0.02)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
@@ -90,7 +104,7 @@ generated_terrain = NodePath("MapGenerator/InfiniteTerrainGen")
 skybox = NodePath("mountain_range_skybox_model_1")
 
 [node name="GodotSky" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1618.91
+timeOfDay = 1203.07
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
@@ -120,7 +134,7 @@ shaderMaterial = ExtResource("4_5r3nd")
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_up5vt")
+mesh = SubResource("PlaneMesh_uw5kp")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 
@@ -134,7 +148,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1165.3, 74.0264, 1144.61)
 
 [node name="Ice" type="MeshInstance3D" parent="mountain_range_skybox_model_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
-material_override = SubResource("StandardMaterial3D_f3t7a")
+material_override = SubResource("StandardMaterial3D_dp3sg")
 mesh = SubResource("PlaneMesh_j34ww")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="mountain_range_skybox_model_1/Ice"]

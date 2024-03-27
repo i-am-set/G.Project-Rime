@@ -109,7 +109,6 @@ func set_settings():
 	_resource_spawn_radius = (Global.RENDER_DISTANCE*24)+20
 
 func _physics_process(delta):
-	print(position.y)
 	if _is_authorized_user:
 		Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)
 		Global.debug.add_property("ShapeCast", CROUCH_SHAPECAST.is_colliding(), 2)
