@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bm3se7nbvev48"]
-
-[ext_resource type="Material" uid="uid://dowqjt7wv7gro" path="res://materials/nature/clipmap_snow_material.tres" id="1_hhp5h"]
-[ext_resource type="Script" path="res://world/clipmap/clipmap_partition.gd" id="1_thu34"]
-
-[node name="clipmap_partition" type="MeshInstance3D"]
-material_override = ExtResource("1_hhp5h")
-extra_cull_margin = 500.0
-script = ExtResource("1_thu34")

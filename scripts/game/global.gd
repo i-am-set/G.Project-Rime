@@ -62,7 +62,7 @@ func _ready():
 		#OS.alert("License not found.\nPlease purchase a copy of the game to proceed.", "Game is not owned.")
 		#get_tree().quit()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	Steam.run_callbacks()
 	
 	GLOBAL_TICK += 1
