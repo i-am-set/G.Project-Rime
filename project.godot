@@ -23,7 +23,6 @@ config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 [autoload]
 
 Global="*res://scripts/game/global.gd"
-Heightmap="*res://world/heightmap/Heightmap.gd"
 
 [display]
 
@@ -42,7 +41,7 @@ movie_writer/movie_file="D:/StayAtHomeDev/Video Production/Social Video Teasers/
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [input]
 
@@ -145,43 +144,15 @@ anti_aliasing/quality/screen_space_aa=1
 
 [shader_globals]
 
-clipmap_partition_length={
-"type": "float",
-"value": 32.0
-}
-clipmap_position={
-"type": "vec3",
-"value": Vector3(0, 0, 0)
-}
-amplitude={
-"type": "float",
-"value": 32.0
-}
 lod_step={
 "type": "float",
 "value": 1.0
-}
-normalmap={
-"type": "sampler2D",
-"value": "res://textures/nature/snow/Snow010A_1K-JPG_NormalDX.jpg"
 }
 sway_speed={
 "type": "float",
 "value": 1.0
 }
-fade_distance_max={
+amplitude={
 "type": "float",
-"value": 90.0
-}
-fade_distance_min={
-"type": "float",
-"value": 75.0
-}
-heightmap={
-"type": "sampler2D",
-"value": "res://world/heightmap/heightmap.png"
-}
-amplitude_mask_heightmap={
-"type": "sampler2D",
-"value": "res://world/heightmap/heightmap.png"
+"value": 32.0
 }

@@ -55,11 +55,6 @@ func strip_into_peer():
 
 func _input(event):
 	if event.is_action_pressed("ui_scroll_up"):
-		var tree = MeshInstance3D.new()
-		tree.mesh = BoxMesh.new()
-		tree.global_position = Vector3(self.global_position.x, Heightmap.get_height(self.global_position.x, self.global_position.z), self.global_position.z)
-		get_parent().add_child(tree)
-		print_debug(Heightmap.get_height(self.global_position.x, self.global_position.z))
 		print_debug("scroll up")
 	if event.is_action_pressed("ui_scroll_down"):
 		print_debug("scroll down")

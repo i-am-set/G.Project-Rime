@@ -136,18 +136,18 @@ func leave_lobby():
 		Global.LOBBY_MEMBERS.clear()
 
 
-func generate_height_map(seed : int, frequency : float) -> NoiseTexture2D:
-	var texture = NoiseTexture2D.new()
-	var fastNoiseLite = FastNoiseLite.new()
-	texture.width = 512
-	texture.height = 512
-	texture.seamless = true
-	fastNoiseLite.seed = seed
-	fastNoiseLite.frequency = frequency
-	fastNoiseLite.fractal_octaves = 5
-	texture.noise = fastNoiseLite
-	
-	return texture
+#func generate_height_map(seed : int, frequency : float) -> NoiseTexture2D:
+	#var texture = NoiseTexture2D.new()
+	#var fastNoiseLite = FastNoiseLite.new()
+	#texture.width = 512
+	#texture.height = 512
+	#texture.seamless = true
+	#fastNoiseLite.seed = seed
+	#fastNoiseLite.frequency = frequency
+	#fastNoiseLite.fractal_octaves = 5
+	#texture.noise = fastNoiseLite
+	#
+	#return texture
 
 
 func initialize_game(seed):

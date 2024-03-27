@@ -23,7 +23,6 @@ var GLOBAL_TICK = 0
 # World Variables
 var WORLD_SEED = 0
 var SPAWN_POINT = Vector2.ZERO
-var WORLD_HEIGHT_MAP = null
 # Options Variables
 var RENDER_DISTANCE = 10
 var LOD_BIAS = 0.25
@@ -77,7 +76,6 @@ func remove_lobby_data():
 	GLOBAL_TICK = 0
 	# World Variables
 	WORLD_SEED = 0
-	WORLD_HEIGHT_MAP = null
 
 func repair_globals():
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

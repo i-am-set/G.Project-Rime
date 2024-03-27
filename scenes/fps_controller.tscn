@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=35 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -19,6 +19,7 @@
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
+[ext_resource type="PackedScene" uid="uid://87ppfs11fnk3" path="res://addons/GDebugPanelGodot/Examples/Scenes/LandscapeAspectGDebugPanelExample.tscn" id="20_iykea"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u6tj1"]
 
@@ -531,7 +532,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -579,7 +580,20 @@ width = 2.0
 points = PackedVector2Array(-5, 0, -15, 0)
 width = 2.0
 
-[node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
+[node name="Console" type="Control" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_kecrd")
+
+[node name="LandscapeAspectGDebugPanelExample" parent="UserInterface/Console" instance=ExtResource("20_iykea")]
+layout_mode = 1
+offset_left = 480.0
+
+[node name="DebugPanel" type="PanelContainer" parent="UserInterface/Console"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 0
 offset_left = 10.0
@@ -587,12 +601,11 @@ offset_top = 10.0
 offset_right = 210.0
 offset_bottom = 50.0
 theme = ExtResource("5_tib1u")
-script = ExtResource("6_kecrd")
 
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/DebugPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/Console/DebugPanel"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/DebugPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/Console/DebugPanel/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 

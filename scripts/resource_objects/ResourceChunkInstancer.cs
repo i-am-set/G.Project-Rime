@@ -79,8 +79,8 @@ public partial class ResourceChunkInstancer : Node3D
     private Vector3 authorizedPlayerPosition = new();
     private int authorizedPlayerResourceSpawnRadius = 10;
     private int authorizedPlayerResourceSpawnRadiusHalf = 5;
-    private FastNoiseLite noise = (FastNoiseLite)GD.Load("res://world/heightmap/resource_noise.tres");
-    private FastNoiseLite noiseMask = (FastNoiseLite)GD.Load("res://world/heightmap/resource_noise_mask.tres");
+    private FastNoiseLite noise = (FastNoiseLite)GD.Load("res://textures/noise/resource_noise.tres");
+    private FastNoiseLite noiseMask = (FastNoiseLite)GD.Load("res://textures/noise/resource_noise_mask.tres");
     private PackedScene testObject = (PackedScene)GD.Load("res://scenes/test_object.tscn");
     private bool isGeneratingResources = false;
 
