@@ -46,6 +46,7 @@ func _ready():
 				player_instance._authorize_user()
 				player_instance.VISOR.visible = false
 				_authorized_player = player_instance
+				HyperLog.camera_3d = player_instance.CAMERA_CONTROLLER
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 100, Global.SPAWN_POINT.y)
 	else:
@@ -55,6 +56,7 @@ func _ready():
 		player_instance._authorize_user()
 		player_instance.VISOR.visible = false
 		_authorized_player = player_instance
+		HyperLog.camera_3d = player_instance.CAMERA_CONTROLLER
 		add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 100, Global.SPAWN_POINT.y)
 		print_debug("self created")
@@ -100,6 +102,10 @@ func join_lobby(this_lobby_id):
 	
 	# Steam join request
 	Steam.joinLobby(this_lobby_id)
+
+func disconnect_from_game():
+	await leave_lobby()
+	await get_tree().change_scene_to_file("res://scenes/mainmenu.tscn")
 
 func leave_lobby():
 	# If in a lobby, leave it

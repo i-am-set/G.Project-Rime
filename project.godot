@@ -23,6 +23,8 @@ config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 [autoload]
 
 Global="*res://scripts/game/global.gd"
+HyperLog="*res://addons/hyperlog/hyperlog.tscn"
+DeveloperConsole="*res://addons/Developer Console/DeveloperConsole.tscn"
 
 [display]
 
@@ -41,7 +43,7 @@ movie_writer/movie_file="D:/StayAtHomeDev/Video Production/Social Video Teasers/
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/Todo_Manager/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/gloot/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/imrp/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [input]
 

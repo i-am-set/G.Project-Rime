@@ -24,7 +24,7 @@ var _tilt_input : float
 var _mouse_rotation : Vector3
 var _camera_rotation : Vector3
 var _cached_position : Vector3
-var _cached_rotation : Vector3
+var _cached_rotation : Vector3 
 var _steam_ID : int
 var _resource_spawn_radius : int
 

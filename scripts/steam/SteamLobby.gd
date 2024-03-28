@@ -13,6 +13,9 @@ enum search_distance {Close, Default, Far, Worldwide}
 @onready var playerList = $Players/PlayerList
 @onready var chatInput = $SendMessage/LineEdit
 func _ready():
+	# reset game information
+	deinitialize_game
+	
 	# set steam name on screen
 	steamName.text = Global.STEAM_NAME
 	# Steamwork connections
@@ -153,6 +156,12 @@ func leave_lobby():
 func initialize_game(seed):
 	# Cement changes
 	Global.WORLD_SEED = seed
+	# Await processing
+	await get_tree().process_frame
+
+func deinitialize_game():
+	# Reset changes
+	Global.WORLD_SEED = 0
 	# Await processing
 	await get_tree().process_frame
 

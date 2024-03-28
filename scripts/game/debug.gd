@@ -26,16 +26,15 @@ func _process(delta):
 			frames_per_second = str(Engine.get_frames_per_second()) # Gets frames per second every second
 #			property.text = property.name + ": " + frames_per_second
 	
-func _input(event):
+func toggle_debug_stats():
 	# Toggle debug panel
-	if event.is_action_pressed("debug"):
-		visible = !visible
-		Global.MOUSE_CAPTURED = visible
-		if visible:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		
+	visible = !visible
+	Global.MOUSE_CAPTURED = visible
+	if visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 # Debug funtion to add and update property
 func add_property(title: String, value, order):
 	var target

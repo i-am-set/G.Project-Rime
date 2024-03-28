@@ -1,0 +1,86 @@
+[gd_scene load_steps=36 format=3 uid="uid://de0qg8ke135ln"]
+
+[ext_resource type="Script" path="res://addons/Developer Console/UI/DeveloperConsoleUI.cs" id="1_8rpjy"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/DCCrosshairUI.cs" id="2_gxyvi"]
+[ext_resource type="Texture2D" uid="uid://dxglbj3p103dn" path="res://addons/Developer Console/Icons/GuiVisibilityVisible.svg" id="3_y56vd"]
+[ext_resource type="Texture2D" uid="uid://bm7v31morg1hu" path="res://addons/Developer Console/Icons/GuiVisibilityHidden.svg" id="4_e4mbv"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Crosshair/UICrosshairViewer.cs" id="5_lgojw"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Crosshair/UIContextTree.cs" id="5_ly5ja"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Terminal/UITerminalOutput.cs" id="5_pj6ps"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Crosshair/UICommandTree.cs" id="6_8kmlh"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Command Prompt/UIContextLabel.cs" id="6_56g1j"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Crosshair/UIMousePositionLabel.cs" id="6_qjser"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Command Prompt/UIAutocompleteController.cs" id="7_t12mj"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Crosshair/UICrosshairOutputLabel.cs" id="8_c1pwn"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Command Prompt/UICommandInput.cs" id="8_xv854"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Command Prompt/UIModeToggle.cs" id="9_u5wy4"]
+[ext_resource type="Script" path="res://addons/Developer Console/UI/Command Prompt/UIDescriptionLabel.cs" id="10_a6cop"]
+[ext_resource type="Script" path="res://addons/Developer Console/ConsoleCamera.cs" id="16_4fo3w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8uk8v"]
+bg_color = Color(0.113281, 0.132813, 0.160156, 1)
+draw_center = false
+border_width_right = 10
+border_color = Color(0.113281, 0.132813, 0.160156, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bgup"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.113281, 0.132813, 0.160156, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2nwv"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.113281, 0.132813, 0.160156, 1)
+border_color = Color(0.171875, 0.171875, 0.171875, 1)
+expand_margin_right = 9.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7vms"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.210938, 0.238281, 0.289063, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ex8m8"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.128906, 0.148438, 0.179688, 1)
+border_color = Color(0.172549, 0.172549, 0.172549, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbr1y"]
+bg_color = Color(0.128906, 0.148438, 0.179688, 1)
+draw_center = false
+border_color = Color(0.172549, 0.172549, 0.172549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48syn"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.128906, 0.148438, 0.179688, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nuqj3"]
+bg_color = Color(0.128906, 0.148438, 0.179688, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_25xm1"]
+draw_center = false
+border_color
