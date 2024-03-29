@@ -24,13 +24,13 @@ func _input(event: InputEvent) -> void:
 				chat_hide_tween.stop()
 				chat.modulate.a = 1
 		# change logic based on if the chat window is open or not
-		if chat.visible == false || chatInput.has_focus() == false:
+		if chat.visible == false || chatInput.has_focus() == false && Global.IS_PAUSED == false && Global.IS_IN_INVENTORY == false:
 			chat.visible = true
 			select_chat_input()
 			uncapture_mouse()
 		else:
 			send_chat_message()
-	if Input.is_action_pressed("exit"):
+	if Input.is_action_pressed("exit") || Global.IS_PAUSED == true || Global.IS_IN_INVENTORY == true:
 		chatInput.clear()
 		if chat.visible == true:
 			deselect_chat_input()
@@ -41,26 +41,24 @@ func _input(event: InputEvent) -> void:
 		chatOutput.scroll_vertical += 1
 
 func capture_mouse():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	Global.MOUSE_CAPTURED = true
+	Global.capture_mouse(true)
 
 func uncapture_mouse():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	Global.MOUSE_CAPTURED = false
+	Global.capture_mouse(false)
 
 func set_chat_type():
 	deselect_chat_input()
 	chatGetType.text = _chat_type
 
-func switch_chat_type():
-	if _chat_type == "GLOBAL":
-		_chat_type == "LOCAL"
-	elif _chat_type == "LOCAL":
-		_chat_type == "GLOBAL"
-	else:
-		_chat_type == "GLOBAL"
-	
-	chatGetType.text = _chat_type
+#func switch_chat_type():
+	#if _chat_type == "GLOBAL":
+		#_chat_type == "LOCAL"
+	#elif _chat_type == "LOCAL":
+		#_chat_type == "GLOBAL"
+	#else:
+		#_chat_type == "GLOBAL"
+	#
+	#chatGetType.text = _chat_type
 
 func select_chat_input():
 	chatInput.grab_focus()

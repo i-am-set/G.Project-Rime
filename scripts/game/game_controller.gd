@@ -63,7 +63,7 @@ func _ready():
 	
 	generated_terrain.viewer = _authorized_player;
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var _authorized_player_position = _authorized_player.position
 	skybox.position = Vector3(_authorized_player_position.x, 0, _authorized_player_position.z);
 	
@@ -75,7 +75,7 @@ func _physics_process(delta):
 	if Global.GLOBAL_TICK % 40 == 0:
 		get_lobby_members()
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("ui_scroll_up"):
 		pass
 

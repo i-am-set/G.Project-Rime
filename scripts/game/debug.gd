@@ -1,6 +1,8 @@
 extends Control
 
 @onready var property_container = %VBoxContainer
+@onready var debug_panel = get_node("DebugPanel")
+@onready var console_panel = get_node("ConsolePanel")
 
 #var property
 var frames_per_second : String
@@ -12,28 +14,46 @@ func _ready():
 	Global.debug = self
 	
 	# Hide Debug Panel on load
-	visible = false
+	debug_panel.visible = false
 	
-#	add_debug_property("FPS",frames_per_second)
+	# Set console commands
+	Console.create_command("debug_panel", self.c_toggle_debug_panel, "Toggles the debug panel.")
+	Console.create_command("tp", self.c_teleport_self_to_point, "Teleports the player to the given coordinate.")
 	
-func _process(delta):
-	
+func _process(_delta):
 	Global.debug.add_property("FPS", frames_per_second, 0)
 	
-	if visible:
+	if debug_panel.visible:
 		# Use delta time to get approx frames per second and round to two decimal places !Disable VSync if fps is stuck at 60!
 #			frames_per_second = "%.2f" % (1.0/delta) # Gets frames per second every frame
 			frames_per_second = str(Engine.get_frames_per_second()) # Gets frames per second every second
 #			property.text = property.name + ": " + frames_per_second
-	
-func toggle_debug_stats():
-	# Toggle debug panel
-	visible = !visible
-	Global.MOUSE_CAPTURED = visible
-	if visible:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func _input(event):
+	if event.is_action_pressed("debug"):
+		toggle_debug_console()
+
+func toggle_debug_console():
+	# Toggle debug console
+	console_panel.visible = !console_panel.visible
+	Global.IS_PAUSED = console_panel.visible
+	Global.MOUSE_CAPTURED = console_panel.visible
+	if console_panel.visible:
+		Global.capture_mouse(false)
 	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		Global.capture_mouse(true)
+
+func c_toggle_debug_panel() -> void:
+	# Toggle debug panel
+	debug_panel.visible = !debug_panel.visible
+
+func c_teleport_self_to_point(x: float, y: float, z: float) -> void:
+	# Teleport self to given objects position
+	if (Global.player.position != null):
+		Global.player.position = Vector3(x, y, z)
+	else:
+		if (Global.player.position == null):
+			Console.print_line("ERROR: Failed to find player position")
 
 # Debug funtion to add and update property
 func add_property(title: String, value, order):

@@ -5,9 +5,9 @@ extends Control
 @onready var playerListPanel = $Players
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("playerlist"):
+	if Input.is_action_just_pressed("playerlist") && Global.IS_PAUSED == false:
 		hold_display_player_list()
-	if !Input.is_action_pressed("playerlist"):
+	if !Input.is_action_pressed("playerlist") || Global.IS_PAUSED == true:
 		playerListPanel.visible = false
 
 func hold_display_player_list():

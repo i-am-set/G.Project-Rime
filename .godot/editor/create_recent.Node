@@ -1,3 +1,6 @@
+Panel
+TextureRect
+ConsoleContainer
 Button
 Control
 MeshInstance3D
@@ -9,7 +12,3 @@ CPUParticles3D
 GPUParticles3D
 StaticBody3D
 CollisionShape3D
-Marker3D
-Sprite2D
-Sprite3D
-Node

@@ -23,6 +23,8 @@ var GLOBAL_TICK = 0
 # World Variables
 var WORLD_SEED = 0
 var SPAWN_POINT = Vector2.ZERO
+var IS_PAUSED = false
+var IS_IN_INVENTORY = false
 # Options Variables
 var RENDER_DISTANCE = 10
 var LOD_BIAS = 0.25
@@ -76,6 +78,14 @@ func remove_lobby_data():
 	GLOBAL_TICK = 0
 	# World Variables
 	WORLD_SEED = 0
+
+func capture_mouse(captured : bool):
+	if captured:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	MOUSE_CAPTURED = captured
 
 func repair_globals():
 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

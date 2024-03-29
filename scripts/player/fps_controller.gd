@@ -17,6 +17,8 @@ extends CharacterBody3D
 
 var _is_authorized_user : bool = false
 
+var _no_clip : bool = false
+
 var _mouse_input : bool = false
 var look_dir: Vector2 # Input direction for look/aim
 var _rotation_input : float
@@ -70,14 +72,15 @@ func _unhandled_input(event: InputEvent) -> void:
 		_rotate_camera()
 
 func capture_mouse():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	Global.MOUSE_CAPTURED = true
+	Global.capture_mouse(true)
 
 func uncapture_mouse():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	Global.MOUSE_CAPTURED = false
+	Global.capture_mouse(false)
 
 func _rotate_camera(sens_mod: float = 1.0) -> void:
+	if  Global.IS_PAUSED == true:
+		return
+		
 	self.rotation.y -= look_dir.x * MOUSE_SENSITIVITY
 	CAMERA_CONTROLLER.rotation.x = clamp(CAMERA_CONTROLLER.rotation.x - look_dir.y * MOUSE_SENSITIVITY, -1.5, 1.5)
 	
@@ -96,6 +99,9 @@ func _ready():
 	
 	if CAMERA_CONTROLLER != null:
 		CAMERA_CONTROLLER.fov = 75.0
+	
+		# Set console commands
+	Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
 
 func set_settings():
 	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
@@ -112,29 +118,68 @@ func _physics_process(delta):
 		
 		_cached_position = global_position
 		_cached_rotation = rotation
-	
+
+func c_set_no_clip(toggle: bool):
+	_no_clip = toggle
+	if get_collision_mask_value(1) == toggle:
+		set_collision_mask_value(1, !toggle)
+
 func update_gravity(delta) -> void:
-	velocity.y -= gravity * delta
+	if (_no_clip):
+		pass
+	else:
+		velocity.y -= gravity * delta
 	
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
 	if _is_authorized_user == true:
-		var input_dir = Vector3.ZERO
-		if (Global.MOUSE_CAPTURED == true):
-			input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
-		
-		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		
-		if direction:
-			velocity.x = lerp(velocity.x,direction.x * speed, acceleration)
-			velocity.z = lerp(velocity.z,direction.z * speed, acceleration)
+		if _no_clip:
+			if Input.is_action_pressed("sprint"):
+				speed = speed * 6
+			else:
+				speed = speed * 3
+			# Allow flying movement based on mouse direction
+			var input_dir = Vector3.ZERO
+			var camera_forward = Vector3.ZERO
+			if Global.MOUSE_CAPTURED:
+				input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+				camera_forward = -CAMERA_CONTROLLER.global_transform.basis.z.normalized()
+				
+			var direction = camera_forward * -input_dir.y
+			
+			if direction:
+				velocity.x = lerp(velocity.x, direction.x * speed, acceleration)
+				velocity.y = lerp(velocity.y, direction.y * speed, acceleration)
+				velocity.z = lerp(velocity.z, direction.z * speed, acceleration)
+			else:
+				velocity.x = move_toward(velocity.x, 0, speed)
+				velocity.y = move_toward(velocity.y, 0, speed)
+				velocity.z = move_toward(velocity.z, 0, speed)
+			print(velocity, "------", input_dir)
+			
+			
+			# Handle vertical movement
+			if Input.is_action_pressed("jump"):
+				velocity.y = speed  # Move up
+			elif Input.is_action_pressed("crouch"):
+				velocity.y = -speed  # Move down
 		else:
-			velocity.x = move_toward(velocity.x, 0, deceleration)
-			velocity.z = move_toward(velocity.z, 0, deceleration)
+			var input_dir = Vector3.ZERO
+			if (Global.MOUSE_CAPTURED == true):
+				input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+			
+			var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+			
+			if direction:
+				velocity.x = lerp(velocity.x,direction.x * speed, acceleration)
+				velocity.z = lerp(velocity.z,direction.z * speed, acceleration)
+			else:
+				velocity.x = move_toward(velocity.x, 0, deceleration)
+				velocity.z = move_toward(velocity.z, 0, deceleration)
 		
 		move_and_slide()
 		
 		if global_position != _cached_position || rotation != _cached_rotation:
-			send_p2p_packet(0, {"message" : "move", "steam_id" : _steam_ID, "player_position" : global_position, "player_rotation" : rotation})
+			send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation})
 	
 func update_velocity() -> void:
 	pass

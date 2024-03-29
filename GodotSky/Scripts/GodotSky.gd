@@ -125,7 +125,7 @@ func _ready():
 	self.environment.sdfgi_enabled = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	simulateDay()
 	updateRotation()
 	updateSky()
