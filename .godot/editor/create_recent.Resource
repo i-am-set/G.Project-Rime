@@ -1,3 +1,4 @@
+BitMap
 TerrainType
 Environment
 StandardMaterial3D
