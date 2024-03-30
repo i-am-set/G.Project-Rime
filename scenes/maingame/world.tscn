@@ -72,7 +72,7 @@ script = ExtResource("7_s7f0o")
 lod = 4
 visibleDstThreshold = 150.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_fg30e"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_vtgb5"]
 size = Vector2(49, 49)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dp3sg"]
@@ -134,7 +134,7 @@ shaderMaterial = ExtResource("4_5r3nd")
 [node name="MapDisplay" type="MeshInstance3D" parent="MapGenerator"]
 visible = false
 material_override = ExtResource("4_5r3nd")
-mesh = SubResource("PlaneMesh_fg30e")
+mesh = SubResource("PlaneMesh_vtgb5")
 script = ExtResource("3_sufe7")
 shaderMaterial = ExtResource("4_5r3nd")
 

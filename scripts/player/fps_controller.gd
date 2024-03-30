@@ -101,7 +101,8 @@ func _ready():
 		CAMERA_CONTROLLER.fov = 75.0
 	
 	# Set console commands
-	Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
+	if _is_authorized_user:
+		Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
 
 func set_settings():
 	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
@@ -119,10 +120,10 @@ func _physics_process(delta):
 		_cached_position = global_position
 		_cached_rotation = rotation
 
-func c_set_no_clip(toggle: bool):
-	_no_clip = toggle
-	if get_collision_mask_value(1) == toggle:
-		set_collision_mask_value(1, !toggle)
+func c_set_no_clip():
+	_no_clip = !_no_clip
+	if get_collision_mask_value(1) == _no_clip:
+		set_collision_mask_value(1, !_no_clip)
 
 func update_gravity(delta) -> void:
 	if (_no_clip):
