@@ -15,6 +15,10 @@ func _ready():
 	
 	await owner.ready
 	CURRENT_STATE.enter(null)
+	
+	# Set console commands
+	Console.create_command("set_speed_sprint", self.c_set_speed_sprint, "Sets your sprint speed. Default is 7.0")
+	Console.create_command("set_speed_walk", self.c_set_speed_walk, "Sets your walk speed. Default is 3.0")
 
 func _process(delta):
 	CURRENT_STATE.update(delta)
@@ -32,3 +36,9 @@ func on_child_transition(new_state_name: StringName) -> void:
 			CURRENT_STATE = new_state
 	else:
 		push_warning("State does not exist")
+
+func c_set_speed_sprint(speed: float) -> void:
+	states["SprintingPlayerState"].SPEED = speed
+
+func c_set_speed_walk(speed: float) -> void:
+	states["WalkingPlayerState"].SPEED = speed

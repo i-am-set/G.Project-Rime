@@ -100,7 +100,7 @@ func _ready():
 	if CAMERA_CONTROLLER != null:
 		CAMERA_CONTROLLER.fov = 75.0
 	
-		# Set console commands
+	# Set console commands
 	Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
 
 func set_settings():

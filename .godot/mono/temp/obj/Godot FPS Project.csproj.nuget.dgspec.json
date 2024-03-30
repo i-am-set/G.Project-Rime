@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj": {}
+    "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj": {}
   },
   "projects": {
-    "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj": {
+    "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+        "projectUniqueName": "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
         "projectName": "Godot FPS Project",
-        "projectPath": "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
-        "packagesPath": "C:\\Users\\sethg\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\sethg\\wkspaces\\G.Project-Rime\\.godot\\mono\\temp\\obj\\",
+        "projectPath": "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\Godot FPS Project.csproj",
+        "packagesPath": "C:\\Users\\SethLaptop\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\SethLaptop\\wkspaces\\G.Project-Rime\\.godot\\mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sethg\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\SethLaptop\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -32,11 +32,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -48,10 +43,6 @@
               "version": "[4.2.1, )"
             },
             "GodotSharp": {
-              "target": "Package",
-              "version": "[4.2.1, )"
-            },
-            "GodotSharpEditor": {
               "target": "Package",
               "version": "[4.2.1, )"
             }
@@ -70,15 +61,27 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.27, 6.0.27]"
+              "version": "[6.0.23, 6.0.23]"
+            },
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[6.0.23, 6.0.23]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.27, 6.0.27]"
+              "version": "[6.0.23, 6.0.23]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[6.0.23, 6.0.23]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.27, 6.0.27]"
+              "version": "[6.0.23, 6.0.23]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[6.0.23, 6.0.23]"
             }
           ],
           "frameworkReferences": {
@@ -86,7 +89,12 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }
