@@ -141,11 +141,15 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			# Allow flying movement based on mouse direction
 			var input_dir = Vector3.ZERO
 			var camera_forward = Vector3.ZERO
-			if Global.MOUSE_CAPTURED:
+			if Global.MOUSE_CAPTURED && !Global.IS_PAUSED:
 				input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 				camera_forward = -CAMERA_CONTROLLER.global_transform.basis.z.normalized()
 				
-			var direction = camera_forward * -input_dir.y
+			var direction
+			if Input.is_action_pressed("move_left") || Input.is_action_pressed("move_right"):
+				direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+			else:
+				direction = camera_forward * -input_dir.y
 			
 			if direction:
 				velocity.x = lerp(velocity.x, direction.x * speed, acceleration)
@@ -165,7 +169,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 				velocity.y = -speed  # Move down
 		else:
 			var input_dir = Vector3.ZERO
-			if (Global.MOUSE_CAPTURED == true):
+			if (Global.MOUSE_CAPTURED == true) && !Global.IS_PAUSED:
 				input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 			
 			var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

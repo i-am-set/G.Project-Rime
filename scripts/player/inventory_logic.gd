@@ -48,6 +48,10 @@ func _input(event: InputEvent) -> void:
 	lbl_info.set_global_position(get_global_mouse_position() + info_offset)
 
 func toggle_inventory():
+	if Global.IS_PAUSED:
+		self.visible == false
+		Global.IS_IN_INVENTORY == false
+		return
 	self.visible = !visible
 	Global.IS_IN_INVENTORY = visible
 	Global.capture_mouse(!visible)
