@@ -1,4 +1,4 @@
-res://scenes/fps_controller.tscn
+res://scenes/maingame/world.tscn
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
 res://GodotSky/Presets/default/overcastCloudColor.tres
@@ -26,11 +26,11 @@ res://materials/nature/twig_shrub_material.tres
 res://textures/noise/resource_noise.tres
 res://textures/noise/resource_noise_mask.tres
 res://shaders/snow_post_processesing.gdshader
+res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
 res://scenes/test_object.tscn
-res://scenes/maingame/world.tscn
-res://scenes/utility/mountain_range_skybox_scene.tscn
 res://examples/inventory_stacked_transfer.tscn
-res://scripts/player/fps_controller.gd
+res://scripts/game/global.gd
+res://scripts/steam/SteamLobby.gd

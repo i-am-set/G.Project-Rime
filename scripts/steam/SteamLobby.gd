@@ -14,7 +14,7 @@ enum search_distance {Close, Default, Far, Worldwide}
 @onready var chatInput = $SendMessage/LineEdit
 func _ready():
 	# reset game information
-	deinitialize_game
+	deinitialize_game()
 	
 	# set steam name on screen
 	steamName.text = Global.STEAM_NAME

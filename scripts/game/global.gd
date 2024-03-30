@@ -18,7 +18,6 @@ var LOBBY_MAX_MEMBERS = 4
 var LOBBY_MEMBERS = []
 var LOBBY_INVITE_ARG = false
 var LOBBY_PEER_INSTANCES = {} 
-var MOUSE_CAPTURED = false
 var GLOBAL_TICK = 0
 # World Variables
 var WORLD_SEED = 0
@@ -26,6 +25,7 @@ var SPAWN_POINT = Vector2.ZERO
 var IS_PAUSED = false
 var IS_IN_INVENTORY = false
 # Options Variables
+var MOUSE_CAPTURED = false
 var RENDER_DISTANCE = 10
 var LOD_BIAS = 0.25
 
@@ -95,3 +95,17 @@ func repair_globals():
 
 func get_render_distance() -> int:
 	return RENDER_DISTANCE
+
+func leave_lobby():
+	# Lobby Variables 
+	LOBBY_ID = 0
+	LOBBY_MAX_MEMBERS = 4
+	LOBBY_MEMBERS = []
+	LOBBY_INVITE_ARG = false
+	LOBBY_PEER_INSTANCES = {} 
+	GLOBAL_TICK = 0
+	# World Variables
+	WORLD_SEED = 0
+	SPAWN_POINT = Vector2.ZERO
+	IS_PAUSED = false
+	IS_IN_INVENTORY = false
