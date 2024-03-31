@@ -6,6 +6,8 @@ extends CharacterBody3D
 @onready var LEGS_MODEL : Node3D = get_node("CollisionShape3D/legs_model")
 @onready var PAUSE_MENU = $UserInterface/PauseMenu
 @onready var CONSOLE_MENU = $UserInterface/ConsoleMenu
+@onready var POSTP_OUTLINE = $PostProcessingOutline
+@onready var POSTP_DITHER = $PostProcessingDither
 
 @export var MOUSE_SENSITIVITY : float = 0.5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -125,11 +127,17 @@ func _ready():
 	CROUCH_SHAPECAST.add_exception($".")
 	
 	if CAMERA_CONTROLLER != null:
-		CAMERA_CONTROLLER.fov = 75.0
+		set_fov(Global.FIELD_OF_VIEW)
 	
 	# Set console commands
 	if _is_authorized_user:
 		Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
+		Console.create_command("tpc", self.c_teleport_self_to_coordinate, "Teleports the player to the given world coordinate.")
+		Console.create_command("tp_to", self.c_teleport_self_to_player, "Teleports the player to player by name.")
+		Console.create_command("tp", self.c_teleport_player_to_player, "Teleports the first input player to the second input player's position by name.")
+		Console.create_command("fov", self.c_set_fov, "Sets the FOV of the camera. " + str(Global.MIN_FOV) + " is minimum; " + str(Global.MAX_FOV) + " is max; " + str(Global.DEFAULT_FOV) + " is default")
+		Console.create_command("enable_postp_dither", self.c_enable_postp_dither, "Toggles the dithering post process effect. Takes a true or false.")
+		Console.create_command("enable_postp_outline", self.c_enable_postp_outline, "Toggles the outline post process effect. Takes a true or false.")
 
 func set_settings():
 	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
@@ -147,10 +155,6 @@ func _physics_process(delta):
 		_cached_position = global_position
 		_cached_rotation = rotation
 
-func c_set_no_clip():
-	_no_clip = !_no_clip
-	if get_collision_mask_value(1) == _no_clip:
-		set_collision_mask_value(1, !_no_clip)
 
 func update_gravity(delta) -> void:
 	if (_no_clip):
@@ -216,6 +220,23 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 func update_velocity() -> void:
 	pass
 
+func set_fov(fov : int) -> int:
+	if fov < Global.MIN_FOV:
+		fov = Global.MIN_FOV
+	elif fov > Global.MAX_FOV:
+		fov = Global.MAX_FOV
+	
+	Global.FIELD_OF_VIEW = fov
+	CAMERA_CONTROLLER.fov = fov
+	
+	return fov
+
+func enable_postp_dither(toggle : bool) -> void:
+	POSTP_DITHER.visible = toggle
+
+func enable_postp_outline(toggle : bool) -> void:
+	POSTP_OUTLINE.visible = toggle
+
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
 	var send_type: int = Steam.P2P_SEND_UNRELIABLE
@@ -240,3 +261,109 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Else send it to someone specific
 	else:
 		Steam.sendP2PPacket(target, this_data, send_type, channel)
+
+func c_set_no_clip() -> void:
+	_no_clip = !_no_clip
+	
+	if (_no_clip == true):
+		Console.print_line("No clip was enabled.")
+	else:
+		Console.print_line("No clip was disabled.")
+	
+	if get_collision_mask_value(1) == _no_clip:
+		set_collision_mask_value(1, !_no_clip)
+
+func c_set_fov(fov : int) -> void:
+	fov = set_fov(fov)
+	
+	Console.print_line("Field of view set to " + str(fov) + ".")
+
+func c_enable_postp_dither(toggle : bool) -> void:
+	enable_postp_dither(toggle)
+	
+	Console.print_line("Post process 'dither' was toggled " + str(toggle) + ".")
+
+func c_enable_postp_outline(toggle : bool) -> void:
+	enable_postp_outline(toggle)
+	
+	Console.print_line("Post process 'outline' was toggled " + str(toggle) + ".")
+
+func c_teleport_self_to_coordinate(x: float, y: float, z: float) -> void:
+	# Teleport self to given objects position
+	if (position != null):
+		position = Vector3(x, y, z)
+	else:
+		if (position == null):
+			Console.print_line("Failed to find player position")
+
+func c_teleport_self_to_player(des_player_name : String) -> void:
+	# Teleport self to given objects position
+	if (position != null):
+		for player in Global.LOBBY_MEMBERS:
+			if player["steam_name"] == des_player_name:
+				var des_player_id = player["steam_id"]
+				if Global.LOBBY_PEER_INSTANCES.has(des_player_id):
+					var des_player_pos : Vector3 = Global.LOBBY_PEER_INSTANCES[des_player_id].position
+					position = Vector3(des_player_pos.x, des_player_pos.y + 4, des_player_pos.z)
+					Console.print_line("Teleported to '" + des_player_name + "'.")
+				elif Global.STEAM_ID == des_player_id:
+					var des_player_pos : Vector3 = position
+					position = Vector3(des_player_pos.x, des_player_pos.y + 4, des_player_pos.z)
+					Console.print_line("Teleported to '" + des_player_name + "' (self).")
+				return
+		Console.print_line("[color=RED]'" + des_player_name + "' is not a valid player name.[/color]")
+	else:
+		Console.print_line("[color=RED]Failed to find player position[/color]")
+
+func c_teleport_player_to_player(ori_player_name : String, des_player_name : String) -> void:
+	var ori_is_self = false
+	var des_is_self = false
+	
+	var ori_player_id = 0
+	var des_player_id = 0
+	
+	var des_player_pos = Vector3.ZERO
+	
+	for player in Global.LOBBY_MEMBERS:
+		if ori_player_id == 0:
+			if player["steam_name"] == ori_player_name:
+				ori_player_id = player["steam_id"]
+		if des_player_id == 0:
+			if player["steam_name"] == des_player_name:
+				des_player_id = player["steam_id"]
+	
+	if Global.STEAM_ID == ori_player_id || ori_player_name == "self" || ori_player_name == "_":
+		ori_is_self = true
+	if Global.STEAM_ID == des_player_id || des_player_name == "self" || des_player_name == "_":
+		des_is_self = true
+		
+	if ori_player_id == 0 && des_player_id == 0 && !ori_is_self && !des_is_self:
+		Console.print_line("[color=RED]'" + ori_player_name + "and" + des_player_name + "' are not a valid player names.[/color]")
+	elif ori_player_id == 0 && !ori_is_self:
+		Console.print_line("[color=RED]'" + ori_player_name + "' is not a valid player name.[/color]")
+	elif des_player_id == 0 && !des_is_self:
+		Console.print_line("[color=RED]'" + des_player_name + "' is not a valid player name.[/color]")
+	
+	if Global.LOBBY_PEER_INSTANCES.has(ori_player_id) || ori_is_self:
+		if ori_is_self:
+			if Global.LOBBY_PEER_INSTANCES.has(des_player_id) || des_is_self:
+				if des_is_self:
+					des_player_pos = position
+					position = Vector3(des_player_pos.x, des_player_pos.y + 4, des_player_pos.z)
+					Console.print_line("Teleported '" + Global.STEAM_NAME + "' (self) to '" + Global.STEAM_NAME + "' (self).")
+					return
+				
+				des_player_pos = Global.LOBBY_PEER_INSTANCES[des_player_id].position
+				position = Vector3(des_player_pos.x, des_player_pos.y + 4, des_player_pos.z)
+				Console.print_line("Teleported '" + Global.STEAM_NAME + "' (self) to '" + des_player_name + "'.")
+		
+		if Global.LOBBY_PEER_INSTANCES.has(des_player_id) || des_is_self:
+			if des_is_self:
+				des_player_pos = position
+				Global.LOBBY_PEER_INSTANCES[ori_player_id].position = Vector3(des_player_pos.x, des_player_pos.y + 4, des_player_pos.z)
+				Console.print_line("Teleported '" + ori_player_name + "' to '" + Global.STEAM_NAME + "' (self).")
+			
+			des_player_pos = Global.LOBBY_PEER_INSTANCES[des_player_id].position
+			Global.LOBBY_PEER_INSTANCES[ori_player_id].position = Vector3(des_player_pos.x, des_player_pos.y + 4, des_player_pos.z)
+			Console.print_line("Teleported '" + ori_player_name + "' to '" + des_player_name + "'.")
+

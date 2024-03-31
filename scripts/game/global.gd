@@ -6,6 +6,11 @@ var player # Reference to PlayerController
 
 const PACKET_READ_LIMIT: int = 32
 
+# Options Constants
+const DEFAULT_FOV = 75
+const MIN_FOV = 60
+const MAX_FOV = 100
+
 # Steam Variables
 var OWNED = false
 var ONLINE = false
@@ -28,6 +33,10 @@ var IS_IN_INVENTORY = false
 var MOUSE_CAPTURED = false
 var RENDER_DISTANCE = 10
 var LOD_BIAS = 0.25
+var FIELD_OF_VIEW = 75
+var POSTP_OUTLINE_ON = true
+var POSTP_DITHER_ON = true
+var RES_SCALE_PERCENT = 100
 
 func _ready():
 	var INIT = Steam.steamInit()

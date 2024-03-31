@@ -17,7 +17,6 @@ func _ready():
 	
 	# Set console commands
 	Console.create_command("debug_panel", self.c_toggle_debug_panel, "Toggles the debug panel.")
-	Console.create_command("tp", self.c_teleport_self_to_point, "Teleports the player to the given coordinate.")
 	
 func _process(_delta):
 	Global.debug.add_property("FPS", frames_per_second, 0)
@@ -31,14 +30,6 @@ func _process(_delta):
 func c_toggle_debug_panel() -> void:
 	# Toggle debug panel
 	debug_panel.visible = !debug_panel.visible
-
-func c_teleport_self_to_point(x: float, y: float, z: float) -> void:
-	# Teleport self to given objects position
-	if (Global.player.position != null):
-		Global.player.position = Vector3(x, y, z)
-	else:
-		if (Global.player.position == null):
-			Console.print_line("ERROR: Failed to find player position")
 
 # Debug funtion to add and update property
 func add_property(title: String, value, order):

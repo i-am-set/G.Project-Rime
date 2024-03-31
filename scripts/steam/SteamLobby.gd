@@ -4,6 +4,8 @@ enum lobby_status {Private, Friends, Public, Invisible}
 enum search_distance {Close, Default, Far, Worldwide}
 
 @onready var steamName = $SteamName
+@onready var createLobbyButton = $CreateLobby
+@onready var startGameButton = $StartGame
 @onready var lobbySetName = $CreateLobby/LobbySetName
 @onready var lobbyGetName = $Chat/ChatName
 @onready var lobbyChatOutput = $Chat/ChatOutput
@@ -39,6 +41,10 @@ func _physics_process(delta):
 	# If the player is connected, read packets
 	if Global.LOBBY_ID > 0:
 		read_all_p2p_packets()
+		
+		if !createLobbyButton.disabled:
+			createLobbyButton.disabled = true
+		
 	
 	if Global.GLOBAL_TICK % 40 == 0:
 		get_lobby_members()
@@ -52,13 +58,24 @@ func _input(event: InputEvent) -> void:
 #################
 
 func create_lobby() -> void:
+	startGameButton.disabled = false
+	
 	# Make sure a lobby is not already set
 	if lobbySetName.text != "":
 		if Global.LOBBY_ID == 0:
 			Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, Global.LOBBY_MAX_MEMBERS)
+		lobbySetName.text = ""
 
+func check_create_lobby_button():
+	if lobbySetName.text == "":
+		createLobbyButton.disabled = true
+	else:
+		if (Global.LOBBY_ID <= 0):
+			createLobbyButton.disabled = false
 
 func join_lobby(this_lobby_id):
+	startGameButton.disabled = true
+	leave_lobby()
 	#lobbyPopup.hide()
 	var _name = Steam.getLobbyData(this_lobby_id, "name")
 	display_message("Joining lobby " + str(_name) + "...")
@@ -137,20 +154,8 @@ func leave_lobby():
 		
 		# Clear lobby list
 		Global.LOBBY_MEMBERS.clear()
-
-
-#func generate_height_map(seed : int, frequency : float) -> NoiseTexture2D:
-	#var texture = NoiseTexture2D.new()
-	#var fastNoiseLite = FastNoiseLite.new()
-	#texture.width = 512
-	#texture.height = 512
-	#texture.seamless = true
-	#fastNoiseLite.seed = seed
-	#fastNoiseLite.frequency = frequency
-	#fastNoiseLite.fractal_octaves = 5
-	#texture.noise = fastNoiseLite
-	#
-	#return texture
+		
+		check_create_lobby_button()
 
 
 func initialize_game(seed):
@@ -410,11 +415,13 @@ func _on_join_lobby_pressed():
 
 
 func _on_start_game_pressed():
+	startGameButton.disabled = true
 	var seed = randi_range(1, 999999999999)
 	Global.WORLD_SEED = seed
 	Steam.setLobbyData(Global.LOBBY_ID, "world_seed", str(seed))
 	await get_tree().process_frame
 	send_p2p_packet(-1, {"message" : "start_game"})
+	Steam.setLobbyData(Global.LOBBY_ID, "is_started", "true")
 
 
 func _on_leave_lobby_pressed():
@@ -424,10 +431,11 @@ func _on_leave_lobby_pressed():
 func _on_send_message_pressed():
 	send_chat_message()
 
-
 func _on_close_popup_pressed():
 	lobbyPopup.hide()
 
+func _on_lobby_set_name_text_changed(new_text):
+	check_create_lobby_button()
 
 #############################
 ### Command Line Arugment ###
@@ -510,5 +518,4 @@ func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
 		if packet_data["message"] == "start_game":
 			await initialize_game(int(Steam.getLobbyData(Global.LOBBY_ID, "world_seed")))
-			Steam.setLobbyData(Global.LOBBY_ID, "is_started", "true")
 			await get_tree().change_scene_to_file("res://scenes/maingame/world.tscn")

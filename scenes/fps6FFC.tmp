@@ -522,9 +522,9 @@ bg_color = Color(0.133333, 0.133333, 0.133333, 1)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ivo4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wlwff"]
-content_margin_top = 0.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
 bg_color = Color(0.564706, 0.564706, 0.564706, 0.266667)
-expand_margin_bottom = 6.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0nsxd"]
 
@@ -540,11 +540,6 @@ Button/styles/focus = SubResource("StyleBoxEmpty_jfu3c")
 Button/styles/hover = SubResource("StyleBoxFlat_7lxhj")
 Button/styles/normal = SubResource("StyleBoxFlat_d77sk")
 Button/styles/pressed = SubResource("StyleBoxFlat_jo2ys")
-CheckBox/icons/unchecked_disabled = null
-CheckBox/styles/hover = SubResource("StyleBoxFlat_7lxhj")
-CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_jo2ys")
-CheckBox/styles/normal = SubResource("StyleBoxFlat_d77sk")
-CheckBox/styles/pressed = SubResource("StyleBoxFlat_jo2ys")
 HSlider/icons/grabber = ExtResource("7_g41i3")
 HSlider/icons/grabber_disabled = ExtResource("8_jebdu")
 HSlider/icons/grabber_highlight = ExtResource("9_s7idq")
@@ -727,7 +722,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -778,6 +773,7 @@ width = 1.5
 [node name="PauseMenu" type="Control" parent="UserInterface"]
 visible = false
 layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -795,11 +791,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ny6q8")
 [node name="Panel" type="Panel" parent="UserInterface/PauseMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
+anchor_left = 0.376
+anchor_right = 0.624
 anchor_bottom = 1.0
-offset_left = -201.0
-offset_right = 201.0
+offset_left = -2.60004
+offset_right = 2.59998
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -830,8 +826,9 @@ text = "144"
 script = ExtResource("8_mj3xk")
 
 [node name="Options_Setting" type="HBoxContainer" parent="UserInterface/PauseMenu"]
+visible = false
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -927,16 +924,20 @@ popup/item_0/id = 0
 popup/item_1/text = "AMD FSR 2.2"
 popup/item_1/id = 1
 
-[node name="Scale_Box" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale"]
+[node name="_Scale_Box" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale"]
 layout_mode = 2
 
-[node name="Scale_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box"]
+[node name="Scale_Percent_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Scale_Box"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Scale"
 uppercase = true
 
-[node name="ScaleSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box"]
+[node name="ScaleBox" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Scale_Box"]
+layout_mode = 2
+alignment = 1
+
+[node name="ScaleSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Scale_Box/ScaleBox"]
 custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -946,11 +947,12 @@ step = 5.0
 value = 100.0
 ticks_on_borders = true
 
-[node name="PercentLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box"]
+[node name="ScaleLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Scale_Box/ScaleBox"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "-----------"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="_FSR_Quality" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale"]
@@ -1007,49 +1009,6 @@ uppercase = true
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
-
-[node name="HEADER_CAMERA" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
-custom_minimum_size = Vector2(330, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 24
-text = "
-CAMERA"
-horizontal_alignment = 1
-
-[node name="_FieldOfView" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
-layout_mode = 2
-
-[node name="FOV_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "Field of View"
-uppercase = true
-
-[node name="FovSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView"]
-custom_minimum_size = Vector2(170, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-min_value = 60.0
-value = 75.0
-ticks_on_borders = true
-
-[node name="PercentLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-theme_override_font_sizes/font_size = 12
-text = "100"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HEADER_GRAPHICS" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
-custom_minimum_size = Vector2(330, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 24
-text = "
-GRAPHICS"
-horizontal_alignment = 1
 
 [node name="Inventory" type="Control" parent="UserInterface"]
 visible = false
@@ -1526,8 +1485,7 @@ script = ExtResource("19_lm36c")
 [connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode/DisplayModes/Windowed" to="UserInterface/PauseMenu/Options_Setting" method="_on_windowed_button_up"]
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Resolution/Resolution_OptionButton" to="UserInterface/PauseMenu/Options_Setting" method="_on_resolution_option_button_item_selected"]
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Upscaler/Scaler" to="UserInterface/PauseMenu/Options_Setting" method="_on_scaler_item_selected"]
-[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_scale_slider_value_changed"]
+[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Scale_Box/ScaleBox/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_scale_slider_value_changed"]
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_FSR_Quality/FSROptions" to="UserInterface/PauseMenu/Options_Setting" method="_on_fsr_options_item_selected"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Vsync/Vsync_Checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_vsync_checkbox_toggled"]
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Screen_Select/Screen_Selector" to="UserInterface/PauseMenu/Options_Setting" method="_on_screen_selector_item_selected"]
-[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_fov_slider_value_changed"]

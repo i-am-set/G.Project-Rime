@@ -1,20 +1,26 @@
 extends HBoxContainer
 
-@onready var resolution_option_button = $VBoxContainer/Resolution_OptionButton
+@onready var fps_controller = $"../../.."
 
-@onready var fullscreen_button = $VBoxContainer/DisplayModes/Fullscreen
-@onready var borderless_button = $VBoxContainer/DisplayModes/Borderless
-@onready var windowed_button = $VBoxContainer/DisplayModes/Windowed
+@onready var fullscreen_button = $VBoxContainer/_Display_Mode/DisplayModes/Fullscreen
+@onready var borderless_button = $VBoxContainer/_Display_Mode/DisplayModes/Borderless
+@onready var windowed_button = $VBoxContainer/_Display_Mode/DisplayModes/Windowed
 
-@onready var scale_label = $VBoxContainer/SubResolutionOptions/VBoxContainer/ScaleBox/ScaleLabel
-@onready var scale_box = $VBoxContainer/SubResolutionOptions/VBoxContainer/ScaleBox
-@onready var scale_slider = $VBoxContainer/SubResolutionOptions/VBoxContainer/ScaleBox/ScaleSlider
+@onready var resolution_option_button = $VBoxContainer/_Resolution/Resolution_OptionButton
 
-@onready var fsr_options = $VBoxContainer/SubResolutionOptions/VBoxContainer/FSROptions
+@onready var scale_box = $VBoxContainer/_Scale/Scale_Box
+@onready var scalepercent_label = $VBoxContainer/_Scale/Scale_Box/PercentLabel
+@onready var scale_slider = $VBoxContainer/_Scale/Scale_Box/ScaleSlider
 
-@onready var vsync_checkbox = $VBoxContainer/Vsync_Checkbox
+@onready var fsr_box = $VBoxContainer/_Scale/_FSR_Quality
+@onready var fsr_options = $VBoxContainer/_Scale/_FSR_Quality/FSROptions
 
-@onready var screen_selector = $VBoxContainer/Screen_Selector
+@onready var vsync_checkbox = $VBoxContainer/_Vsync/Vsync_Checkbox
+
+@onready var screen_selector = $VBoxContainer/_Screen_Select/Screen_Selector
+
+@onready var fovpercent_label = $VBoxContainer/_FieldOfView/PercentLabel
+@onready var fov_slider = $VBoxContainer/_FieldOfView/FovSlider
 
 
 var Resolutions: Dictionary = {"3840x2160":Vector2i(3840,2160),
@@ -38,8 +44,12 @@ func Check_Variables():
 	var _window = get_window()
 	var mode = _window.get_mode()
 	
-	scale_slider.set_value_no_signal(100.00)
-	_on_scale_slider_value_changed(100)
+	fov_slider.min_value = Global.MIN_FOV
+	fov_slider.max_value = Global.MAX_FOV
+	_on_fov_slider_value_changed(Global.FIELD_OF_VIEW)
+	
+	scale_slider.set_value_no_signal(Global.RES_SCALE_PERCENT)
+	_on_scale_slider_value_changed(Global.RES_SCALE_PERCENT)
 	
 	if mode == Window.MODE_EXCLUSIVE_FULLSCREEN:
 		resolution_option_button.set_disabled(true)
@@ -87,10 +97,12 @@ func Center_Window():
 	get_window().set_position(Centre_Screen-Window_Size/2)
 
 func _on_scale_slider_value_changed(value):
+	Global.RES_SCALE_PERCENT = value
+	
 	var Resolution_Scale = value/100.00
 	var Resolution_Text = str(round(get_window().get_size().x*Resolution_Scale))+"x"+str(round(get_window().get_size().y*Resolution_Scale))
 	
-	scale_label.set_text(str(value)+"% - "+ Resolution_Text)
+	scalepercent_label.set_text(str(value)+"% - "+ Resolution_Text)
 	get_viewport().set_scaling_3d_scale(Resolution_Scale)
 	
 func _on_scaler_item_selected(index):
@@ -102,12 +114,12 @@ func _on_scaler_item_selected(index):
 			scale_slider.set_value_no_signal(100.00)
 			_on_scale_slider_value_changed(100)
 			scale_box.show()
-			fsr_options.hide()
+			fsr_box.hide()
 		1:
 			_viewport.set_scaling_3d_mode(Viewport.SCALING_3D_MODE_FSR2)
 			fsr_options.selected = 0
 			scale_box.hide()
-			fsr_options.show()
+			fsr_box.show()
 	
 func _on_fsr_options_item_selected(index):
 	match index:
@@ -147,7 +159,6 @@ func _on_screen_selector_item_selected(index):
 	if mode == Window.MODE_FULLSCREEN:
 		_window.set_mode(Window.MODE_FULLSCREEN)
 
-
 func _on_fullscreen_button_up():
 	resolution_option_button.set_disabled(true)
 	get_window().set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
@@ -163,3 +174,12 @@ func _on_windowed_button_up():
 	get_window().set_mode(Window.MODE_WINDOWED)
 	Center_Window()
 	get_tree().create_timer(.05).timeout.connect(Set_Resolution_Text)
+
+func _on_fov_slider_value_changed(value):
+	fps_controller.set_fov(value)
+	fovpercent_label.set_text(str(value))
+
+func c_set_display_mode() -> void:
+	# Todo: add this logic for console
+	pass
+
