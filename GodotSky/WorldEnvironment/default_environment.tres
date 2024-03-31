@@ -13,7 +13,6 @@ tonemap_white = 1.46
 ssao_enabled = true
 ssil_enabled = true
 sdfgi_enabled = true
-sdfgi_use_occlusion = true
 sdfgi_cascades = 2
 sdfgi_min_cell_size = 1.95313
 glow_enabled = true

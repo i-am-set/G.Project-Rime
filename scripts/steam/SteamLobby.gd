@@ -123,7 +123,7 @@ func leave_lobby():
 		# Send leave request
 		Steam.leaveLobby(Global.LOBBY_ID)
 		
-		lobbyGetName.text = "Lobby Name"
+		lobbyGetName.text = ""
 		playerCount.text = "Players (0)"
 		playerList.clear()
 		

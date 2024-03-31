@@ -286,17 +286,19 @@ public partial class InfiniteTerrainGenerator : Node3D
 							// GD.Print("Reseating resource in chunk ", chunkNumber);
 							ReseatResources();
 							hasSeatedResources = true;
-						} else {
-							GD.Print("Chunk ", chunkNumber, "'s resources are already seated...");
 						}
+						// else {
+						// 	GD.Print("Chunk ", chunkNumber, "'s resources are already seated...");
+						// }
 					} else {
 						if(hasSeatedResources){
 							// GD.Print("Displacing resource in chunk ", chunkNumber);
 							DisplaceResource();
 							hasSeatedResources = false;
-						} else {
-							GD.Print("Chunk ", chunkNumber, "'s resources are already displaced...");
 						}
+						// else {
+						// 	GD.Print("Chunk ", chunkNumber, "'s resources are already displaced...");
+						// }
 					}
 				}
 
@@ -333,10 +335,10 @@ public partial class InfiniteTerrainGenerator : Node3D
 		void RollResources(){
 			chunkVertices = GetCollisionLODMeshVertices();
 			if (chunkVertices == null){
-				GD.Print(chunkNumber, " ------ ", chunkPosition, " : Failed to find Vertices");
+				// GD.Print(chunkNumber, " ------ ", chunkPosition, " : Failed to find Vertices");
 				return;
 			}
-			GD.Print(chunkNumber, " =========== ", chunkPosition, " : Generating Resources");
+			// GD.Print(chunkNumber, " =========== ", chunkPosition, " : Generating Resources");
 			for (int i = 0; i < chunkVertices.Length; i++){
 				bool isViableResourcePosition;
 				Vector3 resourcePosition = new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale;

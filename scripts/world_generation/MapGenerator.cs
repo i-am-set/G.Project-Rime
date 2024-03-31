@@ -49,20 +49,6 @@ public partial class MapGenerator : Node3D
         resourceChunkInstancer = (ResourceChunkInstancer)GetNode("ResourceChunkInstancer");
     }
 
-    public void DrawMapInEditor()
-    {
-        MapData mapData = GenerateMapData(Vector2.Zero);
-
-        MapDisplay display = (MapDisplay)GetNode("MapDisplay");
-        if (drawMode == DrawMode.NoiseMap){
-            display.DrawTexture(TextureGenerator.TextureFromHeightMap(mapData.perlinNoise, mapChunkSize, mapChunkSize));
-        } else if (drawMode == DrawMode.ColorMap){
-            display.DrawTexture(TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
-        } else if (drawMode == DrawMode.Mesh){
-            display.DrawMesh(MeshGenerator.GenerateTerrainMesh(mapData.perlinNoise, mapChunkSize, mapChunkSize, meshHeightMultiplier, meshHeightCurve, editorPreviewLOD, new Vector2(0, 0), 1.0f, new StaticBody3D(), resourceChunkInstancer), TextureGenerator.TextureFromColorMap(mapData.colorMap, mapChunkSize, mapChunkSize));
-        }
-    }
-
     // #---------------------MAP THREADING----------------------------#
     public void RequestMapData(Vector2 center, Action<MapData> callback)
     {

@@ -26,13 +26,14 @@ Global="*res://scripts/game/global.gd"
 HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 Console="*res://addons/godot-console/scripts/console.gd"
 ConsoleMono="*res://addons/godot-console/scripts/ConsoleMono.cs"
+DebugAutoloadCanvas="*res://scenes/utility/debug_autoload_canvas.tscn"
 
 [display]
 
-window/size/viewport_width=960
-window/size/viewport_height=540
-window/size/mode=2
+window/size/viewport_width=1600
+window/size/viewport_height=900
 window/size/initial_position_type=0
+window/size/resizable=false
 
 [dotnet]
 

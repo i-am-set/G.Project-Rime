@@ -17,8 +17,8 @@ func _ready():
 	CURRENT_STATE.enter(null)
 	
 	# Set console commands
-	Console.create_command("set_speed_sprint", self.c_set_speed_sprint, "Sets your sprint speed. Default is 7.0")
-	Console.create_command("set_speed_walk", self.c_set_speed_walk, "Sets your walk speed. Default is 3.0")
+	Console.create_command("set_speed_sprint", self.c_set_speed_sprint, "Sets your sprint speed. Default is 12.0")
+	Console.create_command("set_speed_walk", self.c_set_speed_walk, "Sets your walk speed. Default is 6.0")
 
 func _process(delta):
 	CURRENT_STATE.update(delta)

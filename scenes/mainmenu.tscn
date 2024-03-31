@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/steam/SteamLobby.gd" id="1_0trix"]
 
 [sub_resource type="Theme" id="Theme_ti0bt"]
-Button/font_sizes/font_size = 32
-Label/font_sizes/font_size = 48
+Button/font_sizes/font_size = 16
+Label/font_sizes/font_size = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bt38q"]
 bg_color = Color(0.364706, 0.290196, 0.32549, 1)
@@ -14,145 +14,268 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -2.0
-offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_ti0bt")
 script = ExtResource("1_0trix")
 
 [node name="CreateLobby" type="Button" parent="."]
-layout_mode = 0
-offset_right = 359.0
-offset_bottom = 85.0
-text = "Create Lobby"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.003
+anchor_top = 0.007
+anchor_right = 0.224
+anchor_bottom = 0.106
+offset_left = 0.12
+offset_top = 0.22
+offset_right = -0.0400085
+offset_bottom = -0.239971
+text = "CREATE LOBBY"
 
 [node name="Label2" type="Label" parent="CreateLobby"]
-layout_mode = 0
-offset_left = 377.0
-offset_top = -2.0
-offset_right = 581.0
-offset_bottom = 65.0
-theme_override_font_sizes/font_size = 32
-text = "Lobby Name:"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.028
+anchor_top = -0.057
+anchor_right = 1.726
+anchor_bottom = 0.377
+offset_left = 0.0639954
+offset_top = 0.0210021
+offset_right = -45.912
+offset_bottom = 0.0190182
+theme_override_font_sizes/font_size = 16
+text = "Enter Lobby Name:"
 
 [node name="LobbySetName" type="LineEdit" parent="CreateLobby"]
-layout_mode = 0
-offset_left = 378.0
-offset_top = 46.0
-offset_right = 672.0
-offset_bottom = 82.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.009
+anchor_top = 0.377
+anchor_right = 2.349
+anchor_bottom = 0.962
+offset_left = 0.09198
+offset_top = 0.0189877
+offset_right = 0.0119629
+offset_bottom = 0.0139961
+grow_horizontal = 2
+grow_vertical = 2
 placeholder_text = "Lobby Name Here"
 
 [node name="JoinLobby" type="Button" parent="."]
-layout_mode = 0
-offset_top = 98.0
-offset_right = 361.0
-offset_bottom = 183.0
-text = "Join Lobby"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.003
+anchor_top = 0.111
+anchor_right = 0.224
+anchor_bottom = 0.209
+offset_left = 0.12
+offset_top = 0.0599937
+offset_right = -0.0400085
+offset_bottom = 0.140007
+text = "JOIN LOBBY"
 
 [node name="StartGame" type="Button" parent="."]
-layout_mode = 0
-offset_left = 1524.0
-offset_top = 111.0
-offset_right = 1897.0
-offset_bottom = 189.0
-text = "Start Game"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.775
+anchor_top = 0.006
+anchor_right = 0.996
+anchor_bottom = 0.104
+offset_left = -6.10352e-05
+offset_top = -0.24
+offset_right = -0.160034
+offset_bottom = -0.16
+grow_horizontal = 0
+text = "START GAME"
 
 [node name="LeaveLobby" type="Button" parent="."]
-layout_mode = 0
-offset_left = 2.0
-offset_top = 935.0
-offset_right = 365.0
-offset_bottom = 1017.0
-text = "Leave Lobby"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.003
+anchor_top = 0.893
+anchor_right = 0.224
+anchor_bottom = 0.991
+offset_left = 0.12
+offset_top = -0.220032
+offset_right = -0.0400085
+offset_bottom = -0.139709
+grow_horizontal = 2
+grow_vertical = 2
+text = "LEAVE LOBBY"
 
 [node name="SteamName" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1525.0
-offset_top = 23.0
-offset_right = 1895.0
-offset_bottom = 90.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.227
+anchor_top = 0.104
+anchor_right = 0.994
+anchor_bottom = 0.146
+offset_left = 0.0799866
+offset_top = -0.16
+offset_right = -0.23999
+offset_bottom = 0.159996
+grow_horizontal = 2
+grow_vertical = 2
 text = "Steam Name"
 horizontal_alignment = 2
 vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Players" type="Panel" parent="."]
-layout_mode = 0
-offset_top = 203.0
-offset_right = 363.0
-offset_bottom = 869.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.003
+anchor_top = 0.217
+anchor_right = 0.224
+anchor_bottom = 0.885
+offset_left = 0.12
+offset_top = -0.180008
+offset_right = -0.0400085
+offset_bottom = 0.0999756
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="PlayerCount" type="Label" parent="Players"]
-layout_mode = 0
-offset_left = 106.0
-offset_right = 265.0
-offset_bottom = 67.0
-theme_override_font_sizes/font_size = 32
-text = "Players (0)"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.024
+anchor_right = 0.976
+anchor_bottom = 0.064
+offset_left = -0.0879998
+offset_right = 0.0879822
+offset_bottom = -0.104002
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "PLAYERS (0)"
 
 [node name="PlayerList" type="RichTextLabel" parent="Players"]
-layout_mode = 0
-offset_left = 23.0
-offset_top = 53.0
-offset_right = 347.0
-offset_bottom = 642.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.028
+anchor_top = 0.066
+anchor_right = 0.972
+anchor_bottom = 0.986
+offset_left = 0.0639997
+offset_top = 0.174
+offset_right = -0.0640106
+offset_bottom = 0.0539856
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Chat" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 395.0
-offset_top = 203.0
-offset_right = 1896.0
-offset_bottom = 869.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.243
+anchor_top = 0.217
+anchor_right = 0.92
+anchor_bottom = 0.885
+offset_left = 0.454987
+offset_top = -0.180008
+offset_right = -0.465027
+offset_bottom = 0.0999756
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ChatName" type="Label" parent="Chat"]
-layout_mode = 0
-offset_left = 58.0
-offset_right = 217.0
-offset_bottom = 67.0
-theme_override_font_sizes/font_size = 32
-text = "Lobby Name"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.183
+anchor_right = 0.991
+anchor_bottom = 0.064
+offset_left = 0.232994
+offset_right = -0.159058
+offset_bottom = -0.104002
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "asdasdasd"
+vertical_alignment = 2
+
+[node name="LobbyNameLabel" type="Label" parent="Chat"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.012
+anchor_right = 0.168
+anchor_bottom = 0.064
+offset_left = -1.523
+offset_right = 5.23299
+offset_bottom = -0.104002
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "LOBBY NAME:"
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="ChatOutput" type="RichTextLabel" parent="Chat"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 47.0
-offset_right = 1487.0
-offset_bottom = 655.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009
+anchor_top = 0.069
+anchor_right = 0.991
+anchor_bottom = 0.989
+offset_left = 0.158999
+offset_top = 0.0909977
+offset_right = -0.159058
+offset_bottom = -0.0290222
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="SendMessage" type="Button" parent="."]
-layout_mode = 0
-offset_left = 408.0
-offset_top = 910.0
-offset_right = 602.0
-offset_bottom = 950.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.231
+anchor_top = 0.893
+anchor_right = 0.354
+anchor_bottom = 0.95
+offset_left = 0.23999
+offset_top = -0.220032
+offset_right = 0.160004
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 16
-text = "Send Message"
+text = "SEND MESSAGE"
 
 [node name="LineEdit" type="LineEdit" parent="SendMessage"]
-layout_mode = 0
-offset_left = 199.0
-offset_top = 2.0
-offset_right = 1012.0
-offset_bottom = 38.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.034
+anchor_right = 5.881
+anchor_bottom = 1.0
+offset_left = -0.012001
+offset_right = 0.0419922
 placeholder_text = "Your Message Here"
 
 [node name="LobbyPopup" type="Panel" parent="."]
 visible = false
-layout_mode = 0
-offset_left = 489.0
-offset_top = 127.0
-offset_right = 1449.0
-offset_bottom = 805.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.166
+anchor_top = 0.148
+anchor_right = 0.834
+anchor_bottom = 0.852
+offset_left = -0.360016
+offset_top = 0.0800018
+offset_right = 0.359924
+offset_bottom = -0.0800171
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bt38q")
 
 [node name="Scroll" type="ScrollContainer" parent="LobbyPopup"]
-layout_mode = 0
-offset_left = 32.0
-offset_top = 52.0
-offset_right = 1071.0
-offset_bottom = 608.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.017
+anchor_top = 0.139
+anchor_right = 0.983
+anchor_bottom = 0.9
+offset_left = 0.0859995
+offset_top = -25.82
+offset_right = -0.0859985
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
 horizontal_scroll_mode = 0
 
 [node name="VBox" type="VBoxContainer" parent="LobbyPopup/Scroll"]
@@ -160,26 +283,32 @@ layout_mode = 2
 
 [node name="ClosePopup" type="Button" parent="LobbyPopup"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -152.0
-offset_top = -63.0
-offset_right = -12.0
-offset_bottom = -10.0
+anchors_preset = -1
+anchor_left = 0.83
+anchor_top = 0.905
+anchor_right = 0.988
+anchor_bottom = 0.987
+offset_left = 0.139954
+offset_top = 0.0999756
+offset_right = -0.296021
+offset_bottom = -0.0600281
 grow_horizontal = 0
 grow_vertical = 0
-text = "Close"
+text = "CLOSE"
 
 [node name="Label" type="Label" parent="LobbyPopup"]
-layout_mode = 0
-offset_top = 2.0
-offset_right = 1000.0
-offset_bottom = 722.0
-theme_override_font_sizes/font_size = 32
-text = "Lobby List"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.017
+anchor_top = 0.003
+anchor_right = 0.221
+anchor_bottom = 0.063
+offset_left = 0.0859995
+offset_top = -0.14
+offset_right = 0.117996
+offset_bottom = 0.0599995
+theme_override_font_sizes/font_size = 16
+text = "LIST OF LOBBIES:"
 
 [connection signal="pressed" from="CreateLobby" to="." method="_on_create_lobby_pressed"]
 [connection signal="pressed" from="JoinLobby" to="." method="_on_join_lobby_pressed"]

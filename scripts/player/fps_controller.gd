@@ -2,7 +2,10 @@ class_name Player
 
 extends CharacterBody3D
 
-@export var VISOR : MeshInstance3D
+@onready var PLAYER_MODEL : Node3D = get_node("CollisionShape3D/player_model")
+@onready var LEGS_MODEL : Node3D = get_node("CollisionShape3D/legs_model")
+@onready var PAUSE_MENU = $UserInterface/PauseMenu
+@onready var CONSOLE_MENU = $UserInterface/ConsoleMenu
 
 @export var MOUSE_SENSITIVITY : float = 0.5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -37,9 +40,17 @@ var gravity = 9.8
 
 func _authorize_user():
 	_is_authorized_user = true
+	PLAYER_MODEL= get_node("CollisionShape3D/player_model")
+	LEGS_MODEL = get_node("CollisionShape3D/legs_model")
+	PLAYER_MODEL.visible = false
+	LEGS_MODEL.visible = true
 
 func _deauthorize_user():
 	_is_authorized_user = false
+	PLAYER_MODEL= get_node("CollisionShape3D/player_model")
+	LEGS_MODEL = get_node("CollisionShape3D/legs_model")
+	PLAYER_MODEL.visible = true
+	LEGS_MODEL.visible = false
 
 func strip_into_peer():
 	remove_child(CAMERA_CONTROLLER)
@@ -65,11 +76,27 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mouse_click"):
 		capture_mouse()
 	elif event.is_action_pressed("exit"):
-		uncapture_mouse()
+		toggle_pause_menu()
+		if (CONSOLE_MENU.visible):
+			CONSOLE_MENU.toggle_debug_console()
+	elif event.is_action_pressed("debug"):
+		CONSOLE_MENU.toggle_debug_console()
+		if (!PAUSE_MENU.visible):
+			toggle_pause_menu()
 	
 	if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true && _is_authorized_user == true:
 		look_dir = event.relative * 0.001
 		_rotate_camera()
+
+func toggle_pause_menu():
+	PAUSE_MENU.visible = !PAUSE_MENU.visible
+	
+	if PAUSE_MENU.visible:
+		uncapture_mouse()
+		Global.IS_PAUSED = true
+	else:
+		capture_mouse()
+		Global.IS_PAUSED = false
 
 func capture_mouse():
 	Global.capture_mouse(true)

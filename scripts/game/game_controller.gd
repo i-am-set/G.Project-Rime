@@ -44,7 +44,6 @@ func _ready():
 				var player_instance = _player_node.instantiate()
 				player_instance._steam_ID = this_member['steam_id']
 				player_instance._authorize_user()
-				player_instance.VISOR.visible = false
 				_authorized_player = player_instance
 				HyperLog.camera_3d = player_instance.CAMERA_CONTROLLER
 				add_child(player_instance)
@@ -54,7 +53,6 @@ func _ready():
 		var player_instance = _player_node.instantiate()
 		player_instance._steam_ID = Global.STEAM_ID
 		player_instance._authorize_user()
-		player_instance.VISOR.visible = false
 		_authorized_player = player_instance
 		HyperLog.camera_3d = player_instance.CAMERA_CONTROLLER
 		add_child(player_instance)

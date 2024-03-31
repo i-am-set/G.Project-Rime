@@ -2,7 +2,6 @@ extends Control
 
 @onready var property_container = %VBoxContainer
 @onready var debug_panel = get_node("DebugPanel")
-@onready var console_panel = get_node("ConsolePanel")
 
 #var property
 var frames_per_second : String
@@ -13,7 +12,7 @@ func _ready():
 	# Set global reference to self in Global Singleton
 	Global.debug = self
 	
-	# Hide Debug Panel on load
+	# Hide Panels on load
 	debug_panel.visible = false
 	
 	# Set console commands
@@ -28,20 +27,6 @@ func _process(_delta):
 #			frames_per_second = "%.2f" % (1.0/delta) # Gets frames per second every frame
 			frames_per_second = str(Engine.get_frames_per_second()) # Gets frames per second every second
 #			property.text = property.name + ": " + frames_per_second
-
-func _input(event):
-	if event.is_action_pressed("debug"):
-		toggle_debug_console()
-
-func toggle_debug_console():
-	# Toggle debug console
-	console_panel.visible = !console_panel.visible
-	Global.IS_PAUSED = console_panel.visible
-	Global.MOUSE_CAPTURED = console_panel.visible
-	if console_panel.visible:
-		Global.capture_mouse(false)
-	else:
-		Global.capture_mouse(true)
 
 func c_toggle_debug_panel() -> void:
 	# Toggle debug panel

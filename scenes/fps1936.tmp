@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=82 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://drya7dyoskvek" path="res://icon.png" id="6_454p0"]
 [ext_resource type="Script" path="res://addons/godot-console/scripts/console_container.gd" id="6_ai30m"]
 [ext_resource type="Script" path="res://scripts/game/debug.gd" id="6_kecrd"]
-[ext_resource type="ButtonGroup" uid="uid://cyodex2xc22hm" path="res://ui/button_groups/display_mode_button_group.tres" id="7_7h2ag"]
 [ext_resource type="Script" path="res://scripts/game/options_setting.gd" id="7_8cwra"]
 [ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="7_22y7g"]
 [ext_resource type="FontFile" uid="uid://dacj8wfcnya4p" path="res://ui/fonts/FiraCode/FiraCode-Bold.ttf" id="7_705ql"]
@@ -48,7 +47,6 @@
 [ext_resource type="Texture2D" uid="uid://bx8f86f1rr5i5" path="res://textures/ui/ui_male_silhouette_partition_0009_left_side_foot.png" id="17_p3qy2"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
-[ext_resource type="Script" path="res://scripts/game/console_menu.gd" id="30_vxqwq"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nitno"]
@@ -501,21 +499,7 @@ _data = {
 length = 0.75
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny6q8"]
-bg_color = Color(0.105882, 0.105882, 0.105882, 0.607843)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jfu3c"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ctvq5"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wlwff"]
-content_margin_top = 2.0
-content_margin_bottom = 2.0
-
-[sub_resource type="Theme" id="Theme_ftd28"]
-Button/styles/focus = SubResource("StyleBoxEmpty_jfu3c")
-HSlider/styles/grabber_area = SubResource("StyleBoxEmpty_ctvq5")
-HSlider/styles/slider = SubResource("StyleBoxFlat_wlwff")
-Label/font_sizes/font_size = 12
+bg_color = Color(0.105882, 0.105882, 0.105882, 0.34902)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xbpxg"]
 shader = ExtResource("4_l0pd8")
@@ -577,6 +561,19 @@ region_rect = Rect2(0, 0, 32, 32)
 texture = ExtResource("8_g1dc2")
 region_rect = Rect2(0, 0, 32, 32)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
+bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
+
+[sub_resource type="Theme" id="Theme_mndqq"]
+LineEdit/fonts/font = ExtResource("7_22y7g")
+Panel/styles/panel = SubResource("StyleBoxFlat_qnxiv")
+RichTextLabel/fonts/bold_font = ExtResource("7_705ql")
+RichTextLabel/fonts/mono_font = ExtResource("8_hjgll")
+RichTextLabel/fonts/normal_font = ExtResource("7_22y7g")
+
+[sub_resource type="Theme" id="Theme_g3ryb"]
+Label/font_sizes/font_size = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvtv5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyi13"]
@@ -595,19 +592,6 @@ VScrollBar/styles/grabber = SubResource("StyleBoxFlat_jvtv5")
 VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_eyi13")
 VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_l2ig8")
 VScrollBar/styles/scroll = SubResource("StyleBoxFlat_c2fof")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
-bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
-
-[sub_resource type="Theme" id="Theme_mndqq"]
-LineEdit/fonts/font = ExtResource("7_22y7g")
-Panel/styles/panel = SubResource("StyleBoxFlat_qnxiv")
-RichTextLabel/fonts/bold_font = ExtResource("7_705ql")
-RichTextLabel/fonts/mono_font = ExtResource("8_hjgll")
-RichTextLabel/fonts/normal_font = ExtResource("7_22y7g")
-
-[sub_resource type="Theme" id="Theme_g3ryb"]
-Label/font_sizes/font_size = 8
 
 [sub_resource type="QuadMesh" id="QuadMesh_chtvq"]
 flip_faces = true
@@ -748,17 +732,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ny6q8")
 
-[node name="Panel" type="Panel" parent="UserInterface/PauseMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.341
-anchor_right = 0.659
-anchor_bottom = 1.0
-offset_left = 0.399963
-offset_right = -0.400024
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="Options_Setting" type="HBoxContainer" parent="UserInterface/PauseMenu"]
 layout_mode = 1
 anchors_preset = 15
@@ -769,46 +742,23 @@ grow_vertical = 2
 alignment = 1
 script = ExtResource("7_8cwra")
 
+[node name="FPS_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting"]
+layout_mode = 2
+text = "144"
+script = ExtResource("8_mj3xk")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/PauseMenu/Options_Setting"]
 layout_mode = 2
-theme = SubResource("Theme_ftd28")
 alignment = 1
-
-[node name="_Resolution" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
-custom_minimum_size = Vector2(400, 0)
-layout_mode = 2
-text = "Resolution:"
 
 [node name="Resolution_OptionButton" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 layout_mode = 2
 
-[node name="SubResolutionOptions" type="MarginContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions"]
+[node name="ScaleBox" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 layout_mode = 2
 
-[node name="_Scaler" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Resolution Upscaler:"
-
-[node name="Scaler" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 12
-item_count = 2
-selected = 0
-popup/item_0/text = "BILINEAR"
-popup/item_0/id = 0
-popup/item_1/text = "AMS FSR 2.2"
-popup/item_1/id = 1
-
-[node name="ScaleBox" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer"]
-layout_mode = 2
-
-[node name="ScaleSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer/ScaleBox"]
-custom_minimum_size = Vector2(325, 0)
+[node name="ScaleSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/ScaleBox"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 min_value = 50.0
 max_value = 200.0
@@ -816,101 +766,27 @@ step = 5.0
 value = 100.0
 ticks_on_borders = true
 
-[node name="ScaleLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer/ScaleBox"]
+[node name="ScaleLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/ScaleBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 12
-text = "-----------"
+text = "100% - 1920x1080"
 horizontal_alignment = 2
 
-[node name="FSROptions" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 12
-item_count = 4
-selected = 0
-popup/item_0/text = "Performance"
-popup/item_0/id = 0
-popup/item_1/text = "Balanced"
-popup/item_1/id = 1
-popup/item_2/text = "Quality"
-popup/item_2/id = 2
-popup/item_3/text = "Ultra Quality"
-popup/item_3/id = 3
-
-[node name="_" type="MarginContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
-custom_minimum_size = Vector2(0, 30)
+[node name="Scaler" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 layout_mode = 2
 
-[node name="_Display" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="FSROptions" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 layout_mode = 2
-text = "Display Mode:"
 
-[node name="DisplayModes" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="FullScreen_CheckBox" type="CheckBox" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 layout_mode = 2
-alignment = 1
-
-[node name="Fullscreen" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/DisplayModes"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("7_7h2ag")
-text = "FULLSCREEN"
-
-[node name="Borderless" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/DisplayModes"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("7_7h2ag")
-text = "BORDERLESS"
-
-[node name="Windowed" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/DisplayModes"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-toggle_mode = true
-button_group = ExtResource("7_7h2ag")
-text = "WINDOWED
-"
-
-[node name="_V-Sync" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
-layout_mode = 2
-text = "V-Sync Toggle:"
+text = "Fullscreen"
 
 [node name="Vsync_Checkbox" type="CheckBox" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 layout_mode = 2
 text = "V-Sync Enabled"
 
-[node name="_Screen" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
-layout_mode = 2
-text = "Screen Selection:"
-
 [node name="Screen_Selector" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 layout_mode = 2
-
-[node name="FPSPanel" type="MarginContainer" parent="UserInterface/PauseMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.344
-anchor_top = 0.964
-anchor_right = 0.519
-anchor_bottom = 0.99
-offset_left = 0.599976
-offset_top = 0.399963
-offset_right = 0.599915
-offset_bottom = -6.10352e-05
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/PauseMenu/FPSPanel"]
-layout_mode = 2
-
-[node name="_FPS" type="Label" parent="UserInterface/PauseMenu/FPSPanel/HBoxContainer"]
-layout_mode = 2
-text = "FPS"
-
-[node name="FPS_Label" type="Label" parent="UserInterface/PauseMenu/FPSPanel/HBoxContainer"]
-layout_mode = 2
-text = "144"
-script = ExtResource("8_mj3xk")
 
 [node name="Inventory" type="Control" parent="UserInterface"]
 visible = false
@@ -1248,42 +1124,6 @@ offset_bottom = 14.0
 script = ExtResource("13_1cna5")
 item_protoset = ExtResource("11_t0exd")
 
-[node name="ConsoleMenu" type="Control" parent="UserInterface"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("30_vxqwq")
-
-[node name="ConsolePanel" type="Panel" parent="UserInterface/ConsoleMenu"]
-custom_minimum_size = Vector2(16.815, 46.765)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.014
-anchor_top = 0.614
-anchor_right = 0.986
-anchor_bottom = 0.986
-offset_left = 0.0799999
-offset_top = -0.0800171
-offset_right = -0.0800781
-offset_bottom = 0.0799561
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_8x05h")
-
-[node name="ConsoleContainer" type="VBoxContainer" parent="UserInterface/ConsoleMenu/ConsolePanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("6_ai30m")
-
 [node name="Debug" type="Control" parent="UserInterface"]
 layout_mode = 1
 anchors_preset = 15
@@ -1312,6 +1152,32 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_g3ryb")
+
+[node name="ConsolePanel" type="Panel" parent="UserInterface/Debug"]
+visible = false
+custom_minimum_size = Vector2(16.815, 46.765)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.024
+anchor_top = 0.657
+anchor_right = 0.976
+anchor_bottom = 0.987
+offset_left = -0.0400009
+offset_top = 0.220001
+offset_right = 0.039917
+offset_bottom = 0.0199585
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_8x05h")
+
+[node name="ConsoleContainer" type="VBoxContainer" parent="UserInterface/Debug/ConsolePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_ai30m")
 
 [node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("7_f1ve2")
@@ -1383,11 +1249,9 @@ target_position = Vector3(0, -0.165, 0)
 script = ExtResource("19_lm36c")
 
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/Resolution_OptionButton" to="UserInterface/PauseMenu/Options_Setting" method="_on_resolution_option_button_item_selected"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer/Scaler" to="UserInterface/PauseMenu/Options_Setting" method="_on_scaler_item_selected"]
-[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer/ScaleBox/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_scale_slider_value_changed"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/SubResolutionOptions/VBoxContainer/FSROptions" to="UserInterface/PauseMenu/Options_Setting" method="_on_fsr_options_item_selected"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/DisplayModes/Fullscreen" to="UserInterface/PauseMenu/Options_Setting" method="_on_fullscreen_button_up"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/DisplayModes/Borderless" to="UserInterface/PauseMenu/Options_Setting" method="_on_borderless_button_up"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/DisplayModes/Windowed" to="UserInterface/PauseMenu/Options_Setting" method="_on_windowed_button_up"]
+[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/ScaleBox/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_scale_slider_value_changed"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/Scaler" to="UserInterface/PauseMenu/Options_Setting" method="_on_scaler_item_selected"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/FSROptions" to="UserInterface/PauseMenu/Options_Setting" method="_on_fsr_options_toggled"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/FullScreen_CheckBox" to="UserInterface/PauseMenu/Options_Setting" method="_on_full_screen_check_box_toggled"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/Vsync_Checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_vsync_checkbox_toggled"]
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/Screen_Selector" to="UserInterface/PauseMenu/Options_Setting" method="_on_screen_selector_item_selected"]

@@ -366,12 +366,14 @@ public partial class ResourceChunkInstancer : Node3D
                             }
                         }
                         resourcePositionsWithColliders[position] = body;
-                    } else {
-                        GD.Print("No available bodies for scene: " + scene);
                     }
-                } else {
-                    GD.Print("No scene for position: " + position);
+                    // else {
+                    //     GD.Print("No available bodies for scene: " + scene);
+                    // }
                 }
+                // else {
+                //     GD.Print("No scene for position: " + position);
+                // }
             }
         }
     }

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcdt0ecegc1qi"]
+
+[ext_resource type="FontFile" uid="uid://cblhlwfgq7uv3" path="res://ui/fonts/FiraCode/FiraCode-Regular.ttf" id="1_00isl"]
+[ext_resource type="Script" path="res://scripts/game/debug_autoload_canvas_logic.gd" id="1_of0p0"]
+[ext_resource type="Script" path="res://scripts/game/fps_label.gd" id="2_a0et8"]
+
+[node name="DebugAutoloadCanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_of0p0")
+
+[node name="FPS_Label" type="Label" parent="."]
+offset_left = 2.0
+offset_right = 134.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_00isl")
+text = "144"
+script = ExtResource("2_a0et8")
