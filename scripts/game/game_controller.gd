@@ -1,5 +1,7 @@
 extends Node
 
+@onready var SKYBOX = $SkyBox
+
 var _player_node = preload("res://scenes/fps_controller.tscn")
 var _chat = preload("res://scenes/game_chat_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
@@ -60,6 +62,10 @@ func _ready():
 		print_debug("self created")
 	
 	generated_terrain.viewer = _authorized_player;
+	
+	# Set console commands
+	Console.create_command("time_set", self.c_set_time, "Sets the current world time. 0/2399 is midnight; 1200 is noon")
+	Console.create_command("get_current_time", self.c_get_current_time, "Returns the current time.")
 
 func _physics_process(_delta):
 	var _authorized_player_position = _authorized_player.position
@@ -122,6 +128,15 @@ func leave_lobby():
 		
 		# Clear lobby list
 		Global.LOBBY_MEMBERS.clear()
+
+func set_time(set_time : int) -> int:
+	set_time %= 2400
+	SKYBOX.timeOfDay = set_time
+	
+	return set_time
+
+func get_current_time() -> int:
+	return SKYBOX.timeOfDay
 
 func read_all_p2p_packets(read_count: int = 0):
 	if read_count >= Global.PACKET_READ_LIMIT:
@@ -293,3 +308,12 @@ func process_data(packet_data : Dictionary):
 					player_instance.global_position = packet_data["player_position"]
 				if packet_data.has("player_rotation"):
 					player_instance.rotation = packet_data["player_rotation"]
+
+
+func c_set_time(set_time : int) -> void:
+	set_time = set_time(set_time)
+	
+	Console.print_line("Time set to " + str(set_time) + ".")
+
+func c_get_current_time() -> void:
+	Console.print_line("It is currently [color=GOLD]" + str(get_current_time()) + "[/color].")

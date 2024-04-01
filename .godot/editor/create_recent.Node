@@ -1,6 +1,7 @@
+Button
+CheckButton
 Label
 HBoxContainer
-Button
 HSeparator
 MarginContainer
 PanelContainer
@@ -11,4 +12,3 @@ Control
 CanvasLayer
 HSlider
 CheckBox
-OptionButton

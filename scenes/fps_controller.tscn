@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=99 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -540,7 +540,6 @@ Button/styles/focus = SubResource("StyleBoxEmpty_jfu3c")
 Button/styles/hover = SubResource("StyleBoxFlat_7lxhj")
 Button/styles/normal = SubResource("StyleBoxFlat_d77sk")
 Button/styles/pressed = SubResource("StyleBoxFlat_jo2ys")
-CheckBox/icons/unchecked_disabled = null
 CheckBox/styles/hover = SubResource("StyleBoxFlat_7lxhj")
 CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_jo2ys")
 CheckBox/styles/normal = SubResource("StyleBoxFlat_d77sk")
@@ -560,6 +559,14 @@ OptionButton/styles/pressed = SubResource("StyleBoxFlat_jo2ys")
 PopupMenu/font_sizes/font_size = 12
 PopupMenu/styles/hover = SubResource("StyleBoxFlat_4pp2a")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_5cskc")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ujw28"]
+bg_color = Color(0.494118, 0.494118, 0.494118, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.2, 0.2, 0.2, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xbpxg"]
 shader = ExtResource("4_l0pd8")
@@ -660,7 +667,7 @@ size = Vector2(2, 2)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jnndc"]
 render_priority = 1
 shader = ExtResource("18_6keqs")
-shader_parameter/color_depth = 5
+shader_parameter/color_depth = 6
 shader_parameter/dithering = true
 shader_parameter/resolution_scale = 1
 
@@ -778,6 +785,7 @@ width = 1.5
 [node name="PauseMenu" type="Control" parent="UserInterface"]
 visible = false
 layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -990,9 +998,11 @@ size_flags_horizontal = 2
 text = "VSync Toggle"
 uppercase = true
 
-[node name="Vsync_Checkbox" type="CheckBox" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Vsync"]
+[node name="vsync_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Vsync"]
+custom_minimum_size = Vector2(17, 17)
 layout_mode = 2
-size_flags_horizontal = 10
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ujw28")
+toggle_mode = true
 
 [node name="_Screen_Select" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 layout_mode = 2
@@ -1050,6 +1060,50 @@ theme_override_font_sizes/font_size = 24
 text = "
 GRAPHICS"
 horizontal_alignment = 1
+
+[node name="POST_PROCESSING_CAMERA2" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "
+POST PROCESSING"
+horizontal_alignment = 1
+
+[node name="_PostP_Dither" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="_Dithering" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Dithering"
+uppercase = true
+
+[node name="dithering_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither"]
+custom_minimum_size = Vector2(17, 17)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ujw28")
+toggle_mode = true
+button_pressed = true
+
+[node name="_PostP_Outline" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+layout_mode = 2
+
+[node name="_Outline" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Outline"
+uppercase = true
+
+[node name="outline_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline"]
+custom_minimum_size = Vector2(17, 17)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ujw28")
+toggle_mode = true
+button_pressed = true
 
 [node name="Inventory" type="Control" parent="UserInterface"]
 visible = false
@@ -1528,6 +1582,8 @@ script = ExtResource("19_lm36c")
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Upscaler/Scaler" to="UserInterface/PauseMenu/Options_Setting" method="_on_scaler_item_selected"]
 [connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_scale_slider_value_changed"]
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_FSR_Quality/FSROptions" to="UserInterface/PauseMenu/Options_Setting" method="_on_fsr_options_item_selected"]
-[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Vsync/Vsync_Checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_vsync_checkbox_toggled"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Vsync/vsync_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_vsync_checkbox_toggled"]
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Screen_Select/Screen_Selector" to="UserInterface/PauseMenu/Options_Setting" method="_on_screen_selector_item_selected"]
 [connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_fov_slider_value_changed"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_dithering_checkbox_toggled"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_outline_checkbox_toggled"]

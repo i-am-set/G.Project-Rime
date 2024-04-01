@@ -36,3 +36,17 @@ res://scripts/player/fps_controller.gd
 res://scripts/game/global.gd
 res://scripts/steam/SteamLobby.gd
 res://scripts/game/options_setting.gd
+res://addons/godot-console/scripts/ConsoleMono.cs
+res://scripts/resource_objects/ResourceChunkInstancer.cs
+res://scripts/resource_objects/ResourceController.cs
+res://scripts/resource_objects/ResourceInstancer.cs
+res://scripts/world_generation/InfiniteTerrain.cs
+res://scripts/world_generation/InfiniteTerrainGenerator.cs
+res://scripts/world_generation/LODInfo.cs
+res://scripts/world_generation/MapDisplay.cs
+res://scripts/world_generation/MapGenerator.cs
+res://scripts/world_generation/PregenTerrain.cs
+res://scripts/world_generation/TerrainType.cs
+res://scripts/game/game_controller.gd
+res://addons/godot-console/scripts/console.gd
+res://addons/godot-console/scripts/console_container.gd

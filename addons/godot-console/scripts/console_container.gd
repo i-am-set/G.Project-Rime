@@ -15,6 +15,10 @@ var _console_input : LineEdit
 var _tooltip_panel : PanelContainer
 var _tooltip_label : Label
 
+var autocomplete_list : PackedStringArray
+var reverse_autocomplete_list : PackedStringArray
+var selected_autocomplete_index : int = -1
+
 
 func _init() -> void:
 	_console_output = RichTextLabel.new()
@@ -103,6 +107,9 @@ func set_input_text(text: String) -> void:
 	_console_input.set_caret_column(text.length())
 	_console_input.text_changed.emit(text)
 
+func set_input_text_no_signal(text: String) -> void:
+	_console_input.text = text + " "
+	_console_input.set_caret_column(text.length())
 
 func _on_visibility_changed() -> void:
 	if is_visible_in_tree():
@@ -111,12 +118,15 @@ func _on_visibility_changed() -> void:
 
 
 func _on_input_text_changed(text: String) -> void:
-	var autocomplete := PackedStringArray() if text.is_empty() else _console.autocomplete_list(text)
+	autocomplete_list = PackedStringArray() if text.is_empty() else _console.autocomplete_list(text)
+	reverse_autocomplete_list = autocomplete_list.duplicate()
+	reverse_autocomplete_list.reverse()
+	selected_autocomplete_index = -1
 
-	if autocomplete.is_empty():
+	if autocomplete_list.is_empty():
 		_tooltip_panel.hide()
 	else:
-		_tooltip_label.set_text("\n".join(autocomplete))
+		_tooltip_label.set_text("\n".join(autocomplete_list))
 		_tooltip_panel.show()
 
 
@@ -127,9 +137,25 @@ func _on_input_gui_event(event: InputEvent) -> void:
 	elif event.is_action_pressed(&"ui_text_indent"):
 		set_input_text(_console.autocomplete_command(_console_input.text))
 	elif event.is_action_pressed(&"ui_text_caret_up"):
-		set_input_text(_console.get_prev_command())
+		if !_tooltip_panel.visible:
+			set_input_text(_console.get_prev_command())
+			_tooltip_panel.hide()
+		else:
+			selected_autocomplete_index += 1
+			if selected_autocomplete_index > len(autocomplete_list)-1:
+				selected_autocomplete_index = len(autocomplete_list)-1
+			
+			set_input_text_no_signal(reverse_autocomplete_list[selected_autocomplete_index])
 	elif event.is_action_pressed(&"ui_text_caret_down"):
-		set_input_text(_console.get_next_command())
+		if !_tooltip_panel.visible:
+			set_input_text(_console.get_next_command())
+			_tooltip_panel.hide()
+		else:
+			selected_autocomplete_index -= 1
+			if selected_autocomplete_index < 0:
+				selected_autocomplete_index = 0
+
+			set_input_text_no_signal(reverse_autocomplete_list[selected_autocomplete_index])
 	else:
 		return
 

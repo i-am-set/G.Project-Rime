@@ -33,6 +33,7 @@ var IS_IN_INVENTORY = false
 var MOUSE_CAPTURED = false
 var RENDER_DISTANCE = 10
 var LOD_BIAS = 0.25
+var IS_VSYNC_ENABLED = true
 var FIELD_OF_VIEW = 75
 var POSTP_OUTLINE_ON = true
 var POSTP_DITHER_ON = true

@@ -98,8 +98,8 @@ script = ExtResource("1_beekf")
 generated_terrain = NodePath("MapGenerator/InfiniteTerrainGen")
 skybox = NodePath("mountain_range_skybox_model_1")
 
-[node name="GodotSky" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1803.44
+[node name="SkyBox" parent="." instance=ExtResource("1_v0aj0")]
+timeOfDay = 1272.79
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5

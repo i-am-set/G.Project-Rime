@@ -15,12 +15,16 @@ extends HBoxContainer
 @onready var fsr_box = $VBoxContainer/_Scale/_FSR_Quality
 @onready var fsr_options = $VBoxContainer/_Scale/_FSR_Quality/FSROptions
 
-@onready var vsync_checkbox = $VBoxContainer/_Vsync/Vsync_Checkbox
+@onready var vsync_checkbox = $VBoxContainer/_Vsync/vsync_checkbox
 
 @onready var screen_selector = $VBoxContainer/_Screen_Select/Screen_Selector
 
 @onready var fovpercent_label = $VBoxContainer/_FieldOfView/PercentLabel
 @onready var fov_slider = $VBoxContainer/_FieldOfView/FovSlider
+
+@onready var dithering_checkbox = $VBoxContainer/_PostP_Dither/dithering_checkbox
+
+@onready var outline_checkbox = $VBoxContainer/_PostP_Outline/outline_checkbox
 
 
 var Resolutions: Dictionary = {"3840x2160":Vector2i(3840,2160),
@@ -36,6 +40,8 @@ var Resolutions: Dictionary = {"3840x2160":Vector2i(3840,2160),
 								
 
 func _ready():
+	await get_tree().process_frame
+	
 	Add_Resolutions()
 	Check_Variables()
 	Get_Screens()
@@ -62,8 +68,14 @@ func Check_Variables():
 		windowed_button.set_pressed_no_signal(true)
 		_on_windowed_button_up()
 	
-	if DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_ENABLED:
-		vsync_checkbox.set_pressed_no_signal(true)
+	vsync_checkbox.set_pressed_no_signal(Global.IS_VSYNC_ENABLED)
+	_on_vsync_checkbox_toggled(Global.IS_VSYNC_ENABLED)
+	
+	dithering_checkbox.set_pressed_no_signal(Global.POSTP_DITHER_ON)
+	_on_dithering_checkbox_toggled(Global.POSTP_DITHER_ON)
+	
+	outline_checkbox.set_pressed_no_signal(Global.POSTP_OUTLINE_ON)
+	_on_outline_checkbox_toggled(Global.POSTP_OUTLINE_ON)
 
 func Set_Resolution_Text():
 	var Resolution_Text = str(get_window().get_size().x)+"x"+str(get_window().get_size().y)
@@ -139,8 +151,10 @@ func _on_fsr_options_item_selected(index):
 func _on_vsync_checkbox_toggled(toggled_on):
 	if toggled_on:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+		Global.IS_VSYNC_ENABLED = true
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+		Global.IS_VSYNC_ENABLED = false
 
 func Get_Screens():
 	var Screens = DisplayServer.get_screen_count()
@@ -179,7 +193,12 @@ func _on_fov_slider_value_changed(value):
 	fps_controller.set_fov(value)
 	fovpercent_label.set_text(str(value))
 
+func _on_dithering_checkbox_toggled(toggled_on):
+	fps_controller.enable_postp_dither(toggled_on)
+
+func _on_outline_checkbox_toggled(toggled_on):
+	fps_controller.enable_postp_outline(toggled_on)
+
 func c_set_display_mode() -> void:
 	# Todo: add this logic for console
 	pass
-

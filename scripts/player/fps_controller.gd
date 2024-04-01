@@ -6,8 +6,8 @@ extends CharacterBody3D
 @onready var LEGS_MODEL : Node3D = get_node("CollisionShape3D/legs_model")
 @onready var PAUSE_MENU = $UserInterface/PauseMenu
 @onready var CONSOLE_MENU = $UserInterface/ConsoleMenu
-@onready var POSTP_OUTLINE = $PostProcessingOutline
 @onready var POSTP_DITHER = $PostProcessingDither
+@onready var POSTP_OUTLINE = $PostProcessingOutline
 
 @export var MOUSE_SENSITIVITY : float = 0.5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -75,7 +75,7 @@ func _input(event):
 		print_debug("scroll down")
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("mouse_click"):
+	if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED:
 		capture_mouse()
 	elif event.is_action_pressed("exit"):
 		toggle_pause_menu()
@@ -83,8 +83,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			CONSOLE_MENU.toggle_debug_console()
 	elif event.is_action_pressed("debug"):
 		CONSOLE_MENU.toggle_debug_console()
-		if (!PAUSE_MENU.visible):
-			toggle_pause_menu()
 	
 	if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true && _is_authorized_user == true:
 		look_dir = event.relative * 0.001
@@ -128,16 +126,21 @@ func _ready():
 	
 	if CAMERA_CONTROLLER != null:
 		set_fov(Global.FIELD_OF_VIEW)
-	
+	enable_postp_dither(Global.POSTP_DITHER_ON)
+	enable_postp_dither(Global.POSTP_OUTLINE_ON)
+
 	# Set console commands
 	if _is_authorized_user:
 		Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
-		Console.create_command("tpc", self.c_teleport_self_to_coordinate, "Teleports the player to the given world coordinate.")
-		Console.create_command("tp_to", self.c_teleport_self_to_player, "Teleports the player to player by name.")
-		Console.create_command("tp", self.c_teleport_player_to_player, "Teleports the first input player to the second input player's position by name.")
-		Console.create_command("fov", self.c_set_fov, "Sets the FOV of the camera. " + str(Global.MIN_FOV) + " is minimum; " + str(Global.MAX_FOV) + " is max; " + str(Global.DEFAULT_FOV) + " is default")
-		Console.create_command("enable_postp_dither", self.c_enable_postp_dither, "Toggles the dithering post process effect. Takes a true or false.")
-		Console.create_command("enable_postp_outline", self.c_enable_postp_outline, "Toggles the outline post process effect. Takes a true or false.")
+		Console.create_command("get_self_position", self.c_get_current_position_self, "Gets the current position of self.")
+		Console.create_command("get_player_position", self.c_get_current_position_peer, "Gets the current position of the specified player.")
+		Console.create_command("tpc", self.c_teleport_self_to_coordinate, "Teleports your player to the given world coordinate by x, y, z vectors.")
+		Console.create_command("tp_to", self.c_teleport_self_to_player, "Teleports your player to the specified player by name.")
+		Console.create_command("tp", self.c_teleport_player_to_player, "Teleports the first specified player to the second specified player by name.")
+		Console.create_command("fov", self.c_set_fov, "Sets the FOV of the camera. " + str(Global.MIN_FOV) + " is minimum; " + str(Global.MAX_FOV) + " is maximum; " + str(Global.DEFAULT_FOV) + " is default")
+		Console.create_command("postp_enable_dither", self.c_enable_postp_dither, "Toggles the dithering post process effect. Takes a true or false.")
+		Console.create_command("postp_set_color_depth", self.c_set_postp_color_depth, "Sets the color depth post process effect. 1 is minimum; 8 is maximum; 6 is default.")
+		Console.create_command("postp_enable_outline", self.c_enable_postp_outline, "Toggles the outline post process effect. Takes a true or false.")
 
 func set_settings():
 	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
@@ -232,10 +235,16 @@ func set_fov(fov : int) -> int:
 	return fov
 
 func enable_postp_dither(toggle : bool) -> void:
-	POSTP_DITHER.visible = toggle
+	POSTP_DITHER.get_surface_override_material(0).set_shader_parameter("dithering", toggle)
+	Global.POSTP_DITHER_ON = toggle
+
+func set_postp_color_depth(depth : int) -> void:
+	depth = clamp(depth, 1, 8)
+	POSTP_DITHER.get_surface_override_material(0).set_shader_parameter("color_depth", depth)
 
 func enable_postp_outline(toggle : bool) -> void:
 	POSTP_OUTLINE.visible = toggle
+	Global.POSTP_OUTLINE_ON = toggle
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
@@ -283,10 +292,28 @@ func c_enable_postp_dither(toggle : bool) -> void:
 	
 	Console.print_line("Post process 'dither' was toggled " + str(toggle) + ".")
 
+func c_set_postp_color_depth(depth : int) -> void:
+	set_postp_color_depth(depth)
+	
+	Console.print_line("Post process 'color depth' was set to " + str(depth) + ".")
+
 func c_enable_postp_outline(toggle : bool) -> void:
 	enable_postp_outline(toggle)
 	
 	Console.print_line("Post process 'outline' was toggled " + str(toggle) + ".")
+
+func c_get_current_position_self() -> void:
+	Console.print_line("[color=GOLD]Your current world position is " + str(position) + ".[/color]")
+
+func c_get_current_position_peer(player_name : String) -> void:
+	for player in Global.LOBBY_MEMBERS:
+		if player["steam_name"] == player_name:
+			var player_id = player["steam_id"]
+			if Global.LOBBY_PEER_INSTANCES.has(player_id):
+				Console.print_line("[color=GOLD]" + player_name + "'s current world position is " + str(Global.LOBBY_PEER_INSTANCES[player_id].position) + ".[/color]")
+			return
+	Console.print_line("[color=RED]'" + player_name + "' is not a valid player name.[/color]")
+	
 
 func c_teleport_self_to_coordinate(x: float, y: float, z: float) -> void:
 	# Teleport self to given objects position
@@ -366,4 +393,3 @@ func c_teleport_player_to_player(ori_player_name : String, des_player_name : Str
 			des_player_pos = Global.LOBBY_PEER_INSTANCES[des_player_id].position
 			Global.LOBBY_PEER_INSTANCES[ori_player_id].position = Vector3(des_player_pos.x, des_player_pos.y + 4, des_player_pos.z)
 			Console.print_line("Teleported '" + ori_player_name + "' to '" + des_player_name + "'.")
-
