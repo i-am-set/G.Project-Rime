@@ -28,6 +28,10 @@ Console="*res://addons/godot-console/scripts/console.gd"
 ConsoleMono="*res://addons/godot-console/scripts/ConsoleMono.cs"
 DebugAutoloadCanvas="*res://scenes/utility/debug_autoload_canvas.tscn"
 
+[debug]
+
+gdscript/warnings/unused_parameter=0
+
 [display]
 
 window/size/viewport_width=1600
@@ -143,6 +147,9 @@ inventory={
 
 3d_render/layer_1="Default"
 3d_render/layer_2="Weapon"
+3d_physics/layer_1="World"
+3d_physics/layer_2="Entity"
+2d_physics/layer_32="UI Elements"
 
 [physics]
 

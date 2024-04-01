@@ -193,7 +193,6 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 				velocity.x = move_toward(velocity.x, 0, speed)
 				velocity.y = move_toward(velocity.y, 0, speed)
 				velocity.z = move_toward(velocity.z, 0, speed)
-			print(velocity, "------", input_dir)
 			
 			
 			# Handle vertical movement

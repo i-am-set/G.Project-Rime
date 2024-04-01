@@ -58,13 +58,13 @@ func toggle_inventory():
 
 func _on_btn_sort(ctrl_inventory) -> void:
 	if !ctrl_inventory.inventory.sort():
-		print("Warning: InventoryGrid.sort() returned false!")
+		print_debug("Warning: InventoryGrid.sort() returned false!")
 
 
 func _on_btn_split(ctrl_inventory) -> void:
 	var inventory_stacked := (ctrl_inventory.inventory as InventoryGridStacked)
 	if inventory_stacked == null:
-		print("Warning: inventory is not InventoryGridStacked!")
+		print_debug("Warning: inventory is not InventoryGridStacked!")
 		return
 
 	var selected_item = ctrl_inventory.get_selected_inventory_item()

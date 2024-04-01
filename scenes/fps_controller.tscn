@@ -1,4 +1,4 @@
-[gd_scene load_steps=99 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=101 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -42,6 +42,8 @@
 [ext_resource type="Script" path="res://scripts/player/JumpingPlayerState.gd" id="13_fbjl8"]
 [ext_resource type="Texture2D" uid="uid://dutjoktjru0dn" path="res://textures/ui/ui_male_silhouette_partition_0007_left_side_hand.png" id="13_q7hvq"]
 [ext_resource type="Script" path="res://scripts/player/FallingPlayerState.gd" id="14_7wlsx"]
+[ext_resource type="Script" path="res://scripts/player/inventory_silhouette_hover_logic.gd" id="14_44s6j"]
+[ext_resource type="Script" path="res://scripts/player/UI_hover_area_script.gd" id="14_s2047"]
 [ext_resource type="Texture2D" uid="uid://b2ulqdxn8n4uf" path="res://textures/ui/ui_male_silhouette_partition_0004_right_side_leg.png" id="14_sfo0j"]
 [ext_resource type="Texture2D" uid="uid://drkets27ug8hn" path="res://textures/ui/ui_male_silhouette_partition_0005_right_side_foot.png" id="15_jb0ig"]
 [ext_resource type="Script" path="res://scripts/player/WeaponViewport.gd" id="15_yu4nu"]
@@ -734,7 +736,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1106,7 +1108,6 @@ toggle_mode = true
 button_pressed = true
 
 [node name="Inventory" type="Control" parent="UserInterface"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1123,6 +1124,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="BGColorPanel" type="Panel" parent="UserInterface/Inventory/BGBlurPanel"]
 layout_mode = 1
@@ -1146,7 +1148,138 @@ offset_right = -0.200012
 offset_bottom = 0.23996
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
+
+[node name="Head_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/Head_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 156, 819, 159, 812, 163, 808, 164, 802, 165, 795, 165, 791, 164, 785, 162, 780, 159, 777, 156, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
+
+[node name="Torso_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/Torso_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(802, 166, 795, 166, 791, 165, 785, 163, 780, 160, 777, 157, 771, 160, 758, 166, 747, 171, 736, 176, 732, 179, 735, 184, 738, 191, 741, 199, 743, 208, 745, 218, 747, 231, 747, 241, 747, 247, 747, 252, 747, 255, 749, 274, 750, 283, 751, 286, 750, 302, 748, 323, 746, 332, 744, 341, 743, 348, 750, 350, 760, 354, 768, 358, 776, 364, 784, 371, 790, 379, 794, 386, 798, 395, 798, 398, 801, 398, 801, 395, 805, 386, 809, 379, 815, 371, 823, 364, 832, 358, 844, 352, 855, 349, 855, 342, 853, 334, 851, 321, 849, 306, 848, 298, 848, 285, 852, 250, 852, 242, 853, 224, 854, 214, 857, 203, 860, 193, 863, 186, 866, 180, 867, 179, 863, 176, 857, 173, 850, 170, 843, 167, 834, 163, 827, 160, 822, 157, 819, 160, 812, 164, 808, 165)
+
+[node name="RSArm_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/RSArm_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
+
+[node name="RSHand_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/RSHand_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
+
+[node name="RSLeg_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/RSLeg_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
+
+[node name="RSFoot_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/RSFoot_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
+
+[node name="LSArm_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/LSArm_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(123.8, 145.68, 129.8, 158.68, 134.8, 173.68, 136.8, 187.68, 138.8, 203.68, 137.8, 215.68, 134.8, 228.68, 127.8, 248.68, 124.8, 263.68, 119.8, 280.68, 109.8, 301.68, 101.8, 319.68, 95.8, 333.68, 94.8, 337.68, 85.8, 333.68, 77.8, 331.68, 72.8, 330.68, 73.8, 328.68, 78.8, 304.68, 81.8, 287.68, 88.8, 267.68, 95.8, 255.68, 98.8, 252.68, 99.8, 232.68, 102.8, 217.68, 104.8, 207.68, 107.8, 197.68, 107.8, 183.68, 107.8, 173.68, 110.8, 163.68, 113.8, 155.68, 118.8, 149.68)
+
+[node name="LSHand_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/LSHand_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
+
+[node name="LSLeg_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/LSLeg_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
+
+[node name="LSFoot_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_s2047")
+
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/LSFoot_Area"]
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
 [node name="silhouette_img" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel"]
 modulate = Color(1, 1, 1, 0.52549)
@@ -1156,11 +1289,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("7_j4uj2")
 expand_mode = 4
 stretch_mode = 4
 
 [node name="Head_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1195,7 +1330,7 @@ offset_top = 1.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("10_458h2")
+texture = ExtResource("12_r0dy2")
 expand_mode = 4
 stretch_mode = 4
 
@@ -1247,7 +1382,7 @@ offset_top = 1.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("12_r0dy2")
+texture = ExtResource("10_458h2")
 expand_mode = 4
 stretch_mode = 4
 
@@ -1441,6 +1576,15 @@ offset_bottom = 14.0
 script = ExtResource("13_1cna5")
 item_protoset = ExtResource("11_t0exd")
 
+[node name="Head_Area" type="Area2D" parent="UserInterface/Inventory"]
+visible = false
+collision_layer = 2147483648
+collision_mask = 2147483648
+script = ExtResource("14_44s6j")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="UserInterface/Inventory/Head_Area"]
+polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 112, 824, 136, 820, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 134, 770, 114, 771, 94, 774, 79, 780, 72, 788, 70)
+
 [node name="ConsoleMenu" type="Control" parent="UserInterface"]
 visible = false
 layout_mode = 1
@@ -1482,6 +1626,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -1587,3 +1733,4 @@ script = ExtResource("19_lm36c")
 [connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_fov_slider_value_changed"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_dithering_checkbox_toggled"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_outline_checkbox_toggled"]
+[connection signal="mouse_entered" from="UserInterface/Inventory/Head_Area" to="UserInterface/Inventory/Head_Area" method="_on_mouse_entered"]

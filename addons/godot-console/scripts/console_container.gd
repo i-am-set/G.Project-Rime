@@ -141,9 +141,7 @@ func _on_input_gui_event(event: InputEvent) -> void:
 			set_input_text(_console.get_prev_command())
 			_tooltip_panel.hide()
 		else:
-			selected_autocomplete_index += 1
-			if selected_autocomplete_index > len(autocomplete_list)-1:
-				selected_autocomplete_index = len(autocomplete_list)-1
+			selected_autocomplete_index = min(selected_autocomplete_index + 1, len(autocomplete_list)-1) # returns the smallest of the 2; therefore, returns max if is bigger than
 			
 			set_input_text_no_signal(reverse_autocomplete_list[selected_autocomplete_index])
 	elif event.is_action_pressed(&"ui_text_caret_down"):
@@ -151,9 +149,7 @@ func _on_input_gui_event(event: InputEvent) -> void:
 			set_input_text(_console.get_next_command())
 			_tooltip_panel.hide()
 		else:
-			selected_autocomplete_index -= 1
-			if selected_autocomplete_index < 0:
-				selected_autocomplete_index = 0
+			selected_autocomplete_index = max(selected_autocomplete_index - 1, 0) # returns the largest of the 2; therefore, returns min if is bigger than
 
 			set_input_text_no_signal(reverse_autocomplete_list[selected_autocomplete_index])
 	else:

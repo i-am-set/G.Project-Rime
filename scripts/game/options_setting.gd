@@ -86,7 +86,7 @@ func Set_Resolution_Text():
 	
 func Add_Resolutions():
 	var Current_Resolution = get_window().get_size()
-	print(Current_Resolution)
+	print_debug(Current_Resolution)
 	var ID = 0
 	
 	for r in Resolutions:
@@ -99,7 +99,10 @@ func Add_Resolutions():
 
 func _on_resolution_option_button_item_selected(index):
 	var ID = resolution_option_button.get_item_text(index)
-	get_window().set_size(Resolutions[ID])
+	if (Resolutions[ID].x >= DisplayServer.screen_get_size().x || Resolutions[ID].y >= DisplayServer.screen_get_size().y):
+		get_window().set_size(DisplayServer.screen_get_size())
+	else:
+		get_window().set_size(Resolutions[ID])
 	Set_Resolution_Text()
 	Center_Window()
 

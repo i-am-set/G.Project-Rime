@@ -10,6 +10,8 @@ const PACKET_READ_LIMIT: int = 32
 const DEFAULT_FOV = 75
 const MIN_FOV = 60
 const MAX_FOV = 100
+const MIN_SPEED = 0
+const MAX_SPEED = 1000
 
 # Steam Variables
 var OWNED = false
