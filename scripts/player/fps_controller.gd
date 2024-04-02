@@ -75,18 +75,19 @@ func _input(event):
 		print_debug("scroll down")
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED:
-		capture_mouse()
-	elif event.is_action_pressed("exit"):
-		toggle_pause_menu()
-		if (CONSOLE_MENU.visible):
+	if _is_authorized_user == true:
+		if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED:
+			capture_mouse()
+		elif event.is_action_pressed("exit"):
+			toggle_pause_menu()
+			if (CONSOLE_MENU.visible):
+				CONSOLE_MENU.toggle_debug_console()
+		elif event.is_action_pressed("debug"):
 			CONSOLE_MENU.toggle_debug_console()
-	elif event.is_action_pressed("debug"):
-		CONSOLE_MENU.toggle_debug_console()
-	
-	if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true && _is_authorized_user == true:
-		look_dir = event.relative * 0.001
-		_rotate_camera()
+		
+		if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true:
+			look_dir = event.relative * 0.001
+			_rotate_camera()
 
 func toggle_pause_menu():
 	PAUSE_MENU.visible = !PAUSE_MENU.visible
@@ -112,25 +113,25 @@ func _rotate_camera(sens_mod: float = 1.0) -> void:
 	CAMERA_CONTROLLER.rotation.x = clamp(CAMERA_CONTROLLER.rotation.x - look_dir.y * MOUSE_SENSITIVITY, -1.5, 1.5)
 	
 func _ready():
-	capture_mouse()
-	
-	set_settings()
-	
-	Global.player = self
-	
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	_steam_ID = Steam.getSteamID()
-	
-	CROUCH_SHAPECAST.add_exception($".")
-	
-	if CAMERA_CONTROLLER != null:
-		set_fov(Global.FIELD_OF_VIEW)
-	enable_postp_dither(Global.POSTP_DITHER_ON)
-	enable_postp_dither(Global.POSTP_OUTLINE_ON)
-
-	# Set console commands
-	if _is_authorized_user:
+	if _is_authorized_user == true:
+		capture_mouse()
+		
+		set_settings()
+		
+		Global.player = self
+		
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
+		_steam_ID = Steam.getSteamID()
+		
+		CROUCH_SHAPECAST.add_exception($".")
+		
+		if CAMERA_CONTROLLER != null:
+			set_fov(Global.FIELD_OF_VIEW)
+		enable_postp_dither(Global.POSTP_DITHER_ON)
+		enable_postp_dither(Global.POSTP_OUTLINE_ON)
+		
+		# Set console commands
 		Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
 		Console.create_command("seed", self.c_get_world_seed, "Gets the world seed")
 		Console.create_command("get_self_position", self.c_get_current_position_self, "Gets the current position of self.")
