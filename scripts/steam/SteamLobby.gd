@@ -64,7 +64,6 @@ func create_lobby() -> void:
 	if lobbySetName.text != "":
 		if Global.LOBBY_ID == 0:
 			Steam.createLobby(Steam.LOBBY_TYPE_PUBLIC, Global.LOBBY_MAX_MEMBERS)
-		lobbySetName.text = ""
 
 func check_create_lobby_button():
 	if lobbySetName.text == "":
@@ -211,7 +210,7 @@ func _on_lobby_created(connect: int, this_lobby_id: int) -> void:
 		# Set lobby data
 		Steam.setLobbyData(this_lobby_id, "name", lobbySetName.text)
 		var _name = Steam.getLobbyData(this_lobby_id, "name")
-		lobbyGetName.text = str(_name)
+		lobbyGetName.text = str(lobbySetName.text)
 
 		## Allow P2P connections to fallback to being relayed through Steam if needed
 		#var set_relay: bool = Steam.allowP2PPacketRelay(true)on_lobbyon_lobby
