@@ -1,9 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://dcdt0ecegc1qi"]
+[gd_scene load_steps=12 format=3 uid="uid://dcdt0ecegc1qi"]
 
 [ext_resource type="FontFile" uid="uid://cblhlwfgq7uv3" path="res://ui/fonts/FiraCode/FiraCode-Regular.ttf" id="1_00isl"]
 [ext_resource type="Script" path="res://scripts/game/debug_autoload_canvas_logic.gd" id="1_of0p0"]
 [ext_resource type="Script" path="res://scripts/game/fps_label.gd" id="2_a0et8"]
 [ext_resource type="PackedScene" uid="uid://bufntssvubj16" path="res://scenes/game_chat_controller.tscn" id="4_g6ewg"]
+[ext_resource type="Script" path="res://scripts/game/console_menu.gd" id="5_4ql1w"]
+[ext_resource type="Script" path="res://addons/godot-console/scripts/console_container.gd" id="6_qkkoq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvtv5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyi13"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l2ig8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c2fof"]
+content_margin_left = 4.0
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="Theme" id="Theme_iberm"]
+Label/font_sizes/font_size = 12
+LineEdit/font_sizes/font_size = 12
+RichTextLabel/font_sizes/normal_font_size = 12
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_jvtv5")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_eyi13")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_l2ig8")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_c2fof")
 
 [node name="DebugAutoloadCanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_of0p0")
@@ -17,3 +38,40 @@ text = "144"
 script = ExtResource("2_a0et8")
 
 [node name="GameChatController" parent="." instance=ExtResource("4_g6ewg")]
+visible = false
+
+[node name="ConsoleMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_4ql1w")
+
+[node name="ConsolePanel" type="Panel" parent="ConsoleMenu"]
+custom_minimum_size = Vector2(16.815, 46.765)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.014
+anchor_top = 0.614
+anchor_right = 0.986
+anchor_bottom = 0.986
+offset_left = 0.0799999
+offset_top = -0.0800171
+offset_right = -0.0800781
+offset_bottom = 0.0799561
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_iberm")
+
+[node name="ConsoleContainer" type="VBoxContainer" parent="ConsoleMenu/ConsolePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_qkkoq")

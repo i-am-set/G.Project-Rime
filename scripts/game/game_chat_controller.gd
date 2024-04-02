@@ -18,7 +18,7 @@ func _input(event: InputEvent) -> void:
 	if Global.IS_IN_GAME:
 		if Global.MOUSE_CAPTURED == true && chatInput.has_focus():
 			deselect_chat_input()
-		if Input.is_action_just_pressed("ui_text_completion_accept"):
+		if !Global.IS_PAUSED && Input.is_action_just_pressed("ui_text_completion_accept"):
 			# stop the tween if needed and reset variable
 			if chat_hide_tween != null:
 				if chat_hide_tween.is_running():

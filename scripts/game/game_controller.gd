@@ -130,10 +130,15 @@ func leave_lobby():
 		Global.LOBBY_MEMBERS.clear()
 
 func set_time(set_time : int) -> int:
+	send_p2p_packet(0, {"message": "time_set", "time": set_time})
 	set_time %= 2400
 	SKYBOX.timeOfDay = set_time
 	
 	return set_time
+
+func recieve_set_time_request(set_time : int) -> void:
+	set_time %= 2400
+	SKYBOX.timeOfDay = set_time
 
 func get_current_time() -> int:
 	return SKYBOX.timeOfDay
@@ -311,6 +316,8 @@ func process_data(packet_data : Dictionary):
 					player_instance.global_position = packet_data["player_position"]
 				if packet_data.has("player_rotation"):
 					player_instance.rotation = packet_data["player_rotation"]
+		if packet_data["message"] == "time_set":
+			recieve_set_time_request(packet_data["time_set"])
 
 
 func c_set_time(set_time : int) -> void:

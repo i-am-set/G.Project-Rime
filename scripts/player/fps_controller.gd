@@ -6,7 +6,6 @@ extends CharacterBody3D
 @onready var LEGS_MODEL : Node3D = get_node("CollisionShape3D/legs_model")
 @onready var PAUSE_MENU = $UserInterface/PauseMenu
 @onready var INVENTORY_MENU = $UserInterface/InventoryMenu
-@onready var CONSOLE_MENU = $UserInterface/ConsoleMenu
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
 
@@ -81,12 +80,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			capture_mouse()
 		elif event.is_action_pressed("exit"):
 			toggle_pause_menu()
-			if (CONSOLE_MENU.visible):
-				CONSOLE_MENU.toggle_debug_console()
 			if (INVENTORY_MENU.visible):
 				INVENTORY_MENU.toggle_inventory()
-		elif event.is_action_pressed("debug"):
-			CONSOLE_MENU.toggle_debug_console()
 		
 		if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true:
 			look_dir = event.relative * 0.001
