@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-[Tool]
 public partial class MapGenerator : Node3D
 {
     public enum DrawMode {NoiseMap, ColorMap, Mesh}
@@ -13,29 +12,18 @@ public partial class MapGenerator : Node3D
 
 	[Export(PropertyHint.Range, "0, 8")]public int chunkSizeIndex;
     public int mapChunkSize{get { return MeshGenerator.supportedChunkSizes[chunkSizeIndex]+1; } }
-    private int _editorPreviewLOD;
-    [Export(PropertyHint.Range, "0, 4")] public int editorPreviewLOD { get { return _editorPreviewLOD; } set { _editorPreviewLOD = value; FlagNeedsUpdate(); } }
-    private float _noiseScale;
-    [Export] public float noiseScale { get { return _noiseScale; } set { _noiseScale = value; FlagNeedsUpdate(); } }
+    [Export(PropertyHint.Range, "0, 4")] public int editorPreviewLOD;
+    [Export] public float noiseScale = 0.005f;
 
-    private int _octaves;
-    [Export(PropertyHint.Range, "0, 10")] public int octaves { get { return _octaves; } set { _octaves = value; FlagNeedsUpdate(); } }
-    private float _persistance;
-    [Export(PropertyHint.Range, "0, 1")] public float persistance { get { return _persistance; } set { _persistance = value; FlagNeedsUpdate(); } }
-    private float _lacunarity;
-    [Export(PropertyHint.Range, "1, 10")] public float lacunarity { get { return _lacunarity; } set { _lacunarity = value; FlagNeedsUpdate(); } }
+    [Export(PropertyHint.Range, "0, 10")] public int octaves = 8;
+    [Export(PropertyHint.Range, "0, 1")] public float persistance = 0.5f;
+    [Export(PropertyHint.Range, "1, 10")] public float lacunarity = 2.0f;
 
     public int seed = 0;
-    private Vector2 _offset;
-    [Export] public Vector2 offset { get { return _offset; } set { _offset = value; FlagNeedsUpdate(); } }
+    [Export] public Vector2 offset;
 
-    private float _meshHeightMultiplier;
-    [Export(PropertyHint.Range, "1, 50")] public float meshHeightMultiplier { get { return _meshHeightMultiplier; } set { _meshHeightMultiplier = value; FlagNeedsUpdate(); } } 
-    private Curve _meshHeightCurve;
-    [Export] public Curve meshHeightCurve { get { return _meshHeightCurve; } set { _meshHeightCurve = value; FlagNeedsUpdate(); } } 
-
-    [Export] public bool autoUpdate;
-    public bool needsUpdating = false;
+    [Export(PropertyHint.Range, "1, 50")] public float meshHeightMultiplier = 30.0f;
+    [Export] public Curve meshHeightCurve;
 
     [Export] public TerrainType[] regions;
 
@@ -124,11 +112,6 @@ public partial class MapGenerator : Node3D
         }
 
         return new MapData(perlinNoise, colorMap);
-    }
-
-    private void FlagNeedsUpdate()
-    {
-        needsUpdating = true;
     }
 
     struct MapThreadInfo<T> {

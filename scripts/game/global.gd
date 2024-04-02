@@ -31,6 +31,7 @@ var WORLD_SEED = 0
 var SPAWN_POINT = Vector2.ZERO
 var IS_PAUSED = false
 var IS_IN_INVENTORY = false
+var IS_IN_GAME = false
 # Options Variables
 var MOUSE_CAPTURED = false
 var RENDER_DISTANCE = 10
@@ -82,15 +83,6 @@ func _physics_process(_delta):
 	if GLOBAL_TICK % 40 == 0:
 		repair_globals()
 
-func remove_lobby_data():
-	# Lobby Variables
-	LOBBY_ID = 0
-	LOBBY_MEMBERS = []
-	LOBBY_PEER_INSTANCES = {}
-	GLOBAL_TICK = 0
-	# World Variables
-	WORLD_SEED = 0
-
 func capture_mouse(captured : bool):
 	if captured:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -121,3 +113,4 @@ func leave_lobby():
 	SPAWN_POINT = Vector2.ZERO
 	IS_PAUSED = false
 	IS_IN_INVENTORY = false
+	IS_IN_GAME = false

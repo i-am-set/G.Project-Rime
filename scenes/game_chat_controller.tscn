@@ -1,31 +1,76 @@
-[gd_scene load_steps=3 format=3 uid="uid://bufntssvubj16"]
+[gd_scene load_steps=14 format=3 uid="uid://bufntssvubj16"]
 
 [ext_resource type="Script" path="res://scripts/game/game_chat_controller.gd" id="1_bvp7h"]
+[ext_resource type="FontFile" uid="uid://dacj8wfcnya4p" path="res://ui/fonts/FiraCode/FiraCode-Bold.ttf" id="2_3ur0w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qt841"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aorpn"]
+bg_color = Color(0.235294, 0.235294, 0.235294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qmtdm"]
+bg_color = Color(0.227451, 0.227451, 0.227451, 0.52549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e0u1s"]
+bg_color = Color(0.14902, 0.14902, 0.14902, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v0brr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5yhoa"]
-bg_color = Color(0.211765, 0.211765, 0.211765, 0.603922)
+bg_color = Color(0.211765, 0.211765, 0.211765, 0.0941176)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xjfoq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ghkvx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e35mn"]
+
+[sub_resource type="Theme" id="Theme_lhi2y"]
+Button/colors/font_color = Color(0.87451, 0.87451, 0.87451, 0.192157)
+Button/colors/font_focus_color = Color(0.87451, 0.87451, 0.87451, 0.192157)
+Button/colors/font_hover_color = Color(0.87451, 0.87451, 0.87451, 0.192157)
+Button/colors/font_pressed_color = Color(0.87451, 0.87451, 0.87451, 0.192157)
+Button/fonts/font = ExtResource("2_3ur0w")
+Button/styles/focus = SubResource("StyleBoxEmpty_qt841")
+Button/styles/hover = SubResource("StyleBoxFlat_aorpn")
+Button/styles/normal = SubResource("StyleBoxFlat_qmtdm")
+Button/styles/pressed = SubResource("StyleBoxFlat_e0u1s")
+Label/fonts/font = ExtResource("2_3ur0w")
+LineEdit/colors/font_placeholder_color = Color(0.87451, 0.87451, 0.87451, 0.117647)
+LineEdit/font_sizes/font_size = 16
+LineEdit/fonts/font = ExtResource("2_3ur0w")
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_v0brr")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_qmtdm")
+Panel/styles/panel = SubResource("StyleBoxFlat_5yhoa")
+TextEdit/styles/focus = SubResource("StyleBoxEmpty_xjfoq")
+TextEdit/styles/normal = SubResource("StyleBoxEmpty_ghkvx")
+TextEdit/styles/read_only = SubResource("StyleBoxEmpty_e35mn")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ejo3a"]
+bg_color = Color(0.145098, 0.145098, 0.145098, 0.239216)
 
 [node name="GameChatController" type="Control"]
 layout_mode = 3
-anchor_right = 0.989
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 10.56
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_bvp7h")
 
 [node name="Chat" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -112.0
-offset_right = 490.0
-offset_bottom = 144.0
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -268.0
+offset_right = 500.0
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_5yhoa")
+theme = SubResource("Theme_lhi2y")
 
 [node name="ChatType" type="Label" parent="Chat"]
 layout_mode = 0
@@ -43,7 +88,7 @@ layout_mode = 0
 offset_left = 5.0
 offset_top = 18.0
 offset_right = 484.0
-offset_bottom = 214.0
+offset_bottom = 218.0
 theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 12
 editable = false
@@ -61,26 +106,28 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ejo3a")
 
 [node name="SendMessage" type="Button" parent="Chat"]
 layout_mode = 0
-offset_left = 370.0
-offset_top = 220.0
-offset_right = 488.0
-offset_bottom = 255.0
+offset_left = 357.0
+offset_top = 221.0
+offset_right = 484.0
+offset_bottom = 252.0
 theme_override_font_sizes/font_size = 16
 text = "Send Message"
 
 [node name="LineEdit" type="LineEdit" parent="Chat/SendMessage"]
 layout_mode = 0
-offset_left = -370.0
-offset_top = 1.0
-offset_right = -2.0
-offset_bottom = 34.0
+offset_left = -352.0
+offset_right = -4.0
+offset_bottom = 31.0
 placeholder_text = "Your Message Here"
+caret_blink = true
 
 [node name="ChatHideTimer" type="Timer" parent="."]
 wait_time = 7.0
 one_shot = true
 
+[connection signal="pressed" from="Chat/SendMessage" to="." method="_on_send_message_pressed"]
 [connection signal="timeout" from="ChatHideTimer" to="." method="_on_chat_hide_timer_timeout"]

@@ -3,13 +3,13 @@ extends Node
 @onready var SKYBOX = $SkyBox
 
 var _player_node = preload("res://scenes/fps_controller.tscn")
-var _chat = preload("res://scenes/game_chat_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
+
 
 @export var generated_terrain : Node3D
 @export var skybox : Node3D
 
-var _chat_instance : Control
+var _game_chat_controller : Control = DebugAutoloadCanvas.game_chat_controller
 var _player_list_instance : Control
 var _authorized_player : Player
 
@@ -24,12 +24,11 @@ func _ready():
 	check_command_line()
 	
 	# initialize game chat and player list
-	_chat_instance = _chat.instantiate()
-	add_child(_chat_instance)
 	_player_list_instance = _player_list.instantiate()
 	add_child(_player_list_instance)
 	
 	# initialize player
+	Global.IS_IN_GAME = true
 	if Global.LOBBY_MEMBERS.size() > 1:
 		for this_member in Global.LOBBY_MEMBERS:
 			print_debug(this_member)
@@ -85,7 +84,7 @@ func _input(_event):
 		pass
 
 func display_message(message):
-	_chat_instance.display_message(message)
+	_game_chat_controller.display_message(message)
 
 func make_p2p_handshake() -> void:
 	print_debug("Sending P2P handshake to the lobby")

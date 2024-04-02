@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://scripts/world_generation/MapGenerator.cs" id="2_l6eyd"]
 [ext_resource type="Script" path="res://scripts/world_generation/TerrainType.cs" id="3_f2kf7"]
 [ext_resource type="Material" uid="uid://cokndnhyl7pb3" path="res://materials/world_gen_material.tres" id="4_5r3nd"]
+[ext_resource type="Curve" uid="uid://bcgo5si7q5hok" path="res://scenes/utility/mesh_height_curve.tres" id="4_bp6yq"]
 [ext_resource type="Script" path="res://scripts/world_generation/InfiniteTerrainGenerator.cs" id="6_gmd1k"]
 [ext_resource type="Script" path="res://scripts/world_generation/LODInfo.cs" id="7_s7f0o"]
 [ext_resource type="Script" path="res://scripts/resource_objects/ResourceChunkInstancer.cs" id="9_8y3m7"]
@@ -14,10 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://ch0lv4twi6jw8" path="res://textures/nature/ground/ice/ice_raw_Height.png" id="13_isn0k"]
 [ext_resource type="Texture2D" uid="uid://ccfdl7dutavpr" path="res://textures/nature/ground/ice/ice_raw_Normal.jpg" id="14_3l2u2"]
 [ext_resource type="Texture2D" uid="uid://cvf2cm7f6n23" path="res://textures/nature/ground/ice/ice_raw_Roughness.jpg" id="15_eb41i"]
-
-[sub_resource type="Curve" id="Curve_hjld2"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.282828, 0), 0.0, 5.435, 0, 0, Vector2(0.387, 0.162), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
-point_count = 4
 
 [sub_resource type="Resource" id="Resource_rrn6f"]
 script = ExtResource("3_f2kf7")
@@ -99,20 +96,14 @@ generated_terrain = NodePath("MapGenerator/InfiniteTerrainGen")
 skybox = NodePath("mountain_range_skybox_model_1")
 
 [node name="SkyBox" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1395.19
+timeOfDay = 2028.24
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
 
 [node name="MapGenerator" type="Node3D" parent="."]
 script = ExtResource("2_l6eyd")
-noiseScale = 0.005
-octaves = 8
-persistance = 0.5
-lacunarity = 2.0
-meshHeightMultiplier = 30.0
-meshHeightCurve = SubResource("Curve_hjld2")
-autoUpdate = true
+meshHeightCurve = ExtResource("4_bp6yq")
 regions = [SubResource("Resource_rrn6f"), SubResource("Resource_qiy2y"), SubResource("Resource_p26xn"), SubResource("Resource_tjvym"), SubResource("Resource_bbt57"), SubResource("Resource_5ytf7")]
 
 [node name="InfiniteTerrainGen" type="Node3D" parent="MapGenerator" node_paths=PackedStringArray("viewer")]

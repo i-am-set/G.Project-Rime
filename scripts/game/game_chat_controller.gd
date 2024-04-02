@@ -11,34 +11,35 @@ var _chat_type : String = "GLOBAL"
 var chat_hide_tween : Tween
 
 func _ready():
-	capture_mouse()
+	visible = false
 	set_chat_type()
 
 func _input(event: InputEvent) -> void:
-	if Global.MOUSE_CAPTURED == true && chatInput.has_focus():
-		deselect_chat_input()
-	if Input.is_action_just_pressed("enter"):
-		# stop the tween if needed and reset variable
-		if chat_hide_tween != null:
-			if chat_hide_tween.is_running():
-				chat_hide_tween.stop()
-				chat.modulate.a = 1
-		# change logic based on if the chat window is open or not
-		if chat.visible == false || chatInput.has_focus() == false && Global.IS_PAUSED == false && Global.IS_IN_INVENTORY == false:
-			chat.visible = true
-			select_chat_input()
-			uncapture_mouse()
-		else:
-			send_chat_message()
-	if Input.is_action_pressed("exit") || Global.IS_PAUSED == true || Global.IS_IN_INVENTORY == true:
-		chatInput.clear()
-		if chat.visible == true:
+	if Global.IS_IN_GAME:
+		if Global.MOUSE_CAPTURED == true && chatInput.has_focus():
 			deselect_chat_input()
-			chat.visible = false
-	if event.is_action_pressed("ui_scroll_up") && chatInput.has_focus() == true:
-		chatOutput.scroll_vertical -= 1
-	if event.is_action_pressed("ui_scroll_down") && chatInput.has_focus() == true:
-		chatOutput.scroll_vertical += 1
+		if Input.is_action_just_pressed("ui_text_completion_accept"):
+			# stop the tween if needed and reset variable
+			if chat_hide_tween != null:
+				if chat_hide_tween.is_running():
+					chat_hide_tween.stop()
+					chat.modulate.a = 1
+			# change logic based on if the chat window is open or not
+			if visible == false || chatInput.has_focus() == false && Global.IS_PAUSED == false && Global.IS_IN_INVENTORY == false:
+				visible = true
+				select_chat_input()
+				uncapture_mouse()
+			else:
+				send_chat_message()
+		if Input.is_action_pressed("exit") || Global.IS_PAUSED == true || Global.IS_IN_INVENTORY == true:
+			chatInput.clear()
+			if visible == true:
+				deselect_chat_input()
+				visible = false
+		if event.is_action_pressed("ui_scroll_up") && chatInput.has_focus() == true:
+			chatOutput.scroll_vertical -= 1
+		if event.is_action_pressed("ui_scroll_down") && chatInput.has_focus() == true:
+			chatOutput.scroll_vertical += 1
 
 func capture_mouse():
 	Global.capture_mouse(true)
@@ -80,14 +81,14 @@ func _on_chat_hide_timer_timeout():
 	chat_hide_tween = get_tree().create_tween()
 	chat_hide_tween.tween_property(chat, "modulate:a", 0, 1)
 	await chat_hide_tween.finished
-	chat.visible = false
+	visible = false
 
 func send_chat_message():
 	# reset the timer
 	chatHideTimer.stop()
 	chatHideTimer.start()
 	# Get chat input
-	var this_message = chatInput.text
+	var this_message = " " + chatInput.text
 	# Pass message to steam
 	if this_message != "":
 		var is_sent = Steam.sendLobbyChatMsg(Global.LOBBY_ID, this_message)
@@ -100,3 +101,7 @@ func send_chat_message():
 	deselect_chat_input()
 	# Clear chat input
 	chatInput.text = ""
+
+
+func _on_send_message_pressed():
+	send_chat_message()

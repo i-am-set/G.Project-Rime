@@ -12,8 +12,6 @@ const info_offset: Vector2 = Vector2(20, 0)
 @onready var btn_unequip: Button = $"%BtnUnequip"
 @onready var lbl_info: Label = $"%LblInfo"
 
-var is_inventory_open : bool = false
-
 func _ready() -> void:
 	self.visible = false
 	Global.IS_IN_INVENTORY = false
@@ -39,7 +37,7 @@ func _on_item_mouse_exited(_item: InventoryItem) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("inventory"):
+	if event.is_action_pressed("inventory") && !Global.IS_PAUSED && !DebugAutoloadCanvas.game_chat_controller.visible:
 		toggle_inventory()
 	
 	if !(event is InputEventMouseMotion):
