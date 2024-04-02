@@ -3,6 +3,8 @@ extends Node
 enum lobby_status {Private, Friends, Public, Invisible}
 enum search_distance {Close, Default, Far, Worldwide}
 
+const world_path = "res://scenes/maingame/world.tscn"
+
 @onready var steamName = $SteamName
 @onready var createLobbyButton = $CreateLobby
 @onready var startGameButton = $StartGame
@@ -238,7 +240,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		# Put player in game if game is started
 		if Steam.getLobbyData(this_lobby_id, "is_started") == "true":
 			await initialize_game(int(Steam.getLobbyData(this_lobby_id, "world_seed")))
-			await get_tree().change_scene_to_file("res://levels/level_007.tscn")
+			await get_tree().change_scene_to_file(world_path)
 			# bug - multiplayer lobby joining game on lobby join AND seed is broken
 		
 	# Else it failed for some reason
@@ -517,4 +519,4 @@ func process_data(packet_data : Dictionary):
 	if packet_data.has("message"):
 		if packet_data["message"] == "start_game":
 			await initialize_game(int(Steam.getLobbyData(Global.LOBBY_ID, "world_seed")))
-			await get_tree().change_scene_to_file("res://scenes/maingame/world.tscn")
+			await get_tree().change_scene_to_file(world_path)
