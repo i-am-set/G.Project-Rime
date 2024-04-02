@@ -126,12 +126,6 @@ public partial class MapGenerator : Node3D
         return new MapData(perlinNoise, colorMap);
     }
 
-    public void RandomizeSeed()
-    {
-        Random rnd = new();
-        seed = rnd.Next(0, 999999999);
-    }
-
     private void FlagNeedsUpdate()
     {
         needsUpdating = true;

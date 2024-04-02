@@ -181,7 +181,6 @@ offset_bottom = -0.104002
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16
-text = "asdasdasd"
 vertical_alignment = 2
 
 [node name="LobbyNameLabel" type="Label" parent="Chat"]

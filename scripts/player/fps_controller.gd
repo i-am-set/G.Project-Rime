@@ -132,6 +132,7 @@ func _ready():
 	# Set console commands
 	if _is_authorized_user:
 		Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
+		Console.create_command("seed", self.c_get_world_seed, "Gets the world seed")
 		Console.create_command("get_self_position", self.c_get_current_position_self, "Gets the current position of self.")
 		Console.create_command("get_player_position", self.c_get_current_position_peer, "Gets the current position of the specified player.")
 		Console.create_command("tpc", self.c_teleport_self_to_coordinate, "Teleports your player to the given world coordinate by x, y, z vectors.")
@@ -269,6 +270,10 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Else send it to someone specific
 	else:
 		Steam.sendP2PPacket(target, this_data, send_type, channel)
+
+func c_get_world_seed():
+	Console.print_line("Global seed:" + str(Global.WORLD_SEED))
+	Console.print_line("Global seed:" + Steam.getLobbyData(Global.LOBBY_ID, "world_seed"))
 
 func c_set_no_clip() -> void:
 	_no_clip = !_no_clip

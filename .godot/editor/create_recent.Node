@@ -1,8 +1,9 @@
+Polygon2D
+MeshInstance2D
 TextureButton
 Button
 NinePatchRect
 Control
-Polygon2D
 CollisionPolygon2D
 Area2D
 CheckButton
@@ -11,5 +12,3 @@ HBoxContainer
 HSeparator
 MarginContainer
 PanelContainer
-Container
-Panel

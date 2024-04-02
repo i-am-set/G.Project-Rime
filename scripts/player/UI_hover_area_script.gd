@@ -32,13 +32,14 @@ func _input(event):
 			print_debug("no longer hovering over " + ui_element.name)
 
 func _on_viewport_size_changed():
-	var rect = get_rect()
-	var new_points = PackedVector2Array()
-	var aspect_ratio = rect.size.x / rect.size.y
-	for point in original_polygon_points:
-		new_points.append(rect.position + Vector2(point.x * rect.size.x, point.y * rect.size.y * aspect_ratio))
-	node2d_polygon.polygon = new_points
-	_draw()
+	if ui_element.visible:
+		var rect = get_rect()
+		var new_points = PackedVector2Array()
+		var aspect_ratio = rect.size.x / rect.size.y
+		for point in original_polygon_points:
+			new_points.append(rect.position + Vector2(point.x * rect.size.x, point.y * rect.size.y * aspect_ratio))
+		node2d_polygon.polygon = new_points
+		_draw()
 
 func convert_to_relative(points: PackedVector2Array) -> PackedVector2Array:
 	var rect = get_rect()
