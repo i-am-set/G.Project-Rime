@@ -32,6 +32,7 @@ func _ready():
 	# initialize player
 	if Global.LOBBY_MEMBERS.size() > 1:
 		for this_member in Global.LOBBY_MEMBERS:
+			print_debug(this_member)
 			if this_member['steam_id'] != Global.STEAM_ID:
 				print_debug("creating player %s" %this_member['steam_id'])
 				var player_instance = _player_node.instantiate()
@@ -165,6 +166,9 @@ func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_sta
 				Global.LOBBY_PEER_INSTANCES[making_change_id] = player_instance
 				add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(-5, 10, 0)
+				await get_tree().process_frame
+				# send move packet to update position
+				_authorized_player.send_move_packet()
 		display_message(str(changer) + " has joined the lobby.")
 	elif chat_state == 2:
 		remove_child(Global.LOBBY_PEER_INSTANCES[making_change_id])

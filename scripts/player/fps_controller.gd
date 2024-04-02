@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var PLAYER_MODEL : Node3D = get_node("CollisionShape3D/player_model")
 @onready var LEGS_MODEL : Node3D = get_node("CollisionShape3D/legs_model")
 @onready var PAUSE_MENU = $UserInterface/PauseMenu
+@onready var INVENTORY_MENU = $UserInterface/InventoryMenu
 @onready var CONSOLE_MENU = $UserInterface/ConsoleMenu
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
@@ -82,6 +83,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			toggle_pause_menu()
 			if (CONSOLE_MENU.visible):
 				CONSOLE_MENU.toggle_debug_console()
+			if (INVENTORY_MENU.visible):
+				INVENTORY_MENU.toggle_inventory()
 		elif event.is_action_pressed("debug"):
 			CONSOLE_MENU.toggle_debug_console()
 		
@@ -219,8 +222,11 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 		move_and_slide()
 		
 		if global_position != _cached_position || rotation != _cached_rotation:
-			send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation})
-	
+			send_move_packet()
+
+func send_move_packet():
+	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation})
+
 func update_velocity() -> void:
 	pass
 

@@ -35,3 +35,4 @@ res://scripts/world_generation/PregenTerrain.cs
 res://scripts/world_generation/TerrainType.cs
 res://scripts/steam/SteamLobby.gd
 res://scripts/player/fps_controller.gd
+res://scripts/game/game_controller.gd

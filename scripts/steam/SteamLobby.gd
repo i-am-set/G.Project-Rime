@@ -302,7 +302,6 @@ func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_sta
 func _on_lobby_match_list(these_lobbies: Array) -> void:
 	print_debug("started list")
 	for this_lobby in these_lobbies:
-		print_debug(this_lobby)
 		# Pull lobby data from Steam
 		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
 

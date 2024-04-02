@@ -42,7 +42,6 @@
 [ext_resource type="Script" path="res://scripts/player/JumpingPlayerState.gd" id="13_fbjl8"]
 [ext_resource type="Texture2D" uid="uid://dutjoktjru0dn" path="res://textures/ui/ui_male_silhouette_partition_0007_left_side_hand.png" id="13_q7hvq"]
 [ext_resource type="Script" path="res://scripts/player/FallingPlayerState.gd" id="14_7wlsx"]
-[ext_resource type="Script" path="res://scripts/player/inventory_silhouette_hover_logic.gd" id="14_44s6j"]
 [ext_resource type="Script" path="res://scripts/player/UI_hover_area_script.gd" id="14_s2047"]
 [ext_resource type="Texture2D" uid="uid://b2ulqdxn8n4uf" path="res://textures/ui/ui_male_silhouette_partition_0004_right_side_leg.png" id="14_sfo0j"]
 [ext_resource type="Texture2D" uid="uid://drkets27ug8hn" path="res://textures/ui/ui_male_silhouette_partition_0005_right_side_foot.png" id="15_jb0ig"]
@@ -630,6 +629,35 @@ region_rect = Rect2(0, 0, 32, 32)
 texture = ExtResource("8_g1dc2")
 region_rect = Rect2(0, 0, 32, 32)
 
+[sub_resource type="GDScript" id="GDScript_2enjg"]
+script/source = "extends Area2D
+
+@onready var ui_element : Node = null
+
+func _ready():
+	var name_prefix = get_name().split(\"_\")[0]
+	var sibling = get_node(\"../silhouette_img\")
+	if sibling:
+		for child in sibling.get_children():
+			if child.get_name().begins_with(name_prefix):
+				ui_element = child
+				break
+
+#func _process(delta):
+	#var mouse_position = get_viewport().get_mouse_position()
+	#var space_state = get_world_2d().direct_space_state
+	#var result = space_state.intersect_point(mouse_position, 32, [], self.collision_mask, false, true)
+#
+	#if result.size() > 0:
+		#print(\"Mouse is colliding with the Area2D\")
+	#else:
+		#print(\"Mouse is not colliding with the Area2D\")
+
+func _on_mouse_entered():
+	print(\".\")
+	print(ui_element)
+"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvtv5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyi13"]
@@ -1107,7 +1135,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_ujw28")
 toggle_mode = true
 button_pressed = true
 
-[node name="Inventory" type="Control" parent="UserInterface"]
+[node name="InventoryMenu" type="Control" parent="UserInterface"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1116,7 +1144,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_m68ou")
 
-[node name="BGBlurPanel" type="Panel" parent="UserInterface/Inventory"]
+[node name="BGBlurPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 material = SubResource("ShaderMaterial_xbpxg")
 layout_mode = 1
 anchors_preset = 15
@@ -1126,7 +1154,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="BGColorPanel" type="Panel" parent="UserInterface/Inventory/BGBlurPanel"]
+[node name="BGColorPanel" type="Panel" parent="UserInterface/InventoryMenu/BGBlurPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1135,7 +1163,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ny6q8")
 
-[node name="silhouette_panel" type="Panel" parent="UserInterface/Inventory"]
+[node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.38
@@ -1151,7 +1179,7 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 
-[node name="Head_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="Head_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1160,11 +1188,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/Head_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/Head_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 156, 819, 159, 812, 163, 808, 164, 802, 165, 795, 165, 791, 164, 785, 162, 780, 159, 777, 156, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
-[node name="Torso_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="Torso_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1173,11 +1201,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/Torso_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/Torso_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(802, 166, 795, 166, 791, 165, 785, 163, 780, 160, 777, 157, 771, 160, 758, 166, 747, 171, 736, 176, 732, 179, 735, 184, 738, 191, 741, 199, 743, 208, 745, 218, 747, 231, 747, 241, 747, 247, 747, 252, 747, 255, 749, 274, 750, 283, 751, 286, 750, 302, 748, 323, 746, 332, 744, 341, 743, 348, 750, 350, 760, 354, 768, 358, 776, 364, 784, 371, 790, 379, 794, 386, 798, 395, 798, 398, 801, 398, 801, 395, 805, 386, 809, 379, 815, 371, 823, 364, 832, 358, 844, 352, 855, 349, 855, 342, 853, 334, 851, 321, 849, 306, 848, 298, 848, 285, 852, 250, 852, 242, 853, 224, 854, 214, 857, 203, 860, 193, 863, 186, 866, 180, 867, 179, 863, 176, 857, 173, 850, 170, 843, 167, 834, 163, 827, 160, 822, 157, 819, 160, 812, 164, 808, 165)
 
-[node name="RSArm_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="RSArm_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1186,11 +1214,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/RSArm_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/RSArm_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
-[node name="RSHand_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="RSHand_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1199,11 +1227,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/RSHand_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/RSHand_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
-[node name="RSLeg_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="RSLeg_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1212,11 +1240,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/RSLeg_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/RSLeg_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
-[node name="RSFoot_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="RSFoot_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1225,11 +1253,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/RSFoot_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/RSFoot_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
-[node name="LSArm_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="LSArm_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1238,11 +1266,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/LSArm_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/LSArm_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(123.8, 145.68, 129.8, 158.68, 134.8, 173.68, 136.8, 187.68, 138.8, 203.68, 137.8, 215.68, 134.8, 228.68, 127.8, 248.68, 124.8, 263.68, 119.8, 280.68, 109.8, 301.68, 101.8, 319.68, 95.8, 333.68, 94.8, 337.68, 85.8, 333.68, 77.8, 331.68, 72.8, 330.68, 73.8, 328.68, 78.8, 304.68, 81.8, 287.68, 88.8, 267.68, 95.8, 255.68, 98.8, 252.68, 99.8, 232.68, 102.8, 217.68, 104.8, 207.68, 107.8, 197.68, 107.8, 183.68, 107.8, 173.68, 110.8, 163.68, 113.8, 155.68, 118.8, 149.68)
 
-[node name="LSHand_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="LSHand_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1251,11 +1279,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/LSHand_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/LSHand_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
-[node name="LSLeg_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="LSLeg_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1264,11 +1292,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/LSLeg_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/LSLeg_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
-[node name="LSFoot_Area" type="Control" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="LSFoot_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1277,11 +1305,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("14_s2047")
 
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/Inventory/silhouette_panel/LSFoot_Area"]
+[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/LSFoot_Area"]
 color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
 
-[node name="silhouette_img" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel"]
+[node name="silhouette_img" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel"]
 modulate = Color(1, 1, 1, 0.52549)
 layout_mode = 1
 anchors_preset = 15
@@ -1294,7 +1322,7 @@ texture = ExtResource("7_j4uj2")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Head_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="Head_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -1308,7 +1336,7 @@ texture = ExtResource("8_lg2ti")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="Torso_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="Torso_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1321,7 +1349,7 @@ texture = ExtResource("9_s1bmo")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="RSArm_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="RSArm_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1334,7 +1362,7 @@ texture = ExtResource("12_r0dy2")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="RSHand_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="RSHand_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1347,7 +1375,7 @@ texture = ExtResource("11_00euu")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="RSLeg_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="RSLeg_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1360,7 +1388,7 @@ texture = ExtResource("14_sfo0j")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="RSFoot_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="RSFoot_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1373,7 +1401,7 @@ texture = ExtResource("15_jb0ig")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="LSArm_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="LSArm_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1386,7 +1414,7 @@ texture = ExtResource("10_458h2")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="LSHand_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="LSHand_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1399,7 +1427,7 @@ texture = ExtResource("13_q7hvq")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="LSLeg_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="LSLeg_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1412,7 +1440,7 @@ texture = ExtResource("16_pku5r")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="LSFoot_Hover" type="TextureRect" parent="UserInterface/Inventory/silhouette_panel/silhouette_img"]
+[node name="LSFoot_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1425,23 +1453,23 @@ texture = ExtResource("17_p3qy2")
 expand_mode = 4
 stretch_mode = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/Inventory"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/Inventory/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 custom_minimum_size = Vector2(160, 160)
@@ -1453,25 +1481,25 @@ field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
 
-[node name="BtnSortLeft" type="Button" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="BtnSortLeft" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Sort"
 
-[node name="BtnSplitLeft" type="Button" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="BtnSplitLeft" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Split"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="PanelContainer2" type="PanelContainer" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="PanelContainer2" type="PanelContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridRight" type="Control" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2"]
+[node name="CtrlInventoryGridRight" type="Control" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2"]
 unique_name_in_owner = true
 texture_filter = 1
 custom_minimum_size = Vector2(160, 160)
@@ -1483,30 +1511,30 @@ field_style = SubResource("3")
 field_highlighted_style = SubResource("4")
 selection_style = SubResource("6")
 
-[node name="BtnSortRight" type="Button" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="BtnSortRight" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Sort"
 
-[node name="BtnSplitRight" type="Button" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="BtnSplitRight" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Split"
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer3" type="VBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer3"]
+[node name="Label" type="Label" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 text = "Item Slot:"
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer3"]
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="CtrlItemSlot" type="Control" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer3/PanelContainer"]
+[node name="CtrlItemSlot" type="Control" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer3/PanelContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -1516,17 +1544,17 @@ slot_highlighted_style = SubResource("8")
 item_slot_path = NodePath("../../../../../ItemSlot")
 label_visible = false
 
-[node name="BtnUnequip" type="Button" parent="UserInterface/Inventory/VBoxContainer/HBoxContainer/VBoxContainer3"]
+[node name="BtnUnequip" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Unequip"
 
-[node name="InventoryGridStackedLeft" type="Node" parent="UserInterface/Inventory"]
+[node name="InventoryGridStackedLeft" type="Node" parent="UserInterface/InventoryMenu"]
 script = ExtResource("10_mmu75")
 size = Vector2i(5, 5)
 item_protoset = ExtResource("11_t0exd")
 
-[node name="item_1x1" type="Node" parent="UserInterface/Inventory/InventoryGridStackedLeft"]
+[node name="item_1x1" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedLeft"]
 script = ExtResource("12_exwb5")
 protoset = ExtResource("11_t0exd")
 prototype_id = "item_1x1"
@@ -1534,7 +1562,7 @@ properties = {
 "stack_size": 2
 }
 
-[node name="item_2x2" type="Node" parent="UserInterface/Inventory/InventoryGridStackedLeft"]
+[node name="item_2x2" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedLeft"]
 script = ExtResource("12_exwb5")
 protoset = ExtResource("11_t0exd")
 prototype_id = "item_2x2"
@@ -1543,12 +1571,12 @@ properties = {
 "stack_size": 2
 }
 
-[node name="InventoryGridStackedRight" type="Node" parent="UserInterface/Inventory"]
+[node name="InventoryGridStackedRight" type="Node" parent="UserInterface/InventoryMenu"]
 script = ExtResource("10_mmu75")
 size = Vector2i(5, 5)
 item_protoset = ExtResource("11_t0exd")
 
-[node name="item_1x1" type="Node" parent="UserInterface/Inventory/InventoryGridStackedRight"]
+[node name="item_1x1" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedRight"]
 script = ExtResource("12_exwb5")
 protoset = ExtResource("11_t0exd")
 prototype_id = "item_1x1"
@@ -1556,7 +1584,7 @@ properties = {
 "stack_size": 2
 }
 
-[node name="item_2x2" type="Node" parent="UserInterface/Inventory/InventoryGridStackedRight"]
+[node name="item_2x2" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedRight"]
 script = ExtResource("12_exwb5")
 protoset = ExtResource("11_t0exd")
 prototype_id = "item_2x2"
@@ -1565,24 +1593,24 @@ properties = {
 "stack_size": 2
 }
 
-[node name="LblInfo" type="Label" parent="UserInterface/Inventory"]
+[node name="LblInfo" type="Label" parent="UserInterface/InventoryMenu"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 14.0
 
-[node name="ItemSlot" type="Node" parent="UserInterface/Inventory"]
+[node name="ItemSlot" type="Node" parent="UserInterface/InventoryMenu"]
 script = ExtResource("13_1cna5")
 item_protoset = ExtResource("11_t0exd")
 
-[node name="Head_Area" type="Area2D" parent="UserInterface/Inventory"]
+[node name="Head_Area" type="Area2D" parent="UserInterface/InventoryMenu"]
 visible = false
 collision_layer = 2147483648
 collision_mask = 2147483648
-script = ExtResource("14_44s6j")
+script = SubResource("GDScript_2enjg")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="UserInterface/Inventory/Head_Area"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="UserInterface/InventoryMenu/Head_Area"]
 polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 112, 824, 136, 820, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 134, 770, 114, 771, 94, 774, 79, 780, 72, 788, 70)
 
 [node name="ConsoleMenu" type="Control" parent="UserInterface"]
@@ -1734,4 +1762,4 @@ script = ExtResource("19_lm36c")
 [connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_fov_slider_value_changed"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_dithering_checkbox_toggled"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_outline_checkbox_toggled"]
-[connection signal="mouse_entered" from="UserInterface/Inventory/Head_Area" to="UserInterface/Inventory/Head_Area" method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="UserInterface/InventoryMenu/Head_Area" to="UserInterface/InventoryMenu/Head_Area" method="_on_mouse_entered"]
