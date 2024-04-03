@@ -5,7 +5,6 @@ extends Node
 var _player_node = preload("res://scenes/fps_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
-
 @export var generated_terrain : Node3D
 @export var skybox : Node3D
 
@@ -317,7 +316,7 @@ func process_data(packet_data : Dictionary):
 				if packet_data.has("player_rotation"):
 					player_instance.rotation = packet_data["player_rotation"]
 		if packet_data["message"] == "time_set":
-			recieve_set_time_request(packet_data["time_set"])
+			recieve_set_time_request(packet_data["time"])
 
 
 func c_set_time(set_time : int) -> void:

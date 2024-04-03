@@ -6,6 +6,10 @@ var player # Reference to PlayerController
 
 const PACKET_READ_LIMIT: int = 32
 
+# World Constants
+const MAX_TEMPERATURE = -10 # celsius
+const MIN_TEMPERATURE = -25 # celsius
+
 # Options Constants
 const DEFAULT_FOV = 75
 const MIN_FOV = 60
@@ -14,33 +18,39 @@ const MIN_SPEED = 0
 const MAX_SPEED = 1000
 
 # Steam Variables
-var OWNED = false
-var ONLINE = false
-var STEAM_ID = 0
-var STEAM_NAME = ""
+var OWNED := false
+var ONLINE := false
+var STEAM_ID : int = 0
+var STEAM_NAME := ""
 # Lobby Variables 
 var DATA
-var LOBBY_ID = 0
-var LOBBY_MAX_MEMBERS = 4
-var LOBBY_MEMBERS = []
-var LOBBY_INVITE_ARG = false
-var LOBBY_PEER_INSTANCES = {} 
-var GLOBAL_TICK = 0
+var LOBBY_ID : int = 0
+var LOBBY_MAX_MEMBERS : int = 4
+var LOBBY_MEMBERS := []
+var LOBBY_INVITE_ARG := false
+var LOBBY_PEER_INSTANCES := {} 
+var GLOBAL_TICK : int = 0
 # World Variables
-var WORLD_SEED = 0
-var SPAWN_POINT = Vector2.ZERO
-var IS_PAUSED = false
-var IS_IN_INVENTORY = false
-var IS_IN_GAME = false
+var WORLD_SEED : int = 0
+var TIME_OF_DAY : float = 1200.0
+var CURRENT_TEMPERATURE : float = (MAX_TEMPERATURE + MIN_TEMPERATURE) / 2
+var TEMPERATURE_HIGH : float = MAX_TEMPERATURE
+var TEMPERATURE_LOW : float = TEMPERATURE_HIGH - 3
+var SUN_WARMTH_MULTIPLIER : float = 1.0
+var SPAWN_POINT := Vector2.ZERO
+var IS_PAUSED := false
+var IS_IN_INVENTORY := false
+var IS_IN_GAME := false
+
 # Options Variables
-var MOUSE_CAPTURED = false
+var MOUSE_CAPTURED := false
 var RENDER_DISTANCE = 10
-var LOD_BIAS = 0.25
-var IS_VSYNC_ENABLED = true
-var FIELD_OF_VIEW = 75
-var POSTP_OUTLINE_ON = true
-var POSTP_DITHER_ON = true
-var RES_SCALE_PERCENT = 100
+var LOD_BIAS : float = 0.25
+var IS_VSYNC_ENABLED := true
+var FIELD_OF_VIEW : int = 75
+var POSTP_OUTLINE_ON := true
+var POSTP_DITHER_ON := true
+var RES_SCALE_PERCENT : int = 100
 
 func _ready():
 	var INIT = Steam.steamInit()

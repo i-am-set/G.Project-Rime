@@ -1,4 +1,3 @@
-@tool
 
 extends WorldEnvironment
 
@@ -19,6 +18,7 @@ extends WorldEnvironment
 @export var skyPreset : SkyPreset = preload("res://GodotSky/Presets/sky_default.tres")
 
 # Get required node references
+@onready var sunWarmthMultiplierCurve = preload("res://scenes/utility/sun_warmth_multiplier_curve.tres")
 @onready var sunMoonParent = $SunMoon
 @onready var sunRoot : MeshInstance3D = $SunMoon/Sun
 @onready var moonRoot : MeshInstance3D = $SunMoon/Moon
@@ -30,12 +30,50 @@ var sunPosition : float = 0.0
 var moonPosition : float = 0.0
 var sunPosAlpha : float = 0.0
 
+# temperature variables
+var cached_temperature = Global.CURRENT_TEMPERATURE
+
+
 # Check if simulating day/night cycle, determine rate of time, and increase time
 func simulateDay():
 	if (simulateTime == true):
 		timeOfDay += rateOfTime
 		if (timeOfDay >= 2400.0):
+			set_temp_for_day()
 			timeOfDay = 0.0
+		Global.TIME_OF_DAY = snapped(timeOfDay, 0.01)
+		if Global.GLOBAL_TICK % 40 == 0:
+			update_temperature()
+			print(snapped(Global.TEMPERATURE_HIGH, 0.1), "          ", snapped(Global.TEMPERATURE_LOW, 0.1), "          ", snapped(Global.CURRENT_TEMPERATURE, 0.1))
+		#Global.SUN_WARMTH_MULTIPLIER = snapped(sunWarmthMultiplierCurve.sample(sunPosition), 0.01) * 2 -1
+		# opt - check if this is usable
+
+func update_temperature():
+	var time_ratio = timeOfDay / 2400.0
+	if time_ratio <= 0.5:
+		Global.CURRENT_TEMPERATURE = lerp(cached_temperature, Global.TEMPERATURE_HIGH, time_ratio * 2)
+	else:
+		Global.CURRENT_TEMPERATURE = lerp(Global.TEMPERATURE_HIGH, Global.TEMPERATURE_LOW, (time_ratio - 0.5) * 2)
+
+func set_temp_for_day():
+	var temperature_high
+	var temperature_low
+	
+	var temperature_max_increase = 15
+	
+	cached_temperature = Global.CURRENT_TEMPERATURE
+	
+	if cached_temperature + temperature_max_increase > Global.MAX_TEMPERATURE:
+		temperature_high = cached_temperature + randf_range(-3, 0)
+	elif cached_temperature - 3 < Global.MIN_TEMPERATURE:
+		temperature_high = cached_temperature + randf_range(0, temperature_max_increase)
+	else:
+		temperature_high = cached_temperature + randf_range(-3, temperature_max_increase)
+	
+	temperature_low = temperature_high - randf_range(1, 6)
+	
+	Global.TEMPERATURE_HIGH = temperature_high
+	Global.TEMPERATURE_LOW = temperature_low
 
 # Update sun and moon based on current time of day 
 func updateLights():
@@ -119,6 +157,7 @@ func updateSky():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_temp_for_day()
 	await get_tree().create_timer(3).timeout
 	self.environment.sdfgi_enabled = false
 	await get_tree().create_timer(3).timeout

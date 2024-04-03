@@ -1,4 +1,5 @@
 res://scenes/utility
+res://resources
 C:/Users/SethLaptop/wkspaces/!Builds
 res://scripts/player
 res://ui/button_groups
@@ -19,4 +20,3 @@ res://scenes/maingame
 res://scenes/resourceobjects/nature/shrub
 res://materials/nature
 res://scenes/resourceobjects/nature/nodes
-res://scripts/resource_objects

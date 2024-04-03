@@ -96,7 +96,7 @@ generated_terrain = NodePath("MapGenerator/InfiniteTerrainGen")
 skybox = NodePath("mountain_range_skybox_model_1")
 
 [node name="SkyBox" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 2028.24
+timeOfDay = 1162.5
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5

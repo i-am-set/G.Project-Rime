@@ -1,3 +1,5 @@
+Curve
+PlayerData
 BitMap
 TerrainType
 Environment

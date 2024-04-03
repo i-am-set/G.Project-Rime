@@ -22,7 +22,7 @@ extends CharacterBody3D
 
 var _is_authorized_user : bool = false
 
-var _no_clip : bool = false
+var _player_data : PlayerData
 
 var _mouse_input : bool = false
 var look_dir: Vector2 # Input direction for look/aim
@@ -78,10 +78,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _is_authorized_user == true:
 		if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED:
 			capture_mouse()
-		elif event.is_action_pressed("exit"):
-			toggle_pause_menu()
+		if event.is_action_pressed("exit"):
 			if (INVENTORY_MENU.visible):
 				INVENTORY_MENU.toggle_inventory()
+			else:
+				toggle_pause_menu()
 		
 		if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true:
 			look_dir = event.relative * 0.001
@@ -116,6 +117,8 @@ func _ready():
 		
 		set_settings()
 		
+		_player_data = load("res://resources/default_player_data.tres")
+		
 		Global.player = self
 		
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -141,6 +144,8 @@ func _ready():
 		Console.create_command("postp_enable_dither", self.c_enable_postp_dither, "Toggles the dithering post process effect. Takes a true or false.")
 		Console.create_command("postp_set_color_depth", self.c_set_postp_color_depth, "Sets the color depth post process effect. 1 is minimum; 8 is maximum; 6 is default.")
 		Console.create_command("postp_enable_outline", self.c_enable_postp_outline, "Toggles the outline post process effect. Takes a true or false.")
+		Console.create_command("set_body_temperature", self.c_set_all_player_limb_temperature, "Sets the temperature of all body parts to the given value. 100.0 is default; 0.0 is min; 200.0 is max")
+		Console.create_command("get_body_temperature", self.c_get_all_player_limb_temperature, "Displays the body temperature of each body part. 100.0 is default; 0.0 is min; 200.0 is max")
 
 func set_settings():
 	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
@@ -160,14 +165,14 @@ func _physics_process(delta):
 
 
 func update_gravity(delta) -> void:
-	if (_no_clip):
+	if (_player_data.no_clip):
 		pass
 	else:
 		velocity.y -= gravity * delta
 	
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
 	if _is_authorized_user == true:
-		if _no_clip:
+		if _player_data.no_clip:
 			if Input.is_action_pressed("sprint"):
 				speed = speed * 6
 			else:
@@ -273,20 +278,34 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	else:
 		Steam.sendP2PPacket(target, this_data, send_type, channel)
 
+func c_set_all_player_limb_temperature(temperature : float) -> void:
+	var rounded_temperature : int = temperature
+	_player_data.set_all_limb_temperature(rounded_temperature)
+	
+	Console.print_line("Set body temperature to " + str(rounded_temperature))
+
+func c_get_all_player_limb_temperature() -> void:
+	var body_temperatures: Dictionary = _player_data.get_all_limb_temperature()
+	var average_temperature : int = _player_data.get_average_limb_temperature()
+	
+	for body_part in body_temperatures.keys():
+		Console.print_line(body_part + " is at " + str(body_temperatures[body_part]))
+	Console.print_line("\n[color=GOLD]" + "Average: " + str(average_temperature) + "[/color]")
+
 func c_get_world_seed():
-	Console.print_line("Global seed:" + str(Global.WORLD_SEED))
-	Console.print_line("Global seed:" + Steam.getLobbyData(Global.LOBBY_ID, "world_seed"))
+	Console.print_line(str(Global.WORLD_SEED))
+	Console.print_line(Steam.getLobbyData(Global.LOBBY_ID, "world_seed"))
 
 func c_set_no_clip() -> void:
-	_no_clip = !_no_clip
+	_player_data.no_clip = !_player_data.no_clip
 	
-	if (_no_clip == true):
-		Console.print_line("No clip was enabled.")
+	if (_player_data.no_clip == true):
+		Console.print_line("no_clip was enabled.")
 	else:
-		Console.print_line("No clip was disabled.")
+		Console.print_line("no_clip was disabled.")
 	
-	if get_collision_mask_value(1) == _no_clip:
-		set_collision_mask_value(1, !_no_clip)
+	if get_collision_mask_value(1) == _player_data.no_clip:
+		set_collision_mask_value(1, !_player_data.no_clip)
 
 func c_set_fov(fov : int) -> void:
 	fov = set_fov(fov)

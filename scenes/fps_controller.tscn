@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=86 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -21,34 +21,24 @@
 [ext_resource type="Texture2D" uid="uid://cdhuw0juxw3up" path="res://images/field_highlighted_background.png" id="8_g1dc2"]
 [ext_resource type="FontFile" uid="uid://cblhlwfgq7uv3" path="res://ui/fonts/FiraCode/FiraCode-Regular.ttf" id="8_hjgll"]
 [ext_resource type="Texture2D" uid="uid://beqh5d5pjo0xa" path="res://textures/ui/slider_grabber_disabled.png" id="8_jebdu"]
-[ext_resource type="Texture2D" uid="uid://c4vkrllp2upuc" path="res://textures/ui/ui_male_silhouette_partition_0000_head.png" id="8_lg2ti"]
 [ext_resource type="Script" path="res://scripts/game/fps_label.gd" id="8_mj3xk"]
 [ext_resource type="Script" path="res://scripts/player/IdlePlayerState.gd" id="8_rqw4w"]
 [ext_resource type="Script" path="res://addons/gloot/ui/ctrl_item_slot_ex.gd" id="9_35ilv"]
-[ext_resource type="Texture2D" uid="uid://cxbcxh14najqy" path="res://textures/ui/ui_male_silhouette_partition_0001_torso.png" id="9_s1bmo"]
 [ext_resource type="Texture2D" uid="uid://bgnix38vyapog" path="res://textures/ui/slider_grabber_highlighted.png" id="9_s7idq"]
 [ext_resource type="Script" path="res://scripts/player/WalkingPlayerState.gd" id="9_wvqjd"]
-[ext_resource type="Texture2D" uid="uid://c687w7mnssq8w" path="res://textures/ui/ui_male_silhouette_partition_0002_right_side_arm.png" id="10_458h2"]
 [ext_resource type="Script" path="res://addons/gloot/core/inventory_grid_stacked.gd" id="10_mmu75"]
 [ext_resource type="Script" path="res://scripts/player/SprintingPlayerState.gd" id="10_ssjb3"]
-[ext_resource type="Texture2D" uid="uid://bdy6ika6r7elj" path="res://textures/ui/ui_male_silhouette_partition_0003_right_side_hand.png" id="11_00euu"]
 [ext_resource type="Script" path="res://scripts/player/CrouchingPlayerState.gd" id="11_4t53l"]
 [ext_resource type="Resource" uid="uid://ddrmqwl3guset" path="res://tests/data/item_definitions_grid.tres" id="11_t0exd"]
 [ext_resource type="Script" path="res://addons/gloot/core/inventory_item.gd" id="12_exwb5"]
-[ext_resource type="Texture2D" uid="uid://bpe23uu5h3pxj" path="res://textures/ui/ui_male_silhouette_partition_0006_left_side_arm.png" id="12_r0dy2"]
 [ext_resource type="Script" path="res://scripts/player/SlidingPlayerState.gd" id="12_walwr"]
 [ext_resource type="Script" path="res://addons/gloot/core/item_slot.gd" id="13_1cna5"]
 [ext_resource type="Script" path="res://scripts/player/JumpingPlayerState.gd" id="13_fbjl8"]
-[ext_resource type="Texture2D" uid="uid://dutjoktjru0dn" path="res://textures/ui/ui_male_silhouette_partition_0007_left_side_hand.png" id="13_q7hvq"]
 [ext_resource type="Script" path="res://scripts/player/FallingPlayerState.gd" id="14_7wlsx"]
-[ext_resource type="Script" path="res://scripts/player/UI_hover_area_script.gd" id="14_s2047"]
-[ext_resource type="Texture2D" uid="uid://b2ulqdxn8n4uf" path="res://textures/ui/ui_male_silhouette_partition_0004_right_side_leg.png" id="14_sfo0j"]
-[ext_resource type="Texture2D" uid="uid://drkets27ug8hn" path="res://textures/ui/ui_male_silhouette_partition_0005_right_side_foot.png" id="15_jb0ig"]
+[ext_resource type="Texture2D" uid="uid://cpghkj6kt0fr0" path="res://textures/ui/ui_male_temperature_map.png" id="15_girel"]
 [ext_resource type="Script" path="res://scripts/player/WeaponViewport.gd" id="15_yu4nu"]
 [ext_resource type="Script" path="res://scripts/player/WeaponCamera.gd" id="16_577f2"]
-[ext_resource type="Texture2D" uid="uid://72l40twtsqc4" path="res://textures/ui/ui_male_silhouette_partition_0008_left_side_leg.png" id="16_pku5r"]
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
-[ext_resource type="Texture2D" uid="uid://bx8f86f1rr5i5" path="res://textures/ui/ui_male_silhouette_partition_0009_left_side_foot.png" id="17_p3qy2"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
@@ -587,6 +577,45 @@ shadow_size = 8
 shadow_offset = Vector2(3, -3)
 anti_aliasing = false
 
+[sub_resource type="Shader" id="Shader_ycexp"]
+code = "shader_type canvas_item;
+
+uniform vec4 head_color : source_color;
+uniform vec4 torso_color : source_color;
+uniform vec4 left_arm_color : source_color;
+uniform vec4 right_arm_color : source_color;
+uniform vec4 left_leg_color : source_color;
+uniform vec4 right_leg_color : source_color;
+
+void fragment() {
+    vec4 pixel_color = texture(TEXTURE, UV);
+
+    if (pixel_color == vec4(1.0, 0.0, 0.0, 1.0)) { // red
+        COLOR = head_color;
+    } else if (pixel_color == vec4(0.0, 1.0, 0.0, 1.0)) { // green
+        COLOR = torso_color;
+    } else if (pixel_color == vec4(0.0, 0.0, 1.0, 1.0)) { // blue
+        COLOR = right_arm_color;
+    } else if (pixel_color == vec4(1.0, 1.0, 0.0, 1.0)) { // yellow
+        COLOR = left_arm_color;
+    } else if (pixel_color == vec4(0.0, 1.0, 1.0, 1.0)) { // cyan
+        COLOR = right_leg_color;
+	} else if (pixel_color == vec4(1.0, 0.0, 1.0, 1.0)) { // pink
+        COLOR = left_leg_color;
+	} else {
+        COLOR = pixel_color;
+    }
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cpyot"]
+shader = SubResource("Shader_ycexp")
+shader_parameter/head_color = Color(0, 0, 0, 1)
+shader_parameter/torso_color = Color(1, 1, 1, 1)
+shader_parameter/left_arm_color = null
+shader_parameter/right_arm_color = null
+shader_parameter/left_leg_color = null
+shader_parameter/right_leg_color = null
+
 [sub_resource type="StyleBoxTexture" id="1"]
 texture = ExtResource("7_kdvpp")
 region_rect = Rect2(0, 0, 32, 32)
@@ -743,7 +772,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1158,136 +1187,6 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 
-[node name="Head_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/Head_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 156, 819, 159, 812, 163, 808, 164, 802, 165, 795, 165, 791, 164, 785, 162, 780, 159, 777, 156, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
-
-[node name="Torso_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/Torso_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(802, 166, 795, 166, 791, 165, 785, 163, 780, 160, 777, 157, 771, 160, 758, 166, 747, 171, 736, 176, 732, 179, 735, 184, 738, 191, 741, 199, 743, 208, 745, 218, 747, 231, 747, 241, 747, 247, 747, 252, 747, 255, 749, 274, 750, 283, 751, 286, 750, 302, 748, 323, 746, 332, 744, 341, 743, 348, 750, 350, 760, 354, 768, 358, 776, 364, 784, 371, 790, 379, 794, 386, 798, 395, 798, 398, 801, 398, 801, 395, 805, 386, 809, 379, 815, 371, 823, 364, 832, 358, 844, 352, 855, 349, 855, 342, 853, 334, 851, 321, 849, 306, 848, 298, 848, 285, 852, 250, 852, 242, 853, 224, 854, 214, 857, 203, 860, 193, 863, 186, 866, 180, 867, 179, 863, 176, 857, 173, 850, 170, 843, 167, 834, 163, 827, 160, 822, 157, 819, 160, 812, 164, 808, 165)
-
-[node name="RSArm_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/RSArm_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
-
-[node name="RSHand_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/RSHand_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
-
-[node name="RSLeg_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/RSLeg_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
-
-[node name="RSFoot_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/RSFoot_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
-
-[node name="LSArm_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/LSArm_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(123.8, 145.68, 129.8, 158.68, 134.8, 173.68, 136.8, 187.68, 138.8, 203.68, 137.8, 215.68, 134.8, 228.68, 127.8, 248.68, 124.8, 263.68, 119.8, 280.68, 109.8, 301.68, 101.8, 319.68, 95.8, 333.68, 94.8, 337.68, 85.8, 333.68, 77.8, 331.68, 72.8, 330.68, 73.8, 328.68, 78.8, 304.68, 81.8, 287.68, 88.8, 267.68, 95.8, 255.68, 98.8, 252.68, 99.8, 232.68, 102.8, 217.68, 104.8, 207.68, 107.8, 197.68, 107.8, 183.68, 107.8, 173.68, 110.8, 163.68, 113.8, 155.68, 118.8, 149.68)
-
-[node name="LSHand_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/LSHand_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
-
-[node name="LSLeg_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/LSLeg_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
-
-[node name="LSFoot_Area" type="Control" parent="UserInterface/InventoryMenu/silhouette_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_s2047")
-
-[node name="polygon_area" type="Polygon2D" parent="UserInterface/InventoryMenu/silhouette_panel/LSFoot_Area"]
-color = Color(1, 1, 1, 0)
-polygon = PackedVector2Array(800, 69, 812, 70, 821, 73, 826, 82, 828, 94, 829, 118, 824, 137, 821, 141, 822, 158, 813, 163, 802, 166, 791, 165, 780, 160, 777, 157, 778, 140, 775, 136, 770, 118, 771, 94, 774, 79, 780, 72, 788, 70)
-
 [node name="silhouette_img" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel"]
 modulate = Color(1, 1, 1, 0.52549)
 layout_mode = 1
@@ -1301,135 +1200,19 @@ texture = ExtResource("7_j4uj2")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Head_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-visible = false
+[node name="temperature_map" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel"]
+modulate = Color(1, 1, 1, 0.52549)
+texture_filter = 1
+material = SubResource("ShaderMaterial_cpyot")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("8_lg2ti")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="Torso_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("9_s1bmo")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="RSArm_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("12_r0dy2")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="RSHand_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("11_00euu")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="RSLeg_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("14_sfo0j")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="RSFoot_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("15_jb0ig")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="LSArm_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("10_458h2")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="LSHand_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("13_q7hvq")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="LSLeg_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("16_pku5r")
-expand_mode = 4
-stretch_mode = 4
-
-[node name="LSFoot_Hover" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel/silhouette_img"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("17_p3qy2")
-expand_mode = 4
+mouse_filter = 2
+texture = ExtResource("15_girel")
+expand_mode = 1
 stretch_mode = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu"]

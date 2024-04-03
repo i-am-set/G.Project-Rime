@@ -2,6 +2,8 @@ extends Control
 
 const info_offset: Vector2 = Vector2(20, 0)
 
+@onready var temperature_map = $silhouette_panel/temperature_map
+
 @onready var ctrl_inventory_left := $"%CtrlInventoryGridLeft"
 @onready var ctrl_inventory_right := $"%CtrlInventoryGridRight"
 @onready var btn_sort_left: Button = $"%BtnSortLeft"
@@ -50,9 +52,10 @@ func toggle_inventory():
 		self.visible == false
 		Global.IS_IN_INVENTORY == false
 		return
-	self.visible = !visible
-	Global.IS_IN_INVENTORY = visible
-	Global.capture_mouse(!visible)
+	else:
+		visible = !visible
+		Global.IS_IN_INVENTORY = visible
+		Global.capture_mouse(!visible)
 
 func _on_btn_sort(ctrl_inventory) -> void:
 	if !ctrl_inventory.inventory.sort():
