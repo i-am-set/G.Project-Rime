@@ -26,6 +26,10 @@ extends HBoxContainer
 
 @onready var outline_checkbox = $VBoxContainer/_PostP_Outline/outline_checkbox
 
+@onready var celsius_button = $VBoxContainer/_Temperature_Unit/DisplayModes/Celsius
+@onready var fahrenheit_button = $VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit
+
+
 
 var Resolutions: Dictionary = {"3840x2160":Vector2i(3840,2160),
 								"2560x1440":Vector2i(2560,1080),
@@ -76,6 +80,11 @@ func Check_Variables():
 	
 	outline_checkbox.set_pressed_no_signal(Global.POSTP_OUTLINE_ON)
 	_on_outline_checkbox_toggled(Global.POSTP_OUTLINE_ON)
+	
+	if Global.DISPLAY_FARENHEIT == false:
+		celsius_button.set_pressed_no_signal(true)
+	else:
+		fahrenheit_button.set_pressed_no_signal(true)
 
 func Set_Resolution_Text():
 	var Resolution_Text = str(get_window().get_size().x)+"x"+str(get_window().get_size().y)
@@ -202,6 +211,8 @@ func _on_dithering_checkbox_toggled(toggled_on):
 func _on_outline_checkbox_toggled(toggled_on):
 	fps_controller.enable_postp_outline(toggled_on)
 
-func c_set_display_mode() -> void:
-	# Todo: add this logic for console
-	pass
+func _on_celsius_button_up():
+	Global.DISPLAY_FARENHEIT = false
+
+func _on_fahrenheit_button_up():
+	Global.DISPLAY_FARENHEIT = true

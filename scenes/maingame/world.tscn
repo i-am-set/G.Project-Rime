@@ -90,13 +90,13 @@ size = Vector2(400, 400)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_em6ja"]
 points = PackedVector3Array(-100, 0, -100, -100, 0, 100, 100, 0, -100, 100, 0, 100)
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain", "skybox")]
+[node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain", "distance_objects")]
 script = ExtResource("1_beekf")
 generated_terrain = NodePath("MapGenerator/InfiniteTerrainGen")
-skybox = NodePath("mountain_range_skybox_model_1")
+distance_objects = NodePath("mountain_range_skybox_model_1")
 
 [node name="SkyBox" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1162.5
+timeOfDay = 1256.25
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5

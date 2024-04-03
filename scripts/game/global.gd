@@ -7,8 +7,8 @@ var player # Reference to PlayerController
 const PACKET_READ_LIMIT: int = 32
 
 # World Constants
-const MAX_TEMPERATURE = -10 # celsius
-const MIN_TEMPERATURE = -25 # celsius
+const MAX_TEMPERATURE_C = -10 # celsius
+const MIN_TEMPERATURE_C = -25 # celsius
 
 # Options Constants
 const DEFAULT_FOV = 75
@@ -33,9 +33,9 @@ var GLOBAL_TICK : int = 0
 # World Variables
 var WORLD_SEED : int = 0
 var TIME_OF_DAY : float = 1200.0
-var CURRENT_TEMPERATURE : float = (MAX_TEMPERATURE + MIN_TEMPERATURE) / 2
-var TEMPERATURE_HIGH : float = MAX_TEMPERATURE
-var TEMPERATURE_LOW : float = TEMPERATURE_HIGH - 3
+var CURRENT_TEMPERATURE_C : float = (MAX_TEMPERATURE_C + MIN_TEMPERATURE_C) / 2
+var TEMPERATURE_HIGH_C : float = MAX_TEMPERATURE_C
+var TEMPERATURE_LOW_C : float = TEMPERATURE_HIGH_C - 3
 var SUN_WARMTH_MULTIPLIER : float = 1.0
 var SPAWN_POINT := Vector2.ZERO
 var IS_PAUSED := false
@@ -51,6 +51,7 @@ var FIELD_OF_VIEW : int = 75
 var POSTP_OUTLINE_ON := true
 var POSTP_DITHER_ON := true
 var RES_SCALE_PERCENT : int = 100
+var DISPLAY_FARENHEIT = false
 
 func _ready():
 	var INIT = Steam.steamInit()
@@ -124,3 +125,33 @@ func leave_lobby():
 	IS_PAUSED = false
 	IS_IN_INVENTORY = false
 	IS_IN_GAME = false
+
+func get_current_temperature_display() -> float:
+	if DISPLAY_FARENHEIT:
+		return snapped(CURRENT_TEMPERATURE_C * 9.0/5.0 + 32.0, 0.1)
+	return snapped(CURRENT_TEMPERATURE_C, 0.1)
+
+func get_temperature_high_display() -> float:
+	if DISPLAY_FARENHEIT:
+		return snapped(TEMPERATURE_HIGH_C * 9.0/5.0 + 32.0, 0.1)
+	return snapped(TEMPERATURE_HIGH_C, 0.1)
+	
+func get_temperature_low_display() -> float:
+	if DISPLAY_FARENHEIT:
+		return snapped(TEMPERATURE_LOW_C * 9.0/5.0 + 32.0, 0.1)
+	return snapped(TEMPERATURE_LOW_C, 0.1)
+
+func get_temperature_max_display() -> float:
+	if DISPLAY_FARENHEIT:
+		return snapped(MAX_TEMPERATURE_C * 9.0/5.0 + 32.0, 0.1)
+	return snapped(MAX_TEMPERATURE_C, 0.1)
+	
+func get_temperature_min_display() -> float:
+	if DISPLAY_FARENHEIT:
+		return snapped(MIN_TEMPERATURE_C * 9.0/5.0 + 32.0, 0.1)
+	return snapped(MIN_TEMPERATURE_C, 0.1)
+
+func get_temperature_sign_display() -> String:
+	if DISPLAY_FARENHEIT:
+		return "°F"
+	return "°C"

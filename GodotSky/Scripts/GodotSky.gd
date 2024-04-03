@@ -1,6 +1,8 @@
 
 extends WorldEnvironment
 
+signal temperature_set
+
 # General settings for time of day, on/off for simulating day and night cycle, rate of time, and overall rotation of the sky
 @export_category("GodotSky Control")
 @export_range(0,2400,0.01) var timeOfDay : float = 1200.0
@@ -31,7 +33,7 @@ var moonPosition : float = 0.0
 var sunPosAlpha : float = 0.0
 
 # temperature variables
-var cached_temperature = Global.CURRENT_TEMPERATURE
+var cached_temperature = Global.CURRENT_TEMPERATURE_C
 
 
 # Check if simulating day/night cycle, determine rate of time, and increase time
@@ -42,18 +44,16 @@ func simulateDay():
 			set_temp_for_day()
 			timeOfDay = 0.0
 		Global.TIME_OF_DAY = snapped(timeOfDay, 0.01)
-		if Global.GLOBAL_TICK % 40 == 0:
+		if Global.GLOBAL_TICK % 100 == 0:
 			update_temperature()
-			print(snapped(Global.TEMPERATURE_HIGH, 0.1), "          ", snapped(Global.TEMPERATURE_LOW, 0.1), "          ", snapped(Global.CURRENT_TEMPERATURE, 0.1))
-		#Global.SUN_WARMTH_MULTIPLIER = snapped(sunWarmthMultiplierCurve.sample(sunPosition), 0.01) * 2 -1
-		# opt - check if this is usable
+		#Global.SUN_WARMTH_MULTIPLIER = clamp(((snapped(sunWarmthMultiplierCurve.sample(sunPosition), 0.01) + 1) - cloudCoverage), 1, 2)
 
 func update_temperature():
 	var time_ratio = timeOfDay / 2400.0
 	if time_ratio <= 0.5:
-		Global.CURRENT_TEMPERATURE = lerp(cached_temperature, Global.TEMPERATURE_HIGH, time_ratio * 2)
+		Global.CURRENT_TEMPERATURE_C = lerp(cached_temperature, Global.TEMPERATURE_HIGH_C, time_ratio * 2)
 	else:
-		Global.CURRENT_TEMPERATURE = lerp(Global.TEMPERATURE_HIGH, Global.TEMPERATURE_LOW, (time_ratio - 0.5) * 2)
+		Global.CURRENT_TEMPERATURE_C = lerp(Global.TEMPERATURE_HIGH_C, Global.TEMPERATURE_LOW_C, (time_ratio - 0.5) * 2)
 
 func set_temp_for_day():
 	var temperature_high
@@ -61,9 +61,9 @@ func set_temp_for_day():
 	
 	var temperature_max_increase = 15
 	
-	cached_temperature = Global.CURRENT_TEMPERATURE
+	cached_temperature = Global.CURRENT_TEMPERATURE_C
 	
-	if cached_temperature + temperature_max_increase > Global.MAX_TEMPERATURE:
+	if cached_temperature + temperature_max_increase > Global.MAX_TEMPERATURE_C:
 		temperature_high = cached_temperature + randf_range(-3, 0)
 	elif cached_temperature - 3 < Global.MIN_TEMPERATURE:
 		temperature_high = cached_temperature + randf_range(0, temperature_max_increase)
@@ -72,8 +72,10 @@ func set_temp_for_day():
 	
 	temperature_low = temperature_high - randf_range(1, 6)
 	
-	Global.TEMPERATURE_HIGH = temperature_high
-	Global.TEMPERATURE_LOW = temperature_low
+	Global.TEMPERATURE_HIGH_C = temperature_high
+	Global.TEMPERATURE_LOW_C = temperature_low
+	
+	emit_signal("temperature_set")
 
 # Update sun and moon based on current time of day 
 func updateLights():

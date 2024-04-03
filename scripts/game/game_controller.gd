@@ -6,13 +6,16 @@ var _player_node = preload("res://scenes/fps_controller.tscn")
 var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
 @export var generated_terrain : Node3D
-@export var skybox : Node3D
+@export var distance_objects : Node3D
 
 var _game_chat_controller : Control = DebugAutoloadCanvas.game_chat_controller
 var _player_list_instance : Control
 var _authorized_player : Player
 
 func _ready():
+	# misc signals
+	SKYBOX.temperature_set.connect(_on_skybox_temperature_set)
+	
 	# Steamwork connections
 	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
@@ -65,10 +68,11 @@ func _ready():
 	# Set console commands
 	Console.create_command("time_set", self.c_set_time, "Sets the current world time. 0/2399 is midnight; 1200 is noon")
 	Console.create_command("get_current_time", self.c_get_current_time, "Returns the current time.")
+	Console.create_command("get_current_temperature", self.c_get_current_temperature, "Returns the expected high for the day; the expected low for the day; and the current temperature.")
 
 func _physics_process(_delta):
 	var _authorized_player_position = _authorized_player.position
-	skybox.position = Vector3(_authorized_player_position.x, 0, _authorized_player_position.z);
+	distance_objects.position = Vector3(_authorized_player_position.x, 0, _authorized_player_position.z);
 	
 	# If the player is connected, read packets
 	if Global.LOBBY_ID > 0:
@@ -88,6 +92,9 @@ func display_message(message):
 func make_p2p_handshake() -> void:
 	print_debug("Sending P2P handshake to the lobby")
 	send_p2p_packet(0, {"message": "handshake", "from": Global.STEAM_ID})
+
+func _on_skybox_temperature_set():
+	send_p2p_packet(0, {"message": "temperature_set", "temperature_high": Global.TEMPERATURE_HIGH, "temperature_low": Global.TEMPERATURE_LOW})
 
 func get_lobby_members() -> void:
 	_player_list_instance.get_lobby_members()
@@ -317,6 +324,9 @@ func process_data(packet_data : Dictionary):
 					player_instance.rotation = packet_data["player_rotation"]
 		if packet_data["message"] == "time_set":
 			recieve_set_time_request(packet_data["time"])
+		if packet_data["message"] == "temperature_set":
+			Global.TEMPERATURE_HIGH == packet_data["temperature_high"]
+			Global.TEMPERATURE_LOW == packet_data["temperature_low"]
 
 
 func c_set_time(set_time : int) -> void:
@@ -326,3 +336,13 @@ func c_set_time(set_time : int) -> void:
 
 func c_get_current_time() -> void:
 	Console.print_line("It is currently [color=GOLD]" + str(get_current_time()) + "[/color].")
+
+func c_get_current_temperature() -> void:
+	Console.print_line("\n------------------------------------------------------------------------------")
+	Console.print_line("High of [color=CORAL]" + str(Global.get_temperature_high_display()) + " " + Global.get_temperature_sign_display() + "[/color]")
+	Console.print_line("Low of [color=CORNFLOWER_BLUE]" + str(Global.get_temperature_low_display()) + " " + Global.get_temperature_sign_display() + "[/color]")
+	Console.print_line("The current temperature is [color=FOREST_GREEN]" + str(Global.get_current_temperature_display()) + " " + Global.get_temperature_sign_display()  + "[/color]\n")
+	
+	Console.print_line("MAX: [color=DIM_GRAY]" + str(Global.get_temperature_max_display()) + " " + Global.get_temperature_sign_display()  + "[/color]")
+	Console.print_line("MIN: [color=DIM_GRAY]" + str(Global.get_temperature_min_display()) + " " + Global.get_temperature_sign_display()  + "[/color]")
+	Console.print_line("------------------------------------------------------------------------------\n")

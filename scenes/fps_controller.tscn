@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=87 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -32,6 +32,7 @@
 [ext_resource type="Resource" uid="uid://ddrmqwl3guset" path="res://tests/data/item_definitions_grid.tres" id="11_t0exd"]
 [ext_resource type="Script" path="res://addons/gloot/core/inventory_item.gd" id="12_exwb5"]
 [ext_resource type="Script" path="res://scripts/player/SlidingPlayerState.gd" id="12_walwr"]
+[ext_resource type="ButtonGroup" uid="uid://bpp5x1786kour" path="res://ui/button_groups/temperature_unit_button_group.tres" id="12_xwa8q"]
 [ext_resource type="Script" path="res://addons/gloot/core/item_slot.gd" id="13_1cna5"]
 [ext_resource type="Script" path="res://scripts/player/JumpingPlayerState.gd" id="13_fbjl8"]
 [ext_resource type="Script" path="res://scripts/player/FallingPlayerState.gd" id="14_7wlsx"]
@@ -772,7 +773,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -917,6 +918,8 @@ alignment = 1
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
 button_group = ExtResource("7_7h2ag")
 text = "Fullscreen"
 
@@ -924,6 +927,8 @@ text = "Fullscreen"
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
 button_group = ExtResource("7_7h2ag")
 text = "Borderless"
 
@@ -931,6 +936,8 @@ text = "Borderless"
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
 button_group = ExtResource("7_7h2ag")
 text = "Windowed
 "
@@ -1099,7 +1106,7 @@ text = "
 GRAPHICS"
 horizontal_alignment = 1
 
-[node name="POST_PROCESSING_CAMERA2" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="HEADER_POST_PROCESSING" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -1143,11 +1150,57 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_ujw28")
 toggle_mode = true
 button_pressed = true
 
+[node name="HEADER_GAME" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "
+GAME"
+horizontal_alignment = 1
+
+[node name="_Temperature_Unit" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+layout_mode = 2
+
+[node name="Temperature_Unit" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Temperature"
+uppercase = true
+
+[node name="DisplayModes" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Celsius" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit/DisplayModes"]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+button_group = ExtResource("12_xwa8q")
+text = "Celsius"
+
+[node name="Fahrenheit" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit/DisplayModes"]
+custom_minimum_size = Vector2(85, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+action_mode = 0
+keep_pressed_outside = true
+button_group = ExtResource("12_xwa8q")
+text = "Fahrenheit"
+
 [node name="InventoryMenu" type="Control" parent="UserInterface"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_m68ou")
@@ -1488,4 +1541,6 @@ script = ExtResource("19_lm36c")
 [connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_fov_slider_value_changed"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_dithering_checkbox_toggled"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_outline_checkbox_toggled"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit/DisplayModes/Celsius" to="UserInterface/PauseMenu/Options_Setting" method="_on_celsius_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit" to="UserInterface/PauseMenu/Options_Setting" method="_on_fahrenheit_button_up"]
 [connection signal="mouse_entered" from="UserInterface/InventoryMenu/Head_Area" to="UserInterface/InventoryMenu/Head_Area" method="_on_mouse_entered"]
