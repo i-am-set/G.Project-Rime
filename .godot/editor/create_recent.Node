@@ -1,3 +1,4 @@
+TextureRect
 Panel
 Polygon2D
 MeshInstance2D
@@ -12,4 +13,3 @@ Label
 HBoxContainer
 HSeparator
 MarginContainer
-PanelContainer
