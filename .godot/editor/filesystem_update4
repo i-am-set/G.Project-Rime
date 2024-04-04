@@ -1,4 +1,4 @@
-res://GodotSky/GodotSky.tscn
+res://scenes/maingame/world.tscn
 res://GodotSky/Presets/default/sunLightIntensity.tres
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
@@ -20,12 +20,10 @@ res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/utility/mesh_height_curve.tres
 res://shaders/snow_post_processesing.gdshader
-res://GodotSky/Scripts/GodotSky.gd
-res://scripts/game/game_controller.gd
 res://scenes/fps_controller.tscn
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
-res://scenes/maingame/world.tscn
+res://GodotSky/GodotSky.tscn
 res://scenes/utility/debug_autoload_canvas.tscn
 res://scenes/game_chat_controller.tscn
 res://addons/godot-console/scripts/ConsoleMono.cs
@@ -39,5 +37,5 @@ res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/PregenTerrain.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/game/global.gd
-res://scripts/game/options_setting.gd
+res://scripts/player/inventory_logic.gd
+res://scripts/player/player_data.gd

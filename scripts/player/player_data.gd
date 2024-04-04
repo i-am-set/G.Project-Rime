@@ -13,12 +13,16 @@ const min_temperature : int = 200
 
 var health : int = 100
 var stamina : int = 100
-var head_temperature : int = 100
+var head_temperature : int = 75
 var torso_temperature : int = 100
-var left_arm_temperature : int = 100
-var right_arm_temperature : int = 100
-var left_leg_temperature : int = 100
-var right_leg_temperature : int = 100
+var left_arm_temperature : int = 34
+var right_arm_temperature : int = 64
+var left_leg_temperature : int = 120
+var right_leg_temperature : int = 155
+var left_hand_temperature : int = 12
+var right_hand_temperature : int = 42
+var left_foot_temperature : int = 76
+var right_foot_temperature : int = 59
 
 func get_all_limb_temperature() -> Dictionary:
 	return {
@@ -27,7 +31,11 @@ func get_all_limb_temperature() -> Dictionary:
 		"left arm": left_arm_temperature,
 		"right arm": right_arm_temperature,
 		"left leg": left_leg_temperature,
-		"right leg": right_leg_temperature
+		"right leg": right_leg_temperature,
+		"left hand": left_hand_temperature,
+		"right hand": right_hand_temperature,
+		"left foot": left_foot_temperature,
+		"right foot": right_foot_temperature
 	}
 
 func set_all_limb_temperature(temperature : float):
@@ -50,9 +58,9 @@ func get_average_limb_temperature() -> float:
 	return total_temperature / limb_count
 
 func get_temperature_color(temperature) -> Color:
-	var blue = Color(0, 0, 1)  # Blue color
-	var green = Color(0, 1, 0)  # Green color
-	var red = Color(1, 0, 0)  # Red color
+	var blue = Color(0, 0, 1, 0.5)  # Blue color
+	var green = Color(0, 1, 0, 0.5)  # Green color
+	var red = Color(1, 0, 0, 0.5)  # Red color
 
 	if temperature <= 100:
 		# Interpolate between blue and green for values 0-100

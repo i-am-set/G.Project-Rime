@@ -2,7 +2,10 @@ extends Control
 
 const info_offset: Vector2 = Vector2(20, 0)
 
+@onready var fps_controller = $"../.."
 @onready var temperature_map = $silhouette_panel/temperature_map
+@onready var temperature_map_material = temperature_map.material
+var player_data
 
 @onready var ctrl_inventory_left := $"%CtrlInventoryGridLeft"
 @onready var ctrl_inventory_right := $"%CtrlInventoryGridRight"
@@ -15,6 +18,9 @@ const info_offset: Vector2 = Vector2(20, 0)
 @onready var lbl_info: Label = $"%LblInfo"
 
 func _ready() -> void:
+	await fps_controller.ready
+	player_data = fps_controller._player_data
+	
 	self.visible = false
 	Global.IS_IN_INVENTORY = false
 	
@@ -28,6 +34,9 @@ func _ready() -> void:
 	btn_split_right.pressed.connect(_on_btn_split.bind(ctrl_inventory_right))
 	btn_unequip.pressed.connect(_on_btn_unequip)
 
+func _physics_process(delta):
+	if visible == true && Global.GLOBAL_TICK % 10 == 0:
+		update_temperature_map_colors()
 
 func _on_item_mouse_entered(item: InventoryItem) -> void:
 	lbl_info.show()
@@ -56,6 +65,8 @@ func toggle_inventory():
 		visible = !visible
 		Global.IS_IN_INVENTORY = visible
 		Global.capture_mouse(!visible)
+		if visible == true:
+			update_temperature_map_colors()
 
 func _on_btn_sort(ctrl_inventory) -> void:
 	if !ctrl_inventory.inventory.sort():
@@ -84,3 +95,10 @@ func _on_btn_split(ctrl_inventory) -> void:
 func _on_btn_unequip() -> void:
 	ctrl_slot.item_slot.clear()
 
+func update_temperature_map_colors():
+	temperature_map_material.set_shader_parameter("head_color", player_data.get_temperature_color(player_data.head_temperature))
+	temperature_map_material.set_shader_parameter("torso_color", player_data.get_temperature_color(player_data.torso_temperature))
+	temperature_map_material.set_shader_parameter("left_arm_color", player_data.get_temperature_color(player_data.left_arm_temperature))
+	temperature_map_material.set_shader_parameter("right_arm_color", player_data.get_temperature_color(player_data.right_arm_temperature))
+	temperature_map_material.set_shader_parameter("left_leg_color", player_data.get_temperature_color(player_data.left_leg_temperature))
+	temperature_map_material.set_shader_parameter("right_leg_color", player_data.get_temperature_color(player_data.right_leg_temperature))
