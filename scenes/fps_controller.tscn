@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=88 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://gkwxbmjelhno" path="res://textures/ui/ui_male_temperature_map_mask.png" id="15_jn7u3"]
 [ext_resource type="Script" path="res://scripts/player/WeaponViewport.gd" id="15_yu4nu"]
 [ext_resource type="Script" path="res://scripts/player/WeaponCamera.gd" id="16_577f2"]
+[ext_resource type="Texture2D" uid="uid://oqpu6q01sl3v" path="res://textures/ui/button_unselected.png" id="16_mplsr"]
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
@@ -494,7 +495,7 @@ _data = {
 length = 0.75
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny6q8"]
-bg_color = Color(0.105882, 0.105882, 0.105882, 0.952941)
+bg_color = Color(0.105882, 0.105882, 0.105882, 0.972549)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jfu3c"]
 
@@ -675,12 +676,14 @@ border_width_bottom = 2
 border_color = Color(1, 0.92549, 0.152941, 1)
 
 [sub_resource type="StyleBoxTexture" id="7"]
-texture = ExtResource("7_kdvpp")
+texture = ExtResource("16_mplsr")
 region_rect = Rect2(0, 0, 32, 32)
+modulate_color = Color(0.243137, 0.243137, 0.243137, 0.419608)
 
 [sub_resource type="StyleBoxTexture" id="8"]
-texture = ExtResource("8_g1dc2")
+texture = ExtResource("16_mplsr")
 region_rect = Rect2(0, 0, 32, 32)
+modulate_color = Color(1, 1, 1, 0.466667)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
@@ -769,7 +772,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5]
+blend_times = [&"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1213,11 +1216,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ny6q8")
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.423
-anchor_right = 0.577
+anchor_left = 0.671
+anchor_right = 0.974
 anchor_bottom = 1.0
-offset_left = -86.8
-offset_right = 87.8
+offset_left = -0.599976
+offset_right = -0.400024
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -1226,14 +1229,19 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 [node name="silhouette_img" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel"]
 self_modulate = Color(1, 1, 1, 0.0470588)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_left = 0.101
+anchor_right = 0.904
 anchor_bottom = 1.0
+offset_left = 0.0149994
+offset_top = 141.0
+offset_right = -0.190033
+offset_bottom = -67.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("7_j4uj2")
-expand_mode = 4
+expand_mode = 3
 stretch_mode = 5
 
 [node name="temperature_map_mask" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel"]
@@ -1265,6 +1273,19 @@ mouse_filter = 2
 texture = ExtResource("15_girel")
 expand_mode = 1
 stretch_mode = 4
+
+[node name="inventory_panel2" type="Panel" parent="UserInterface/InventoryMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.023
+anchor_right = 0.648
+anchor_bottom = 1.0
+offset_left = 0.199997
+offset_right = 0.199951
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu"]
 visible = false
