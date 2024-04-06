@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=103 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/player/reticle.gd" id="4_ntsfx"]
 [ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid_ex.gd" id="5_a1ct0"]
 [ext_resource type="Script" path="res://scripts/player/inventory_logic.gd" id="5_m68ou"]
+[ext_resource type="Resource" uid="uid://dr285553q3o4n" path="res://resources/weapons/weap_nothing.tres" id="5_srgsy"]
 [ext_resource type="Theme" uid="uid://cjxg2tt7m1r7e" path="res://ui/themes/debug.tres" id="5_tib1u"]
 [ext_resource type="Texture2D" uid="uid://drya7dyoskvek" path="res://icon.png" id="6_454p0"]
 [ext_resource type="Script" path="res://scripts/game/debug.gd" id="6_kecrd"]
@@ -56,6 +57,11 @@ height = 3.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_5pbwv"]
 size = Vector3(0.61, 0.185, 0.335)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_25fmm"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_33bd6"]
+noise = SubResource("FastNoiseLite_25fmm")
 
 [sub_resource type="Animation" id="Animation_uw13e"]
 resource_name = "Crouch"
@@ -496,6 +502,21 @@ _data = {
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cvmy6"]
 length = 0.75
 
+[sub_resource type="Animation" id="Animation_36kdk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../../BlurBackground:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_mv06j"]
 resource_name = "start_pause"
 length = 0.3
@@ -510,21 +531,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_36kdk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../../../BlurBackground:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nd8bc"]
@@ -602,6 +608,21 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.2, 0.2, 0.2, 1)
 
+[sub_resource type="Animation" id="Animation_3l7ui"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../BlurBackground:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_pa7xc"]
 resource_name = "blur_start"
 length = 0.3
@@ -616,21 +637,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_3l7ui"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../BlurBackground:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ey2ug"]
@@ -734,8 +740,9 @@ shader_parameter/right_leg_map = Color(0, 1, 0, 1)
 shader_parameter/right_leg_color = null
 
 [sub_resource type="StyleBoxTexture" id="1"]
-texture = ExtResource("7_kdvpp")
+texture = ExtResource("16_mplsr")
 region_rect = Rect2(0, 0, 32, 32)
+modulate_color = Color(0.176471, 0.176471, 0.176471, 0.47451)
 
 [sub_resource type="StyleBoxTexture" id="2"]
 texture = ExtResource("8_g1dc2")
@@ -811,7 +818,7 @@ shader_parameter/color_depth = 6
 shader_parameter/dithering = true
 shader_parameter/resolution_scale = 1
 
-[node name="FPSController" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "ANIMATIONPLAYER", "CROUCH_SHAPECAST", "PLAYERSTATEMACHINE", "USERINTERFACE", "WEAPONVIEWPORT")]
+[node name="FPSController" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER", "ANIMATIONPLAYER", "CROUCH_SHAPECAST", "PLAYERSTATEMACHINE", "WEAPON_CONTROLLER", "USERINTERFACE", "WEAPONVIEWPORT")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784052, 0)
 collision_layer = 2
 collision_mask = 3
@@ -823,6 +830,7 @@ CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
 ANIMATIONPLAYER = NodePath("AnimationPlayer")
 CROUCH_SHAPECAST = NodePath("OverheadShapeCast")
 PLAYERSTATEMACHINE = NodePath("PlayerStateMachine")
+WEAPON_CONTROLLER = NodePath("CameraController/Camera3D/WeaponRig/Weapon")
 USERINTERFACE = NodePath("UserInterface")
 WEAPONVIEWPORT = NodePath("WeaponViewport")
 
@@ -832,9 +840,10 @@ shape = SubResource("CapsuleShape3D_nitno")
 
 [node name="player_model" parent="CollisionShape3D" instance=ExtResource("35_60cqa")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -1.465, 0)
+visible = false
 
 [node name="legs_model" parent="CollisionShape3D" instance=ExtResource("35_60cqa")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.465, 0.4)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.465, 0.872343)
 visible = false
 
 [node name="PlaceholderMesh" type="MeshInstance3D" parent="CollisionShape3D"]
@@ -854,7 +863,7 @@ transform = Transform3D(1, 0, 0, 0, 0.997564, 0.0697565, 0, -0.0697565, 0.997564
 unique_name_in_owner = true
 cull_mask = 1048573
 current = true
-near = 0.287
+near = 0.01
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="CameraController/Camera3D"]
 visible = false
@@ -865,16 +874,17 @@ enable_shadows = true
 
 [node name="WeaponRig" type="Node3D" parent="CameraController/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
-visible = false
 
 [node name="Weapon" parent="CameraController/Camera3D/WeaponRig" instance=ExtResource("3_835tj")]
-transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.999848, 0.12183, 0.9924, -0.0172825, 0.13, -0.165, -0.22)
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.55)
+WEAPON_TYPE = ExtResource("5_srgsy")
+sway_noise = SubResource("NoiseTexture2D_33bd6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1024,6 +1034,7 @@ offset_right = -0.600098
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
+script = ExtResource("7_8cwra")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting"]
 layout_mode = 2
@@ -1031,7 +1042,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = SubResource("Theme_ftd28")
 alignment = 1
-script = ExtResource("7_8cwra")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer"]
 layout_mode = 2
@@ -1343,6 +1353,7 @@ text = "Fahrenheit"
 [node name="Node" type="Node" parent="UserInterface/PauseMenu"]
 
 [node name="InventoryMenu" type="Control" parent="UserInterface"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1520,7 +1531,7 @@ layout_mode = 2
 [node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/Inventories/HBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 texture_filter = 1
-custom_minimum_size = Vector2(160, 160)
+custom_minimum_size = Vector2(640, 160)
 layout_mode = 2
 script = ExtResource("5_a1ct0")
 inventory_path = NodePath("../../../../InventoryGridStackedLeft")
@@ -1530,6 +1541,7 @@ field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
 
 [node name="TooltipPanel" type="Panel" parent="UserInterface/InventoryMenu"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.519
@@ -1629,7 +1641,7 @@ text = "Unequip"
 
 [node name="InventoryGridStackedLeft" type="Node" parent="UserInterface/InventoryMenu"]
 script = ExtResource("10_mmu75")
-size = Vector2i(5, 5)
+size = Vector2i(20, 5)
 item_protoset = ExtResource("11_t0exd")
 
 [node name="item_1x1" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedLeft"]
@@ -1730,6 +1742,14 @@ ACCELERATION = 0.075
 unique_name_in_owner = true
 script = ExtResource("10_ssjb3")
 SPEED = 12.0
+ACCELERATION = null
+DECELERATION = null
+TOP_ANIM_SPEED = null
+WEAPON_BOB_SPD = null
+WEAPON_BOB_H = null
+WEAPON_BOB_V = null
+WEAPON_PULL_DOWN_DISTANCE = null
+WEAPON_PULL_DOWN_SPEED = null
 
 [node name="CrouchingPlayerState" type="Node" parent="PlayerStateMachine"]
 script = ExtResource("11_4t53l")
@@ -1783,17 +1803,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.77756, 0)
 target_position = Vector3(0, -0.165, 0)
 script = ExtResource("19_lm36c")
 
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Fullscreen" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_fullscreen_button_up"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Borderless" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_borderless_button_up"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Windowed" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_windowed_button_up"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Resolution/Resolution_OptionButton" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_resolution_option_button_item_selected"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_Upscaler/Scaler" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_scaler_item_selected"]
-[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/Scale_Box/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_scale_slider_value_changed"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_FSR_Quality/FSROptions" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_fsr_options_item_selected"]
-[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Vsync/vsync_checkbox" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_vsync_checkbox_toggled"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Screen_Select/Screen_Selector" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_screen_selector_item_selected"]
-[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_fov_slider_value_changed"]
-[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_dithering_checkbox_toggled"]
-[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_outline_checkbox_toggled"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Celsius" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_celsius_button_up"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_fahrenheit_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Fullscreen" to="UserInterface/PauseMenu/Options_Setting" method="_on_fullscreen_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Borderless" to="UserInterface/PauseMenu/Options_Setting" method="_on_borderless_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Windowed" to="UserInterface/PauseMenu/Options_Setting" method="_on_windowed_button_up"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Resolution/Resolution_OptionButton" to="UserInterface/PauseMenu/Options_Setting" method="_on_resolution_option_button_item_selected"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_Upscaler/Scaler" to="UserInterface/PauseMenu/Options_Setting" method="_on_scaler_item_selected"]
+[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/Scale_Box/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_scale_slider_value_changed"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_FSR_Quality/FSROptions" to="UserInterface/PauseMenu/Options_Setting" method="_on_fsr_options_item_selected"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Vsync/vsync_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_vsync_checkbox_toggled"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Screen_Select/Screen_Selector" to="UserInterface/PauseMenu/Options_Setting" method="_on_screen_selector_item_selected"]
+[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_fov_slider_value_changed"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_dithering_checkbox_toggled"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_outline_checkbox_toggled"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Celsius" to="UserInterface/PauseMenu/Options_Setting" method="_on_celsius_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit" to="UserInterface/PauseMenu/Options_Setting" method="_on_fahrenheit_button_up"]

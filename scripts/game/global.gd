@@ -13,7 +13,7 @@ const MIN_TEMPERATURE_C = -25 # celsius
 # Options Constants
 const DEFAULT_FOV = 75
 const MIN_FOV = 60
-const MAX_FOV = 100
+const MAX_FOV = 90
 const MIN_SPEED = 0
 const MAX_SPEED = 1000
 

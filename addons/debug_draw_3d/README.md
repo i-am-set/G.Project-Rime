@@ -55,13 +55,14 @@ Precompiled for:
 * Linux (built on Ubuntu 20.04)
 * macOS (10.14+)
 * Android (5.0+)
+* iOS
 * Web (Firefox not supported)
+
+This addon also supports working with several World3D and different Viewports.
 
 ## [Interactive Web Demo](https://dd3d.dmitriysalnikov.ru/demo/)
 
 [![screenshot_web](/images/screenshot_web.png)](https://dd3d.dmitriysalnikov.ru/demo/)
-
-Thanks to Nick Maltbie ([nicholas-maltbie](https://github.com/nicholas-maltbie)) ([#24](https://github.com/DmitriySalnikov/godot_debug_draw_3d/pull/24))
 
 > [!WARNING]
 >
@@ -85,17 +86,17 @@ Simple test:
 
 ```gdscript
 func _process(delta: float) -> void:
-	var _time = Time.get_ticks_msec() / 1000.0
-	var box_pos = Vector3(0, sin(_time * 4), 0)
-	var line_begin = Vector3(-1, sin(_time * 4), 0)
-	var line_end = Vector3(1, cos(_time * 4), 0)
+    var _time = Time.get_ticks_msec() / 1000.0
+    var box_pos = Vector3(0, sin(_time * 4), 0)
+    var line_begin = Vector3(-1, sin(_time * 4), 0)
+    var line_end = Vector3(1, cos(_time * 4), 0)
 
-	DebugDraw3D.draw_box(box_pos, Vector3(1, 2, 1), Color(0, 1, 0))
-	DebugDraw3D.draw_line(line_begin, line_end, Color(1, 1, 0))
-	DebugDraw2D.set_text("Time", _time)
-	DebugDraw2D.set_text("Frames drawn", Engine.get_frames_drawn())
-	DebugDraw2D.set_text("FPS", Engine.get_frames_per_second())
-	DebugDraw2D.set_text("delta", delta)
+    DebugDraw3D.draw_box(box_pos, Vector3(1, 2, 1), Color(0, 1, 0))
+    DebugDraw3D.draw_line(line_begin, line_end, Color(1, 1, 0))
+    DebugDraw2D.set_text("Time", _time)
+    DebugDraw2D.set_text("Frames drawn", Engine.get_frames_drawn())
+    DebugDraw2D.set_text("FPS", Engine.get_frames_per_second())
+    DebugDraw2D.set_text("delta", delta)
 ```
 
 ![screenshot_1](/images/screenshot_1.png)

@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://v8g6dodhumyk"]
+[gd_scene load_steps=7 format=3 uid="uid://v8g6dodhumyk"]
 
+[ext_resource type="Script" path="res://scripts/player/init_weapon.gd" id="1_fyelu"]
 [ext_resource type="ArrayMesh" uid="uid://c4fnn07t5jqdl" path="res://meshes/weapons/crowbar/mesh_crowbar.res" id="1_j4u60"]
 [ext_resource type="Shader" path="res://meshes/weapons/weapon_shadow.gdshader" id="2_tfi24"]
 
@@ -42,7 +43,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_k8gve")
 
-[node name="Weapon" type="Node3D"]
+[node name="Weapon" type="Node3D" node_paths=PackedStringArray("weapon_mesh", "weapon_shadow")]
+script = ExtResource("1_fyelu")
+weapon_mesh = NodePath("WeaponMesh")
+weapon_shadow = NodePath("WeaponShadow")
 
 [node name="WeaponMesh" type="MeshInstance3D" parent="."]
 cast_shadow = 0

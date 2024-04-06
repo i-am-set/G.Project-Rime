@@ -11,6 +11,7 @@ res://GodotSky/Presets/default/moonLight.tres
 res://GodotSky/Presets/default/moonGlowColor.tres
 res://GodotSky/Presets/sky_default.tres
 res://scenes/utility/sun_warmth_multiplier_curve.tres
+res://shaders/2d/blur_shader.gdshader
 res://shaders/player_post_processesing.gdshader
 res://materials/post_processing_material.tres
 res://shaders/dithering_post_process.gdshader
@@ -19,7 +20,7 @@ res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/utility/mesh_height_curve.tres
 res://shaders/snow_post_processesing.gdshader
-res://shaders/2d/ui_blur_shader.gdshader
+res://scripts/player/init_weapon.gd
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
@@ -37,10 +38,8 @@ res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/PregenTerrain.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/player/fps_controller.gd
-res://shaders/2d/blur_shader.gdshader
-res://scripts/player/inventory_logic.gd
-res://scripts/game/options_setting.gd
-res://scripts/player/SprintingPlayerState.gd
+res://scripts/player/weapons.gd
 res://scripts/player/WalkingPlayerState.gd
-res://scripts/player/IdlePlayerState.gd
+res://scripts/player/CrouchingPlayerState.gd
+res://resources/weapons/weap_hatchet.tres
+res://resources/weapons/weap_nothing.tres

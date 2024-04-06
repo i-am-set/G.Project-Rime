@@ -1,33 +1,33 @@
-extends HBoxContainer
+extends ScrollContainer
 
-@onready var fps_controller = $"../../../.."
+@onready var fps_controller = $"../../.."
 
-@onready var fullscreen_button = $VBoxContainer/_Display_Mode/DisplayModes/Fullscreen
-@onready var borderless_button = $VBoxContainer/_Display_Mode/DisplayModes/Borderless
-@onready var windowed_button = $VBoxContainer/_Display_Mode/DisplayModes/Windowed
+@onready var fullscreen_button = $HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Fullscreen
+@onready var borderless_button = $HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Borderless
+@onready var windowed_button = $HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Windowed
 
-@onready var resolution_option_button = $VBoxContainer/_Resolution/Resolution_OptionButton
+@onready var resolution_option_button = $HBoxContainer/VBoxContainer/_Resolution/Resolution_OptionButton
 
-@onready var scale_box = $VBoxContainer/_Scale/Scale_Box
-@onready var scalepercent_label = $VBoxContainer/_Scale/Scale_Box/PercentLabel
-@onready var scale_slider = $VBoxContainer/_Scale/Scale_Box/ScaleSlider
+@onready var scale_box = $HBoxContainer/VBoxContainer/_Scale/Scale_Box
+@onready var scalepercent_label = $HBoxContainer/VBoxContainer/_Scale/Scale_Box/PercentLabel
+@onready var scale_slider = $HBoxContainer/VBoxContainer/_Scale/Scale_Box/ScaleSlider
 
-@onready var fsr_box = $VBoxContainer/_Scale/_FSR_Quality
-@onready var fsr_options = $VBoxContainer/_Scale/_FSR_Quality/FSROptions
+@onready var fsr_box = $HBoxContainer/VBoxContainer/_Scale/_FSR_Quality
+@onready var fsr_options = $HBoxContainer/VBoxContainer/_Scale/_FSR_Quality/FSROptions
 
-@onready var vsync_checkbox = $VBoxContainer/_Vsync/vsync_checkbox
+@onready var vsync_checkbox = $HBoxContainer/VBoxContainer/_Vsync/vsync_checkbox
 
-@onready var screen_selector = $VBoxContainer/_Screen_Select/Screen_Selector
+@onready var screen_selector = $HBoxContainer/VBoxContainer/_Screen_Select/Screen_Selector
 
-@onready var fovpercent_label = $VBoxContainer/_FieldOfView/PercentLabel
-@onready var fov_slider = $VBoxContainer/_FieldOfView/FovSlider
+@onready var fovpercent_label = $HBoxContainer/VBoxContainer/_FieldOfView/PercentLabel
+@onready var fov_slider = $HBoxContainer/VBoxContainer/_FieldOfView/FovSlider
 
-@onready var dithering_checkbox = $VBoxContainer/_PostP_Dither/dithering_checkbox
+@onready var dithering_checkbox = $HBoxContainer/VBoxContainer/_PostP_Dither/dithering_checkbox
 
-@onready var outline_checkbox = $VBoxContainer/_PostP_Outline/outline_checkbox
+@onready var outline_checkbox = $HBoxContainer/VBoxContainer/_PostP_Outline/outline_checkbox
 
-@onready var celsius_button = $VBoxContainer/_Temperature_Unit/DisplayModes/Celsius
-@onready var fahrenheit_button = $VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit
+@onready var celsius_button = $HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Celsius
+@onready var fahrenheit_button = $HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit
 
 
 

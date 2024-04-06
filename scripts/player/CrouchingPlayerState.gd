@@ -5,6 +5,9 @@ class_name CrouchingPlayerState extends PlayerMovementState
 @export var DECELERATION : float = 0.25
 @export var TOGGLE_CROUCH : bool = false
 @export_range(1, 6, 0.1) var CROUCH_SPEED : float = 4.0
+@export var WEAPON_BOB_SPD : float = 2.0
+@export var WEAPON_BOB_H : float = 1.5
+@export var WEAPON_BOB_V : float = 0.7
 
 @onready var CROUCH_SHAPECAST : ShapeCast3D = %OverheadShapeCast
 
@@ -23,11 +26,16 @@ func enter(previous_state) -> void:
 		
 func exit() -> void:
 	RELEASED = false
+	
+	WEAPON.weapon_bob_amount = Vector2(0,0)
 
 func update(delta):
 	PLAYER.update_gravity(delta)
 	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION)
 	PLAYER.update_velocity()
+	
+	WEAPON.sway_weapon(delta, false)
+	WEAPON._weapon_bob(delta, WEAPON_BOB_SPD, WEAPON_BOB_H, WEAPON_BOB_V)
 	
 	if TOGGLE_CROUCH == false:
 		if Input.is_action_just_released("crouch"):
@@ -46,6 +54,9 @@ func update(delta):
 				if ANIMATION.is_playing() and ANIMATION.current_animation == "Crouching":
 					await ANIMATION.animation_finished
 				transition.emit("JumpingPlayerState")
+	
+	if Input.is_action_just_pressed("attack"):
+		WEAPON._attack()
 
 func uncrouch():
 	if CROUCH_SHAPECAST.is_colliding() == false:

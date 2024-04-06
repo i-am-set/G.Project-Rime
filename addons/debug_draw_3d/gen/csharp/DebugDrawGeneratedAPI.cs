@@ -1,4 +1,4 @@
-/// 1.3.1
+/// 1.4.0
 /// ////////////////////////////////////////////////
 /// THIS FILE HAS BEEN GENERATED.
 /// THE CHANGES IN THIS FILE WILL BE OVERWRITTEN
@@ -81,7 +81,7 @@ static internal class DebugDraw2D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__set_text, key, value ?? _DebugDrawUtils_.DefaultArgumentsData.arg_1, priority, color_of_value ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__set_text, key, value ?? _DebugDrawUtils_.DefaultArgumentsData.arg_1, priority, color_of_value ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -674,6 +674,7 @@ static internal class DebugDraw3D
     private static readonly StringName __draw_grid = "draw_grid";
     private static readonly StringName __draw_grid_xf = "draw_grid_xf";
     private static readonly StringName __get_render_stats = "get_render_stats";
+    private static readonly StringName __get_render_stats_for_world = "get_render_stats_for_world";
     private static readonly StringName __new_scoped_config = "new_scoped_config";
     private static readonly StringName __scoped_config = "scoped_config";
     
@@ -708,7 +709,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_sphere, position, radius, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_sphere, position, radius, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -720,7 +721,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_sphere_xf, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_sphere_xf, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -732,7 +733,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_cylinder, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_cylinder, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -744,7 +745,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_cylinder_ab, a, b, radius, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_cylinder_ab, a, b, radius, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -756,7 +757,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_box, position, rotation, size, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, is_box_centered, duration);
+            Instance?.Call(__draw_box, position, rotation, size, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, is_box_centered, duration);
 #endif
         }
     }
@@ -768,7 +769,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_box_ab, a, b, up ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, is_ab_diagonal, duration);
+            Instance?.Call(__draw_box_ab, a, b, up ?? _DebugDrawUtils_.DefaultArgumentsData.arg_3, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, is_ab_diagonal, duration);
 #endif
         }
     }
@@ -780,7 +781,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_box_xf, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, is_box_centered, duration);
+            Instance?.Call(__draw_box_xf, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, is_box_centered, duration);
 #endif
         }
     }
@@ -792,7 +793,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_aabb, aabb, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_aabb, aabb, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -804,7 +805,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_aabb_ab, a, b, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_aabb_ab, a, b, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -816,7 +817,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_line_hit, start, end, hit, is_hit, hit_size, hit_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, after_hit_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_line_hit, start, end, hit, is_hit, hit_size, hit_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, after_hit_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -828,7 +829,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_line_hit_offset, start, end, is_hit, unit_offset_of_hit, hit_size, hit_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, after_hit_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_line_hit_offset, start, end, is_hit, unit_offset_of_hit, hit_size, hit_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, after_hit_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -840,7 +841,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_line, a, b, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_line, a, b, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -852,7 +853,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_lines, lines, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_lines, lines, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -864,7 +865,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_ray, origin, direction, length, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_ray, origin, direction, length, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -876,7 +877,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_line_path, path, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_line_path, path, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -888,7 +889,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_arrowhead, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_arrowhead, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -900,7 +901,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_arrow, a, b, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, arrow_size, is_absolute_size, duration);
+            Instance?.Call(__draw_arrow, a, b, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, arrow_size, is_absolute_size, duration);
 #endif
         }
     }
@@ -912,7 +913,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_arrow_ray, origin, direction, length, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, arrow_size, is_absolute_size, duration);
+            Instance?.Call(__draw_arrow_ray, origin, direction, length, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, arrow_size, is_absolute_size, duration);
 #endif
         }
     }
@@ -924,7 +925,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_arrow_path, path, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, arrow_size, is_absolute_size, duration);
+            Instance?.Call(__draw_arrow_path, path, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, arrow_size, is_absolute_size, duration);
 #endif
         }
     }
@@ -936,7 +937,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_point_path, path, (long)type, size, points_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, lines_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_point_path, path, (long)type, size, points_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, lines_color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -948,7 +949,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_square, position, size, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_square, position, size, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -960,7 +961,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_plane, plane, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, anchor_point ?? _DebugDrawUtils_.DefaultArgumentsData.arg_3, duration);
+            Instance?.Call(__draw_plane, plane, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, anchor_point ?? _DebugDrawUtils_.DefaultArgumentsData.arg_4, duration);
 #endif
         }
     }
@@ -972,7 +973,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_points, points, (long)type, size, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_points, points, (long)type, size, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -984,7 +985,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_camera_frustum, camera, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_camera_frustum, camera, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -996,7 +997,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_camera_frustum_planes, camera_frustum, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_camera_frustum_planes, camera_frustum, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -1008,7 +1009,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_position, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, duration);
+            Instance?.Call(__draw_position, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, duration);
 #endif
         }
     }
@@ -1020,7 +1021,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_gizmo, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, is_centered, duration);
+            Instance?.Call(__draw_gizmo, transform, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, is_centered, duration);
 #endif
         }
     }
@@ -1032,7 +1033,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_grid, origin, x_size, y_size, subdivision, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, is_centered, duration);
+            Instance?.Call(__draw_grid, origin, x_size, y_size, subdivision, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, is_centered, duration);
 #endif
         }
     }
@@ -1044,7 +1045,7 @@ static internal class DebugDraw3D
 #endif
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
-            Instance?.Call(__draw_grid_xf, transform, subdivision, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_0, is_centered, duration);
+            Instance?.Call(__draw_grid_xf, transform, subdivision, color ?? _DebugDrawUtils_.DefaultArgumentsData.arg_2, is_centered, duration);
 #endif
         }
     }
@@ -1057,6 +1058,26 @@ static internal class DebugDraw3D
         {
 #if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
             return (DebugDraw3DStats)_DebugDrawUtils_.CreateWrapperFromObject((GodotObject)Instance?.Call(__get_render_stats));
+#endif
+        }
+#if !DEBUG && !FORCED_DD3D
+        else
+#endif
+        {
+#if !DEBUG && !FORCED_DD3D
+            return default;
+#endif
+        }
+    }
+    
+    public static DebugDraw3DStats GetRenderStatsForWorld(Viewport viewport)
+    {
+#if !DEBUG && !FORCED_DD3D
+        if (_DebugDrawUtils_.IsCallEnabled)
+#endif
+        {
+#if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
+            return (DebugDraw3DStats)_DebugDrawUtils_.CreateWrapperFromObject((GodotObject)Instance?.Call(__get_render_stats_for_world, viewport));
 #endif
         }
 #if !DEBUG && !FORCED_DD3D
@@ -1112,7 +1133,6 @@ static internal class DebugDraw3D
     private static readonly StringName __prop_empty_color = "empty_color";
     private static readonly StringName __prop_debug_enabled = "debug_enabled";
     private static readonly StringName __prop_config = "config";
-    private static readonly StringName __prop_custom_viewport = "custom_viewport";
     
     public static Color EmptyColor
     {
@@ -1132,12 +1152,6 @@ static internal class DebugDraw3D
         set => ClassDB.ClassSetProperty(Instance, __prop_config, value.Instance);
     }
     
-    public static Viewport CustomViewport
-    {
-        get => (Viewport)ClassDB.ClassGetProperty(Instance, __prop_custom_viewport);
-        set => ClassDB.ClassSetProperty(Instance, __prop_custom_viewport, value);
-    }
-    
 }
 
 internal class DebugDraw3DStats : _DebugDrawInstanceWrapper_
@@ -1153,18 +1167,14 @@ internal class DebugDraw3DStats : _DebugDrawInstanceWrapper_
     private static readonly StringName __prop_total_geometry = "total_geometry";
     private static readonly StringName __prop_visible_instances = "visible_instances";
     private static readonly StringName __prop_visible_lines = "visible_lines";
-    private static readonly StringName __prop_visible_instances_physics = "visible_instances_physics";
-    private static readonly StringName __prop_visible_lines_physics = "visible_lines_physics";
     private static readonly StringName __prop_total_visible = "total_visible";
     private static readonly StringName __prop_time_filling_buffers_instances_usec = "time_filling_buffers_instances_usec";
     private static readonly StringName __prop_time_filling_buffers_lines_usec = "time_filling_buffers_lines_usec";
     private static readonly StringName __prop_time_filling_buffers_instances_physics_usec = "time_filling_buffers_instances_physics_usec";
     private static readonly StringName __prop_time_filling_buffers_lines_physics_usec = "time_filling_buffers_lines_physics_usec";
     private static readonly StringName __prop_total_time_filling_buffers_usec = "total_time_filling_buffers_usec";
-    private static readonly StringName __prop_time_culling_instant_usec = "time_culling_instant_usec";
-    private static readonly StringName __prop_time_culling_delayed_usec = "time_culling_delayed_usec";
-    private static readonly StringName __prop_time_culling_instant_physics_usec = "time_culling_instant_physics_usec";
-    private static readonly StringName __prop_time_culling_delayed_physics_usec = "time_culling_delayed_physics_usec";
+    private static readonly StringName __prop_time_culling_instances_usec = "time_culling_instances_usec";
+    private static readonly StringName __prop_time_culling_lines_usec = "time_culling_lines_usec";
     private static readonly StringName __prop_total_time_culling_usec = "total_time_culling_usec";
     private static readonly StringName __prop_total_time_spent_usec = "total_time_spent_usec";
     private static readonly StringName __prop_created_scoped_configs = "created_scoped_configs";
@@ -1212,18 +1222,6 @@ internal class DebugDraw3DStats : _DebugDrawInstanceWrapper_
         set => ClassDB.ClassSetProperty(Instance, __prop_visible_lines, value);
     }
     
-    public int VisibleInstancesPhysics
-    {
-        get => (int)ClassDB.ClassGetProperty(Instance, __prop_visible_instances_physics);
-        set => ClassDB.ClassSetProperty(Instance, __prop_visible_instances_physics, value);
-    }
-    
-    public int VisibleLinesPhysics
-    {
-        get => (int)ClassDB.ClassGetProperty(Instance, __prop_visible_lines_physics);
-        set => ClassDB.ClassSetProperty(Instance, __prop_visible_lines_physics, value);
-    }
-    
     public int TotalVisible
     {
         get => (int)ClassDB.ClassGetProperty(Instance, __prop_total_visible);
@@ -1260,28 +1258,16 @@ internal class DebugDraw3DStats : _DebugDrawInstanceWrapper_
         set => ClassDB.ClassSetProperty(Instance, __prop_total_time_filling_buffers_usec, value);
     }
     
-    public int TimeCullingInstantUsec
+    public int TimeCullingInstancesUsec
     {
-        get => (int)ClassDB.ClassGetProperty(Instance, __prop_time_culling_instant_usec);
-        set => ClassDB.ClassSetProperty(Instance, __prop_time_culling_instant_usec, value);
+        get => (int)ClassDB.ClassGetProperty(Instance, __prop_time_culling_instances_usec);
+        set => ClassDB.ClassSetProperty(Instance, __prop_time_culling_instances_usec, value);
     }
     
-    public int TimeCullingDelayedUsec
+    public int TimeCullingLinesUsec
     {
-        get => (int)ClassDB.ClassGetProperty(Instance, __prop_time_culling_delayed_usec);
-        set => ClassDB.ClassSetProperty(Instance, __prop_time_culling_delayed_usec, value);
-    }
-    
-    public int TimeCullingInstantPhysicsUsec
-    {
-        get => (int)ClassDB.ClassGetProperty(Instance, __prop_time_culling_instant_physics_usec);
-        set => ClassDB.ClassSetProperty(Instance, __prop_time_culling_instant_physics_usec, value);
-    }
-    
-    public int TimeCullingDelayedPhysicsUsec
-    {
-        get => (int)ClassDB.ClassGetProperty(Instance, __prop_time_culling_delayed_physics_usec);
-        set => ClassDB.ClassSetProperty(Instance, __prop_time_culling_delayed_physics_usec, value);
+        get => (int)ClassDB.ClassGetProperty(Instance, __prop_time_culling_lines_usec);
+        set => ClassDB.ClassSetProperty(Instance, __prop_time_culling_lines_usec, value);
     }
     
     public int TotalTimeCullingUsec
@@ -1319,7 +1305,7 @@ internal class DebugDraw3DConfig : _DebugDrawInstanceWrapper_
     private static readonly StringName __prop_freeze_3d_render = "freeze_3d_render";
     private static readonly StringName __prop_visible_instance_bounds = "visible_instance_bounds";
     private static readonly StringName __prop_use_frustum_culling = "use_frustum_culling";
-    private static readonly StringName __prop_culling_distance = "culling_distance";
+    private static readonly StringName __prop_frustum_length_scale = "frustum_length_scale";
     private static readonly StringName __prop_force_use_camera_from_scene = "force_use_camera_from_scene";
     private static readonly StringName __prop_geometry_render_layers = "geometry_render_layers";
     private static readonly StringName __prop_line_hit_color = "line_hit_color";
@@ -1343,10 +1329,10 @@ internal class DebugDraw3DConfig : _DebugDrawInstanceWrapper_
         set => ClassDB.ClassSetProperty(Instance, __prop_use_frustum_culling, value);
     }
     
-    public float CullingDistance
+    public float FrustumLengthScale
     {
-        get => (float)ClassDB.ClassGetProperty(Instance, __prop_culling_distance);
-        set => ClassDB.ClassSetProperty(Instance, __prop_culling_distance, value);
+        get => (float)ClassDB.ClassGetProperty(Instance, __prop_frustum_length_scale);
+        set => ClassDB.ClassSetProperty(Instance, __prop_frustum_length_scale, value);
     }
     
     public bool ForceUseCameraFromScene
@@ -1389,6 +1375,8 @@ internal class DebugDraw3DScopeConfig : _DebugDrawInstanceWrapper_, IDisposable
     private static readonly StringName __is_hd_sphere = "is_hd_sphere";
     private static readonly StringName __set_plane_size = "set_plane_size";
     private static readonly StringName __get_plane_size = "get_plane_size";
+    private static readonly StringName __set_viewport = "set_viewport";
+    private static readonly StringName __get_viewport = "get_viewport";
     // Additional custom statics
     private static readonly StringName ___manual_unregister = "_manual_unregister";
     
@@ -1558,6 +1546,46 @@ internal class DebugDraw3DScopeConfig : _DebugDrawInstanceWrapper_, IDisposable
         }
     }
     
+    public DebugDraw3DScopeConfig SetViewport(Viewport value)
+    {
+#if !DEBUG && !FORCED_DD3D
+        if (_DebugDrawUtils_.IsCallEnabled)
+#endif
+        {
+#if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
+            return (DebugDraw3DScopeConfig)_DebugDrawUtils_.CreateWrapperFromObject((GodotObject)Instance?.Call(__set_viewport, value));
+#endif
+        }
+#if !DEBUG && !FORCED_DD3D
+        else
+#endif
+        {
+#if !DEBUG && !FORCED_DD3D
+            return default;
+#endif
+        }
+    }
+    
+    public Viewport GetViewport()
+    {
+#if !DEBUG && !FORCED_DD3D
+        if (_DebugDrawUtils_.IsCallEnabled)
+#endif
+        {
+#if (!DEBUG || FORCED_DD3D) || (DEBUG && !FORCED_DD3D)
+            return (Viewport)(Instance?.Call(__get_viewport));
+#endif
+        }
+#if !DEBUG && !FORCED_DD3D
+        else
+#endif
+        {
+#if !DEBUG && !FORCED_DD3D
+            return default;
+#endif
+        }
+    }
+    
     
 }
 
@@ -1636,10 +1664,11 @@ internal static class _DebugDrawUtils_
     
     public static class DefaultArgumentsData
     {
-        public static readonly Color arg_0 = new Color(0f, 0f, 0f, 0f);
+        public static readonly Color arg_0 = new Color(0.95999997854233f, 0.95999997854233f, 0.95999997854233f, 1f);
         public static readonly Variant arg_1 = default;
-        public static readonly Vector3 arg_2 = new Vector3(0f, 1f, 0f);
-        public static readonly Vector3 arg_3 = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+        public static readonly Color arg_2 = new Color(0f, 0f, 0f, 0f);
+        public static readonly Vector3 arg_3 = new Vector3(0f, 1f, 0f);
+        public static readonly Vector3 arg_4 = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
     }
     
     static System.Collections.Generic.Dictionary<ulong, _DebugDrawInstanceWrapper_> cached_instances = new();

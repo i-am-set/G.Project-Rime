@@ -10,6 +10,7 @@ extends CharacterBody3D
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
 
+
 @export var MOUSE_SENSITIVITY : float = 0.5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
@@ -17,9 +18,10 @@ extends CharacterBody3D
 @export var ANIMATIONPLAYER : AnimationPlayer
 @export var CROUCH_SHAPECAST : ShapeCast3D
 @export var PLAYERSTATEMACHINE : StateMachine
+@export var WEAPON_CONTROLLER : WeaponController
 @export var USERINTERFACE : Control
-@export var WEAPONVIEWPORT : SubViewportContainer
 @export var GRASS_EMITTER : GPUParticles3D
+@export var WEAPONVIEWPORT : SubViewportContainer
 
 var _is_authorized_user : bool = false
 
@@ -46,7 +48,7 @@ func _authorize_user():
 	PLAYER_MODEL= get_node("CollisionShape3D/player_model")
 	LEGS_MODEL = get_node("CollisionShape3D/legs_model")
 	PLAYER_MODEL.visible = false
-	LEGS_MODEL.visible = true
+	LEGS_MODEL.visible = false
 
 func _deauthorize_user():
 	_is_authorized_user = false
