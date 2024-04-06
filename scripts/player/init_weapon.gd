@@ -32,12 +32,6 @@ func _ready() -> void:
 	load_weapon()
 	
 func _input(event):
-	if event.is_action_pressed("weapon1"):
-		WEAPON_TYPE = load("res://meshes/weapons/crowbar/crowbar.tres")
-		load_weapon()
-	if event.is_action_pressed("weapon2"):
-		WEAPON_TYPE = load("res://meshes/weapons/crowbar2/crowbarL.tres")
-		load_weapon()
 	if event is InputEventMouseMotion && !Global.IS_PAUSED && !Global.IS_IN_INVENTORY:
 		mouse_movement = event.relative
 
