@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var PLAYER_MODEL : Node3D = get_node("CollisionShape3D/player_model")
 @onready var LEGS_MODEL : Node3D = get_node("CollisionShape3D/legs_model")
 @onready var PAUSE_MENU = $UserInterface/PauseMenu
+@onready var PAUSE_ANIMATOR = $UserInterface/PauseMenu/BlurAnimator
 @onready var INVENTORY_MENU = $UserInterface/InventoryMenu
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
@@ -94,9 +95,11 @@ func toggle_pause_menu():
 	if PAUSE_MENU.visible:
 		uncapture_mouse()
 		Global.IS_PAUSED = true
+		PAUSE_ANIMATOR.play("start_pause")
 	else:
 		capture_mouse()
 		Global.IS_PAUSED = false
+		PAUSE_ANIMATOR.play("RESET")
 
 func capture_mouse():
 	Global.capture_mouse(true)

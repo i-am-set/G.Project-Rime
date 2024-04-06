@@ -1,3 +1,4 @@
+res://shaders
 res://ui/button_groups
 res://scenes/utility
 res://resources
@@ -8,7 +9,6 @@ c:/Users/SethLaptop/wkspaces/!Builds
 res://textures/ui
 res://shaders/2d
 res://addons/godot-console/scripts
-res://shaders
 res://
 res://materials
 res://scenes/resourceobjects/nature/nodes/colliders

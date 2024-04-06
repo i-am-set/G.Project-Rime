@@ -2,7 +2,7 @@ class_name IdlePlayerState extends PlayerMovementState
 
 @export var SPEED: float = 5.0
 @export var ACCELERATION : float = 0.1
-@export var DECELERATION : float = 0.25
+@export var DECELERATION : float = 0.6
 
 func enter(previous_state) -> void:
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":

@@ -1,6 +1,6 @@
 extends HBoxContainer
 
-@onready var fps_controller = $"../../.."
+@onready var fps_controller = $"../../../.."
 
 @onready var fullscreen_button = $VBoxContainer/_Display_Mode/DisplayModes/Fullscreen
 @onready var borderless_button = $VBoxContainer/_Display_Mode/DisplayModes/Borderless

@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=100 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -9,6 +9,7 @@
 [ext_resource type="Theme" uid="uid://cjxg2tt7m1r7e" path="res://ui/themes/debug.tres" id="5_tib1u"]
 [ext_resource type="Texture2D" uid="uid://drya7dyoskvek" path="res://icon.png" id="6_454p0"]
 [ext_resource type="Script" path="res://scripts/game/debug.gd" id="6_kecrd"]
+[ext_resource type="Shader" path="res://shaders/2d/blur_shader.gdshader" id="7_5ppov"]
 [ext_resource type="ButtonGroup" uid="uid://cyodex2xc22hm" path="res://ui/button_groups/display_mode_button_group.tres" id="7_7h2ag"]
 [ext_resource type="Script" path="res://scripts/game/options_setting.gd" id="7_8cwra"]
 [ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="7_22y7g"]
@@ -35,6 +36,7 @@
 [ext_resource type="Script" path="res://addons/gloot/core/item_slot.gd" id="13_1cna5"]
 [ext_resource type="Script" path="res://scripts/player/JumpingPlayerState.gd" id="13_fbjl8"]
 [ext_resource type="Script" path="res://scripts/player/FallingPlayerState.gd" id="14_7wlsx"]
+[ext_resource type="Texture2D" uid="uid://bsysr2ekeswpu" path="res://textures/screenshots/daylight_1_screenshot.png" id="14_hebny"]
 [ext_resource type="Texture2D" uid="uid://cpghkj6kt0fr0" path="res://textures/ui/ui_male_temperature_map.png" id="15_girel"]
 [ext_resource type="Texture2D" uid="uid://gkwxbmjelhno" path="res://textures/ui/ui_male_temperature_map_mask.png" id="15_jn7u3"]
 [ext_resource type="Script" path="res://scripts/player/WeaponViewport.gd" id="15_yu4nu"]
@@ -494,8 +496,49 @@ _data = {
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cvmy6"]
 length = 0.75
 
+[sub_resource type="Animation" id="Animation_mv06j"]
+resource_name = "start_pause"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../../BlurBackground:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_36kdk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../../BlurBackground:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nd8bc"]
+_data = {
+"RESET": SubResource("Animation_36kdk"),
+"start_pause": SubResource("Animation_mv06j")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_srfi1"]
+shader = ExtResource("7_5ppov")
+shader_parameter/amount = 1.5
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny6q8"]
-bg_color = Color(0.105882, 0.105882, 0.105882, 0.972549)
+bg_color = Color(0.223529, 0.223529, 0.223529, 0.388235)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jfu3c"]
 
@@ -559,15 +602,62 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.2, 0.2, 0.2, 1)
 
+[sub_resource type="Animation" id="Animation_pa7xc"]
+resource_name = "blur_start"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../BlurBackground:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3l7ui"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../BlurBackground:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ey2ug"]
+_data = {
+"RESET": SubResource("Animation_3l7ui"),
+"blur_start": SubResource("Animation_pa7xc")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cq2t0"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.756863)
+border_width_top = 2
+border_width_bottom = 2
+border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
+shadow_color = Color(0, 0, 0, 0.231373)
+shadow_size = 145
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8in0f"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.419608)
+border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m4jl"]
-bg_color = Color(0.2, 0.2, 0.2, 0.243137)
+bg_color = Color(0.133333, 0.12549, 0.141176, 0.431373)
 border_width_left = 4
-border_width_right = 4
-border_color = Color(0.294118, 0.294118, 0.294118, 1)
+border_color = Color(0.270588, 0.270588, 0.270588, 0.286275)
 border_blend = true
-shadow_color = Color(0, 0, 0, 0.219608)
-shadow_size = 228
-shadow_offset = Vector2(3, -3)
+shadow_color = Color(0, 0, 0, 0.243137)
+shadow_size = 238
 anti_aliasing = false
 
 [sub_resource type="Shader" id="Shader_522v6"]
@@ -658,6 +748,18 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 0.92549, 0.152941, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drgx6"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.270588)
+border_width_left = 4
+border_width_top = 4
+border_width_bottom = 4
+border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.301961)
+shadow_size = 40
+shadow_offset = Vector2(0, 27.51)
 
 [sub_resource type="StyleBoxTexture" id="3"]
 texture = ExtResource("7_kdvpp")
@@ -772,7 +874,7 @@ transform = Transform3D(-0.992541, 0.12189, 0.0024289, 0.00451701, 0.0168577, 0.
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -829,7 +931,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BGColorPanel" type="Panel" parent="UserInterface/PauseMenu"]
+[node name="FACADE" type="TextureRect" parent="UserInterface/PauseMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_hebny")
+expand_mode = 1
+
+[node name="BlurAnimator" type="AnimationPlayer" parent="UserInterface/PauseMenu"]
+root_node = NodePath("../Options_Setting/HBoxContainer/VBoxContainer")
+libraries = {
+"": SubResource("AnimationLibrary_nd8bc")
+}
+
+[node name="BlurBackground" type="Control" parent="UserInterface/PauseMenu"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BGBlur" type="ColorRect" parent="UserInterface/PauseMenu/BlurBackground"]
+material = SubResource("ShaderMaterial_srfi1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BGColorPanel" type="Panel" parent="UserInterface/PauseMenu/BlurBackground"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -875,22 +1013,31 @@ layout_mode = 2
 text = "144"
 script = ExtResource("8_mj3xk")
 
-[node name="Options_Setting" type="HBoxContainer" parent="UserInterface/PauseMenu"]
+[node name="Options_Setting" type="ScrollContainer" parent="UserInterface/PauseMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
+anchor_left = 0.374
+anchor_right = 0.626
 anchor_bottom = 1.0
+offset_left = 0.599976
+offset_right = -0.600098
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = SubResource("Theme_ftd28")
 alignment = 1
 script = ExtResource("7_8cwra")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/PauseMenu/Options_Setting"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="HEADER_SCREEN" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="HEADER_SCREEN" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -899,21 +1046,21 @@ text = "SCREEN
 "
 horizontal_alignment = 1
 
-[node name="_Display_Mode" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_Display_Mode" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Display_Mode_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode"]
+[node name="Display_Mode_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Display Mode"
 uppercase = true
 
-[node name="DisplayModes" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode"]
+[node name="DisplayModes" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode"]
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Fullscreen" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode/DisplayModes"]
+[node name="Fullscreen" type="Button" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes"]
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 toggle_mode = true
@@ -922,7 +1069,7 @@ keep_pressed_outside = true
 button_group = ExtResource("7_7h2ag")
 text = "Fullscreen"
 
-[node name="Borderless" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode/DisplayModes"]
+[node name="Borderless" type="Button" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes"]
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 toggle_mode = true
@@ -931,7 +1078,7 @@ keep_pressed_outside = true
 button_group = ExtResource("7_7h2ag")
 text = "Borderless"
 
-[node name="Windowed" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode/DisplayModes"]
+[node name="Windowed" type="Button" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes"]
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 toggle_mode = true
@@ -941,33 +1088,33 @@ button_group = ExtResource("7_7h2ag")
 text = "Windowed
 "
 
-[node name="_Resolution" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_Resolution" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Resolution_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Resolution"]
+[node name="Resolution_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Resolution"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Resolution"
 uppercase = true
 
-[node name="Resolution_OptionButton" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Resolution"]
+[node name="Resolution_OptionButton" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Resolution"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="_Scale" type="VBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_Scale" type="VBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="_Upscaler" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale"]
+[node name="_Upscaler" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale"]
 layout_mode = 2
 
-[node name="Upscaler_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Upscaler"]
+[node name="Upscaler_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_Upscaler"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Upscaler"
 uppercase = true
 
-[node name="Scaler" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Upscaler"]
+[node name="Scaler" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_Upscaler"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 12
@@ -979,16 +1126,16 @@ popup/item_0/id = 0
 popup/item_1/text = "AMD FSR 2.2"
 popup/item_1/id = 1
 
-[node name="Scale_Box" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale"]
+[node name="Scale_Box" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale"]
 layout_mode = 2
 
-[node name="Scale_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box"]
+[node name="Scale_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/Scale_Box"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Scale"
 uppercase = true
 
-[node name="ScaleSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box"]
+[node name="ScaleSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/Scale_Box"]
 custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -998,24 +1145,24 @@ step = 5.0
 value = 100.0
 ticks_on_borders = true
 
-[node name="PercentLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box"]
+[node name="PercentLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/Scale_Box"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "-----------"
 vertical_alignment = 1
 
-[node name="_FSR_Quality" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale"]
+[node name="_FSR_Quality" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale"]
 visible = false
 layout_mode = 2
 
-[node name="FSRQuality_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_FSR_Quality"]
+[node name="FSRQuality_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_FSR_Quality"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "FSR Quality"
 uppercase = true
 
-[node name="FSROptions" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_FSR_Quality"]
+[node name="FSROptions" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_FSR_Quality"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1032,37 +1179,37 @@ popup/item_2/id = 2
 popup/item_3/text = "Ultra Quality"
 popup/item_3/id = 3
 
-[node name="_Vsync" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_Vsync" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="_V-Sync" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Vsync"]
+[node name="_V-Sync" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Vsync"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 2
 text = "VSync Toggle"
 uppercase = true
 
-[node name="vsync_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Vsync"]
+[node name="vsync_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Vsync"]
 custom_minimum_size = Vector2(17, 17)
 layout_mode = 2
 theme_override_styles/pressed = SubResource("StyleBoxFlat_ujw28")
 toggle_mode = true
 
-[node name="_Screen_Select" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_Screen_Select" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="_Screen" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Screen_Select"]
+[node name="_Screen" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Screen_Select"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Screen Select"
 uppercase = true
 
-[node name="Screen_Selector" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Screen_Select"]
+[node name="Screen_Selector" type="OptionButton" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Screen_Select"]
 layout_mode = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="HEADER_CAMERA" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="HEADER_CAMERA" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -1071,16 +1218,16 @@ text = "
 CAMERA"
 horizontal_alignment = 1
 
-[node name="_FieldOfView" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_FieldOfView" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="FOV_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView"]
+[node name="FOV_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_FieldOfView"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Field of View"
 uppercase = true
 
-[node name="FovSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView"]
+[node name="FovSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_FieldOfView"]
 custom_minimum_size = Vector2(170, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1088,7 +1235,7 @@ min_value = 60.0
 value = 75.0
 ticks_on_borders = true
 
-[node name="PercentLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView"]
+[node name="PercentLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_FieldOfView"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
@@ -1096,7 +1243,7 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HEADER_GRAPHICS" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="HEADER_GRAPHICS" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -1105,7 +1252,7 @@ text = "
 GRAPHICS"
 horizontal_alignment = 1
 
-[node name="HEADER_POST_PROCESSING" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="HEADER_POST_PROCESSING" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -1114,17 +1261,17 @@ text = "
 POST PROCESSING"
 horizontal_alignment = 1
 
-[node name="_PostP_Dither" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_PostP_Dither" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="_Dithering" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither"]
+[node name="_Dithering" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Dither"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Dithering"
 uppercase = true
 
-[node name="dithering_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither"]
+[node name="dithering_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Dither"]
 custom_minimum_size = Vector2(17, 17)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -1132,16 +1279,16 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_ujw28")
 toggle_mode = true
 button_pressed = true
 
-[node name="_PostP_Outline" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_PostP_Outline" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="_Outline" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline"]
+[node name="_Outline" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Outline"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Outline"
 uppercase = true
 
-[node name="outline_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline"]
+[node name="outline_checkbox" type="Button" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Outline"]
 custom_minimum_size = Vector2(17, 17)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -1149,7 +1296,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_ujw28")
 toggle_mode = true
 button_pressed = true
 
-[node name="HEADER_GAME" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="HEADER_GAME" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -1158,22 +1305,22 @@ text = "
 GAME"
 horizontal_alignment = 1
 
-[node name="_Temperature_Unit" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer"]
+[node name="_Temperature_Unit" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Temperature_Unit" type="Label" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit"]
+[node name="Temperature_Unit" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Temperature"
 uppercase = true
 
-[node name="DisplayModes" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit"]
+[node name="DisplayModes" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Celsius" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit/DisplayModes"]
+[node name="Celsius" type="Button" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes"]
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1183,7 +1330,7 @@ keep_pressed_outside = true
 button_group = ExtResource("12_xwa8q")
 text = "Celsius"
 
-[node name="Fahrenheit" type="Button" parent="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit/DisplayModes"]
+[node name="Fahrenheit" type="Button" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes"]
 custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1192,6 +1339,8 @@ action_mode = 0
 keep_pressed_outside = true
 button_group = ExtResource("12_xwa8q")
 text = "Fahrenheit"
+
+[node name="Node" type="Node" parent="UserInterface/PauseMenu"]
 
 [node name="InventoryMenu" type="Control" parent="UserInterface"]
 layout_mode = 1
@@ -1204,7 +1353,42 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_m68ou")
 
-[node name="BGColorPanel" type="Panel" parent="UserInterface/InventoryMenu"]
+[node name="FACADE" type="TextureRect" parent="UserInterface/InventoryMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_hebny")
+expand_mode = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UserInterface/InventoryMenu"]
+root_node = NodePath("../FACADE")
+libraries = {
+"": SubResource("AnimationLibrary_ey2ug")
+}
+
+[node name="BlurBackground" type="Control" parent="UserInterface/InventoryMenu"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BGBlur" type="ColorRect" parent="UserInterface/InventoryMenu/BlurBackground"]
+material = SubResource("ShaderMaterial_srfi1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BGColorPanel" type="Panel" parent="UserInterface/InventoryMenu/BlurBackground"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1213,30 +1397,71 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ny6q8")
 
+[node name="TopPanel" type="Panel" parent="UserInterface/InventoryMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.158
+offset_top = -7.0
+offset_right = 1.0
+offset_bottom = -0.200012
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
+
+[node name="MainPanel" type="Panel" parent="UserInterface/InventoryMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.158
+anchor_right = 1.0
+anchor_bottom = 0.94
+offset_top = -0.200012
+offset_right = 1.0
+offset_bottom = -6.10352e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8in0f")
+
+[node name="BottomPanel" type="Panel" parent="UserInterface/InventoryMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.94
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -6.10352e-05
+offset_right = 1.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
+
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.671
+anchor_left = 0.577
+anchor_top = 0.158
 anchor_right = 0.974
-anchor_bottom = 1.0
-offset_left = -0.599976
-offset_right = -0.400024
+anchor_bottom = 0.94
+offset_left = 0.799988
+offset_top = -0.200012
+offset_right = 42.6001
+offset_bottom = -6.10352e-05
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 
 [node name="silhouette_img" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel"]
-self_modulate = Color(1, 1, 1, 0.0470588)
+self_modulate = Color(0.482353, 0.482353, 0.482353, 0.192157)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.101
-anchor_right = 0.904
+anchor_right = 0.718
 anchor_bottom = 1.0
-offset_left = 0.0149994
-offset_top = 141.0
-offset_right = -0.190033
-offset_bottom = -67.0
+offset_left = -0.376999
+offset_top = 16.0
+offset_right = -0.0860291
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -1274,18 +1499,50 @@ texture = ExtResource("15_girel")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="inventory_panel2" type="Panel" parent="UserInterface/InventoryMenu"]
+[node name="Inventories" type="VBoxContainer" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.023
-anchor_right = 0.648
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.199997
-offset_right = 0.199951
+offset_left = 97.0
+offset_top = 142.0
+offset_right = -706.0
+offset_bottom = -54.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/Inventories"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/Inventories/HBoxContainer"]
+layout_mode = 2
+
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/Inventories/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+script = ExtResource("5_a1ct0")
+inventory_path = NodePath("../../../../InventoryGridStackedLeft")
+default_item_texture = ExtResource("6_454p0")
+field_style = SubResource("1")
+field_highlighted_style = SubResource("2")
+selection_style = SubResource("5")
+
+[node name="TooltipPanel" type="Panel" parent="UserInterface/InventoryMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.519
+anchor_top = 0.672
+anchor_right = 1.001
+anchor_bottom = 0.919
+offset_left = 0.599915
+offset_top = 0.199951
+offset_right = -0.600098
+offset_bottom = -0.100037
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_drgx6")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu"]
 visible = false
@@ -1300,21 +1557,6 @@ size_flags_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
-unique_name_in_owner = true
-texture_filter = 1
-custom_minimum_size = Vector2(160, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedLeft")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
 
 [node name="BtnSortLeft" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -1333,6 +1575,7 @@ layout_mode = 2
 
 [node name="PanelContainer2" type="PanelContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
+size_flags_horizontal = 4
 
 [node name="CtrlInventoryGridRight" type="Control" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2"]
 unique_name_in_owner = true
@@ -1540,17 +1783,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.77756, 0)
 target_position = Vector3(0, -0.165, 0)
 script = ExtResource("19_lm36c")
 
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode/DisplayModes/Fullscreen" to="UserInterface/PauseMenu/Options_Setting" method="_on_fullscreen_button_up"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode/DisplayModes/Borderless" to="UserInterface/PauseMenu/Options_Setting" method="_on_borderless_button_up"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Display_Mode/DisplayModes/Windowed" to="UserInterface/PauseMenu/Options_Setting" method="_on_windowed_button_up"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Resolution/Resolution_OptionButton" to="UserInterface/PauseMenu/Options_Setting" method="_on_resolution_option_button_item_selected"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_Upscaler/Scaler" to="UserInterface/PauseMenu/Options_Setting" method="_on_scaler_item_selected"]
-[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/Scale_Box/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_scale_slider_value_changed"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Scale/_FSR_Quality/FSROptions" to="UserInterface/PauseMenu/Options_Setting" method="_on_fsr_options_item_selected"]
-[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Vsync/vsync_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_vsync_checkbox_toggled"]
-[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Screen_Select/Screen_Selector" to="UserInterface/PauseMenu/Options_Setting" method="_on_screen_selector_item_selected"]
-[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_fov_slider_value_changed"]
-[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_dithering_checkbox_toggled"]
-[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_outline_checkbox_toggled"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit/DisplayModes/Celsius" to="UserInterface/PauseMenu/Options_Setting" method="_on_celsius_button_up"]
-[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit" to="UserInterface/PauseMenu/Options_Setting" method="_on_fahrenheit_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Fullscreen" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_fullscreen_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Borderless" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_borderless_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Windowed" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_windowed_button_up"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Resolution/Resolution_OptionButton" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_resolution_option_button_item_selected"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_Upscaler/Scaler" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_scaler_item_selected"]
+[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/Scale_Box/ScaleSlider" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_scale_slider_value_changed"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Scale/_FSR_Quality/FSROptions" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_fsr_options_item_selected"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Vsync/vsync_checkbox" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_vsync_checkbox_toggled"]
+[connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Screen_Select/Screen_Selector" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_screen_selector_item_selected"]
+[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_fov_slider_value_changed"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_dithering_checkbox_toggled"]
+[connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_outline_checkbox_toggled"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Celsius" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_celsius_button_up"]
+[connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit" to="UserInterface/PauseMenu/Options_Setting/HBoxContainer" method="_on_fahrenheit_button_up"]

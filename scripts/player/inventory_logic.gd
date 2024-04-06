@@ -5,6 +5,7 @@ const info_offset: Vector2 = Vector2(20, 0)
 @onready var fps_controller = $"../.."
 @onready var temperature_map = $silhouette_panel/temperature_map
 @onready var temperature_map_material = temperature_map.material
+@onready var animation_player = $AnimationPlayer
 var player_data
 
 @onready var ctrl_inventory_left := $"%CtrlInventoryGridLeft"
@@ -60,13 +61,17 @@ func toggle_inventory():
 	if Global.IS_PAUSED:
 		self.visible == false
 		Global.IS_IN_INVENTORY == false
+		animation_player.play("RESET")
 		return
 	else:
 		visible = !visible
 		Global.IS_IN_INVENTORY = visible
 		Global.capture_mouse(!visible)
 		if visible == true:
+			animation_player.play("blur_start")
 			update_temperature_map_colors()
+		else:
+			animation_player.play("RESET")
 
 func _on_btn_sort(ctrl_inventory) -> void:
 	if !ctrl_inventory.inventory.sort():
