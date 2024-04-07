@@ -884,7 +884,7 @@ sway_noise = SubResource("NoiseTexture2D_33bd6")
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1525,14 +1525,14 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+[node name="HFlowContainer" type="HFlowContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
 layout_mode = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HFlowContainer"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer/PanelContainer"]
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HFlowContainer/PanelContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 custom_minimum_size = Vector2(640, 160)
@@ -1543,6 +1543,30 @@ default_item_texture = ExtResource("6_454p0")
 field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
+
+[node name="PanelContainer2" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HFlowContainer"]
+layout_mode = 2
+
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HFlowContainer/PanelContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(640, 160)
+layout_mode = 2
+script = ExtResource("5_a1ct0")
+inventory_path = NodePath("../../../../../InventoryGridStackedLeft")
+default_item_texture = ExtResource("6_454p0")
+field_style = SubResource("1")
+field_highlighted_style = SubResource("2")
+selection_style = SubResource("5")
+
+[node name="BoxContainer" type="BoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+layout_mode = 2
+size_flags_horizontal = 8
+alignment = 2
+vertical = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+layout_mode = 2
+alignment = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
 layout_mode = 2
