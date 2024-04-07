@@ -73,6 +73,7 @@ func strip_into_peer():
 
 func _input(event):
 	if event.is_action_pressed("ui_scroll_up"):
+		INVENTORY_MENU.get_node("InventoriesScroll").position.x += 5
 		print_debug("scroll up")
 	if event.is_action_pressed("ui_scroll_down"):
 		print_debug("scroll down")

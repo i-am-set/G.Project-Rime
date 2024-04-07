@@ -165,6 +165,7 @@ func drag_start() -> void:
 	if drag_preview != null:
 		drag_preview.item = item
 		drag_preview.texture = texture
+		#drag_preview.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		drag_preview.size = size
 		drag_preview.stretch_mode = stretch_mode
 	super.drag_start()

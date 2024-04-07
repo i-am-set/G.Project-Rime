@@ -90,8 +90,8 @@ func Set_Resolution_Text():
 	var Resolution_Text = str(get_window().get_size().x)+"x"+str(get_window().get_size().y)
 	resolution_option_button.set_text(Resolution_Text)
 	
-	scale_slider.set_value_no_signal(100.00)
-	_on_scale_slider_value_changed(100.00)
+	#scale_slider.set_value_no_signal(100.00)
+	#_on_scale_slider_value_changed(100.00)
 	
 func Add_Resolutions():
 	var Current_Resolution = get_window().get_size()

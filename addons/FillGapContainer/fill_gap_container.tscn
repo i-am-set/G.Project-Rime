@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://gtsffc1sp703"]
+
+[ext_resource type="Script" path="res://addons/FillGapContainer/fill_gap_container.gd" id="1_xxdgc"]
+[ext_resource type="Texture2D" uid="uid://bwlc6ex01sv1l" path="res://addons/CustomControls/Images/check_box_checked.png" id="2_rue65"]
+[ext_resource type="Texture2D" uid="uid://cl03ves56nqq2" path="res://addons/CustomControls/Images/folder_icon.png" id="3_jnktu"]
+[ext_resource type="Texture2D" uid="uid://bbcowd0po3nu6" path="res://addons/CustomControls/Images/curve_presets.png" id="4_xbr86"]
+
+[node name="FillGapContainer" type="Container"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -837.0
+offset_bottom = -533.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xxdgc")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_rue65")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_rue65")
+
+[node name="TextureRect7" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("3_jnktu")
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 2
+text = "THIS IS A BUTTON 1"
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("4_xbr86")
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_rue65")
+
+[node name="TextureRect5" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_rue65")
+
+[node name="TextureRect6" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_rue65")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+text = "THIS IS A BUTTON 1"

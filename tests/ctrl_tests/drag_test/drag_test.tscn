@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://tests/ctrl_tests/drag_test/drag_test.gd" id="1_u86bx"]
 [ext_resource type="Script" path="res://addons/gloot/ui/ctrl_drop_zone.gd" id="2_4tjx6"]
 [ext_resource type="Script" path="res://tests/ctrl_tests/drag_test/dragable.gd" id="3_ugjyw"]
-[ext_resource type="Texture2D" uid="uid://b2hkcwwq10cut" path="res://icon.png" id="4_pwn6t"]
+[ext_resource type="Texture2D" uid="uid://drya7dyoskvek" path="res://icon.png" id="4_pwn6t"]
 
 [node name="drag_test" type="Control"]
 layout_mode = 3

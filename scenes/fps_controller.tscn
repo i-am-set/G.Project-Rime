@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=107 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -46,6 +46,7 @@
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
+[ext_resource type="Script" path="res://addons/FillGapContainer/fill_gap_container.gd" id="20_kf8yy"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nitno"]
@@ -608,6 +609,24 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.2, 0.2, 0.2, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhjre"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iebnp"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 0.607843)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+expand_margin_left = 30.0
+expand_margin_right = 30.0
+
+[sub_resource type="Theme" id="Theme_d6bwr"]
+MarginContainer/constants/margin_bottom = 4
+MarginContainer/constants/margin_left = 4
+MarginContainer/constants/margin_top = 4
+TabContainer/constants/side_margin = 30
+TabContainer/styles/panel = SubResource("StyleBoxFlat_yhjre")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_iebnp")
+
 [sub_resource type="Animation" id="Animation_3l7ui"]
 length = 0.001
 tracks/0/type = "value"
@@ -884,7 +903,7 @@ sway_noise = SubResource("NoiseTexture2D_33bd6")
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpStart", &"Walking", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1361,6 +1380,7 @@ offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_d6bwr")
 script = ExtResource("5_m68ou")
 
 [node name="FACADE" type="TextureRect" parent="UserInterface/InventoryMenu"]
@@ -1509,7 +1529,7 @@ texture = ExtResource("15_girel")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu"]
+[node name="InventoriesScroll" type="ScrollContainer" parent="UserInterface/InventoryMenu"]
 layout_mode = 2
 anchor_left = 0.061
 anchor_top = 0.158
@@ -1521,61 +1541,57 @@ offset_right = -0.400024
 offset_bottom = -6.10352e-05
 size_flags_vertical = 3
 
-[node name="Inventories" type="VBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer"]
+[node name="Inventories" type="Container" parent="UserInterface/InventoryMenu/InventoriesScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("20_kf8yy")
 
-[node name="HFlowContainer" type="HFlowContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+[node name="*INVENTORYNAME" type="TabContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
+layout_mode = 2
+tab_alignment = 2
+clip_tabs = false
+tab_focus_mode = 0
+
+[node name="*INVENTORYNAME" type="HFlowContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME"]
 layout_mode = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HFlowContainer"]
+[node name="*SUBINVENTORYNAME" type="MarginContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME/*INVENTORYNAME"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HFlowContainer/PanelContainer"]
-unique_name_in_owner = true
+[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME/*INVENTORYNAME/*SUBINVENTORYNAME"]
 texture_filter = 1
 custom_minimum_size = Vector2(640, 160)
 layout_mode = 2
 script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedLeft")
+inventory_path = NodePath("../../../../../../InventoryGridStackedLeft")
 default_item_texture = ExtResource("6_454p0")
 field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
 
-[node name="PanelContainer2" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HFlowContainer"]
+[node name="*SUBINVENTORYNAME2" type="MarginContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME/*INVENTORYNAME"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HFlowContainer/PanelContainer2"]
+[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME/*INVENTORYNAME/*SUBINVENTORYNAME2"]
 texture_filter = 1
 custom_minimum_size = Vector2(640, 160)
 layout_mode = 2
 script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedLeft")
+inventory_path = NodePath("../../../../../../InventoryGridStackedLeft")
 default_item_texture = ExtResource("6_454p0")
 field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
 
-[node name="BoxContainer" type="BoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
-layout_mode = 2
-size_flags_horizontal = 8
-alignment = 2
-vertical = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
 layout_mode = 2
 alignment = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
-layout_mode = 2
-alignment = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer2"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer2/PanelContainer"]
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer2/PanelContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(640, 160)
 layout_mode = 2
@@ -1586,14 +1602,14 @@ field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
 layout_mode = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer3"]
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer3"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer3/PanelContainer"]
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer3/PanelContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(640, 160)
 layout_mode = 2
@@ -1604,14 +1620,14 @@ field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
 layout_mode = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer4"]
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer4"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer4/PanelContainer"]
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer4/PanelContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(640, 160)
 layout_mode = 2
@@ -1622,14 +1638,14 @@ field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+[node name="HBoxContainer5" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
 layout_mode = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer5"]
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer5"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer5/PanelContainer"]
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer5/PanelContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(640, 160)
 layout_mode = 2
@@ -1640,14 +1656,14 @@ field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
 selection_style = SubResource("5")
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
 layout_mode = 2
 alignment = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer6"]
+[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer6"]
 layout_mode = 2
 
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/ScrollContainer/Inventories/HBoxContainer6/PanelContainer"]
+[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer6/PanelContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(640, 160)
 layout_mode = 2

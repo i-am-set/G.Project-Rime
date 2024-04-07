@@ -25,14 +25,10 @@ func _ready() -> void:
 	self.visible = false
 	Global.IS_IN_INVENTORY = false
 	
-	ctrl_inventory_left.item_mouse_entered.connect(_on_item_mouse_entered)
-	ctrl_inventory_left.item_mouse_exited.connect(_on_item_mouse_exited)
+	#ctrl_inventory_left.item_mouse_entered.connect(_on_item_mouse_entered)
+	#ctrl_inventory_left.item_mouse_exited.connect(_on_item_mouse_exited)
 	ctrl_inventory_right.item_mouse_entered.connect(_on_item_mouse_entered)
 	ctrl_inventory_right.item_mouse_exited.connect(_on_item_mouse_exited)
-	btn_sort_left.pressed.connect(_on_btn_sort.bind(ctrl_inventory_left))
-	btn_sort_right.pressed.connect(_on_btn_sort.bind(ctrl_inventory_right))
-	btn_split_left.pressed.connect(_on_btn_split.bind(ctrl_inventory_left))
-	btn_split_right.pressed.connect(_on_btn_split.bind(ctrl_inventory_right))
 	btn_unequip.pressed.connect(_on_btn_unequip)
 
 func _physics_process(delta):

@@ -40,7 +40,7 @@ var _show_queued := false
 
 static func grab(dragable: CtrlDragable) -> void:
 	_grabbed_dragable = dragable
-	_grab_offset = dragable.get_grab_position()
+	_grab_offset = dragable.size/2
 
 	dragable.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	dragable.grabbed.emit(_grab_offset)

@@ -38,3 +38,4 @@ res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/PregenTerrain.cs
 res://scripts/world_generation/TerrainType.cs
+res://scripts/player/fps_controller.gd
