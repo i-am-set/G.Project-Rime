@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=113 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -610,7 +610,7 @@ border_width_bottom = 3
 border_color = Color(0.2, 0.2, 0.2, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhjre"]
-bg_color = Color(0.156863, 0.156863, 0.156863, 0.392157)
+bg_color = Color(0.196078, 0.196078, 0.196078, 0.376471)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iebnp"]
 bg_color = Color(0.129412, 0.129412, 0.129412, 0.607843)
@@ -624,6 +624,7 @@ MarginContainer/constants/margin_bottom = 4
 MarginContainer/constants/margin_left = 4
 MarginContainer/constants/margin_top = 4
 TabContainer/constants/side_margin = 30
+TabContainer/font_sizes/font_size = 12
 TabContainer/styles/panel = SubResource("StyleBoxFlat_yhjre")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_iebnp")
 
@@ -758,10 +759,49 @@ shader_parameter/left_leg_color = null
 shader_parameter/right_leg_map = Color(0, 1, 0, 1)
 shader_parameter/right_leg_color = null
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qww6g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4u2fv"]
+bg_color = Color(0.6, 0.6, 0.6, 0.0352941)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+expand_margin_left = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkj1y"]
+bg_color = Color(0.235294, 0.235294, 0.235294, 0.231373)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xb5jv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+expand_margin_left = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvmrj"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[sub_resource type="Theme" id="Theme_4hpg0"]
+Button/colors/font_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/colors/font_focus_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/colors/font_hover_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/colors/font_hover_pressed_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/colors/font_pressed_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/font_sizes/font_size = 12
+Button/styles/focus = SubResource("StyleBoxEmpty_qww6g")
+Button/styles/hover = SubResource("StyleBoxFlat_4u2fv")
+Button/styles/normal = SubResource("StyleBoxFlat_pkj1y")
+Button/styles/pressed = SubResource("StyleBoxFlat_xb5jv")
+Panel/styles/panel = SubResource("StyleBoxFlat_kvmrj")
+
 [sub_resource type="StyleBoxTexture" id="1"]
 texture = ExtResource("16_mplsr")
 region_rect = Rect2(0, 0, 32, 32)
-modulate_color = Color(0.176471, 0.176471, 0.176471, 0.47451)
+modulate_color = Color(0.294118, 0.294118, 0.294118, 0.8)
 
 [sub_resource type="StyleBoxTexture" id="2"]
 texture = ExtResource("8_g1dc2")
@@ -903,7 +943,7 @@ sway_noise = SubResource("NoiseTexture2D_33bd6")
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpStart", &"Walking", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1431,10 +1471,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ny6q8")
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 0.158
+anchor_bottom = 0.136
 offset_top = -7.0
 offset_right = 1.0
-offset_bottom = -0.200012
+offset_bottom = -0.400009
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
@@ -1442,12 +1482,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 [node name="MainPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.158
+anchor_top = 0.136
 anchor_right = 1.0
 anchor_bottom = 0.94
-offset_top = -0.200012
+offset_top = -0.400009
 offset_right = 1.0
-offset_bottom = -6.10352e-05
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8in0f")
@@ -1468,14 +1507,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.577
-anchor_top = 0.158
-anchor_right = 0.974
+anchor_left = 0.167
+anchor_top = 0.136
+anchor_right = 0.834
 anchor_bottom = 0.94
-offset_left = 0.799988
-offset_top = -0.200012
-offset_right = 42.6001
-offset_bottom = -6.10352e-05
+offset_left = -0.200012
+offset_top = -0.400009
+offset_right = 0.599976
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -1485,13 +1523,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 self_modulate = Color(0.482353, 0.482353, 0.482353, 0.192157)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.101
-anchor_right = 0.718
+anchor_left = 0.315
+anchor_right = 0.685
 anchor_bottom = 1.0
-offset_left = -0.376999
-offset_top = 16.0
-offset_right = -0.0860291
-offset_bottom = -30.0
+offset_left = -0.420044
+offset_right = 0.419922
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -1529,7 +1565,101 @@ texture = ExtResource("15_girel")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="*SUBINVENTORYNAME" type="MarginContainer" parent="UserInterface/InventoryMenu"]
+layout_mode = 2
+anchor_left = 0.433
+anchor_top = 0.617
+anchor_right = 0.433
+anchor_bottom = 0.617
+offset_left = -304.8
+offset_top = -0.300049
+offset_right = 0.199951
+offset_bottom = 104.7
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_4hpg0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="Button" type="Button" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Right Pocket"
+
+[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 8
+script = ExtResource("5_a1ct0")
+inventory_path = NodePath("../../../InventoryGridStackedRight")
+default_item_texture = ExtResource("6_454p0")
+field_style = SubResource("1")
+field_highlighted_style = SubResource("2")
+selection_style = SubResource("5")
+
+[node name="*SUBINVENTORYNAME2" type="MarginContainer" parent="UserInterface/InventoryMenu"]
+layout_mode = 2
+anchor_left = 0.567
+anchor_top = 0.617
+anchor_right = 0.567
+anchor_bottom = 0.617
+offset_left = 0.799927
+offset_top = -0.300049
+offset_right = 305.799
+offset_bottom = 104.7
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_4hpg0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME2"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="Button" type="Button" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Right Pocket"
+
+[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("5_a1ct0")
+inventory_path = NodePath("../../../InventoryGridStackedRight")
+default_item_texture = ExtResource("6_454p0")
+field_style = SubResource("1")
+field_highlighted_style = SubResource("2")
+selection_style = SubResource("5")
+
+[node name="TabContainer" type="TabContainer" parent="UserInterface/InventoryMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.428
+anchor_top = 0.604
+anchor_right = 0.428
+anchor_bottom = 0.677
+offset_left = -166.8
+offset_top = 0.399963
+offset_right = 0.199951
+offset_bottom = -0.300049
+tab_alignment = 2
+tab_focus_mode = 0
+
 [node name="InventoriesScroll" type="ScrollContainer" parent="UserInterface/InventoryMenu"]
+visible = false
 layout_mode = 2
 anchor_left = 0.061
 anchor_top = 0.158
@@ -1545,44 +1675,6 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("20_kf8yy")
-
-[node name="*INVENTORYNAME" type="TabContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
-layout_mode = 2
-tab_alignment = 2
-clip_tabs = false
-tab_focus_mode = 0
-
-[node name="*INVENTORYNAME" type="HFlowContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME"]
-layout_mode = 2
-alignment = 2
-
-[node name="*SUBINVENTORYNAME" type="MarginContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME/*INVENTORYNAME"]
-layout_mode = 2
-
-[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME/*INVENTORYNAME/*SUBINVENTORYNAME"]
-texture_filter = 1
-custom_minimum_size = Vector2(640, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../../InventoryGridStackedLeft")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
-[node name="*SUBINVENTORYNAME2" type="MarginContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME/*INVENTORYNAME"]
-layout_mode = 2
-
-[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/*INVENTORYNAME/*INVENTORYNAME/*SUBINVENTORYNAME2"]
-texture_filter = 1
-custom_minimum_size = Vector2(640, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../../InventoryGridStackedLeft")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
 layout_mode = 2
@@ -1775,7 +1867,7 @@ text = "Unequip"
 
 [node name="InventoryGridStackedLeft" type="Node" parent="UserInterface/InventoryMenu"]
 script = ExtResource("10_mmu75")
-size = Vector2i(12, 5)
+size = Vector2i(6, 4)
 item_protoset = ExtResource("11_t0exd")
 
 [node name="item_1x1" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedLeft"]
@@ -1797,7 +1889,7 @@ properties = {
 
 [node name="InventoryGridStackedRight" type="Node" parent="UserInterface/InventoryMenu"]
 script = ExtResource("10_mmu75")
-size = Vector2i(5, 5)
+size = Vector2i(6, 4)
 item_protoset = ExtResource("11_t0exd")
 
 [node name="item_1x1" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedRight"]
@@ -1813,7 +1905,7 @@ script = ExtResource("12_exwb5")
 protoset = ExtResource("11_t0exd")
 prototype_id = "item_2x2"
 properties = {
-"grid_position": Vector2i(0, 1),
+"grid_position": Vector2i(1, 0),
 "stack_size": 2
 }
 

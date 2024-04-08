@@ -27,15 +27,4 @@ res://GodotSky/GodotSky.tscn
 res://scenes/maingame/world.tscn
 res://scenes/utility/debug_autoload_canvas.tscn
 res://scenes/game_chat_controller.tscn
-res://addons/godot-console/scripts/ConsoleMono.cs
-res://scripts/resource_objects/ResourceChunkInstancer.cs
-res://scripts/resource_objects/ResourceController.cs
-res://scripts/resource_objects/ResourceInstancer.cs
-res://scripts/world_generation/InfiniteTerrain.cs
-res://scripts/world_generation/InfiniteTerrainGenerator.cs
-res://scripts/world_generation/LODInfo.cs
-res://scripts/world_generation/MapDisplay.cs
-res://scripts/world_generation/MapGenerator.cs
-res://scripts/world_generation/PregenTerrain.cs
-res://scripts/world_generation/TerrainType.cs
-res://scripts/player/fps_controller.gd
+res://addons/gloot/ui/ctrl_dragable.gd
