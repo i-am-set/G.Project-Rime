@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=112 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -46,7 +46,6 @@
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
-[ext_resource type="Script" path="res://addons/FillGapContainer/fill_gap_container.gd" id="20_kf8yy"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nitno"]
@@ -943,7 +942,7 @@ sway_noise = SubResource("NoiseTexture2D_33bd6")
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1507,13 +1506,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.167
+anchor_left = 0.634
 anchor_top = 0.136
-anchor_right = 0.834
+anchor_right = 1.001
 anchor_bottom = 0.94
-offset_left = -0.200012
+offset_left = 0.599976
 offset_top = -0.400009
-offset_right = 0.599976
+offset_right = -0.600098
+offset_bottom = -6.10352e-05
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
@@ -1523,11 +1523,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 self_modulate = Color(0.482353, 0.482353, 0.482353, 0.192157)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.315
-anchor_right = 0.685
+anchor_left = 0.273
+anchor_right = 0.99
 anchor_bottom = 1.0
-offset_left = -0.420044
-offset_right = 0.419922
+offset_left = 0.0220032
+offset_right = -0.140015
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -1638,129 +1638,6 @@ layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("5_a1ct0")
 inventory_path = NodePath("../../../InventoryGridStackedRight")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
-[node name="TabContainer" type="TabContainer" parent="UserInterface/InventoryMenu"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.428
-anchor_top = 0.604
-anchor_right = 0.428
-anchor_bottom = 0.677
-offset_left = -166.8
-offset_top = 0.399963
-offset_right = 0.199951
-offset_bottom = -0.300049
-tab_alignment = 2
-tab_focus_mode = 0
-
-[node name="InventoriesScroll" type="ScrollContainer" parent="UserInterface/InventoryMenu"]
-visible = false
-layout_mode = 2
-anchor_left = 0.061
-anchor_top = 0.158
-anchor_right = 0.559
-anchor_bottom = 0.94
-offset_left = -0.600006
-offset_top = -0.200012
-offset_right = -0.400024
-offset_bottom = -6.10352e-05
-size_flags_vertical = 3
-
-[node name="Inventories" type="Container" parent="UserInterface/InventoryMenu/InventoriesScroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("20_kf8yy")
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
-layout_mode = 2
-alignment = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer2"]
-layout_mode = 2
-
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer2/PanelContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(640, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedRight")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
-layout_mode = 2
-alignment = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer3"]
-layout_mode = 2
-
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer3/PanelContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(640, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedLeft")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
-[node name="HBoxContainer4" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
-layout_mode = 2
-alignment = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer4"]
-layout_mode = 2
-
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer4/PanelContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(640, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedLeft")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
-[node name="HBoxContainer5" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
-layout_mode = 2
-alignment = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer5"]
-layout_mode = 2
-
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer5/PanelContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(640, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedLeft")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
-[node name="HBoxContainer6" type="HBoxContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories"]
-layout_mode = 2
-alignment = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer6"]
-layout_mode = 2
-
-[node name="CtrlInventoryGridLeft" type="Control" parent="UserInterface/InventoryMenu/InventoriesScroll/Inventories/HBoxContainer6/PanelContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(640, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedLeft")
 default_item_texture = ExtResource("6_454p0")
 field_style = SubResource("1")
 field_highlighted_style = SubResource("2")
