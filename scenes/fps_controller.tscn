@@ -676,6 +676,62 @@ shadow_size = 145
 bg_color = Color(0.101961, 0.101961, 0.101961, 0.419608)
 border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qww6g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4u2fv"]
+bg_color = Color(0.6, 0.6, 0.6, 0.0352941)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+expand_margin_left = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkj1y"]
+bg_color = Color(0.235294, 0.235294, 0.235294, 0.231373)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 3.0
+expand_margin_right = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xb5jv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+expand_margin_left = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvmrj"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[sub_resource type="Theme" id="Theme_4hpg0"]
+Button/colors/font_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/colors/font_focus_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/colors/font_hover_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/colors/font_hover_pressed_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/colors/font_pressed_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
+Button/font_sizes/font_size = 12
+Button/styles/focus = SubResource("StyleBoxEmpty_qww6g")
+Button/styles/hover = SubResource("StyleBoxFlat_4u2fv")
+Button/styles/normal = SubResource("StyleBoxFlat_pkj1y")
+Button/styles/pressed = SubResource("StyleBoxFlat_xb5jv")
+Panel/styles/panel = SubResource("StyleBoxFlat_kvmrj")
+
+[sub_resource type="StyleBoxTexture" id="1"]
+texture = ExtResource("16_mplsr")
+region_rect = Rect2(0, 0, 32, 32)
+modulate_color = Color(0.294118, 0.294118, 0.294118, 0.8)
+
+[sub_resource type="StyleBoxTexture" id="2"]
+texture = ExtResource("8_g1dc2")
+region_rect = Rect2(0, 0, 32, 32)
+
+[sub_resource type="StyleBoxFlat" id="5"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.92549, 0.152941, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m4jl"]
 bg_color = Color(0.133333, 0.12549, 0.141176, 0.431373)
 border_width_left = 4
@@ -757,62 +813,6 @@ shader_parameter/left_leg_map = Color(1, 0, 0, 1)
 shader_parameter/left_leg_color = null
 shader_parameter/right_leg_map = Color(0, 1, 0, 1)
 shader_parameter/right_leg_color = null
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qww6g"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4u2fv"]
-bg_color = Color(0.6, 0.6, 0.6, 0.0352941)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-expand_margin_left = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkj1y"]
-bg_color = Color(0.235294, 0.235294, 0.235294, 0.231373)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_left = 3.0
-expand_margin_right = 3.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xb5jv"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-expand_margin_left = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvmrj"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
-
-[sub_resource type="Theme" id="Theme_4hpg0"]
-Button/colors/font_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/colors/font_focus_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/colors/font_hover_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/colors/font_hover_pressed_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/colors/font_pressed_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/font_sizes/font_size = 12
-Button/styles/focus = SubResource("StyleBoxEmpty_qww6g")
-Button/styles/hover = SubResource("StyleBoxFlat_4u2fv")
-Button/styles/normal = SubResource("StyleBoxFlat_pkj1y")
-Button/styles/pressed = SubResource("StyleBoxFlat_xb5jv")
-Panel/styles/panel = SubResource("StyleBoxFlat_kvmrj")
-
-[sub_resource type="StyleBoxTexture" id="1"]
-texture = ExtResource("16_mplsr")
-region_rect = Rect2(0, 0, 32, 32)
-modulate_color = Color(0.294118, 0.294118, 0.294118, 0.8)
-
-[sub_resource type="StyleBoxTexture" id="2"]
-texture = ExtResource("8_g1dc2")
-region_rect = Rect2(0, 0, 32, 32)
-
-[sub_resource type="StyleBoxFlat" id="5"]
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 0.92549, 0.152941, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drgx6"]
 bg_color = Color(0.101961, 0.101961, 0.101961, 0.270588)
@@ -942,7 +942,7 @@ sway_noise = SubResource("NoiseTexture2D_33bd6")
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1503,6 +1503,73 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 
+[node name="Inventories" type="VBoxContainer" parent="UserInterface/InventoryMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.136
+anchor_right = 0.634
+anchor_bottom = 0.94
+offset_left = 1.0
+offset_top = -0.400009
+offset_right = 0.599976
+offset_bottom = -6.10352e-05
+
+[node name="*SUBINVENTORYNAME2" type="MarginContainer" parent="UserInterface/InventoryMenu/Inventories"]
+layout_mode = 2
+theme = SubResource("Theme_4hpg0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME2"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME2/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="Button" type="Button" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Right Pocket"
+
+[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 8
+script = ExtResource("5_a1ct0")
+inventory_path = NodePath("../../../../InventoryGridStackedLeft")
+default_item_texture = ExtResource("6_454p0")
+field_style = SubResource("1")
+field_highlighted_style = SubResource("2")
+selection_style = SubResource("5")
+
+[node name="*SUBINVENTORYNAME" type="MarginContainer" parent="UserInterface/InventoryMenu/Inventories"]
+layout_mode = 2
+theme = SubResource("Theme_4hpg0")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 0
+
+[node name="Button" type="Button" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Right Pocket"
+
+[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 8
+script = ExtResource("5_a1ct0")
+inventory_path = NodePath("../../../../InventoryGridStackedRight")
+default_item_texture = ExtResource("6_454p0")
+field_style = SubResource("1")
+field_highlighted_style = SubResource("2")
+selection_style = SubResource("5")
+
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
@@ -1564,84 +1631,6 @@ mouse_filter = 2
 texture = ExtResource("15_girel")
 expand_mode = 1
 stretch_mode = 4
-
-[node name="*SUBINVENTORYNAME" type="MarginContainer" parent="UserInterface/InventoryMenu"]
-layout_mode = 2
-anchor_left = 0.433
-anchor_top = 0.617
-anchor_right = 0.433
-anchor_bottom = 0.617
-offset_left = -304.8
-offset_top = -0.300049
-offset_right = 0.199951
-offset_bottom = 104.7
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-theme = SubResource("Theme_4hpg0")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 0
-
-[node name="Button" type="Button" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME/VBoxContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "Right Pocket"
-
-[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME/VBoxContainer"]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 8
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../InventoryGridStackedRight")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
-[node name="*SUBINVENTORYNAME2" type="MarginContainer" parent="UserInterface/InventoryMenu"]
-layout_mode = 2
-anchor_left = 0.567
-anchor_top = 0.617
-anchor_right = 0.567
-anchor_bottom = 0.617
-offset_left = 0.799927
-offset_top = -0.300049
-offset_right = 305.799
-offset_bottom = 104.7
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-theme = SubResource("Theme_4hpg0")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME2"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME2/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 0
-
-[node name="Button" type="Button" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME2/VBoxContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Right Pocket"
-
-[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/*SUBINVENTORYNAME2/VBoxContainer"]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../InventoryGridStackedRight")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
 
 [node name="TooltipPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 visible = false
@@ -1744,7 +1733,7 @@ text = "Unequip"
 
 [node name="InventoryGridStackedLeft" type="Node" parent="UserInterface/InventoryMenu"]
 script = ExtResource("10_mmu75")
-size = Vector2i(6, 4)
+size = Vector2i(20, 9)
 item_protoset = ExtResource("11_t0exd")
 
 [node name="item_1x1" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedLeft"]

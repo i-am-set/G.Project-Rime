@@ -1,10 +1,10 @@
+VBoxContainer
+Panel
 ReorderableVBox
 ColorRect
 MarginContainer
-Panel
 Button
 Label
-VBoxContainer
 HBoxContainer
 GridContainer
 TabContainer
@@ -12,4 +12,3 @@ FillGapContainer
 BoxContainer
 Control
 HFlowContainer
-CenterContainer
