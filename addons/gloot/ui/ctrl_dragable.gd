@@ -47,7 +47,6 @@ static func grab(dragable: CtrlDragable) -> void:
 	dragable_grabbed.emit(dragable, _grab_offset)
 	dragable.drag_start()
 
-
 static func release() -> void:
 	_drop(null)
 
@@ -95,8 +94,9 @@ func drag_start() -> void:
 	drag_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	drag_preview.global_position = _get_global_preview_position()
 	get_viewport().add_child(_preview_canvas_layer)
+	drag_preview.pivot_offset = drag_preview.get_rect().size / 2
 	_preview_canvas_layer.add_child(drag_preview)
-	# Make sure the preview is drawn above the embedded windows
+	# Make sure the preview is drawn above the embedded windowsr
 	_preview_canvas_layer.layer = EMBEDDED_WINDOWS_LAYER + 1
 	hide()
 
@@ -132,7 +132,6 @@ func _process(_delta) -> void:
 	if _show_queued:
 		_show_queued = false
 		show()
-
 
 func _gui_input(event: InputEvent) -> void:
 	if !enabled:

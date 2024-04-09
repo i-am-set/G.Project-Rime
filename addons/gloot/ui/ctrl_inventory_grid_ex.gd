@@ -157,7 +157,6 @@ func _process(_delta) -> void:
 		_refresh()
 		_refresh_queued = false
 
-
 func _refresh() -> void:
 	_refresh_field_background_grid()
 	_refresh_selection_panel()
@@ -276,8 +275,16 @@ func _on_inventory_resized() -> void:
 
 
 func _input(event) -> void:
+	if Input.is_action_just_pressed("rotate"):
+		var item_to_rotate := _get_global_grabbed_item()
+		var item_rect_to_rotate : CtrlInventoryItemRect = CtrlDragable.get_grabbed_dragable()
+		if item_to_rotate != null:
+			if inventory.can_rotate_item(item_to_rotate):
+				inventory.rotate_item(item_to_rotate, true)
+	
 	if !(event is InputEventMouseMotion):
-		return
+		if !Input.is_action_just_pressed("rotate"):
+			return
 	if !is_instance_valid(inventory):
 		return
 	
@@ -304,7 +311,10 @@ func _highlight_grabbed_item(style: StyleBox):
 
 
 func _is_hovering(local_pos: Vector2) -> bool:
-	return get_rect().has_point(local_pos)
+	var rect = get_global_rect()
+	var local_rect_pos = rect.position - global_position
+	var local_rect = Rect2(local_rect_pos, rect.size)
+	return local_rect.has_point(local_pos)
 
 
 func _set_item_background(item: InventoryItem, style: StyleBox, priority: int) -> bool:

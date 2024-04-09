@@ -52,7 +52,7 @@ func _physics_process(delta):
 		get_lobby_members()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("enter"):
+	if event.is_action_pressed("ui_text_completion_accept"):
 		send_chat_message()
 
 #################

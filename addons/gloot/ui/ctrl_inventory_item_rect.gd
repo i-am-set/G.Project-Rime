@@ -55,6 +55,10 @@ var _stack_size_label: Label
 static var _stored_preview_size: Vector2
 static var _stored_preview_offset: Vector2
 
+func _input(event) -> void:
+	if Input.is_action_just_pressed("rotate"):
+		_update_held_texture()
+		_update_stack_size()
 
 func _connect_item_signals(new_item: InventoryItem) -> void:
 	if new_item == null:
@@ -140,6 +144,25 @@ func _update_texture() -> void:
 		_texture_rect.position = Vector2.ZERO
 		_texture_rect.rotation = 0
 
+func _update_held_texture() -> void:
+	if !is_instance_valid(_texture_rect) || CtrlDragable.get_grabbed_dragable() == null:
+		return
+	_texture_rect.texture = texture
+	var grabbed_dragable := (CtrlDragable.get_grabbed_dragable() as CtrlInventoryItemRect).item
+	if is_instance_valid(item) && item == grabbed_dragable:
+		if !GridConstraint.is_item_rotated(item):
+			_texture_rect.size = size
+			if GridConstraint.is_item_rotation_positive(item):
+				_texture_rect.position = Vector2(_texture_rect.size.y, 0)
+				_texture_rect.rotation = PI/2
+			else:
+				_texture_rect.position = Vector2(0, _texture_rect.size.x)
+				_texture_rect.rotation = -PI/2
+
+		else:
+			_texture_rect.size = Vector2(size.y, size.x)
+			_texture_rect.position = Vector2.ZERO
+			_texture_rect.rotation = 0
 
 func _update_stack_size() -> void:
 	if !is_instance_valid(_stack_size_label):

@@ -5,6 +5,7 @@ signal dragable_dropped(dragable, position)
 
 const CtrlDragable = preload("res://addons/gloot/ui/ctrl_dragable.gd")
 const CtrlDropZone = preload("res://addons/gloot/ui/ctrl_drop_zone.gd")
+const releaseToDrop : bool = true
 
 var _mouse_inside := false
 static var _drop_event: Dictionary = {}
@@ -30,8 +31,12 @@ func _input(event: InputEvent) -> void:
 		return
 
 	var mb_event: InputEventMouseButton = event
-	if !mb_event.is_pressed() || mb_event.button_index != MOUSE_BUTTON_LEFT:
-		return
+	if releaseToDrop:
+		if mb_event.is_pressed() || mb_event.button_index != MOUSE_BUTTON_LEFT:
+			return
+	else:
+		if !mb_event.is_pressed() || mb_event.button_index != MOUSE_BUTTON_LEFT:
+			return
 
 	if CtrlDragable.get_grabbed_dragable() == null:
 		return
