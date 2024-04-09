@@ -5,7 +5,8 @@ func _ready():
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED:
-		Global.capture_mouse(true)
+		pass
+		#Global.capture_mouse(true)
 	elif event.is_action_pressed("exit"):
 		if (visible):
 			toggle_debug_console()

@@ -39,6 +39,7 @@ script = ExtResource("2_a0et8")
 
 [node name="GameChatController" parent="." instance=ExtResource("4_g6ewg")]
 visible = false
+mouse_filter = 2
 
 [node name="ConsoleMenu" type="Control" parent="."]
 visible = false
@@ -65,6 +66,7 @@ offset_right = -0.0800781
 offset_bottom = 0.0799561
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = SubResource("Theme_iberm")
 
 [node name="ConsoleContainer" type="VBoxContainer" parent="ConsoleMenu/ConsolePanel"]
@@ -74,4 +76,5 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("6_qkkoq")
