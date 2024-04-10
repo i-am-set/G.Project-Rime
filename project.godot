@@ -49,15 +49,7 @@ movie_writer/movie_file="D:/StayAtHomeDev/Video Production/Social Video Teasers/
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/FillGapContainer/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/gloot/plugin.cfg", "res://addons/godot-console/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/imrp/plugin.cfg", "res://addons/script-ide/plugin.cfg")
-
-[file_customization]
-
-folder_colors={
-"res://examples/": "red",
-"res://images/": "red",
-"res://tests/": "red"
-}
+enabled=PackedStringArray("res://addons/FillGapContainer/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/godot-console/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/imrp/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [input]
 

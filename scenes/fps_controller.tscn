@@ -1,14 +1,12 @@
-[gd_scene load_steps=112 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=88 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
 [ext_resource type="PackedScene" uid="uid://v8g6dodhumyk" path="res://meshes/weapons/weapon.tscn" id="3_835tj"]
 [ext_resource type="Script" path="res://scripts/player/reticle.gd" id="4_ntsfx"]
-[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_inventory_grid_ex.gd" id="5_a1ct0"]
 [ext_resource type="Script" path="res://scripts/player/inventory_logic.gd" id="5_m68ou"]
 [ext_resource type="Resource" uid="uid://dr285553q3o4n" path="res://resources/weapons/weap_nothing.tres" id="5_srgsy"]
 [ext_resource type="Theme" uid="uid://cjxg2tt7m1r7e" path="res://ui/themes/debug.tres" id="5_tib1u"]
-[ext_resource type="Texture2D" uid="uid://drya7dyoskvek" path="res://icon.png" id="6_454p0"]
 [ext_resource type="Script" path="res://scripts/game/debug.gd" id="6_kecrd"]
 [ext_resource type="Shader" path="res://shaders/2d/blur_shader.gdshader" id="7_5ppov"]
 [ext_resource type="ButtonGroup" uid="uid://cyodex2xc22hm" path="res://ui/button_groups/display_mode_button_group.tres" id="7_7h2ag"]
@@ -18,23 +16,16 @@
 [ext_resource type="Script" path="res://scripts/player/state_machine.gd" id="7_f1ve2"]
 [ext_resource type="Texture2D" uid="uid://gjrd62lhvw1l" path="res://textures/ui/slider_grabber.png" id="7_g41i3"]
 [ext_resource type="Texture2D" uid="uid://dxhuibh5ps6gd" path="res://textures/ui/ui_male_silhouette.png" id="7_j4uj2"]
-[ext_resource type="Texture2D" uid="uid://bpmdtgysdm2tp" path="res://images/field_background.png" id="7_kdvpp"]
-[ext_resource type="Texture2D" uid="uid://cdhuw0juxw3up" path="res://images/field_highlighted_background.png" id="8_g1dc2"]
 [ext_resource type="FontFile" uid="uid://cblhlwfgq7uv3" path="res://ui/fonts/FiraCode/FiraCode-Regular.ttf" id="8_hjgll"]
 [ext_resource type="Texture2D" uid="uid://beqh5d5pjo0xa" path="res://textures/ui/slider_grabber_disabled.png" id="8_jebdu"]
 [ext_resource type="Script" path="res://scripts/game/fps_label.gd" id="8_mj3xk"]
 [ext_resource type="Script" path="res://scripts/player/IdlePlayerState.gd" id="8_rqw4w"]
-[ext_resource type="Script" path="res://addons/gloot/ui/ctrl_item_slot_ex.gd" id="9_35ilv"]
 [ext_resource type="Texture2D" uid="uid://bgnix38vyapog" path="res://textures/ui/slider_grabber_highlighted.png" id="9_s7idq"]
 [ext_resource type="Script" path="res://scripts/player/WalkingPlayerState.gd" id="9_wvqjd"]
-[ext_resource type="Script" path="res://addons/gloot/core/inventory_grid_stacked.gd" id="10_mmu75"]
 [ext_resource type="Script" path="res://scripts/player/SprintingPlayerState.gd" id="10_ssjb3"]
 [ext_resource type="Script" path="res://scripts/player/CrouchingPlayerState.gd" id="11_4t53l"]
-[ext_resource type="Resource" uid="uid://ddrmqwl3guset" path="res://tests/data/item_definitions_grid.tres" id="11_t0exd"]
-[ext_resource type="Script" path="res://addons/gloot/core/inventory_item.gd" id="12_exwb5"]
 [ext_resource type="Script" path="res://scripts/player/SlidingPlayerState.gd" id="12_walwr"]
 [ext_resource type="ButtonGroup" uid="uid://bpp5x1786kour" path="res://ui/button_groups/temperature_unit_button_group.tres" id="12_xwa8q"]
-[ext_resource type="Script" path="res://addons/gloot/core/item_slot.gd" id="13_1cna5"]
 [ext_resource type="Script" path="res://scripts/player/JumpingPlayerState.gd" id="13_fbjl8"]
 [ext_resource type="Script" path="res://scripts/player/FallingPlayerState.gd" id="14_7wlsx"]
 [ext_resource type="Texture2D" uid="uid://bsysr2ekeswpu" path="res://textures/screenshots/daylight_1_screenshot.png" id="14_hebny"]
@@ -42,7 +33,6 @@
 [ext_resource type="Texture2D" uid="uid://gkwxbmjelhno" path="res://textures/ui/ui_male_temperature_map_mask.png" id="15_jn7u3"]
 [ext_resource type="Script" path="res://scripts/player/WeaponViewport.gd" id="15_yu4nu"]
 [ext_resource type="Script" path="res://scripts/player/WeaponCamera.gd" id="16_577f2"]
-[ext_resource type="Texture2D" uid="uid://oqpu6q01sl3v" path="res://textures/ui/button_unselected.png" id="16_mplsr"]
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
@@ -676,62 +666,6 @@ shadow_size = 145
 bg_color = Color(0.101961, 0.101961, 0.101961, 0.419608)
 border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qww6g"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4u2fv"]
-bg_color = Color(0.6, 0.6, 0.6, 0.0352941)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-expand_margin_left = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pkj1y"]
-bg_color = Color(0.235294, 0.235294, 0.235294, 0.231373)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-expand_margin_left = 3.0
-expand_margin_right = 3.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xb5jv"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-expand_margin_left = 2.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvmrj"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
-
-[sub_resource type="Theme" id="Theme_4hpg0"]
-Button/colors/font_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/colors/font_focus_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/colors/font_hover_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/colors/font_hover_pressed_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/colors/font_pressed_color = Color(0.701961, 0.701961, 0.701961, 0.243137)
-Button/font_sizes/font_size = 12
-Button/styles/focus = SubResource("StyleBoxEmpty_qww6g")
-Button/styles/hover = SubResource("StyleBoxFlat_4u2fv")
-Button/styles/normal = SubResource("StyleBoxFlat_pkj1y")
-Button/styles/pressed = SubResource("StyleBoxFlat_xb5jv")
-Panel/styles/panel = SubResource("StyleBoxFlat_kvmrj")
-
-[sub_resource type="StyleBoxTexture" id="1"]
-texture = ExtResource("16_mplsr")
-region_rect = Rect2(0, 0, 32, 32)
-modulate_color = Color(0.294118, 0.294118, 0.294118, 0.8)
-
-[sub_resource type="StyleBoxTexture" id="2"]
-texture = ExtResource("8_g1dc2")
-region_rect = Rect2(0, 0, 32, 32)
-
-[sub_resource type="StyleBoxFlat" id="5"]
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 0.92549, 0.152941, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m4jl"]
 bg_color = Color(0.133333, 0.12549, 0.141176, 0.431373)
 border_width_left = 4
@@ -826,32 +760,6 @@ shadow_color = Color(0, 0, 0, 0.301961)
 shadow_size = 40
 shadow_offset = Vector2(0, 27.51)
 
-[sub_resource type="StyleBoxTexture" id="3"]
-texture = ExtResource("7_kdvpp")
-region_rect = Rect2(0, 0, 32, 32)
-
-[sub_resource type="StyleBoxTexture" id="4"]
-texture = ExtResource("8_g1dc2")
-region_rect = Rect2(0, 0, 32, 32)
-
-[sub_resource type="StyleBoxFlat" id="6"]
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 0.92549, 0.152941, 1)
-
-[sub_resource type="StyleBoxTexture" id="7"]
-texture = ExtResource("16_mplsr")
-region_rect = Rect2(0, 0, 32, 32)
-modulate_color = Color(0.243137, 0.243137, 0.243137, 0.419608)
-
-[sub_resource type="StyleBoxTexture" id="8"]
-texture = ExtResource("16_mplsr")
-region_rect = Rect2(0, 0, 32, 32)
-modulate_color = Color(1, 1, 1, 0.466667)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
 
@@ -942,7 +850,7 @@ sway_noise = SubResource("NoiseTexture2D_33bd6")
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1503,73 +1411,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 
-[node name="Inventories" type="VBoxContainer" parent="UserInterface/InventoryMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.136
-anchor_right = 0.634
-anchor_bottom = 0.94
-offset_left = 1.0
-offset_top = -0.400009
-offset_right = 0.599976
-offset_bottom = -6.10352e-05
-
-[node name="*SUBINVENTORYNAME2" type="MarginContainer" parent="UserInterface/InventoryMenu/Inventories"]
-layout_mode = 2
-theme = SubResource("Theme_4hpg0")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME2"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME2/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 0
-
-[node name="Button" type="Button" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME2/VBoxContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "Right Pocket"
-
-[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME2/VBoxContainer"]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 8
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../InventoryGridStackedLeft")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
-[node name="*SUBINVENTORYNAME" type="MarginContainer" parent="UserInterface/InventoryMenu/Inventories"]
-layout_mode = 2
-theme = SubResource("Theme_4hpg0")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 0
-
-[node name="Button" type="Button" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME/VBoxContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "Right Pocket"
-
-[node name="*SUBINVENTORYNAME" type="Control" parent="UserInterface/InventoryMenu/Inventories/*SUBINVENTORYNAME/VBoxContainer"]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 8
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../InventoryGridStackedRight")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("1")
-field_highlighted_style = SubResource("2")
-selection_style = SubResource("5")
-
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
@@ -1647,144 +1488,6 @@ offset_bottom = -0.100037
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_drgx6")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="BtnSortLeft" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Sort"
-
-[node name="BtnSplitLeft" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Split"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="PanelContainer2" type="PanelContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="CtrlInventoryGridRight" type="Control" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer2"]
-unique_name_in_owner = true
-texture_filter = 1
-custom_minimum_size = Vector2(160, 160)
-layout_mode = 2
-script = ExtResource("5_a1ct0")
-inventory_path = NodePath("../../../../../InventoryGridStackedRight")
-default_item_texture = ExtResource("6_454p0")
-field_style = SubResource("3")
-field_highlighted_style = SubResource("4")
-selection_style = SubResource("6")
-
-[node name="BtnSortRight" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Sort"
-
-[node name="BtnSplitRight" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Split"
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-text = "Item Slot:"
-
-[node name="PanelContainer" type="PanelContainer" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="CtrlItemSlot" type="Control" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer3/PanelContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-script = ExtResource("9_35ilv")
-slot_style = SubResource("7")
-slot_highlighted_style = SubResource("8")
-item_slot_path = NodePath("../../../../../ItemSlot")
-label_visible = false
-
-[node name="BtnUnequip" type="Button" parent="UserInterface/InventoryMenu/VBoxContainer/HBoxContainer/VBoxContainer3"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Unequip"
-
-[node name="InventoryGridStackedLeft" type="Node" parent="UserInterface/InventoryMenu"]
-script = ExtResource("10_mmu75")
-size = Vector2i(20, 9)
-item_protoset = ExtResource("11_t0exd")
-
-[node name="item_1x1" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedLeft"]
-script = ExtResource("12_exwb5")
-protoset = ExtResource("11_t0exd")
-prototype_id = "item_1x1"
-properties = {
-"stack_size": 2
-}
-
-[node name="item_2x2" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedLeft"]
-script = ExtResource("12_exwb5")
-protoset = ExtResource("11_t0exd")
-prototype_id = "item_2x2"
-properties = {
-"grid_position": Vector2i(0, 1),
-"stack_size": 2
-}
-
-[node name="InventoryGridStackedRight" type="Node" parent="UserInterface/InventoryMenu"]
-script = ExtResource("10_mmu75")
-size = Vector2i(6, 4)
-item_protoset = ExtResource("11_t0exd")
-
-[node name="item_1x1" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedRight"]
-script = ExtResource("12_exwb5")
-protoset = ExtResource("11_t0exd")
-prototype_id = "item_1x1"
-properties = {
-"stack_size": 2
-}
-
-[node name="item_2x2" type="Node" parent="UserInterface/InventoryMenu/InventoryGridStackedRight"]
-script = ExtResource("12_exwb5")
-protoset = ExtResource("11_t0exd")
-prototype_id = "item_2x2"
-properties = {
-"grid_position": Vector2i(1, 0),
-"stack_size": 2
-}
-
-[node name="LblInfo" type="Label" parent="UserInterface/InventoryMenu"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 14.0
-
-[node name="ItemSlot" type="Node" parent="UserInterface/InventoryMenu"]
-script = ExtResource("13_1cna5")
-item_protoset = ExtResource("11_t0exd")
 
 [node name="Debug" type="Control" parent="UserInterface"]
 visible = false
