@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=90 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -762,9 +762,6 @@ shadow_color = Color(0, 0, 0, 0.301961)
 shadow_size = 40
 shadow_offset = Vector2(0, 27.51)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_psheo"]
-bg_color = Color(0.6, 0.6, 0.6, 0.368627)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
 
@@ -855,7 +852,7 @@ sway_noise = SubResource("NoiseTexture2D_33bd6")
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1502,32 +1499,38 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="subinventory" type="PanelContainer" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
+[node name="subinventory" type="ColorRect" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
 custom_minimum_size = Vector2(400, 200)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_psheo")
+color = Color(0.635294, 0.635294, 0.635294, 0.34902)
 
 [node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory" instance=ExtResource("21_80abt")]
 layout_mode = 2
+offset_right = 50.0
+offset_bottom = 50.0
 
-[node name="subinventory2" type="PanelContainer" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
+[node name="subinventory2" type="ColorRect" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
 custom_minimum_size = Vector2(400, 200)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_psheo")
+color = Color(0.635294, 0.635294, 0.635294, 0.34902)
 
 [node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory2" instance=ExtResource("21_80abt")]
 layout_mode = 2
+offset_right = 50.0
+offset_bottom = 50.0
 
-[node name="subinventory3" type="PanelContainer" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
+[node name="subinventory3" type="ColorRect" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
 custom_minimum_size = Vector2(400, 200)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_psheo")
+color = Color(0.635294, 0.635294, 0.635294, 0.34902)
 
 [node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory3" instance=ExtResource("21_80abt")]
 layout_mode = 2
+offset_right = 50.0
+offset_bottom = 50.0
 
 [node name="HeldItemPreview" type="ColorRect" parent="UserInterface/InventoryMenu"]
 visible = false
