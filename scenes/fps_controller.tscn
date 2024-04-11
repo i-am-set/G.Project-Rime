@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=91 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -36,6 +36,8 @@
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
+[ext_resource type="Script" path="res://scripts/inventory/inventories_container_controller.gd" id="20_2y6e7"]
+[ext_resource type="PackedScene" uid="uid://c1tu8fkhkb1u3" path="res://scenes/ui/inv_item.tscn" id="21_80abt"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nitno"]
@@ -668,7 +670,7 @@ border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m4jl"]
 bg_color = Color(0.133333, 0.12549, 0.141176, 0.431373)
-border_width_left = 4
+border_width_right = 4
 border_color = Color(0.270588, 0.270588, 0.270588, 0.286275)
 border_blend = true
 shadow_color = Color(0, 0, 0, 0.243137)
@@ -759,6 +761,9 @@ corner_radius_bottom_left = 10
 shadow_color = Color(0, 0, 0, 0.301961)
 shadow_size = 40
 shadow_offset = Vector2(0, 27.51)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_psheo"]
+bg_color = Color(0.6, 0.6, 0.6, 0.368627)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
@@ -1323,7 +1328,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1414,28 +1418,24 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.634
 anchor_top = 0.136
-anchor_right = 1.001
+anchor_right = 0.367
 anchor_bottom = 0.94
-offset_left = 0.599976
 offset_top = -0.400009
-offset_right = -0.600098
-offset_bottom = -6.10352e-05
+offset_right = 0.166992
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 
 [node name="silhouette_img" type="TextureRect" parent="UserInterface/InventoryMenu/silhouette_panel"]
-self_modulate = Color(0.482353, 0.482353, 0.482353, 0.192157)
+self_modulate = Color(0.482353, 0.482353, 0.482353, 0.32549)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.273
-anchor_right = 0.99
+anchor_right = 0.695
 anchor_bottom = 1.0
-offset_left = 0.0220032
-offset_right = -0.140015
+offset_right = -0.0200195
+offset_bottom = 6.10352e-05
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -1488,6 +1488,55 @@ offset_bottom = -0.100037
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_drgx6")
+
+[node name="inventories_container" type="ScrollContainer" parent="UserInterface/InventoryMenu"]
+layout_mode = 0
+offset_left = 587.0
+offset_top = 122.0
+offset_right = 1601.0
+offset_bottom = 846.0
+script = ExtResource("20_2y6e7")
+
+[node name="subinventory_container" type="VBoxContainer" parent="UserInterface/InventoryMenu/inventories_container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="subinventory" type="PanelContainer" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_psheo")
+
+[node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory" instance=ExtResource("21_80abt")]
+layout_mode = 2
+
+[node name="subinventory2" type="PanelContainer" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_psheo")
+
+[node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory2" instance=ExtResource("21_80abt")]
+layout_mode = 2
+
+[node name="subinventory3" type="PanelContainer" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_psheo")
+
+[node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory3" instance=ExtResource("21_80abt")]
+layout_mode = 2
+
+[node name="HeldItemPreview" type="ColorRect" parent="UserInterface/InventoryMenu"]
+visible = false
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+offset_right = 50.0
+offset_bottom = 50.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Debug" type="Control" parent="UserInterface"]
 visible = false

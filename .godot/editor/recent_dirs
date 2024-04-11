@@ -1,3 +1,6 @@
+res://scenes/ui
+res://scripts/inventory
+res://data
 res://resources/weapons
 res://shaders
 res://ui/button_groups
@@ -17,6 +20,3 @@ res://scenes/resourceobjects/nature/trees/colliders
 res://scenes/resourceobjects/nature/trees
 res://scenes
 res://scripts/world_generation
-res://scenes/maingame
-res://scenes/resourceobjects/nature/shrub
-res://materials/nature
