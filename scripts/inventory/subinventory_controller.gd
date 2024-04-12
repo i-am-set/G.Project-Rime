@@ -8,7 +8,7 @@ extends ColorRect
 
 var item_center : Vector2
 var cell_positions : Array[Vector2] = []
-var occupied_cell_positions : Array[Vector2] = []
+var contents : Dictionary = {}
 var hovered_cell_position : Vector2
 
 func _ready():
@@ -46,13 +46,6 @@ func _draw():
 	for pos in cell_positions:
 		draw_circle(pos, circle_radius, circle_color)
 
-func add_occupied_cell_position(cell_position : Vector2):
-	occupied_cell_positions.push_back(cell_position)
-
-func remove_occupied_cell_position(cell_position : Vector2):
-	if occupied_cell_positions.has(cell_position):
-		occupied_cell_positions.erase(cell_position)
-
 func get_closest_cell_position(input_position, input_size):
 	var closest_distance = INF
 	var closest_cell_position
@@ -63,3 +56,13 @@ func get_closest_cell_position(input_position, input_size):
 			closest_distance = distance
 			closest_cell_position = cell_position
 	return closest_cell_position
+
+func add_item(item : ColorRect, _cell_positions : Array[Vector2]):
+	for cell_pos in _cell_positions:
+		if !contents.keys().has(cell_pos):
+			contents[cell_pos] = item
+
+func remove_item(_cell_positions : Array[Vector2]):
+	for cell_pos in _cell_positions:
+		if contents.keys().has(cell_pos):
+			contents.erase(cell_pos)

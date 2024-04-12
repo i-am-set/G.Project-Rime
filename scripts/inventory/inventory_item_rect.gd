@@ -7,14 +7,14 @@ var held_item_preview : Control
 var subinventory_rects : Dictionary
 
 var cached_position : Vector2
-var item_center : Vector2
+var item_center_offset : Vector2
 
 func _ready():
 	pass
 
 func _process(delta):
 	held_item_preview = inventories_container.held_item_preview
-	item_center = held_item_preview.size * 0.5
+	item_center_offset = size * 0.5
 	
 	held_item_follow_mouse()
 
@@ -25,10 +25,10 @@ func _input(event):
 				subinventory_rects = inventories_container.subinventory_rects
 				inventories_container.set_subinventories()
 				for subinventory in subinventory_rects.keys():
-					if subinventory_rects[subinventory].has_point(held_item_preview.position + item_center):
+					if subinventory_rects[subinventory].has_point(held_item_preview.position + item_center_offset):
 						subinventory.get_closest_cell_position_to_held_item()
-						print(subinventory.hovered_cell_position, "   ", subinventory.occupied_cell_positions)
-						if !subinventory.occupied_cell_positions.has(subinventory.hovered_cell_position):
+						print(subinventory.hovered_cell_position, "   ", subinventory.contents.keys())
+						if !subinventory.contents.keys().has(subinventory.hovered_cell_position):
 							drop_item()
 						else:
 							print("Slot taken")
@@ -38,10 +38,8 @@ func _input(event):
 func pick_up_item():
 	held_item_preview.held_item = self
 	cached_position = position
-	subinventory.remove_occupied_cell_position(position + size * 0.5)
-	position.y = -1000  # Move the ColorRect out of sight
 	held_item_preview.size = size
-	held_item_preview.position = get_global_mouse_position() - item_center # Move the held_item_preview to the mouse's position
+	held_item_preview.position = get_global_mouse_position() - item_center_offset # Move the held_item_preview to the mouse's position
 	held_item_preview.show()
 
 func drop_item():
@@ -52,7 +50,7 @@ func drop_item():
 	# Check if the held_item_preview is within one of the inventory_rects
 	inventories_container.set_subinventories()
 	for key in subinventory_rects.keys():
-		if subinventory_rects[key].has_point(held_item_preview.global_position + item_center):
+		if subinventory_rects[key].has_point(held_item_preview.global_position + item_center_offset):
 			drop_logic(key)
 			return
 	
@@ -63,11 +61,11 @@ func drop_item():
 func drop_logic(key : Control) -> void:
 	var moved_item = self.duplicate()
 	
-	var drop_position = held_item_preview.global_position - key.global_position - item_center
+	var drop_position = held_item_preview.global_position - key.global_position - item_center_offset
 	moved_item.position = drop_position
 	# Snap the center of the ColorRect to the closest_cell_position
 	var closest_cell_position = key.get_closest_cell_position(moved_item.position, moved_item.size)
-	moved_item.position = closest_cell_position - item_center
+	moved_item.position = closest_cell_position - item_center_offset
 	
 	key.add_child(moved_item)
 	held_item_preview.held_item = null
@@ -78,9 +76,12 @@ func drop_logic(key : Control) -> void:
 	elif held_item_preview.position.x + held_item_preview.size.x > subinventory_rects[key].position.x + subinventory_rects[key].size.x:
 		moved_item.position.x = subinventory_rects[key].size.x - moved_item.get_rect().size.x
 	
-	key.add_occupied_cell_position(moved_item.position + moved_item.size * 0.5)
+	var previous_positions : Array[Vector2] = [position + item_center_offset]
+	subinventory.remove_item(previous_positions)
+	var new_positions : Array[Vector2] = [moved_item.position + moved_item.size * 0.5]
+	key.add_item(moved_item, new_positions)
 	self.queue_free()
 
 func held_item_follow_mouse():
 	if held_item_preview.held_item == self:
-		held_item_preview.position = get_global_mouse_position() - item_center  # Follow the mouse's x position
+		held_item_preview.position = get_global_mouse_position() - item_center_offset  # Follow the mouse's x position

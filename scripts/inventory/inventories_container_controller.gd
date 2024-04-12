@@ -16,7 +16,7 @@ func _process(delta):
 
 func _draw():
 	for subinventory in subinventory_rects:
-		for occupied_cell in subinventory.occupied_cell_positions:
+		for occupied_cell in subinventory.contents.keys():
 			draw_line(occupied_cell + subinventory.position, occupied_cell + subinventory.position - Vector2(0, 20), Color.AQUA, 4)
 
 func set_subinventories():
