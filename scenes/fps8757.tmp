@@ -1551,15 +1551,6 @@ layout_mode = 0
 offset_right = 25.0
 offset_bottom = 25.0
 
-[node name="GhostPreview" type="ColorRect" parent="UserInterface/InventoryMenu"]
-visible = false
-layout_mode = 2
-offset_right = 50.0
-offset_bottom = 50.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-color = Color(0.745098, 0.0823529, 0.454902, 0.556863)
-
 [node name="HeldItemPreview" type="ColorRect" parent="UserInterface/InventoryMenu"]
 visible = false
 layout_mode = 2

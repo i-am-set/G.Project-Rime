@@ -10,6 +10,9 @@ const PACKET_READ_LIMIT: int = 32
 const MAX_TEMPERATURE_C = -10 # celsius
 const MIN_TEMPERATURE_C = -25 # celsius
 
+# Player Constants
+const INV_DEFAULT_CELL_SIZE = 30
+
 # Options Constants
 const DEFAULT_FOV = 75
 const MIN_FOV = 60
@@ -22,6 +25,7 @@ var OWNED := false
 var ONLINE := false
 var STEAM_ID : int = 0
 var STEAM_NAME := ""
+
 # Lobby Variables 
 var DATA
 var LOBBY_ID : int = 0
@@ -30,6 +34,7 @@ var LOBBY_MEMBERS := []
 var LOBBY_INVITE_ARG := false
 var LOBBY_PEER_INSTANCES := {} 
 var GLOBAL_TICK : int = 0
+
 # World Variables
 var WORLD_SEED : int = 0
 var TIME_OF_DAY : float = 1200.0
