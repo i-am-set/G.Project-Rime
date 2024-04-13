@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1tu8fkhkb1u3"]
-
-[ext_resource type="Script" path="res://scripts/inventory/inventory_item_rect.gd" id="1_l1q4f"]
-
-[node name="inv_item" type="ColorRect"]
-custom_minimum_size = Vector2(50, 50)
-size_flags_horizontal = 0
-size_flags_vertical = 0
-script = ExtResource("1_l1q4f")

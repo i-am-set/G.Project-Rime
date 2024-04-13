@@ -63,7 +63,7 @@ func position_to_cell(_pos : Vector2) -> Vector2:
 func cell_to_position(_cell : Vector2) -> Vector2:
 	return (_cell - Vector2(0.5, 0.5)) * Global.INV_DEFAULT_CELL_SIZE
 
-func add_item(item : ColorRect, _cell_positions : Array[Vector2]):
+func add_item(item : Control, _cell_positions : Array[Vector2]):
 	for _cell_pos in _cell_positions:
 		var _cell = position_to_cell(_cell_pos)
 		if !contents.keys().has(_cell):

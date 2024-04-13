@@ -1,6 +1,6 @@
 extends ColorRect
 
-var held_item : ColorRect
+var held_item : Control
 
 func _ready():
 	pass # Replace with function body.

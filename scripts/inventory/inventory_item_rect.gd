@@ -1,4 +1,4 @@
-extends ColorRect
+extends Control
 
 @onready var inventories_container = $"../../.."
 @onready var subinventory : Control = get_parent()
@@ -63,14 +63,14 @@ func drop_logic(key : Control) -> void:
 	
 	var drop_position = held_item_preview.global_position - key.global_position - item_center_offset
 	moved_item.position = drop_position
-	# Snap the center of the ColorRect to the closest_cell_position
+	# Snap the center of the Control to the closest_cell_position
 	var closest_cell_position = key.get_closest_cell_position(moved_item.position, moved_item.size)
 	moved_item.position = closest_cell_position - item_center_offset
 	
 	key.add_child(moved_item)
 	held_item_preview.held_item = null
 	
-	# Ensure the ColorRect is within the parent's bounds
+	# Ensure the Control is within the parent's bounds
 	if held_item_preview.position.x < subinventory_rects[key].position.x:
 		moved_item.position.x = 0
 	elif held_item_preview.position.x + held_item_preview.size.x > subinventory_rects[key].position.x + subinventory_rects[key].size.x:
