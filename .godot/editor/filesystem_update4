@@ -21,8 +21,6 @@ res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/utility/mesh_height_curve.tres
 res://shaders/snow_post_processesing.gdshader
-res://scripts/inventory/inventory_item_rect.gd
-res://scripts/inventory/subinventory_controller.gd
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
@@ -39,4 +37,6 @@ res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/PregenTerrain.cs
 res://scripts/world_generation/TerrainType.cs
+res://scripts/inventory/subinventory_controller.gd
+res://scripts/inventory/inventory_item_rect.gd
 res://scripts/inventory/inventories_container_controller.gd

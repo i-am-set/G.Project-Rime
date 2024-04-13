@@ -27,8 +27,8 @@ func _input(event):
 				for subinventory in subinventory_rects.keys():
 					if subinventory_rects[subinventory].has_point(held_item_preview.position + item_center_offset):
 						subinventory.get_closest_cell_position_to_held_item()
-						print(subinventory.hovered_cell_position, "   ", subinventory.contents.keys())
-						if !subinventory.contents.keys().has(subinventory.hovered_cell_position):
+						var _hovered_cell = subinventory.position_to_cell(subinventory.hovered_cell_position)
+						if !subinventory.contents.has(_hovered_cell):
 							drop_item()
 						else:
 							print("Slot taken")
