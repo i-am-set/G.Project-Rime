@@ -17,11 +17,11 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("inventory") && !Global.IS_PAUSED && !DebugAutoloadCanvas.game_chat_controller.visible:
+	if event.is_action_pressed("inventory") && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE && !DebugAutoloadCanvas.game_chat_controller.visible:
 		toggle_inventory()
 
 func toggle_inventory():
-	if Global.IS_PAUSED:
+	if Global.IS_PAUSED || Global.IS_IN_CONSOLE:
 		self.visible == false
 		Global.IS_IN_INVENTORY == false
 		animation_player.play("RESET")

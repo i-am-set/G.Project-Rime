@@ -55,7 +55,7 @@ func handle_click(_click_pos):
 					else:
 						print_debug("Space occupied.")
 				else:
-					var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_DEFAULT_CELL_SIZE * 0.5)
+					var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
 					var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
 					print(_subinventory.name, closest_cell_to_click)
 					
@@ -75,7 +75,7 @@ func add_subinventory(_subinventory : Control):
 
 func held_item_follow_mouse():
 	if held_item_reference != null:
-		held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["item"].item_width, held_item_reference["item"].item_height) * Global.INV_DEFAULT_CELL_SIZE * 0.5 # Follow the mouse's x position
+		held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["item"].item_width, held_item_reference["item"].item_height) * Global.INV_CELL_SIZE * 0.5 # Follow the mouse's x position
 
 func try_to_pick_up_item(_picked_up_item : InventoryItem) -> Control:
 	for _subinventory in subinventories:

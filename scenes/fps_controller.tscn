@@ -1549,7 +1549,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Debug" type="Control" parent="UserInterface"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1563,7 +1562,6 @@ theme = SubResource("Theme_mndqq")
 script = ExtResource("6_kecrd")
 
 [node name="DebugPanel" type="PanelContainer" parent="UserInterface/Debug"]
-visible = false
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 0
 offset_left = 10.0
@@ -1579,6 +1577,31 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_g3ryb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/Debug/DebugPanel"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="is_in_inventoryindicator" type="ColorRect" parent="UserInterface/Debug/DebugPanel/HBoxContainer"]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+color = Color(0.901961, 0.65098, 0.368627, 1)
+
+[node name="is_in_consoleindicator" type="ColorRect" parent="UserInterface/Debug/DebugPanel/HBoxContainer"]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+color = Color(0.447059, 0.803922, 0.498039, 1)
+
+[node name="is_pausedindicator" type="ColorRect" parent="UserInterface/Debug/DebugPanel/HBoxContainer"]
+custom_minimum_size = Vector2(3, 3)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
 
 [node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("7_f1ve2")

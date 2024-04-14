@@ -43,3 +43,16 @@ res://data/StaticData.gd
 res://scripts/inventory/item_rect.gd
 res://scripts/game/global.gd
 res://scripts/game/options_setting.gd
+res://addons/diagnosticlist/Panel.gd
+res://scenes/ui/item_rect.tscn
+res://scripts/game/debug.gd
+res://scripts/player/fps_controller.gd
+res://scripts/game/console_menu.gd
+res://scripts/game/game_player_list_controller.gd
+res://scripts/game/game_chat_controller.gd
+res://scripts/player/init_weapon.gd
+res://scripts/player/inventory_logic.gd
+res://scripts/game/game_controller.gd
+res://scripts/game/debug_autoload_canvas_logic.gd
+res://scripts/player/FallingPlayerState.gd
+res://scripts/player/JumpingPlayerState.gd

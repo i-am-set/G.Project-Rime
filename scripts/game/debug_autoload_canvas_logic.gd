@@ -2,6 +2,8 @@ extends CanvasLayer
 
 @onready var fps_label = $FPS_Label
 @onready var game_chat_controller = $GameChatController
+@onready var game_player_list_controller = $GamePlayerListController
+
 
 var is_high_contrast : bool = false
 

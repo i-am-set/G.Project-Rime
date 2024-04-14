@@ -12,18 +12,9 @@ var inventory_cells : Array = [] # Stores cell coordinate
 var items : Array[Dictionary] = [] # Stores item data and positions
 
 func _ready():
-	# Set up the grid based on the default cell size
-	custom_minimum_size = Global.INV_DEFAULT_CELL_SIZE * Vector2(columns, rows)
+	Global.inv_cell_size_updated.connect(update_grid)
 	
-	var cell_size = Global.INV_DEFAULT_CELL_SIZE
-	var cell_number = 1
-	
-	# Set up the inventory size
-	for i in range(rows):
-		for j in range(columns):
-			var _cell = Vector2(j, i)
-			inventory_cells.append(_cell)
-	
+	set_up_cell_grid()
 	update_grid()
 
 func _process(delta):
@@ -35,20 +26,33 @@ func _draw():
 	
 	var closest_cell_to_preview = get_closest_cell_position(held_item_preview.global_position - global_position)
 
-	draw_circle(closest_cell_to_preview + (Global.INV_DEFAULT_CELL_SIZE * 0.5), 5, Color.RED)
+	draw_circle(closest_cell_to_preview + (Global.INV_CELL_SIZE * 0.5), 5, Color.RED)
 	
-	draw_line(Vector2(0,0), Vector2(columns*Global.INV_DEFAULT_CELL_SIZE.x, 0), circle_color, 4)
-	draw_line(Vector2(columns*Global.INV_DEFAULT_CELL_SIZE.x, 0), Vector2(columns*Global.INV_DEFAULT_CELL_SIZE.x, rows*Global.INV_DEFAULT_CELL_SIZE.y), circle_color, 4)
-	draw_line(Vector2(columns*Global.INV_DEFAULT_CELL_SIZE.x, rows*Global.INV_DEFAULT_CELL_SIZE.y), Vector2(0, rows*Global.INV_DEFAULT_CELL_SIZE.y), circle_color, 4)
-	draw_line(Vector2(0, rows*Global.INV_DEFAULT_CELL_SIZE.y), Vector2(0,0), circle_color, 4)
+	draw_line(Vector2(0,0), Vector2(columns*Global.INV_CELL_SIZE.x, 0), circle_color, 4)
+	draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, 0), Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
+	draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), Vector2(0, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
+	draw_line(Vector2(0, rows*Global.INV_CELL_SIZE.y), Vector2(0,0), circle_color, 4)
 	
 	for _cell in inventory_cells:
-		draw_circle(cell_to_position(_cell) + (Global.INV_DEFAULT_CELL_SIZE * 0.5), circle_radius, circle_color)
+		draw_circle(cell_to_position(_cell) + (Global.INV_CELL_SIZE * 0.5), circle_radius, circle_color)
 
 
 func update_grid():
-	# Reset and redraw grid visualizations or GUI elements here if needed
-	pass
+	for _item in items:
+		_item["item_rect"].position = cell_to_position(_item["cell"])
+
+func set_up_cell_grid():
+	var cell_size = Global.INV_CELL_SIZE
+	var cell_number = 1
+	
+	# Set up the grid based on the default cell size
+	custom_minimum_size = Global.INV_CELL_SIZE * Vector2(columns, rows)
+	
+	# Set up the inventory size
+	for i in range(rows):
+		for j in range(columns):
+			var _cell = Vector2(j, i)
+			inventory_cells.append(_cell)
 
 func get_closest_cell_position(input_position):
 	var closest_distance = INF
@@ -61,10 +65,10 @@ func get_closest_cell_position(input_position):
 	return closest_cell_position
 
 func position_to_cell(_pos : Vector2) -> Vector2:
-	return _pos / Global.INV_DEFAULT_CELL_SIZE
+	return _pos / Global.INV_CELL_SIZE
 
 func cell_to_position(_cell : Vector2) -> Vector2:
-	return _cell * Global.INV_DEFAULT_CELL_SIZE
+	return _cell * Global.INV_CELL_SIZE
 
 func is_space_occupied(_drop_cell : Vector2, _item_size : Vector2):
 	var cells_to_occupy = get_occupied_cells(_drop_cell, _item_size)

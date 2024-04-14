@@ -1,6 +1,8 @@
 extends Node
 class_name _Global
 
+signal inv_cell_size_updated()
+
 var debug # Reference to DebugPanel for debug property assignment
 var player # Reference to PlayerController
 
@@ -11,13 +13,7 @@ const MAX_TEMPERATURE_C = -10 # celsius
 const MIN_TEMPERATURE_C = -25 # celsius
 
 # Player Constants
-var INV_DEFAULT_CELL_SIZE = Vector2(30, 30):
-	get:
-		var value = INV_DEFAULT_CELL_SIZE
-		if get_viewport().size.x < 1000:
-			return value * 0.5
-		else:
-			return value
+const INV_DEFAULT_CELL_SIZE = Vector2(30, 30)
 
 # Options Constants
 const DEFAULT_FOV = 75
@@ -49,9 +45,6 @@ var TEMPERATURE_HIGH_C : float = MAX_TEMPERATURE_C
 var TEMPERATURE_LOW_C : float = TEMPERATURE_HIGH_C - 3
 var SUN_WARMTH_MULTIPLIER : float = 1.0
 var SPAWN_POINT := Vector2.ZERO
-var IS_PAUSED := false
-var IS_IN_INVENTORY := false
-var IS_IN_GAME := false
 
 # Options Variables
 var MOUSE_CAPTURED := false
@@ -63,6 +56,16 @@ var POSTP_OUTLINE_ON := true
 var POSTP_DITHER_ON := true
 var RES_SCALE_PERCENT : int = 100
 var DISPLAY_FARENHEIT = false
+
+# Player Variables
+var INV_CELL_SIZE = INV_DEFAULT_CELL_SIZE:
+	set(new_value):
+		INV_CELL_SIZE = new_value
+		emit_signal("inv_cell_size_updated")
+var IS_PAUSED := false
+var IS_IN_INVENTORY := false
+var IS_IN_CONSOLE := false
+var IS_IN_GAME := false
 
 func _ready():
 	var INIT = Steam.steamInit()

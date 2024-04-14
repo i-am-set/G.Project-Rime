@@ -112,6 +112,15 @@ func _on_resolution_option_button_item_selected(index):
 		get_window().set_size(DisplayServer.screen_get_size())
 	else:
 		get_window().set_size(Resolutions[ID])
+	
+	var _new_resolution = get_window().get_size()
+	if _new_resolution.x > 2000:
+		Global.INV_CELL_SIZE = Global.INV_DEFAULT_CELL_SIZE * 1.25
+	elif _new_resolution.x > 1200 && _new_resolution.x < 2000:
+		Global.INV_CELL_SIZE = Global.INV_DEFAULT_CELL_SIZE
+	else:
+		Global.INV_CELL_SIZE = round(Global.INV_DEFAULT_CELL_SIZE * 0.75)
+	
 	Set_Resolution_Text()
 	Center_Window()
 

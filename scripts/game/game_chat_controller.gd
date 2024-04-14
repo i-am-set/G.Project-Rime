@@ -18,20 +18,20 @@ func _input(event: InputEvent) -> void:
 	if Global.IS_IN_GAME:
 		if Global.MOUSE_CAPTURED == true && chatInput.has_focus():
 			deselect_chat_input()
-		if !Global.IS_PAUSED && Input.is_action_just_pressed("ui_text_completion_accept"):
+		if !Global.IS_PAUSED && !Global.IS_IN_CONSOLE && Input.is_action_just_pressed("ui_text_completion_accept"):
 			# stop the tween if needed and reset variable
 			if chat_hide_tween != null:
 				if chat_hide_tween.is_running():
 					chat_hide_tween.stop()
 					chat.modulate.a = 1
 			# change logic based on if the chat window is open or not
-			if visible == false || chatInput.has_focus() == false && Global.IS_PAUSED == false && Global.IS_IN_INVENTORY == false:
+			if visible == false || chatInput.has_focus() == false && Global.IS_PAUSED == false && Global.IS_IN_INVENTORY == false && Global.IS_IN_CONSOLE == false:
 				visible = true
 				select_chat_input()
 				uncapture_mouse()
 			else:
 				send_chat_message()
-		if Input.is_action_pressed("exit") || Global.IS_PAUSED == true || Global.IS_IN_INVENTORY == true:
+		if Input.is_action_pressed("exit") || Global.IS_PAUSED == true || Global.IS_IN_INVENTORY == true || Global.IS_IN_CONSOLE == true:
 			chatInput.clear()
 			if visible == true:
 				deselect_chat_input()

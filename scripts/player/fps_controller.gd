@@ -42,6 +42,7 @@ var _current_rotation : float
 
 # Get the gravity from the project s ettings to be synced with RigidBody nodes.
 var gravity = 9.8
+var mass = 82
 
 func _authorize_user():
 	_is_authorized_user = true
@@ -79,11 +80,14 @@ func _input(event):
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_authorized_user == true:
-		if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED:
+		if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE:
 			capture_mouse()
 		if event.is_action_pressed("exit"):
 			if (INVENTORY_MENU.visible):
-				INVENTORY_MENU.toggle_inventory()
+				if !Global.IS_IN_CONSOLE:
+					INVENTORY_MENU.toggle_inventory()
+			elif Global.IS_IN_CONSOLE:
+				pass
 			else:
 				toggle_pause_menu()
 		
@@ -110,7 +114,7 @@ func uncapture_mouse():
 	Global.capture_mouse(false)
 
 func _rotate_camera(sens_mod: float = 1.0) -> void:
-	if  Global.IS_PAUSED == true:
+	if Global.IS_PAUSED || Global.IS_IN_CONSOLE:
 		return
 		
 	self.rotation.y -= look_dir.x * MOUSE_SENSITIVITY
@@ -167,13 +171,18 @@ func _physics_process(delta):
 		
 		_cached_position = global_position
 		_cached_rotation = rotation
+		
+		if PAUSE_MENU.visible:
+			Global.IS_PAUSED = true
 
 
 func update_gravity(delta) -> void:
 	if (_player_data.no_clip):
 		pass
 	else:
-		velocity.y -= gravity * delta
+		var gravitational_force = gravity * mass
+		var acceleration = gravitational_force / mass  # Simplifies to gravity
+		velocity.y -= acceleration * delta
 	
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
 	if _is_authorized_user == true:
@@ -185,7 +194,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			# Allow flying movement based on mouse direction
 			var input_dir = Vector3.ZERO
 			var camera_forward = Vector3.ZERO
-			if Global.MOUSE_CAPTURED && !Global.IS_PAUSED:
+			if Global.MOUSE_CAPTURED && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE:
 				input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 				camera_forward = -CAMERA_CONTROLLER.global_transform.basis.z.normalized()
 				
@@ -212,7 +221,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 				velocity.y = -speed  # Move down
 		else:
 			var input_dir = Vector3.ZERO
-			if (Global.MOUSE_CAPTURED == true) && !Global.IS_PAUSED:
+			if (Global.MOUSE_CAPTURED == true) && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE:
 				input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 			
 			var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()

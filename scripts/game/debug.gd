@@ -1,7 +1,10 @@
 extends Control
 
 @onready var property_container = %VBoxContainer
-@onready var debug_panel = get_node("DebugPanel")
+@onready var debug_panel = $DebugPanel
+@onready var is_pausedindicator = $DebugPanel/HBoxContainer/is_pausedindicator
+@onready var is_in_consoleindicator = $DebugPanel/HBoxContainer/is_in_consoleindicator
+@onready var is_in_inventoryindicator = $DebugPanel/HBoxContainer/is_in_inventoryindicator
 
 #var property
 var frames_per_second : String
@@ -21,11 +24,29 @@ func _ready():
 func _process(_delta):
 	Global.debug.add_property("FPS", frames_per_second, 0)
 	
+	display_indicators()
+	
 	if debug_panel.visible:
 		# Use delta time to get approx frames per second and round to two decimal places !Disable VSync if fps is stuck at 60!
 #			frames_per_second = "%.2f" % (1.0/delta) # Gets frames per second every frame
 			frames_per_second = str(Engine.get_frames_per_second()) # Gets frames per second every second
 #			property.text = property.name + ": " + frames_per_second
+
+func display_indicators():
+	if Global.IS_PAUSED:
+		is_pausedindicator.visible = true
+	else:
+		is_pausedindicator.visible = false
+	
+	if Global.IS_IN_CONSOLE:
+		is_in_consoleindicator.visible = true
+	else:
+		is_in_consoleindicator.visible = false
+	
+	if Global.IS_IN_INVENTORY:
+		is_in_inventoryindicator.visible = true
+	else:
+		is_in_inventoryindicator.visible = false
 
 func c_toggle_debug_panel() -> void:
 	# Toggle debug panel

@@ -4,11 +4,13 @@ extends Control
 @onready var playerCount = $Players/PlayerCount
 @onready var playerListPanel = $Players
 
-func _physics_process(delta):
-	if Input.is_action_just_pressed("playerlist") && Global.IS_PAUSED == false:
-		hold_display_player_list()
-	if !Input.is_action_pressed("playerlist") || Global.IS_PAUSED == true:
-		playerListPanel.visible = false
+
+func _input(event):
+	if Global.IS_IN_GAME:
+		if Input.is_action_just_pressed("playerlist") && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE:
+			hold_display_player_list()
+		if !Input.is_action_pressed("playerlist") || Global.IS_PAUSED || Global.IS_IN_CONSOLE:
+			playerListPanel.visible = false
 
 func hold_display_player_list():
 	if !Input.is_action_pressed("playerlist"):

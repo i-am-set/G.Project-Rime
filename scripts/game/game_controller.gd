@@ -3,13 +3,12 @@ extends Node
 @onready var SKYBOX = $SkyBox
 
 var _player_node = preload("res://scenes/fps_controller.tscn")
-var _player_list = preload("res://scenes/game_player_list_controller.tscn")
 
 @export var generated_terrain : Node3D
 @export var distance_objects : Node3D
 
 var _game_chat_controller : Control = DebugAutoloadCanvas.game_chat_controller
-var _player_list_instance : Control
+var _game_player_list_controller : Control = DebugAutoloadCanvas.game_player_list_controller
 var _authorized_player : Player
 
 func _ready():
@@ -24,10 +23,6 @@ func _ready():
 	
 	## Check for command line arguments
 	check_command_line()
-	
-	# initialize game chat and player list
-	_player_list_instance = _player_list.instantiate()
-	add_child(_player_list_instance)
 	
 	# initialize player
 	Global.IS_IN_GAME = true
@@ -97,10 +92,10 @@ func _on_skybox_temperature_set():
 	send_p2p_packet(0, {"message": "temperature_set", "temperature_high": Global.TEMPERATURE_HIGH, "temperature_low": Global.TEMPERATURE_LOW})
 
 func get_lobby_members() -> void:
-	_player_list_instance.get_lobby_members()
+	_game_player_list_controller.get_lobby_members()
 
 func add_player_list(this_steam_id, this_steam_name):
-	_player_list_instance.add_player_list(this_steam_id, this_steam_name)
+	_game_player_list_controller.add_player_list(this_steam_id, this_steam_name)
 
 func join_lobby(this_lobby_id):
 	#lobbyPopup.hide()
@@ -126,7 +121,7 @@ func leave_lobby():
 		# Wipe LOBBY_ID
 		Global.LOBBY_ID = 0
 		
-		_player_list_instance.leave_lobby()
+		_game_player_list_controller.leave_lobby()
 		
 		# Close session with all users
 		for member in Global.LOBBY_MEMBERS:

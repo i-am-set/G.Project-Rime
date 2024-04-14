@@ -32,7 +32,7 @@ func _ready() -> void:
 	load_weapon()
 	
 func _input(event):
-	if event is InputEventMouseMotion && !Global.IS_PAUSED && !Global.IS_IN_INVENTORY:
+	if event is InputEventMouseMotion && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE && !Global.IS_IN_INVENTORY:
 		mouse_movement = event.relative
 
 func load_weapon() -> void:
