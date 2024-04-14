@@ -1504,25 +1504,21 @@ script = ExtResource("20_mmuft")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 20
 
 [node name="subinventory" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories"]
 layout_mode = 2
-size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
 rows = 4
 columns = 4
 
 [node name="subinventory2" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories"]
 layout_mode = 2
-size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
-rows = 5
-columns = 12
+rows = 12
+columns = 5
 
 [node name="subinventory3" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories"]
 layout_mode = 2
-size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
 columns = 4
 
@@ -1536,8 +1532,9 @@ size_flags_vertical = 0
 color = Color(0.745098, 0.0823529, 0.454902, 0.556863)
 
 [node name="held_item_preview" type="Control" parent="UserInterface/InventoryMenu"]
-visible = false
 anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("22_8y7sx")
 
 [node name="display" type="ColorRect" parent="UserInterface/InventoryMenu/held_item_preview"]

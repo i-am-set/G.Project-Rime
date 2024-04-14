@@ -1,5 +1,5 @@
 extends Resource
-class_name InvItem
+class_name InventoryItem
 
 # Item properties
 @export var item_id: String

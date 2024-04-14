@@ -7,6 +7,8 @@ var item_data_file_path = "res://data/Item_Data.json"
 
 func _ready():
 	item_data = import_json_file(item_data_file_path)
+	
+	Console.create_command("get_item_list", self.c_list_all_items, "Lists all items and their IDs.")
 
 
 
@@ -22,3 +24,18 @@ func import_json_file(path : String):
 			printerr("Error reading file!")
 	else:
 		printerr("File doesn't exist!")
+
+func create_item_from_id(item_id : String) -> InventoryItem:
+	var new_item = InventoryItem.new()
+	new_item.item_id = item_id
+	new_item.item_name = item_data[item_id]["item_name"]
+	new_item.item_width = item_data[item_id]["item_width"]
+	new_item.item_height = item_data[item_id]["item_height"]
+	#new_item.item_mesh = item_data[item_id]["item_mesh"]
+	#new_item.item_image = item_data[item_id]["item_image"]
+	
+	return new_item
+
+func c_list_all_items() -> void:
+	for item in item_data:
+		Console.print_line("[color=MEDIUM_VIOLET_RED]name: [/color][color=SEA_GREEN]" + item_data[item]["item_name"] + "        " +"[/color][color=MEDIUM_VIOLET_RED]id: [/color][color=SEA_GREEN]" + item + "[/color]")

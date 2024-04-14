@@ -1,5 +1,7 @@
-CenterContainer
 ColorRect
+Control
+GridContainer
+CenterContainer
 MarginContainer
 PanelContainer
 Panel
@@ -10,6 +12,3 @@ ReorderableVBox
 Button
 Label
 HBoxContainer
-GridContainer
-TabContainer
-FillGapContainer

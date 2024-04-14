@@ -11,7 +11,13 @@ const MAX_TEMPERATURE_C = -10 # celsius
 const MIN_TEMPERATURE_C = -25 # celsius
 
 # Player Constants
-const INV_DEFAULT_CELL_SIZE = 30
+var INV_DEFAULT_CELL_SIZE = Vector2(30, 30):
+	get:
+		var value = INV_DEFAULT_CELL_SIZE
+		if get_viewport().size.x < 1000:
+			return value * 0.5
+		else:
+			return value
 
 # Options Constants
 const DEFAULT_FOV = 75
