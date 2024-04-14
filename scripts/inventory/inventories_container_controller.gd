@@ -15,10 +15,12 @@ func _process(delta):
 	queue_redraw()
 
 func _draw():
-	for subinventory in subinventory_rects:
-		for occupied_cell in subinventory.contents.keys():
-			var occupied_cell_position = subinventory.cell_to_position(occupied_cell)
-			draw_line(occupied_cell_position + subinventory.position, occupied_cell_position + subinventory.position - Vector2(0, 20), Color.AQUA, 4)
+	for _subinventory in subinventory_rects:
+		var centents_cells = _subinventory.contents.values()
+		for _occupied_cells in centents_cells:
+			for _occupied_cell in _occupied_cells:
+				var occupied_cell_position = _subinventory.cell_to_position(_occupied_cell)
+				draw_line(occupied_cell_position + _subinventory.position, occupied_cell_position + _subinventory.position - Vector2(0, 20), Color.AQUA, 4)
 
 func set_subinventories():
 	subinventory_rects.clear()

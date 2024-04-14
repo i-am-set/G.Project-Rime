@@ -1,4 +1,7 @@
-extends ColorRect
+extends Control
+
+@onready var DISPLAY = $ColorRect
+
 
 var held_item : Control
 

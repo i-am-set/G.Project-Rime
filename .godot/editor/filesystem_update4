@@ -43,3 +43,5 @@ res://scripts/inventory/subinventory_controller.gd
 res://scripts/held_item_preview.gd
 res://scenes/ui/inv_item_rect.tscn
 res://scripts/inventory/inv_item.gd
+res://scripts/inventory/held_item_preview.gd
+res://scripts/inventory/inventories_container_controller.gd

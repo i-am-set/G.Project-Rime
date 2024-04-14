@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=91 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -38,7 +38,6 @@
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
 [ext_resource type="Script" path="res://scripts/inventory/inventories_container_controller.gd" id="20_2y6e7"]
 [ext_resource type="Script" path="res://scripts/inventory/subinventory_controller.gd" id="21_x5pxw"]
-[ext_resource type="PackedScene" uid="uid://c1tu8fkhkb1u3" path="res://scenes/ui/inv_item_rect.tscn" id="22_wqvoq"]
 [ext_resource type="Script" path="res://scripts/inventory/held_item_preview.gd" id="23_y8b06"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
 
@@ -1515,13 +1514,6 @@ script = ExtResource("21_x5pxw")
 inventory_width = 8
 inventory_height = 4
 
-[node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory" instance=ExtResource("22_wqvoq")]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-anchors_preset = 0
-offset_right = 25.0
-offset_bottom = 25.0
-
 [node name="subinventory2" type="ColorRect" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
 custom_minimum_size = Vector2(400, 200)
 layout_mode = 2
@@ -1530,17 +1522,6 @@ color = Color(0.635294, 0.635294, 0.635294, 0.34902)
 script = ExtResource("21_x5pxw")
 inventory_width = 12
 inventory_height = 7
-
-[node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory2" instance=ExtResource("22_wqvoq")]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 25.0
-offset_bottom = 25.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="subinventory3" type="ColorRect" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container"]
 custom_minimum_size = Vector2(400, 200)
@@ -1551,17 +1532,6 @@ script = ExtResource("21_x5pxw")
 inventory_width = 2
 inventory_height = 4
 
-[node name="inv_item" parent="UserInterface/InventoryMenu/inventories_container/subinventory_container/subinventory3" instance=ExtResource("22_wqvoq")]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 25.0
-offset_bottom = 25.0
-grow_horizontal = 1
-grow_vertical = 1
-
 [node name="GhostPreview" type="ColorRect" parent="UserInterface/InventoryMenu"]
 visible = false
 layout_mode = 2
@@ -1571,14 +1541,21 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 color = Color(0.745098, 0.0823529, 0.454902, 0.556863)
 
-[node name="HeldItemPreview" type="ColorRect" parent="UserInterface/InventoryMenu"]
-visible = false
-layout_mode = 2
-offset_right = 50.0
-offset_bottom = 50.0
+[node name="HeldItemPreview" type="Control" parent="UserInterface/InventoryMenu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("23_y8b06")
+
+[node name="ColorRect" type="ColorRect" parent="UserInterface/InventoryMenu/HeldItemPreview"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-script = ExtResource("23_y8b06")
 
 [node name="Debug" type="Control" parent="UserInterface"]
 visible = false
