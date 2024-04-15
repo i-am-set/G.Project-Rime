@@ -809,7 +809,6 @@ shape = SubResource("CapsuleShape3D_nitno")
 
 [node name="player_model" parent="CollisionShape3D" instance=ExtResource("35_60cqa")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -1.465, 0)
-visible = false
 
 [node name="legs_model" parent="CollisionShape3D" instance=ExtResource("35_60cqa")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.465, 0.872343)
@@ -849,11 +848,14 @@ transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.55)
 WEAPON_TYPE = ExtResource("5_srgsy")
 sway_noise = SubResource("NoiseTexture2D_33bd6")
 
+[node name="DropPosition" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.40458, -0.367773)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1563,7 +1565,8 @@ script = ExtResource("6_kecrd")
 
 [node name="DebugPanel" type="PanelContainer" parent="UserInterface/Debug"]
 custom_minimum_size = Vector2(100, 0)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 offset_left = 10.0
 offset_top = 10.0
 offset_right = 110.0

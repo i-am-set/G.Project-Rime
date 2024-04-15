@@ -169,3 +169,13 @@ func get_temperature_sign_display() -> String:
 	if DISPLAY_FARENHEIT:
 		return "°F"
 	return "°C"
+
+func get_all_temperature_stats_debug() -> String:
+	var sign_t := get_temperature_sign_display()
+	var cur_t := get_current_temperature_display()
+	var lo_t := get_temperature_low_display()
+	var hi_t := get_temperature_high_display()
+	var min_t := get_temperature_min_display()
+	var max_t := get_temperature_max_display()
+	
+	return ("\nCurrent: %d%s\nLow: %d%s  High: %d%s\nMin: %d%s  Max: %d%s\n" % [cur_t, sign_t, lo_t, sign_t, hi_t, sign_t, min_t, sign_t, max_t, sign_t,])

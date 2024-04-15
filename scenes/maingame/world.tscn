@@ -96,7 +96,7 @@ generated_terrain = NodePath("MapGenerator/InfiniteTerrainGen")
 distance_objects = NodePath("mountain_range_skybox_model_1")
 
 [node name="SkyBox" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1256.25
+timeOfDay = 1293.75
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5
@@ -134,3 +134,7 @@ shape = SubResource("ConvexPolygonShape3D_em6ja")
 [node name="Decal" type="Decal" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0756981, -18.0763, 0)
 texture_albedo = ExtResource("12_c6ask")
+
+[node name="Entities" type="Node3D" parent="."]
+
+[node name="GroundObjects" type="Node3D" parent="."]

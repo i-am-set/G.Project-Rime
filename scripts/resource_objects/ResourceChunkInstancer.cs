@@ -96,7 +96,7 @@ public partial class ResourceChunkInstancer : Node3D
     private System.Collections.Generic.Dictionary<Vector3, StaticBody3D> resourcePositionsWithColliders = new();
     private List<Vector3> resourcePositionsCloseToThePlayer = new();
 
-    private static int positionsPerFrame = 5;
+    private static int positionsPerFrame = 3;
     private Timer initGenerationTimer;
 
     private bool isWeightSystemInitialized = false;

@@ -6,8 +6,9 @@ class_name InventoryItem
 @export var item_name: String
 @export var item_width: int
 @export var item_height: int
-@export var item_mesh: PackedScene
-@export var item_image: Texture
+@export var stack_size: int
+@export var item_weight: int
+@export var item_mesh: ArrayMesh
 
 # Optional: Provide a function to display basic info
 func _to_string() -> String:

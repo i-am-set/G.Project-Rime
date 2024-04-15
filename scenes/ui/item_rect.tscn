@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bdwxe80vw400y"]
+[gd_scene load_steps=4 format=3 uid="uid://bdwxe80vw400y"]
 
 [ext_resource type="Script" path="res://scripts/inventory/item_rect.gd" id="1_61j55"]
+[ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="2_c8l0r"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qp53d"]
+viewport_path = NodePath("SubViewport")
 
 [node name="item_rect" type="Control"]
 layout_mode = 3
@@ -9,10 +13,41 @@ offset_right = 30.0
 offset_bottom = 30.0
 script = ExtResource("1_61j55")
 
-[node name="display" type="ColorRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = SubResource("ViewportTexture_qp53d")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+gui_disable_input = true
+positional_shadow_atlas_size = 512
+positional_shadow_atlas_quad_2 = 2
+positional_shadow_atlas_quad_3 = 2
+size = Vector2i(30, 30)
+render_target_clear_mode = 1
+render_target_update_mode = 1
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+projection = 1
+size = 0.5
+near = 0.025
+far = 15.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.668, 0)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.261, -0.065)
+light_energy = 0.1
+
+[node name="MeshContainer" type="MeshInstance3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36)
+mesh = ExtResource("2_c8l0r")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

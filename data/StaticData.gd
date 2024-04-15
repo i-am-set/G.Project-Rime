@@ -3,7 +3,7 @@ extends Node
 var item_data
 var item_data_file_path = "res://data/Item_Data.json"
 
-
+const MISSING_MESH_MODEL = preload("res://meshes/utility/missing_mesh_model.obj")
 
 func _ready():
 	item_data = import_json_file(item_data_file_path)
@@ -31,8 +31,12 @@ func create_item_from_id(item_id : String) -> InventoryItem:
 	new_item.item_name = item_data[item_id]["item_name"]
 	new_item.item_width = item_data[item_id]["item_width"]
 	new_item.item_height = item_data[item_id]["item_height"]
-	#new_item.item_mesh = item_data[item_id]["item_mesh"]
-	#new_item.item_image = item_data[item_id]["item_image"]
+	new_item.stack_size = item_data[item_id]["stack_size"]
+	new_item.item_weight = item_data[item_id]["item_weight"]
+	if item_data[item_id].has("item_mesh"):
+		new_item.item_mesh = load(item_data[item_id]["item_mesh"])
+	else:
+		new_item.item_mesh = MISSING_MESH_MODEL
 	
 	return new_item
 

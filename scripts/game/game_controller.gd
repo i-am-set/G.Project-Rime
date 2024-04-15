@@ -1,6 +1,10 @@
 extends Node
 
-@onready var SKYBOX = $SkyBox
+const GROUND_ITEM = preload("res://scenes/maingame/ground_item.tscn")
+
+@onready var sky_box = $SkyBox
+@onready var entities = $Entities
+@onready var ground_objects = $GroundObjects
 
 var _player_node = preload("res://scenes/fps_controller.tscn")
 
@@ -13,7 +17,7 @@ var _authorized_player : Player
 
 func _ready():
 	# misc signals
-	SKYBOX.temperature_set.connect(_on_skybox_temperature_set)
+	sky_box.temperature_set.connect(_on_skybox_temperature_set)
 	
 	# Steamwork connections
 	Steam.lobby_joined.connect(_on_lobby_joined)
@@ -36,7 +40,7 @@ func _ready():
 				player_instance._deauthorize_user()
 				player_instance.strip_into_peer()
 				Global.LOBBY_PEER_INSTANCES[this_member['steam_id']] = player_instance
-				add_child(player_instance)
+				entities.add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 100, Global.SPAWN_POINT.y)
 			else:
 				print_debug("creating self with friends")
@@ -45,7 +49,7 @@ func _ready():
 				player_instance._authorize_user()
 				_authorized_player = player_instance
 				HyperLog.camera_3d = player_instance.CAMERA_CONTROLLER
-				add_child(player_instance)
+				entities.add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 100, Global.SPAWN_POINT.y)
 	else:
 		print_debug("creating self alone")
@@ -54,7 +58,7 @@ func _ready():
 		player_instance._authorize_user()
 		_authorized_player = player_instance
 		HyperLog.camera_3d = player_instance.CAMERA_CONTROLLER
-		add_child(player_instance)
+		entities.add_child(player_instance)
 		player_instance.global_transform.origin = Vector3(Global.SPAWN_POINT.x, 100, Global.SPAWN_POINT.y)
 		print_debug("self created")
 	
@@ -133,16 +137,23 @@ func leave_lobby():
 func set_time(set_time : int) -> int:
 	send_p2p_packet(0, {"message": "time_set", "time": set_time})
 	set_time %= 2400
-	SKYBOX.timeOfDay = set_time
+	sky_box.timeOfDay = set_time
 	
 	return set_time
 
 func recieve_set_time_request(set_time : int) -> void:
 	set_time %= 2400
-	SKYBOX.timeOfDay = set_time
+	sky_box.timeOfDay = set_time
 
 func get_current_time() -> int:
-	return SKYBOX.timeOfDay
+	return sky_box.timeOfDay
+
+func instance_ground_item(dropped_inv_item : InventoryItem, drop_position : Vector3):
+	var new_ground_item = GROUND_ITEM.instantiate()
+	new_ground_item.inv_item = dropped_inv_item
+	
+	ground_objects.add_child(new_ground_item)
+	new_ground_item.position = drop_position
 
 func read_all_p2p_packets(read_count: int = 0):
 	if read_count >= Global.PACKET_READ_LIMIT:
@@ -169,7 +180,7 @@ func _on_lobby_chat_update(this_lobby_id, changed_id, making_change_id, chat_sta
 				player_instance._deauthorize_user()
 				player_instance.strip_into_peer()
 				Global.LOBBY_PEER_INSTANCES[making_change_id] = player_instance
-				add_child(player_instance)
+				entities.add_child(player_instance)
 				player_instance.global_transform.origin = Vector3(-5, 10, 0)
 				await get_tree().process_frame
 				# send move packet to update position
@@ -323,6 +334,9 @@ func process_data(packet_data : Dictionary):
 			Global.TEMPERATURE_HIGH == packet_data["temperature_high"]
 			Global.TEMPERATURE_LOW == packet_data["temperature_low"]
 
+#############################
+##### Console Commands ######
+#############################
 
 func c_set_time(set_time : int) -> void:
 	set_time = set_time(set_time)

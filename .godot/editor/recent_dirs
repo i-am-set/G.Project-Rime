@@ -1,3 +1,4 @@
+res://scenes/maingame
 res://scenes/ui
 res://scripts/inventory
 res://data
@@ -19,4 +20,3 @@ res://scenes/resourceobjects/nature/nodes/colliders
 res://scenes/resourceobjects/nature/trees/colliders
 res://scenes/resourceobjects/nature/trees
 res://scenes
-res://scripts/world_generation

@@ -54,6 +54,7 @@ func update_temperature():
 		Global.CURRENT_TEMPERATURE_C = lerp(cached_temperature, Global.TEMPERATURE_HIGH_C, time_ratio * 2)
 	else:
 		Global.CURRENT_TEMPERATURE_C = lerp(Global.TEMPERATURE_HIGH_C, Global.TEMPERATURE_LOW_C, (time_ratio - 0.5) * 2)
+	
 
 func set_temp_for_day():
 	var temperature_high

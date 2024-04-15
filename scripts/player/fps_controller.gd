@@ -9,7 +9,8 @@ extends CharacterBody3D
 @onready var INVENTORY_MENU = $UserInterface/InventoryMenu
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
-
+@onready var WORLD = $"../.."
+@onready var drop_position = $DropPosition
 
 @export var MOUSE_SENSITIVITY : float = 0.5
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -155,6 +156,7 @@ func _ready():
 		Console.create_command("postp_enable_outline", self.c_enable_postp_outline, "Toggles the outline post process effect. Takes a true or false.")
 		Console.create_command("set_body_temperature", self.c_set_all_player_limb_temperature, "Sets the temperature of all body parts to the given value. 100.0 is default; 0.0 is min; 200.0 is max")
 		Console.create_command("get_body_temperature", self.c_get_all_player_limb_temperature, "Displays the body temperature of each body part. 100.0 is default; 0.0 is min; 200.0 is max")
+		Console.create_command("create_item", self.c_create_item_from_id, "Drops the number input of input item by ID in front of player.")
 
 func set_settings():
 	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
@@ -164,10 +166,7 @@ func set_settings():
 
 func _physics_process(delta):
 	if _is_authorized_user:
-		Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)
-		Global.debug.add_property("ShapeCast", CROUCH_SHAPECAST.is_colliding(), 2)
-		Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
-		Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
+		debug_process()
 		
 		_cached_position = global_position
 		_cached_rotation = rotation
@@ -254,6 +253,15 @@ func set_fov(fov : int) -> int:
 	CAMERA_CONTROLLER.fov = fov
 	
 	return fov
+
+func debug_process():
+	Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)
+	Global.debug.add_property("ShapeCast", CROUCH_SHAPECAST.is_colliding(), 2)
+	Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
+	Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
+
+func drop_ground_item(_item : InventoryItem):
+	WORLD.instance_ground_item(StaticData.create_item_from_id(_item.item_id), drop_position.global_position)
 
 func enable_postp_dither(toggle : bool) -> void:
 	POSTP_DITHER.get_surface_override_material(0).set_shader_parameter("dithering", toggle)
@@ -380,6 +388,14 @@ func c_teleport_self_to_player(des_player_name : String) -> void:
 		Console.print_line("[color=RED]'" + des_player_name + "' is not a valid player name.[/color]")
 	else:
 		Console.print_line("[color=RED]Failed to find player position[/color]")
+
+func c_create_item_from_id(item_to_create_id : String, number_of_item : int):
+	var process_step = 0
+	for i in range(number_of_item):
+		process_step += 1
+		if process_step % 10 == 0:
+			await get_tree().process_frame
+		WORLD.instance_ground_item(StaticData.create_item_from_id(item_to_create_id), drop_position.global_position)
 
 func c_teleport_player_to_player(ori_player_name : String, des_player_name : String) -> void:
 	var ori_is_self = false
