@@ -1,3 +1,5 @@
+Panel
+Control
 Node3D
 RigidBody3D
 Node
@@ -11,4 +13,3 @@ TextureRect
 SubViewport
 SubViewportContainer
 Camera3D
-HBoxContainer

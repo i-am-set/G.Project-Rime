@@ -1,7 +1,7 @@
 extends Control
 
 @onready var held_item_preview = $"../held_item_preview"
-
+@onready var tooltip = $"../Tooltip"
 @onready var subinventories_container = $subinventories
 
 var subinventories : Array = [] :
@@ -13,6 +13,7 @@ var held_item_reference = null
 var held_item_subinventory : Control = null
 
 func _ready():
+	HideTooltip()
 	Console.create_command("give", self.c_give_item, "Quick adds the given item by ID into if space is available; Drops item if no space.")
 
 func _input(event):
@@ -20,6 +21,7 @@ func _input(event):
 		handle_click(get_global_mouse_position() - global_position)
 
 func _process(delta):
+	tooltip_follow_mouse()
 	held_item_follow_mouse()
 	queue_redraw()
 
@@ -73,9 +75,18 @@ func handle_click(_click_pos):
 func add_subinventory(_subinventory : Control):
 	subinventories_container.add_child(_subinventory)
 
+func DisplayTooltip():
+	tooltip.show()
+
+func HideTooltip():
+	tooltip.hide()
+
 func held_item_follow_mouse():
 	if held_item_reference != null:
 		held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["item"].item_width, held_item_reference["item"].item_height) * Global.INV_CELL_SIZE * 0.5 # Follow the mouse's x position
+
+func tooltip_follow_mouse():
+	tooltip.position = get_global_mouse_position()
 
 func try_to_pick_up_item(_picked_up_item : InventoryItem) -> Control:
 	for _subinventory in subinventories:

@@ -1,27 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdwxe80vw400y"]
+[gd_scene load_steps=4 format=3 uid="uid://rtjd6w1h2cde"]
 
-[ext_resource type="Script" path="res://scripts/inventory/item_rect.gd" id="1_61j55"]
-[ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="2_c8l0r"]
+[ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="1_notxg"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_qp53d"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oqpb6"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rwtup"]
 viewport_path = NodePath("SubViewport")
 
-[node name="item_rect" type="Control"]
+[node name="Tooltip" type="Control"]
+custom_minimum_size = Vector2(60, 30)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 30.0
+offset_right = 60.0
 offset_bottom = 30.0
-script = ExtResource("1_61j55")
+mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_oqpb6")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 30.0
+offset_bottom = 30.0
 pivot_offset = Vector2(16, 16)
-texture = SubResource("ViewportTexture_qp53d")
+texture = SubResource("ViewportTexture_rwtup")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
@@ -48,7 +57,4 @@ light_energy = 0.1
 
 [node name="MeshContainer" type="MeshInstance3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36)
-mesh = ExtResource("2_c8l0r")
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+mesh = ExtResource("1_notxg")
