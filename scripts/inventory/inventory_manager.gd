@@ -75,7 +75,8 @@ func handle_click(_click_pos):
 func add_subinventory(_subinventory : Control):
 	subinventories_container.add_child(_subinventory)
 
-func DisplayTooltip():
+func DisplayTooltip(_inv_item : InventoryItem):
+	tooltip.inv_item = _inv_item
 	tooltip.show()
 
 func HideTooltip():

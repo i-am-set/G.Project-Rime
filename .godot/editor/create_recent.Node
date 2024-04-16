@@ -12,4 +12,3 @@ DirectionalLight3D
 TextureRect
 SubViewport
 SubViewportContainer
-Camera3D
