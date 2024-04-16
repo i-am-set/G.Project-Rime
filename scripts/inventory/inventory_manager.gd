@@ -1,5 +1,6 @@
 extends Control
 
+@onready var inventory_menu = $".."
 @onready var held_item_preview = $"../held_item_preview"
 @onready var tooltip = $"../Tooltip"
 @onready var subinventories_container = $subinventories
@@ -21,7 +22,7 @@ func _input(event):
 		handle_click(get_global_mouse_position() - global_position)
 
 func _process(delta):
-	tooltip_follow_mouse()
+	#tooltip_follow_mouse()
 	held_item_follow_mouse()
 	queue_redraw()
 
@@ -77,6 +78,7 @@ func add_subinventory(_subinventory : Control):
 
 func DisplayTooltip(_inv_item : InventoryItem):
 	tooltip.inv_item = _inv_item
+	tooltip.move_position_within_bounds(get_global_mouse_position(), inventory_menu)
 	tooltip.show()
 
 func HideTooltip():
@@ -86,8 +88,8 @@ func held_item_follow_mouse():
 	if held_item_reference != null:
 		held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["item"].item_width, held_item_reference["item"].item_height) * Global.INV_CELL_SIZE * 0.5 # Follow the mouse's x position
 
-func tooltip_follow_mouse():
-	tooltip.position = get_global_mouse_position()
+#func tooltip_follow_mouse():
+	#tooltip.position = get_global_mouse_position()
 
 func try_to_pick_up_item(_picked_up_item : InventoryItem) -> Control:
 	for _subinventory in subinventories:

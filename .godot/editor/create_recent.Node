@@ -1,3 +1,5 @@
+RichTextLabel
+VBoxContainer
 Panel
 Control
 Node3D
@@ -11,4 +13,3 @@ SpotLight3D
 DirectionalLight3D
 TextureRect
 SubViewport
-SubViewportContainer

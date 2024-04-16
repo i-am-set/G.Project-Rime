@@ -1,4 +1,4 @@
-res://scenes/ui/inventory_tooltip.tscn
+res://scenes/fps_controller.tscn
 res://GodotSky/Presets/default/sunLightIntensity.tres
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
@@ -21,7 +21,9 @@ res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/utility/mesh_height_curve.tres
 res://shaders/snow_post_processesing.gdshader
-res://scenes/fps_controller.tscn
+res://scripts/inventory/inventory_manager.gd
+res://scenes/ui/inventory_tooltip.tscn
+res://scripts/inventory/inventory_tooltip.gd
 res://meshes/weapons/weapon.tscn
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
@@ -37,6 +39,3 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/inventory/inventory_tooltip.gd
-res://scripts/inventory/item_rect.gd
-res://scripts/inventory/inventory_manager.gd
