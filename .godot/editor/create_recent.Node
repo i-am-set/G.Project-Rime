@@ -1,4 +1,7 @@
+Label
+Button
 RichTextLabel
+HBoxContainer
 VBoxContainer
 Panel
 Control
@@ -9,7 +12,3 @@ StaticBody3D
 CollisionShape3D
 MeshInstance3D
 OmniLight3D
-SpotLight3D
-DirectionalLight3D
-TextureRect
-SubViewport

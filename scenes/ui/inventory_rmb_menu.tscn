@@ -1,0 +1,270 @@
+[gd_scene load_steps=16 format=3 uid="uid://b4kiu73xi3i07"]
+
+[ext_resource type="Script" path="res://scripts/inventory/inventory_rmb_menu.gd" id="1_3tt4f"]
+[ext_resource type="Shader" path="res://shaders/2d/blur_shader.gdshader" id="2_y62ye"]
+[ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="3_y6oxa"]
+[ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="4_mxq8e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q5h2g"]
+bg_color = Color(1, 0.156863, 0.784314, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xcw3p"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_astup"]
+bg_color = Color(0.447059, 0.447059, 0.447059, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stsia"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 0.784314)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.239216, 0.239216, 0.239216, 0.784314)
+shadow_color = Color(0, 0, 0, 0.639216)
+shadow_size = 1
+shadow_offset = Vector2(1, 1.46)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dq8b8"]
+bg_color = Color(0.333333, 0.333333, 0.333333, 1)
+
+[sub_resource type="Theme" id="Theme_60u4v"]
+Button/styles/disabled = SubResource("StyleBoxFlat_q5h2g")
+Button/styles/focus = SubResource("StyleBoxEmpty_xcw3p")
+Button/styles/hover = SubResource("StyleBoxFlat_astup")
+Button/styles/normal = SubResource("StyleBoxFlat_stsia")
+Button/styles/pressed = SubResource("StyleBoxFlat_dq8b8")
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.792157)
+Label/constants/shadow_offset_x = 2
+Label/font_sizes/font_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oqpb6"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 1)
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.188235)
+shadow_size = 6
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8ac3"]
+bg_color = Color(0.592157, 0.592157, 0.592157, 0.270588)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.278431)
+shadow_size = 1
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rwtup"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqodg"]
+shader = ExtResource("2_y62ye")
+shader_parameter/amount = 1.5
+
+[sub_resource type="Theme" id="Theme_budnd"]
+RichTextLabel/font_sizes/normal_font_size = 12
+RichTextLabel/fonts/normal_font = ExtResource("3_y6oxa")
+
+[node name="inventory_rmb_menu" type="Control"]
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 150.0
+mouse_filter = 2
+theme = SubResource("Theme_60u4v")
+script = ExtResource("1_3tt4f")
+
+[node name="Dropdown" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = -10
+
+[node name="DropDownVBox" type="VBoxContainer" parent="Dropdown"]
+custom_minimum_size = Vector2(123.67, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Button3" type="Button" parent="Dropdown/DropDownVBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "INSPECT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Dropdown/DropDownVBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="Dropdown/DropDownVBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SPLIT (1)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button6" type="Button" parent="Dropdown/DropDownVBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button6"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SPLIT (HALF)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button4" type="Button" parent="Dropdown/DropDownVBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DROP (1)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button5" type="Button" parent="Dropdown/DropDownVBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DROP ALL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InspectPanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_oqpb6")
+
+[node name="preview_panel" type="Panel" parent="InspectPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_right = 153.0
+offset_bottom = -2.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m8ac3")
+
+[node name="TextureRect" type="TextureRect" parent="InspectPanel/preview_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+texture = SubResource("ViewportTexture_rwtup")
+stretch_mode = 3
+
+[node name="BGBlur" type="ColorRect" parent="InspectPanel"]
+material = SubResource("ShaderMaterial_dqodg")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.235294)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InspectPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.033
+anchor_right = 1.0
+anchor_bottom = 0.98
+offset_left = 157.0
+offset_top = -1.983
+offset_right = -25.0
+offset_bottom = 0.0200043
+grow_horizontal = 0
+grow_vertical = 2
+theme = SubResource("Theme_budnd")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InspectPanel/VBoxContainer"]
+layout_mode = 2
+text = "test"
+fit_content = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+transparent_bg = true
+gui_disable_input = true
+positional_shadow_atlas_size = 512
+positional_shadow_atlas_quad_2 = 2
+positional_shadow_atlas_quad_3 = 2
+size = Vector2i(150, 150)
+render_target_clear_mode = 1
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+projection = 1
+near = 0.025
+far = 15.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.668, 0)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.261, -0.065)
+light_energy = 0.1
+
+[node name="MeshContainer" type="MeshInstance3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36)
+mesh = ExtResource("4_mxq8e")

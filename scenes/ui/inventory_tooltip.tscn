@@ -1,128 +1,36 @@
-[gd_scene load_steps=10 format=3 uid="uid://nvpqhb7ntek8"]
+[gd_scene load_steps=5 format=3 uid="uid://nvpqhb7ntek8"]
 
+[ext_resource type="FontFile" uid="uid://dacj8wfcnya4p" path="res://ui/fonts/FiraCode/FiraCode-Bold.ttf" id="1_5ka3f"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_tooltip.gd" id="1_l82b5"]
-[ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="1_notxg"]
-[ext_resource type="Shader" path="res://shaders/2d/blur_shader.gdshader" id="2_xb2td"]
 [ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="3_6p6m5"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oqpb6"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 1)
-shadow_color = Color(0, 0, 0, 0.188235)
-shadow_size = 6
-shadow_offset = Vector2(3, 3)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqodg"]
-shader = ExtResource("2_xb2td")
-shader_parameter/amount = 1.5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8ac3"]
-bg_color = Color(0.592157, 0.592157, 0.592157, 0.270588)
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-shadow_color = Color(0, 0, 0, 0.278431)
-shadow_size = 1
-shadow_offset = Vector2(2, 2)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_rwtup"]
-viewport_path = NodePath("SubViewport")
-
-[sub_resource type="Theme" id="Theme_budnd"]
-RichTextLabel/font_sizes/normal_font_size = 12
+[sub_resource type="Theme" id="Theme_aifxj"]
+Label/colors/font_color = Color(1, 1, 1, 0.878431)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.705882)
+Label/constants/shadow_offset_x = 2
+Label/fonts/font = ExtResource("1_5ka3f")
+RichTextLabel/colors/default_color = Color(1, 1, 1, 0.878431)
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0.705882)
+RichTextLabel/constants/shadow_offset_x = 2
 RichTextLabel/fonts/normal_font = ExtResource("3_6p6m5")
 
 [node name="Tooltip" type="Control"]
-custom_minimum_size = Vector2(200, 150)
+custom_minimum_size = Vector2(450, 30)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 327.0
-offset_bottom = 151.0
+offset_right = 450.0
+offset_bottom = 30.0
 mouse_filter = 2
+theme = SubResource("Theme_aifxj")
 script = ExtResource("1_l82b5")
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.013
-offset_top = 2.0
-offset_bottom = 0.0370026
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_oqpb6")
-
-[node name="BGBlur" type="ColorRect" parent="Panel"]
-material = SubResource("ShaderMaterial_dqodg")
+[node name="TooltipLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -17.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 1, 1, 0.235294)
-
-[node name="preview_panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_bottom = 1.0
-offset_right = 153.0
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_m8ac3")
-
-[node name="TextureRect" type="TextureRect" parent="preview_panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(16, 16)
-mouse_filter = 2
-texture = SubResource("ViewportTexture_rwtup")
-stretch_mode = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.033
-anchor_right = 1.0
-anchor_bottom = 0.98
-offset_left = 157.0
-offset_top = 0.0170002
-offset_right = -25.0
-offset_bottom = 2.02
-grow_horizontal = 0
-grow_vertical = 2
-theme = SubResource("Theme_budnd")
-
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
-layout_mode = 2
-text = "test"
-fit_content = true
-
-[node name="SubViewport" type="SubViewport" parent="."]
-own_world_3d = true
-transparent_bg = true
-gui_disable_input = true
-positional_shadow_atlas_size = 512
-positional_shadow_atlas_quad_2 = 2
-positional_shadow_atlas_quad_3 = 2
-size = Vector2i(150, 150)
-render_target_clear_mode = 1
-
-[node name="Camera3D" type="Camera3D" parent="SubViewport"]
-projection = 1
-near = 0.025
-far = 15.0
-
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.668, 0)
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.261, -0.065)
-light_energy = 0.1
-
-[node name="MeshContainer" type="MeshInstance3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36)
-mesh = ExtResource("1_notxg")
+text = ":Null"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=93 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -40,6 +40,7 @@
 [ext_resource type="Script" path="res://scripts/inventory/subinventory.gd" id="21_g0f63"]
 [ext_resource type="Script" path="res://scripts/inventory/held_item_preview.gd" id="22_8y7sx"]
 [ext_resource type="PackedScene" uid="uid://nvpqhb7ntek8" path="res://scenes/ui/inventory_tooltip.tscn" id="22_m7qam"]
+[ext_resource type="PackedScene" uid="uid://b4kiu73xi3i07" path="res://scenes/ui/inventory_rmb_menu.tscn" id="23_xmp0g"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nitno"]
@@ -1538,6 +1539,9 @@ size_flags_vertical = 0
 color = Color(0.745098, 0.0823529, 0.454902, 0.556863)
 
 [node name="Tooltip" parent="UserInterface/InventoryMenu" instance=ExtResource("22_m7qam")]
+
+[node name="RmbMenu" parent="UserInterface/InventoryMenu" instance=ExtResource("23_xmp0g")]
+layout_mode = 1
 
 [node name="held_item_preview" type="Control" parent="UserInterface/InventoryMenu"]
 visible = false

@@ -1,38 +1,18 @@
 extends Control
 
-@onready var tooltip = $"."
-@onready var mesh_container = $SubViewport/MeshContainer
-@onready var sub_viewport = $SubViewport
-
-# Speed of rotation in degrees per second.
-var rotation_speed = 90.0
+@onready var tooltip_label : Label = $TooltipLabel
 
 var inv_item : InventoryItem : set = set_inv_item
 func set_inv_item(value):
 	inv_item = value
 	if inv_item != null:
-		update_item_mesh()
+		update_tooltip()
 
 func _ready():
-	sub_viewport.own_world_3d = true
+	hide()
 
 func _process(delta):
-	if tooltip.visible:
-		mesh_container.rotation_degrees.y += rotation_speed * delta
+	pass
 
-func move_position_within_bounds(new_position: Vector2, boundary_control: Control) -> void:
-	var boundary_rect := boundary_control.get_rect()
-	var own_rect := get_rect()
-	
-	var min_x = boundary_rect.position.x
-	var max_x = boundary_rect.position.x + boundary_rect.size.x - own_rect.size.x
-	var min_y = boundary_rect.position.y
-	var max_y = boundary_rect.position.y + boundary_rect.size.y - own_rect.size.y
-
-	var clamped_x = clamp(new_position.x, min_x, max_x)
-	var clamped_y = clamp(new_position.y, min_y, max_y)
-
-	position = Vector2(clamped_x, clamped_y)
-
-func update_item_mesh():
-	mesh_container.mesh = inv_item.item_mesh
+func update_tooltip():
+	tooltip_label.text = inv_item.item_name

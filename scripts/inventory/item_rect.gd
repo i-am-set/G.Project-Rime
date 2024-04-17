@@ -41,12 +41,12 @@ func hover_item():
 func define_tooltip_timer():
 	tooltip_timer = Timer.new()
 	add_child(tooltip_timer)
-	tooltip_timer.wait_time = 0.5
+	tooltip_timer.wait_time = 0.2
 	tooltip_timer.one_shot = true
-	tooltip_timer.timeout.connect(DisplayTooltip)
+	tooltip_timer.timeout.connect(ShowTooltip)
 
-func DisplayTooltip():
-	subinventory.inventory.DisplayTooltip(inv_item)
+func ShowTooltip():
+	subinventory.inventory.ShowTooltip(inv_item)
 
 func _on_mouse_entered():
 	subinventory = get_parent()

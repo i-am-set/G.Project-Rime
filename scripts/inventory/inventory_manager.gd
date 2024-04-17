@@ -3,6 +3,7 @@ extends Control
 @onready var inventory_menu = $".."
 @onready var held_item_preview = $"../held_item_preview"
 @onready var tooltip = $"../Tooltip"
+@onready var rmb_menu = $"../RmbMenu"
 @onready var subinventories_container = $subinventories
 
 var subinventories : Array = [] :
@@ -13,16 +14,20 @@ var subinventories : Array = [] :
 var held_item_reference = null
 var held_item_subinventory : Control = null
 
+var mouse_pos : Vector2
+
 func _ready():
 	HideTooltip()
-	Console.create_command("give", self.c_give_item, "Quick adds the given item by ID into if space is available; Drops item if no space.")
+	HideRmbMenu()
+	Console.create_command("give", self.c_give_item, "Quick adds the given item by ID into if space is available; Does nothing if no space.")
 
 func _input(event):
 	if event.is_action_pressed("mouse_click"):
-		handle_click(get_global_mouse_position() - global_position)
+		handle_click(event, get_global_mouse_position() - global_position)
 
 func _process(delta):
-	#tooltip_follow_mouse()
+	mouse_pos = get_global_mouse_position()
+	tooltip_follow_mouse()
 	held_item_follow_mouse()
 	queue_redraw()
 
@@ -43,53 +48,73 @@ func _draw():
 	#]
 		#draw_polygon(points, [Color.PINK])
 
-func handle_click(_click_pos):
+func handle_click(event, _click_pos : Vector2):
 	if Global.IS_IN_INVENTORY:
+		if event.is_action_pressed("left_mouse_click"):
+			if rmb_menu.visible && !rmb_menu.get_rect().has_point(_click_pos + position):
+				HideRmbMenu()
+		elif event.is_action_pressed("right_mouse_click"):
+			if rmb_menu.visible:
+				HideRmbMenu()
 		for _subinventory in subinventories:
 			if _subinventory.get_rect().has_point(_click_pos):
-				if held_item_reference != null:
-					var drop_cell_position = _subinventory.get_closest_cell_position(held_item_preview.position - _subinventory.global_position)
-					var drop_cell = _subinventory.position_to_cell(drop_cell_position)
-					if _subinventory.try_add_item(held_item_reference["item"], drop_cell):
-						held_item_preview.hide()
-						held_item_subinventory.remove_item(held_item_reference)
-						held_item_reference = null
-						held_item_subinventory = null
+				if event.is_action_pressed("left_mouse_click"):
+					if held_item_reference != null:
+						var drop_cell_position = _subinventory.get_closest_cell_position(held_item_preview.position - _subinventory.global_position)
+						var drop_cell = _subinventory.position_to_cell(drop_cell_position)
+						if _subinventory.try_add_item(held_item_reference["item"], drop_cell):
+							held_item_preview.hide()
+							held_item_subinventory.remove_item(held_item_reference)
+							held_item_reference = null
+							held_item_subinventory = null
+						else:
+							print_debug("Space occupied.")
 					else:
-						print_debug("Space occupied.")
-				else:
+						var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
+						var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
+						print(_subinventory.name, closest_cell_to_click)
+						
+						if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
+							var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
+							var _inv_item = _item["item"]
+							print("Occupied! Picking up ", _inv_item.item_name)
+							held_item_reference = _item
+							held_item_subinventory = _subinventory
+							held_item_preview.set_preview_size(Vector2(_inv_item.item_width, _inv_item.item_height))
+							held_item_preview.show()
+						else:
+							print("Empty...")
+				elif event.is_action_pressed("right_mouse_click"):
 					var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
 					var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
-					print(_subinventory.name, closest_cell_to_click)
-					
 					if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
 						var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
-						var _inv_item = _item["item"]
-						print("Occupied! Picking up ", _inv_item.item_name)
-						held_item_reference = _item
-						held_item_subinventory = _subinventory
-						held_item_preview.set_preview_size(Vector2(_inv_item.item_width, _inv_item.item_height))
-						held_item_preview.show()
-					else:
-						print("Empty...")
+						ShowRmbMenu(_item["item"])
 
 func add_subinventory(_subinventory : Control):
 	subinventories_container.add_child(_subinventory)
 
-func DisplayTooltip(_inv_item : InventoryItem):
+func ShowTooltip(_inv_item : InventoryItem):
 	tooltip.inv_item = _inv_item
-	tooltip.move_position_within_bounds(get_global_mouse_position(), inventory_menu)
 	tooltip.show()
 
 func HideTooltip():
 	tooltip.hide()
 
+func ShowRmbMenu(_inv_item : InventoryItem):
+	rmb_menu.position = mouse_pos
+	rmb_menu.inv_item = _inv_item
+	rmb_menu.show()
+
+func HideRmbMenu():
+	rmb_menu.hide()
+
 func held_item_follow_mouse():
 	if held_item_reference != null:
 		held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["item"].item_width, held_item_reference["item"].item_height) * Global.INV_CELL_SIZE * 0.5 # Follow the mouse's x position
 
-#func tooltip_follow_mouse():
-	#tooltip.position = get_global_mouse_position()
+func tooltip_follow_mouse():
+	tooltip.position = mouse_pos
 
 func try_to_pick_up_item(_picked_up_item : InventoryItem) -> Control:
 	for _subinventory in subinventories:
@@ -101,7 +126,7 @@ func try_to_pick_up_item(_picked_up_item : InventoryItem) -> Control:
 func c_give_item(item_id: String, number_of_item: int = 1) -> void:
 	var new_item = StaticData.create_item_from_id(item_id)
 	var items_added := 0
-	var items_dropped := 0
+	var items_ignored := 0
 	var inventory_destinations := {}
 	
 	for i in range(number_of_item):
@@ -114,7 +139,7 @@ func c_give_item(item_id: String, number_of_item: int = 1) -> void:
 			else:
 				inventory_destinations[_inventory_destination.name] = 1
 		else:
-			items_dropped += 1
+			items_ignored += 1
 	
 	# Printing messages for items placed in inventories
 	if items_added > 0:
@@ -122,7 +147,7 @@ func c_give_item(item_id: String, number_of_item: int = 1) -> void:
 			Console.print_line("Placed [color=LIGHT_GREEN]" + str(inventory_destinations[key]) + "[/color] '[color=GOLD]" + new_item.item_name + "[/color]' in [color=SKY_BLUE]'" + key + "'[/color].")
 	
 	# Printing message for dropped items
-	if items_dropped > 0:
-		Console.print_line("Dropped [color=LIGHT_CORAL]%d[/color] '[color=GOLD]%s[/color]'." % [items_dropped, new_item.item_name])
+	if items_ignored > 0:
+		Console.print_line("Ignored [color=LIGHT_CORAL]%d[/color] '[color=GOLD]%s[/color]'." % [items_ignored, new_item.item_name])
 
 
