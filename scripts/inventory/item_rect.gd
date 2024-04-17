@@ -1,14 +1,18 @@
 extends Control
 
 @onready var texture_rect = $TextureRect
+@onready var stack_label : Label = $StackLabel
 
 var subinventory : Control
 var held_item_preview : Control
 var mouse_is_over = false
 var max_scale : float = 1.25
-var old_cells : Array[Vector2]
-var new_cells : Array[Vector2]
 var tooltip_timer: Timer
+
+var current_stack : int : set = set_current_stack
+func set_current_stack(value):
+	current_stack = value
+	update_current_stack()
 
 var inv_item : InventoryItem : set = set_inv_item
 func set_inv_item(value):
@@ -29,6 +33,14 @@ func _physics_process(delta):
 
 func update_item_size():
 	size = Vector2(inv_item.item_width, inv_item.item_height) * Global.INV_CELL_SIZE
+
+func update_current_stack():
+	if stack_label == null:
+		stack_label = $StackLabel
+	if current_stack > 1:
+		stack_label.text = str(current_stack)
+	else:
+		stack_label.text = ""
 
 func hover_item():
 	if mouse_is_over:

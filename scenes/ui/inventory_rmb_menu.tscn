@@ -92,11 +92,11 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Button3" type="Button" parent="Dropdown/DropDownVBox"]
+[node name="Inpect" type="Button" parent="Dropdown/DropDownVBox"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button3"]
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Inpect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -107,11 +107,11 @@ text = "INSPECT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="Dropdown/DropDownVBox"]
+[node name="Hold" type="Button" parent="Dropdown/DropDownVBox"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button"]
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Hold"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,11 +122,11 @@ text = "HOLD"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button2" type="Button" parent="Dropdown/DropDownVBox"]
+[node name="SplitOne" type="Button" parent="Dropdown/DropDownVBox"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button2"]
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/SplitOne"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -137,11 +137,11 @@ text = "SPLIT (1)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button6" type="Button" parent="Dropdown/DropDownVBox"]
+[node name="SplitHalf" type="Button" parent="Dropdown/DropDownVBox"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button6"]
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/SplitHalf"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -152,11 +152,11 @@ text = "SPLIT (HALF)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button4" type="Button" parent="Dropdown/DropDownVBox"]
+[node name="DropOne" type="Button" parent="Dropdown/DropDownVBox"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button4"]
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/DropOne"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -167,11 +167,11 @@ text = "DROP (1)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button5" type="Button" parent="Dropdown/DropDownVBox"]
+[node name="DropAll" type="Button" parent="Dropdown/DropDownVBox"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Dropdown/DropDownVBox/Button5"]
+[node name="Label" type="Label" parent="Dropdown/DropDownVBox/DropAll"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -268,3 +268,6 @@ light_energy = 0.1
 [node name="MeshContainer" type="MeshInstance3D" parent="SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36)
 mesh = ExtResource("4_mxq8e")
+
+[connection signal="pressed" from="Dropdown/DropDownVBox/DropOne" to="." method="_on_drop_one_pressed"]
+[connection signal="pressed" from="Dropdown/DropDownVBox/DropAll" to="." method="_on_drop_all_pressed"]

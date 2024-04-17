@@ -1,5 +1,6 @@
 extends Control
 
+@onready var fps_controller = $"../../.."
 @onready var inventory_menu = $".."
 @onready var held_item_preview = $"../held_item_preview"
 @onready var tooltip = $"../Tooltip"
@@ -62,11 +63,9 @@ func handle_click(event, _click_pos : Vector2):
 					if held_item_reference != null:
 						var drop_cell_position = _subinventory.get_closest_cell_position(held_item_preview.position - _subinventory.global_position)
 						var drop_cell = _subinventory.position_to_cell(drop_cell_position)
-						if _subinventory.try_add_item(held_item_reference["item"], drop_cell):
-							held_item_preview.hide()
+						if _subinventory.try_add_item(held_item_reference["item"], held_item_reference["item_rect"].current_stack, drop_cell):
 							held_item_subinventory.remove_item(held_item_reference)
-							held_item_reference = null
-							held_item_subinventory = null
+							HideHeldItemPreview()
 						else:
 							print_debug("Space occupied.")
 					else:
@@ -77,7 +76,7 @@ func handle_click(event, _click_pos : Vector2):
 						if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
 							var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
 							var _inv_item = _item["item"]
-							print("Occupied! Picking up ", _inv_item.item_name)
+							print("Occupied! Picking up ", _inv_item.item_name, " ; Stack size is ", _item["item_rect"].current_stack)
 							held_item_reference = _item
 							held_item_subinventory = _subinventory
 							held_item_preview.set_preview_size(Vector2(_inv_item.item_width, _inv_item.item_height))
@@ -89,10 +88,15 @@ func handle_click(event, _click_pos : Vector2):
 					var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
 					if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
 						var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
-						ShowRmbMenu(_item["item"])
+						ShowRmbMenu(_item)
 
 func add_subinventory(_subinventory : Control):
 	subinventories_container.add_child(_subinventory)
+
+func HideHeldItemPreview():
+	held_item_preview.hide()
+	held_item_reference = null
+	held_item_subinventory = null
 
 func ShowTooltip(_inv_item : InventoryItem):
 	tooltip.inv_item = _inv_item
@@ -101,9 +105,10 @@ func ShowTooltip(_inv_item : InventoryItem):
 func HideTooltip():
 	tooltip.hide()
 
-func ShowRmbMenu(_inv_item : InventoryItem):
+func ShowRmbMenu(_item : Dictionary):
 	rmb_menu.position = mouse_pos
-	rmb_menu.inv_item = _inv_item
+	rmb_menu.right_clicked_item_ref = _item
+	rmb_menu.inv_item = _item["item"]
 	rmb_menu.show()
 
 func HideRmbMenu():
@@ -118,7 +123,7 @@ func tooltip_follow_mouse():
 
 func try_to_pick_up_item(_picked_up_item : InventoryItem) -> Control:
 	for _subinventory in subinventories:
-		if _subinventory.try_quick_add_item(_picked_up_item):
+		if _subinventory.try_quick_add_item(_picked_up_item, 1):
 			return _subinventory
 	
 	return null

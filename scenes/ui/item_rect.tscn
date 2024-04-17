@@ -1,6 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdwxe80vw400y"]
+[gd_scene load_steps=5 format=3 uid="uid://bdwxe80vw400y"]
 
+[ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="1_6wolk"]
 [ext_resource type="Script" path="res://scripts/inventory/item_rect.gd" id="1_61j55"]
+
+[sub_resource type="Theme" id="Theme_34mqv"]
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.729412)
+Label/font_sizes/font_size = 10
+Label/fonts/font = ExtResource("1_6wolk")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_qp53d"]
 viewport_path = NodePath("SubViewport")
@@ -10,6 +16,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 30.0
 offset_bottom = 30.0
+theme = SubResource("Theme_34mqv")
 script = ExtResource("1_61j55")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -21,6 +28,18 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(16, 16)
 texture = SubResource("ViewportTexture_qp53d")
+
+[node name="StackLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

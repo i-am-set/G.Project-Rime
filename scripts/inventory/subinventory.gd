@@ -70,6 +70,44 @@ func position_to_cell(_pos : Vector2) -> Vector2:
 func cell_to_position(_cell : Vector2) -> Vector2:
 	return _cell * Global.INV_CELL_SIZE
 
+func get_stackable_items(_dropped_item : InventoryItem, _stack_size : int, _drop_cell : Vector2, _item_size : Vector2):
+	var cells_to_occupy = get_occupied_cells(_drop_cell, _item_size)
+	
+	# Check if space for an item is free
+	for _item in items:
+		if _item != inventory.held_item_reference:
+			if _item["item"].item_id == _dropped_item.item_id:
+				for _cell in cells_to_occupy:
+					var _occupied_cells = get_occupied_cells(_item["cell"], Vector2(_item["item"].item_width, _item["item"].item_height))
+					if _cell in _occupied_cells:
+						if _item["item_rect"].current_stack + _stack_size <= _item["item"].stack_size:
+							print_debug(_cell, " is stackable!")
+							return _item
+						else:
+							print_debug(_cell, " is stackable, but full...")
+							return null
+	return null
+
+func try_stack_transfer(_dropped_item : InventoryItem, _stack_size : int, _drop_cell : Vector2, _item_size : Vector2):
+	var cells_to_occupy = get_occupied_cells(_drop_cell, _item_size)
+	
+	# Check if space for an item is free
+	for _item in items:
+		if _item != inventory.held_item_reference:
+			if _item["item"].item_id == _dropped_item.item_id:
+				for _cell in cells_to_occupy:
+					var _occupied_cells = get_occupied_cells(_item["cell"], Vector2(_item["item"].item_width, _item["item"].item_height))
+					if _cell in _occupied_cells:
+						if _item["item_rect"].current_stack + _stack_size > _item["item"].stack_size && _stack_size > _item["item_rect"].current_stack:
+							inventory.held_item_reference["item_rect"].current_stack = _item["item_rect"].current_stack
+							_item["item_rect"].current_stack = _stack_size
+							print_debug(_cell, " stack transfered!")
+							return true
+						else:
+							printerr("Logic failed!")
+							return false
+	return false
+
 func is_space_occupied(_drop_cell : Vector2, _item_size : Vector2):
 	var cells_to_occupy = get_occupied_cells(_drop_cell, _item_size)
 	
@@ -109,24 +147,71 @@ func can_add_item(_item : InventoryItem, _drop_cell : Vector2) -> bool:
 		return false
 	return true
 
-func try_quick_add_item(_item : InventoryItem):
+func can_stack_item(_item : InventoryItem, _stack_size : int, _drop_cell : Vector2) -> bool:
+	if get_stackable_items(_item, _stack_size, _drop_cell, Vector2(_item.item_width, _item.item_height)) != null:
+		return true
+	return false
+
+func try_quick_add_item(_item : InventoryItem, _stack_size : int):
+	for _cell in inventory_cells:
+		if get_stackable_items(_item, _stack_size, _cell, Vector2(_item.item_width, _item.item_height)) != null:
+			try_add_item(_item, _stack_size, _cell)
+			return true
 	for _cell in inventory_cells:
 		if !is_space_occupied(_cell, Vector2(_item.item_width, _item.item_height)):
-			try_add_item(_item, _cell)
+			try_add_item(_item, _stack_size, _cell)
 			return true
 	return false
 
-func try_add_item(_item : InventoryItem, _drop_cell : Vector2) -> bool:
-	if is_space_occupied(_drop_cell, Vector2(_item.item_width, _item.item_height)):
+func try_add_item(_item : InventoryItem, _stack_size : int, _drop_cell : Vector2) -> bool:
+	if can_stack_item(_item, _stack_size, _drop_cell):
+		var _stackable_item : Dictionary = get_stackable_items(_item, _stack_size, _drop_cell, Vector2(_item.item_width, _item.item_height))
+		_stackable_item["item_rect"].current_stack += _stack_size
+		print_debug(_stackable_item["item_rect"].current_stack)
+		return true
+	
+	if try_stack_transfer(_item, _stack_size, _drop_cell, Vector2(_item.item_width, _item.item_height)):
+		inventory.HideHeldItemPreview()
+		return false
+	
+	if !can_add_item(_item, _drop_cell):
 		return false
 	
 	var new_item = ITEM_RECT.instantiate()
 	new_item.inv_item = _item
 	new_item.position = cell_to_position(_drop_cell)
+	new_item.current_stack = _stack_size
 	add_child(new_item)
-	items.append({"item" : _item, "item_rect" : new_item, "cell" : _drop_cell})
+	items.append({"item" : _item, "item_rect" : new_item, "cell" : _drop_cell, "subinventory" : self})
 	update_grid()
 	return true
+
+func drop_ground_item_backend(_dropped_item : InventoryItem):
+	var player = inventory.fps_controller
+	player.WORLD.instance_ground_item(_dropped_item, player.drop_position.global_position)
+
+func drop_item_one(_item : Dictionary):
+	var cached_item : InventoryItem = _item["item"]
+	
+	if _item["item_rect"].current_stack > 1:
+		_item["item_rect"].current_stack -= 1
+	else:
+		remove_item(_item)
+	
+	drop_ground_item_backend(cached_item)
+	
+	update_grid()
+
+func drop_item_all(_item : Dictionary):
+	var cached_item_stack_amount : int = _item["item_rect"].current_stack
+	var cached_item : InventoryItem = _item["item"]
+	
+	remove_item(_item)
+	
+	for i in cached_item_stack_amount:
+		drop_ground_item_backend(cached_item)
+	
+	update_grid()
 
 func remove_item(_item : Dictionary):
 	items.erase(_item)

@@ -6,6 +6,7 @@ extends Control
 # Speed of rotation in degrees per second.
 var rotation_speed = 90.0
 
+var right_clicked_item_ref : Dictionary
 var inv_item : InventoryItem : set = set_inv_item
 func set_inv_item(value):
 	inv_item = value
@@ -36,3 +37,14 @@ func move_position_within_bounds(new_position: Vector2, boundary_control: Contro
 
 func update_item_mesh():
 	mesh_container.mesh = inv_item.item_mesh
+
+func base_button_function():
+	hide()
+
+func _on_drop_one_pressed():
+	right_clicked_item_ref["subinventory"].drop_item_one(right_clicked_item_ref)
+	base_button_function()
+
+func _on_drop_all_pressed():
+	right_clicked_item_ref["subinventory"].drop_item_all(right_clicked_item_ref)
+	base_button_function()

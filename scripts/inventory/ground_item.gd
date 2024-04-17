@@ -3,7 +3,6 @@ extends RigidBody3D
 @onready var mesh_instance = $MeshInstance3D
 @onready var collision_shape = $CollisionShape3D
 
-
 var inv_item : InventoryItem : set = set_inv_item
 func set_inv_item(value):
 	inv_item = value
@@ -48,3 +47,7 @@ func randomize_rotation():
 func randomize_scale():
 	var random_scale = randf_range(0.75, 1.25)
 	scale = Vector3(random_scale, random_scale, random_scale)
+
+func _on_body_entered(body):
+	if body.collision_layer == 1:
+		freeze = true
