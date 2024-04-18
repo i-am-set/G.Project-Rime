@@ -794,7 +794,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.784052, 0)
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_k00bc")
-MOUSE_SENSITIVITY = 1.0
 TILT_LOWER_LIMIT = -1.571
 TILT_UPPER_LIMIT = 1.571
 CAMERA_CONTROLLER = NodePath("CameraController/Camera3D")
@@ -1226,6 +1225,33 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="_Sensitivity" type="HBoxContainer" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Sens_Label" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Sensitivity"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Sensitivity"
+uppercase = true
+
+[node name="SensSlider" type="HSlider" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Sensitivity"]
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.1
+max_value = 3.0
+step = 0.1
+value = 1.0
+ticks_on_borders = true
+
+[node name="AmountLabel" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Sensitivity"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="HEADER_GRAPHICS" type="Label" parent="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(330, 0)
 layout_mode = 2
@@ -1323,9 +1349,8 @@ keep_pressed_outside = true
 button_group = ExtResource("12_xwa8q")
 text = "Fahrenheit"
 
-[node name="Node" type="Node" parent="UserInterface/PauseMenu"]
-
 [node name="InventoryMenu" type="Control" parent="UserInterface"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1699,6 +1724,7 @@ script = ExtResource("19_lm36c")
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Vsync/vsync_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_vsync_checkbox_toggled"]
 [connection signal="item_selected" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Screen_Select/Screen_Selector" to="UserInterface/PauseMenu/Options_Setting" method="_on_screen_selector_item_selected"]
 [connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_FieldOfView/FovSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_fov_slider_value_changed"]
+[connection signal="value_changed" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Sensitivity/SensSlider" to="UserInterface/PauseMenu/Options_Setting" method="_on_sens_slider_value_changed"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Dither/dithering_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_dithering_checkbox_toggled"]
 [connection signal="toggled" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_PostP_Outline/outline_checkbox" to="UserInterface/PauseMenu/Options_Setting" method="_on_outline_checkbox_toggled"]
 [connection signal="button_up" from="UserInterface/PauseMenu/Options_Setting/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Celsius" to="UserInterface/PauseMenu/Options_Setting" method="_on_celsius_button_up"]

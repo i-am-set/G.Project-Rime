@@ -96,13 +96,12 @@ public partial class ResourceChunkInstancer : Node3D
     private System.Collections.Generic.Dictionary<Vector3, StaticBody3D> resourcePositionsWithColliders = new();
     private List<Vector3> resourcePositionsCloseToThePlayer = new();
 
-    private static int positionsPerFrame = 3;
+    private int positionsPerFrame = 1;
     private Timer initGenerationTimer;
 
     private bool isWeightSystemInitialized = false;
 	private float totalWeight = 0;
 	private RandomNumberGenerator rngBase = new();
-
 
     public override void _Ready(){
         InitializeChunkLoadingSpeed();

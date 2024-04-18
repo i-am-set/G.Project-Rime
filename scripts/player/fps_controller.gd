@@ -12,7 +12,7 @@ extends CharacterBody3D
 @onready var WORLD = $"../.."
 @onready var drop_position = $DropPosition
 
-@export var MOUSE_SENSITIVITY : float = 0.5
+@export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
@@ -142,6 +142,8 @@ func _ready():
 		enable_postp_dither(Global.POSTP_DITHER_ON)
 		enable_postp_dither(Global.POSTP_OUTLINE_ON)
 		
+		set_sensitivity(Global.MOUSE_SENSITIVITY)
+		
 		# Set console commands
 		Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
 		Console.create_command("seed", self.c_get_world_seed, "Gets the world seed")
@@ -159,8 +161,6 @@ func _ready():
 		Console.create_command("create_item", self.c_create_item_from_id, "Drops the number input of input item by ID in front of player.")
 
 func set_settings():
-	RenderingServer.global_shader_parameter_set("fade_distance_max", Global.RENDER_DISTANCE*12)
-	RenderingServer.global_shader_parameter_set("fade_distance_min", Global.RENDER_DISTANCE*9)
 	#CAMERA_CONTROLLER.far = Global.RENDER_DISTANCE*12 # opt - see if this would have even helped performance; can't use it with the skybox
 	_resource_spawn_radius = (Global.RENDER_DISTANCE*24)+20
 
@@ -253,6 +253,17 @@ func set_fov(fov : int) -> int:
 	CAMERA_CONTROLLER.fov = fov
 	
 	return fov
+
+func set_sensitivity(sensitivity : float) -> float:
+	if sensitivity < Global.MIN_SENSITIVITY:
+		sensitivity = Global.MIN_SENSITIVITY
+	elif sensitivity > Global.MAX_SENSITIVITY:
+		sensitivity = Global.MAX_SENSITIVITY
+	
+	Global.MOUSE_SENSITIVITY = sensitivity
+	MOUSE_SENSITIVITY = sensitivity
+	
+	return sensitivity
 
 func debug_process():
 	Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)

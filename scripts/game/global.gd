@@ -9,6 +9,7 @@ var player # Reference to PlayerController
 const PACKET_READ_LIMIT: int = 32
 
 # World Constants
+const WORLD_PATH = "res://scenes/maingame/world.tscn"
 const MAX_TEMPERATURE_C = -10 # celsius
 const MIN_TEMPERATURE_C = -25 # celsius
 
@@ -19,6 +20,8 @@ const INV_DEFAULT_CELL_SIZE = Vector2(30, 30)
 const DEFAULT_FOV = 75
 const MIN_FOV = 60
 const MAX_FOV = 90
+const MIN_SENSITIVITY = 0.1
+const MAX_SENSITIVITY = 3
 const MIN_SPEED = 0
 const MAX_SPEED = 1000
 
@@ -48,7 +51,8 @@ var SPAWN_POINT := Vector2.ZERO
 
 # Options Variables
 var MOUSE_CAPTURED := false
-var RENDER_DISTANCE = 10
+var RENDER_DISTANCE = 2
+var MOUSE_SENSITIVITY : float = 1
 var LOD_BIAS : float = 0.25
 var IS_VSYNC_ENABLED := true
 var FIELD_OF_VIEW : int = 75
@@ -72,23 +76,23 @@ func _ready():
 	if INIT['status'] == 20:
 		print_debug("Steam is not running. Please run steam for this integration to work.")
 		# Show an alert
-		OS.alert("Initialization Status: " + str(INIT['status']) + "\n" + str(INIT['verbal']) + "\nPlease run steam for this integration to work.", "Steam not running.")
+		OS.alert("Initialization Status: " + str(INIT['status']) + "\n" + str(INIT['verbal']) + "\nPlease run steam for online play to work.", "Steam not running.")
 		# Quit the game
-		get_tree().quit()
+		#get_tree().quit()
 		return
 	elif Steam.getSteamID() <= 0:
 		print_debug("Steam has not fully initualized and/or no valid Steam ID was found.")
 		# Show an alert
 		OS.alert("Steam has not fully initualized and/or no valid Steam ID was found.\nPlease wait for Steam to initualize and try again.", "Failure to find Steam ID")
 		# Quit the game
-		get_tree().quit()
+		#get_tree().quit()
 		return
 	elif INIT['status'] != 1:
 		print_debug("Steam is not running. Please run steam for this integration to work.")
 		# Show an alert
 		OS.alert("Initialization Status: " + str(INIT['status']) + "\n" + str(INIT['verbal']), str(INIT['verbal']))
 		# Quit the game
-		get_tree().quit()
+		#get_tree().quit()
 		return
 	
 	ONLINE = Steam.loggedOn()

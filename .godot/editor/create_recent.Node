@@ -1,14 +1,14 @@
-Label
 Button
+ColorRect
+Control
+Label
 RichTextLabel
 HBoxContainer
 VBoxContainer
 Panel
-Control
 Node3D
 RigidBody3D
 Node
 StaticBody3D
 CollisionShape3D
 MeshInstance3D
-OmniLight3D

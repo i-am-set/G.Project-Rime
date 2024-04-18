@@ -19,8 +19,11 @@ extends ScrollContainer
 
 @onready var screen_selector = $HBoxContainer/VBoxContainer/_Screen_Select/Screen_Selector
 
-@onready var fovpercent_label = $HBoxContainer/VBoxContainer/_FieldOfView/PercentLabel
 @onready var fov_slider = $HBoxContainer/VBoxContainer/_FieldOfView/FovSlider
+@onready var fovpercent_label = $HBoxContainer/VBoxContainer/_FieldOfView/PercentLabel
+
+@onready var sens_slider = $HBoxContainer/VBoxContainer/_Sensitivity/SensSlider
+@onready var sensamount_label = $HBoxContainer/VBoxContainer/_Sensitivity/AmountLabel
 
 @onready var dithering_checkbox = $HBoxContainer/VBoxContainer/_PostP_Dither/dithering_checkbox
 
@@ -56,6 +59,10 @@ func Check_Variables():
 	
 	fov_slider.min_value = Global.MIN_FOV
 	fov_slider.max_value = Global.MAX_FOV
+	_on_fov_slider_value_changed(Global.FIELD_OF_VIEW)
+	
+	sens_slider.min_value = Global.MIN_SENSITIVITY
+	sens_slider.max_value = Global.MAX_SENSITIVITY
 	_on_fov_slider_value_changed(Global.FIELD_OF_VIEW)
 	
 	scale_slider.set_value_no_signal(Global.RES_SCALE_PERCENT)
@@ -212,7 +219,11 @@ func _on_windowed_button_up():
 
 func _on_fov_slider_value_changed(value):
 	fps_controller.set_fov(value)
-	fovpercent_label.set_text(str(value))
+	fovpercent_label.set_text(str(value) + "°")
+
+func _on_sens_slider_value_changed(value):
+	fps_controller.set_sensitivity(value)
+	sensamount_label.set_text(str(value))
 
 func _on_dithering_checkbox_toggled(toggled_on):
 	fps_controller.enable_postp_dither(toggled_on)

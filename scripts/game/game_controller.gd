@@ -67,7 +67,11 @@ func _ready():
 	# Set console commands
 	Console.create_command("time_set", self.c_set_time, "Sets the current world time. 0/2399 is midnight; 1200 is noon")
 	Console.create_command("get_current_time", self.c_get_current_time, "Returns the current time.")
-	Console.create_command("get_current_temperature", self.c_get_current_temperature, "Returns the expected high for the day; the expected low for the day; and the current temperature.")
+	Console.create_command("simulate_time", self.c_simulate_time, "Toggles whether or not the day cycle is simulated; Default is true")
+	Console.create_command("get_current_temperature", self.c_get_current_temperature, "Returns the expected high for the day; the expected low for the day; and the current temperature")
+	Console.create_command("graphics_enable_sdfgi", self.c_enable_enviroment_sdfgi, "Toggles the graphical setting 'SDFGI'; Default is true")
+	Console.create_command("graphics_enable_glow", self.c_enable_enviroment_glow, "Toggles the graphical setting 'GLOW'; Default is true")
+	Console.create_command("graphics_enable_fog", self.c_enable_enviroment_fog, "Toggles the graphical setting 'VOLUMETRIC FOG'; Default is true")
 
 func _physics_process(_delta):
 	var _authorized_player_position = _authorized_player.position
@@ -346,6 +350,11 @@ func c_set_time(set_time : int) -> void:
 func c_get_current_time() -> void:
 	Console.print_line("It is currently [color=GOLD]" + str(get_current_time()) + "[/color].")
 
+func c_simulate_time(toggle : bool) -> void:
+	sky_box.simulateTime = toggle
+	
+	Console.print_line("Simulate time was set to " + str(toggle) + ".")
+
 func c_get_current_temperature() -> void:
 	Console.print_line("\n------------------------------------------------------------------------------")
 	Console.print_line("High of [color=CORAL]" + str(Global.get_temperature_high_display()) + " " + Global.get_temperature_sign_display() + "[/color]")
@@ -355,3 +364,18 @@ func c_get_current_temperature() -> void:
 	Console.print_line("MAX: [color=DIM_GRAY]" + str(Global.get_temperature_max_display()) + " " + Global.get_temperature_sign_display()  + "[/color]")
 	Console.print_line("MIN: [color=DIM_GRAY]" + str(Global.get_temperature_min_display()) + " " + Global.get_temperature_sign_display()  + "[/color]")
 	Console.print_line("------------------------------------------------------------------------------\n")
+
+func c_enable_enviroment_sdfgi(toggle : bool) -> void:
+	sky_box.environment.sdfgi_enabled = toggle
+	
+	Console.print_line("Graphical setting 'SDFGI' was toggled " + str(toggle) + ".")
+
+func c_enable_enviroment_glow(toggle : bool) -> void:
+	sky_box.environment.glow_enabled = toggle
+	
+	Console.print_line("Graphical setting 'GLOW' was toggled " + str(toggle) + ".")
+
+func c_enable_enviroment_fog(toggle : bool) -> void:
+	sky_box.environment.volumetric_fog_enabled = toggle
+	
+	Console.print_line("Graphical setting 'VOLUMETRIC FOG' was toggled " + str(toggle) + ".")
