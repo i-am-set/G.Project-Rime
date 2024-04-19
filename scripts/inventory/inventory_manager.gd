@@ -137,7 +137,7 @@ func c_give_item(item_id: String, number_of_item: int = 1) -> void:
 	for i in range(number_of_item):
 		var _inventory_destination = try_to_pick_up_item(new_item)
 		
-		if _inventory_destination:
+		if _inventory_destination != null:
 			items_added += 1
 			if _inventory_destination.name in inventory_destinations:
 				inventory_destinations[_inventory_destination.name] += 1

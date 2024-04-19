@@ -31,6 +31,7 @@ public partial class MapGenerator : Node3D
 
     Queue<MapThreadInfo<MapData>> mapDataThreadInfoQueue = new Queue<MapThreadInfo<MapData>>();
 	Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
+    Queue<RollResourceThreadInfo<List<Vector3>>> rollResourceThreadInfoQueue = new Queue<RollResourceThreadInfo<List<Vector3>>>();
 
     public override void _Ready(){
         seed = (int)GetNode<Node>("/root/Global").Get("WORLD_SEED");
@@ -73,6 +74,24 @@ public partial class MapGenerator : Node3D
         }
     }
 
+    // #----------------------RESOURCE THREADING-------------------------#
+    public void RequestRollResource(InfiniteTerrainGenerator.TerrainChunk terrainChunk, Action<List<Vector3>> callback)
+    {
+        ThreadStart threadStart = delegate {
+            RollResourceThread(terrainChunk, callback);
+        };
+
+        new Thread(threadStart).Start();
+    }
+
+    private void RollResourceThread(InfiniteTerrainGenerator.TerrainChunk terrainChunk, Action<List<Vector3>> callback)
+    {
+        List<Vector3> rolledChunkResourcePositions = terrainChunk.RollResources();
+        lock(rollResourceThreadInfoQueue){
+            rollResourceThreadInfoQueue.Enqueue(new RollResourceThreadInfo<List<Vector3>>(callback, rolledChunkResourcePositions));
+        }
+    }
+    
     public override void _Process(double delta)
     {
         if (mapDataThreadInfoQueue.Count > 0)
@@ -89,6 +108,15 @@ public partial class MapGenerator : Node3D
             for (int i = 0; i < meshDataThreadInfoQueue.Count; i++)
             {
                 MapThreadInfo<MeshData> threadInfo = meshDataThreadInfoQueue.Dequeue();
+                threadInfo.callback(threadInfo.parameter);
+            }
+        }
+
+        if (rollResourceThreadInfoQueue.Count > 0)
+        {
+            for (int i = 0; i < rollResourceThreadInfoQueue.Count; i++)
+            {
+                RollResourceThreadInfo<List<Vector3>> threadInfo = rollResourceThreadInfoQueue.Dequeue();
                 threadInfo.callback(threadInfo.parameter);
             }
         }
@@ -124,6 +152,17 @@ public partial class MapGenerator : Node3D
             this.parameter = parameter;
         }
     }
+
+    struct RollResourceThreadInfo<T> {
+			public readonly Action<T> callback;
+			public readonly T parameter;
+
+			public RollResourceThreadInfo(Action<T> callback, T parameter)
+			{
+				this.callback = callback;
+				this.parameter = parameter;
+			}
+		}
 }
 
 [Tool]

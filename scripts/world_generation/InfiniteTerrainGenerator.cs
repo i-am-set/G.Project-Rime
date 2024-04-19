@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Intrinsics;
+using System.Threading;
 
 public partial class InfiniteTerrainGenerator : Node3D
 {
@@ -14,7 +15,7 @@ public partial class InfiniteTerrainGenerator : Node3D
 	const float colliderGenerationDistanceThreshold = 35;
 
 	[Export]public int colliderLODIndex;
-	[Export] public LODInfo[] detailLevels;
+	[Export]public LODInfo[] detailLevels;
     public static float maxViewDst;
     int chunksVisibleInViewDst;
     int chunkSize;
@@ -32,20 +33,18 @@ public partial class InfiniteTerrainGenerator : Node3D
 	public Vector2 viewerPositionOld;
 	static MapGenerator mapGenerator;
 	static ResourceChunkInstancer resourceChunkInstancer;
+	int resourceChunkInstanceCounter = 0;
 
 	// bool hasWorldBeenGenerated = false;
 
     Dictionary<Vector2, TerrainChunk> TerrainChunkDictionary = new();
     static List<TerrainChunk> visibleTerrainChunks = new();
 
-    // public override void _Ready(){
-	// 	if (!Engine.IsEditorHint()){
-	// 		StartWorld();
-    // 	}
-	// }
-
 	public override void _Ready(){
-	// void StartWorld(){
+		StartWorld();
+	}
+
+	void StartWorld(){
 		mapGenerator = (MapGenerator)GetParent();
 		GD.Print(mapGenerator.seed);
 		resourceChunkInstancer = (ResourceChunkInstancer)mapGenerator.GetNode("ResourceChunkInstancer");
@@ -59,28 +58,9 @@ public partial class InfiniteTerrainGenerator : Node3D
 
 		UpdateVisibleChunks();
 
-		// Vector2 firstChunkPosition = Vector2.Zero;
-		// Vector2 lastChunkPosition = Vector2.Zero;
-		// foreach (KeyValuePair<Vector2, TerrainChunk> item in TerrainChunkDictionary){
-		// 	if (item.Value.chunkNumber == 1){
-		// 		firstChunkPosition = item.Value.chunkPosition;
-		// 	} else if (item.Value.chunkNumber == worldChunkAmount){
-		// 		lastChunkPosition = item.Value.chunkPosition;
-		// 	}
-		// }
-		// spawnPoint = (firstChunkPosition + lastChunkPosition) / 2;
 		spawnPoint = Vector2.Zero;
 		GetNode<Node>("/root/Global").Set("SPAWN_POINT", spawnPoint);
     }
-
-	// public override void _Process(double delta){
-	// 	if (generateWorld){
-	// 		generateWorld = false;
-	// 		StartWorld();
-	// 	}
-	// }
-
-    
 
     public override void _PhysicsProcess(double delta){
         WorldGenerationLogic();
@@ -89,17 +69,19 @@ public partial class InfiniteTerrainGenerator : Node3D
 	void WorldGenerationLogic(){
 		viewerPosition = new Vector2(viewer.Position.X, viewer.Position.Z) / scale;
 
-		if (viewerPosition != viewerPositionOld){
+		resourceChunkInstanceCounter++;
+		if (resourceChunkInstanceCounter >= 30){
 			// set colliders close to player
 			resourceChunkInstancer.SetCloseResourcePositions(GetCloseResourcePositions());
+			resourceChunkInstanceCounter = 0;
+		}
 
+		if ((viewerPositionOld - viewerPosition).LengthSquared() > sqrViewerMoveThresholdForChunkUpdate){
 			// update terrain mesh collision
 			foreach (TerrainChunk chunk in visibleTerrainChunks){
 				chunk.UpdateCollisionMesh();
 			}
-		}
 
-		if ((viewerPositionOld - viewerPosition).LengthSquared() > sqrViewerMoveThresholdForChunkUpdate){
 			viewerPositionOld = viewerPosition;
         	UpdateVisibleChunks();
 		}
@@ -240,8 +222,7 @@ public partial class InfiniteTerrainGenerator : Node3D
 
         public void UpdateTerrainChunk(){
 			if (!hasRolledResources && lodMeshes[colliderLODIndex].hasMesh){
-				RollResources();
-				hasRolledResources = true;
+				mapGenerator.RequestRollResource(this, OnRolledResourceReceived);
 			}
 
 			if (mapDataReceived) {
@@ -313,6 +294,12 @@ public partial class InfiniteTerrainGenerator : Node3D
 			}
         }
 
+		private void OnRolledResourceReceived(List<Vector3> rolledChunkResourcePositions){
+			chunkResourcePositions.AddRange(rolledChunkResourcePositions);
+			hasRolledResources = true;
+		}
+
+
 		public void UpdateCollisionMesh(){
 			if(!hasSetCollider){
 				float sqrDistanceFromViewerToEdge = Bounds.Position.DistanceSquaredTo(new Vector3(viewerPosition.X, 0, viewerPosition.Y));
@@ -332,22 +319,25 @@ public partial class InfiniteTerrainGenerator : Node3D
 		}
 
 	// generate resources
-		void RollResources(){
+		public List<Vector3> RollResources(){
+			List<Vector3> rolledChunkResourcePositions = new();
 			chunkVertices = GetCollisionLODMeshVertices();
 			if (chunkVertices == null){
-				// GD.Print(chunkNumber, " ------ ", chunkPosition, " : Failed to find Vertices");
-				return;
+				GD.PrintErr(chunkNumber, " ------ ", chunkPosition, " : Failed to find Vertices");
+				return rolledChunkResourcePositions;
 			}
 			// GD.Print(chunkNumber, " =========== ", chunkPosition, " : Generating Resources");
+
 			for (int i = 0; i < chunkVertices.Length; i++){
 				bool isViableResourcePosition;
 				Vector3 resourcePosition = new Vector3(chunkVertices[i].X + chunkPosition.X, chunkVertices[i].Y, chunkVertices[i].Z + chunkPosition.Y)*scale;
 				isViableResourcePosition = resourceChunkInstancer.TryToSetLocalResources(resourcePosition);
 
 				if (isViableResourcePosition){
-					chunkResourcePositions.Add(resourcePosition);
+					rolledChunkResourcePositions.Add(resourcePosition);
 				}
 			}
+			return rolledChunkResourcePositions;
 		}
 
 		void ReseatResources(){
@@ -362,16 +352,16 @@ public partial class InfiniteTerrainGenerator : Node3D
 			}
 		}
 
-	// get collisionLODMeshVertices
+		// get collisionLODMeshVertices
 		Vector3[] GetCollisionLODMeshVertices(){
-		if (lodMeshes[colliderLODIndex].hasMesh){
-			return lodMeshes[colliderLODIndex].meshData.vertices;
-		}
-		
-		return null;
+			if (lodMeshes[colliderLODIndex].hasMesh){
+				return lodMeshes[colliderLODIndex].meshData.vertices;
+			}
+			
+			return null;
 		}
 
-	// visibility logic
+		// visibility logic
         public void SetVisible(bool visible){
 			resourceParent.Visible = visible;
             meshObject.Visible = visible;

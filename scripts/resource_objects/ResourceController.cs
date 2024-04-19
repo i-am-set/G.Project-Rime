@@ -14,12 +14,12 @@ public partial class ResourceController : Node3D
 	{
 		if (child >= 0 && child <= children.Length)
 		{
-			children[child].Show();
+			children[child].Visible = true;
 			currentResource = child;
 		}
 		else
 		{
-			GD.Print("Invalid child index : ShowResource( | ", children, " | ", child);
+			GD.PrintErr("Invalid child index : ShowResource( | ", children, " | ", child);
 		}
 	}
 
@@ -27,12 +27,12 @@ public partial class ResourceController : Node3D
 	{
 		if (child >= 0 && child <= children.Length)
 		{
-			children[child].Hide();
+			children[child].Visible = false;
 			currentResource = 0;
 		}
 		else
 		{
-			GD.Print("Invalid child index : HideResource() | ", children, " | ", child);
+			GD.PrintErr("Invalid child index : HideResource() | ", children, " | ", child);
 		}
 	}
 
@@ -42,7 +42,7 @@ public partial class ResourceController : Node3D
 		{
 			if (children[i].Visible)
 			{
-				children[i].Hide();
+				children[i].Visible = false;
 			}
 		}
 

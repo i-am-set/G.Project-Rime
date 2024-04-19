@@ -114,8 +114,8 @@ public partial class ResourceChunkInstancer : Node3D
         for (int i = 0; i < positionsPerFrame; i++){
             if (queuedResourceForReseating.Count > 0){
                 nextResourceToReseat = queuedResourceForReseating.Dequeue();
-                if(resourceData.ContainsKey(nextResourceToReseat.position)){
-                }
+                // if(resourceData.ContainsKey(nextResourceToReseat.position)){
+                // }
                 ReseatResource(nextResourceToReseat.position, nextResourceToReseat.parent);
             }
         }
@@ -205,11 +205,13 @@ public partial class ResourceChunkInstancer : Node3D
     }
 
     public bool TryToSetLocalResources(Vector3 resourcePosition){
-        resourceDataCountCached = resourceData.Count;
-        resourceData = FindResource(resourceData, resourcePosition);
-         
-        if(resourceDataCountCached != resourceData.Count){
-            return true;
+        lock (resourceData){
+            resourceDataCountCached = resourceData.Count;
+            resourceData = FindResource(resourceData, resourcePosition);
+            
+            if(resourceDataCountCached != resourceData.Count){
+                return true;
+            }
         }
 
         return false;
