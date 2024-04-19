@@ -42,3 +42,4 @@ res://scripts/game/game_controller.gd
 res://scripts/game/global.gd
 res://scripts/player/fps_controller.gd
 res://scripts/inventory/inventory_manager.gd
+res://scripts/game/options_setting.gd

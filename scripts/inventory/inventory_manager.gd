@@ -121,9 +121,9 @@ func held_item_follow_mouse():
 func tooltip_follow_mouse():
 	tooltip.position = mouse_pos
 
-func try_to_pick_up_item(_picked_up_item : InventoryItem) -> Control:
+func try_to_pick_up_item(_picked_up_item : InventoryItem, _stack_size : int) -> Control:
 	for _subinventory in subinventories:
-		if _subinventory.try_quick_add_item(_picked_up_item, 1):
+		if _subinventory.try_quick_add_item(_picked_up_item, _stack_size):
 			return _subinventory
 	
 	return null
@@ -135,7 +135,7 @@ func c_give_item(item_id: String, number_of_item: int = 1) -> void:
 	var inventory_destinations := {}
 	
 	for i in range(number_of_item):
-		var _inventory_destination = try_to_pick_up_item(new_item)
+		var _inventory_destination = try_to_pick_up_item(new_item, 1)
 		
 		if _inventory_destination != null:
 			items_added += 1

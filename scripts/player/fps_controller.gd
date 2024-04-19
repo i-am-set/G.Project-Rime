@@ -2,15 +2,16 @@ class_name Player
 
 extends CharacterBody3D
 
-@onready var PLAYER_MODEL : Node3D = get_node("CollisionShape3D/player_model")
-@onready var LEGS_MODEL : Node3D = get_node("CollisionShape3D/legs_model")
-@onready var PAUSE_MENU = $UserInterface/PauseMenu
-@onready var PAUSE_ANIMATOR = $UserInterface/PauseMenu/BlurAnimator
-@onready var INVENTORY_MENU = $UserInterface/InventoryMenu
+@onready var player_model = $CollisionShape3D/player_model
+@onready var legs_model = $CollisionShape3D/legs_model
+@onready var pause_menu = $UserInterface/PauseMenu
+@onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator
+@onready var inventory_menu = $UserInterface/InventoryMenu
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
-@onready var WORLD = $"../.."
+@onready var world = $"../.."
 @onready var drop_position = $DropPosition
+@onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
 
 @export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -47,17 +48,17 @@ var mass = 82
 
 func _authorize_user():
 	_is_authorized_user = true
-	PLAYER_MODEL= get_node("CollisionShape3D/player_model")
-	LEGS_MODEL = get_node("CollisionShape3D/legs_model")
-	PLAYER_MODEL.visible = false
-	LEGS_MODEL.visible = false
+	player_model= get_node("CollisionShape3D/player_model")
+	legs_model = get_node("CollisionShape3D/legs_model")
+	player_model.visible = false
+	legs_model.visible = false
 
 func _deauthorize_user():
 	_is_authorized_user = false
-	PLAYER_MODEL= get_node("CollisionShape3D/player_model")
-	LEGS_MODEL = get_node("CollisionShape3D/legs_model")
-	PLAYER_MODEL.visible = true
-	LEGS_MODEL.visible = false
+	player_model= get_node("CollisionShape3D/player_model")
+	legs_model = get_node("CollisionShape3D/legs_model")
+	player_model.visible = true
+	legs_model.visible = false
 
 func strip_into_peer():
 	remove_child(CAMERA_CONTROLLER)
@@ -84,9 +85,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE:
 			capture_mouse()
 		if event.is_action_pressed("exit"):
-			if (INVENTORY_MENU.visible):
+			if (inventory_menu.visible):
 				if !Global.IS_IN_CONSOLE:
-					INVENTORY_MENU.toggle_inventory()
+					inventory_menu.toggle_inventory()
 			elif Global.IS_IN_CONSOLE:
 				pass
 			else:
@@ -97,16 +98,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			_rotate_camera()
 
 func toggle_pause_menu():
-	PAUSE_MENU.visible = !PAUSE_MENU.visible
+	pause_menu.visible = !pause_menu.visible
 	
-	if PAUSE_MENU.visible:
+	if pause_menu.visible:
 		uncapture_mouse()
 		Global.IS_PAUSED = true
-		PAUSE_ANIMATOR.play("start_pause")
+		pause_animator.play("start_pause")
 	else:
 		capture_mouse()
 		Global.IS_PAUSED = false
-		PAUSE_ANIMATOR.play("RESET")
+		pause_animator.play("RESET")
 
 func capture_mouse():
 	Global.capture_mouse(true)
@@ -168,10 +169,12 @@ func _physics_process(delta):
 	if _is_authorized_user:
 		debug_process()
 		
+		looking_process()
+		
 		_cached_position = global_position
 		_cached_rotation = rotation
 		
-		if PAUSE_MENU.visible:
+		if pause_menu.visible:
 			Global.IS_PAUSED = true
 
 
@@ -271,8 +274,12 @@ func debug_process():
 	Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
 	Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
 
+func looking_process():
+	if look_at_ray_cast.is_colliding():
+		print(look_at_ray_cast.get_collider().name)
+
 func drop_ground_item(_item : InventoryItem):
-	WORLD.instance_ground_item(StaticData.create_item_from_id(_item.item_id), drop_position.global_position)
+	world.instance_ground_item(StaticData.create_item_from_id(_item.item_id), drop_position.global_position)
 
 func enable_postp_dither(toggle : bool) -> void:
 	POSTP_DITHER.get_surface_override_material(0).set_shader_parameter("dithering", toggle)
@@ -406,7 +413,7 @@ func c_create_item_from_id(item_to_create_id : String, number_of_item : int):
 		process_step += 1
 		if process_step % 10 == 0:
 			await get_tree().process_frame
-		WORLD.instance_ground_item(StaticData.create_item_from_id(item_to_create_id), drop_position.global_position)
+		world.instance_ground_item(StaticData.create_item_from_id(item_to_create_id), drop_position.global_position)
 
 func c_teleport_player_to_player(ori_player_name : String, des_player_name : String) -> void:
 	var ori_is_self = false

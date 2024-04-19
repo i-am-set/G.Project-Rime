@@ -830,9 +830,15 @@ transform = Transform3D(1, 0, 0, 0, 0.997564, 0.0697565, 0, -0.0697565, 0.997564
 
 [node name="Camera3D" type="Camera3D" parent="CameraController"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 cull_mask = 1048573
 current = true
 near = 0.01
+
+[node name="LookAtRayCast" type="RayCast3D" parent="CameraController/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+target_position = Vector3(0, 0, -2)
+collision_mask = 4
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="CameraController/Camera3D"]
 visible = false
@@ -1705,6 +1711,7 @@ surface_material_override/0 = ExtResource("17_bjkm5")
 
 [node name="PostProcessingDither" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21163, -0.801684)
+visible = false
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_chtvq")
 surface_material_override/0 = SubResource("ShaderMaterial_jnndc")
