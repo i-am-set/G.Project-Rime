@@ -12,6 +12,7 @@ extends CharacterBody3D
 @onready var world = $"../.."
 @onready var drop_position = $DropPosition
 @onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
+@onready var look_at_label = $LookAtLabel
 
 @export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -39,8 +40,15 @@ var _cached_position : Vector3
 var _cached_rotation : Vector3 
 var _steam_ID : int
 var _resource_spawn_radius : int
-
+var look_at_label_anchor : Vector3
+var look_at_collider
 var _current_rotation : float
+
+# interaction variables
+var is_holding_interact = false
+var interact_hold_time = 0.0
+var increasing_interact_value = 0
+var interact_time_threshold = 0.5
 
 # Get the gravity from the project s ettings to be synced with RigidBody nodes.
 var gravity = 9.8
@@ -79,6 +87,20 @@ func _input(event):
 		print_debug("scroll up")
 	if event.is_action_pressed("ui_scroll_down"):
 		print_debug("scroll down")
+	
+	if event.is_action_pressed("interact"):
+		is_holding_interact = true
+		interact_hold_time = 0  # Reset the timer
+		increasing_interact_value = 0  # Reset the increasing value
+
+	if event.is_action_released("interact"):
+		if increasing_interact_value > 0 and increasing_interact_value < 100:
+			# Reset values if released while value is above 0 but below 100
+			is_holding_interact = false
+			increasing_interact_value = 0
+		elif increasing_interact_value == 0:
+			interact_pick_up_to_inventory()
+		is_holding_interact = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_authorized_user == true:
@@ -96,6 +118,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true:
 			look_dir = event.relative * 0.001
 			_rotate_camera()
+			looking_process()
 
 func toggle_pause_menu():
 	pause_menu.visible = !pause_menu.visible
@@ -169,7 +192,7 @@ func _physics_process(delta):
 	if _is_authorized_user:
 		debug_process()
 		
-		looking_process()
+		interact_process(delta)
 		
 		_cached_position = global_position
 		_cached_rotation = rotation
@@ -177,6 +200,8 @@ func _physics_process(delta):
 		if pause_menu.visible:
 			Global.IS_PAUSED = true
 
+func _process(delta):
+	look_at_label.global_position = look_at_label_anchor
 
 func update_gravity(delta) -> void:
 	if (_player_data.no_clip):
@@ -276,7 +301,32 @@ func debug_process():
 
 func looking_process():
 	if look_at_ray_cast.is_colliding():
-		print(look_at_ray_cast.get_collider().name)
+		if look_at_collider != null:
+			look_at_collider.toggle_highlight(false)
+		look_at_collider = look_at_ray_cast.get_collider()
+		look_at_collider.toggle_highlight(true)
+		look_at_label_anchor = look_at_collider.global_position
+		look_at_label.text = look_at_collider.inv_item.item_name
+	else:
+		if look_at_collider != null:
+			look_at_collider.toggle_highlight(false)
+		look_at_label.text = ""
+
+func interact_process(delta):
+	if is_holding_interact:
+		interact_hold_time += delta
+		if interact_hold_time >= interact_time_threshold:
+			# Increase value only if hold time has surpassed the threshold
+			if increasing_interact_value < 100:
+				increasing_interact_value += 2  # Increase the value each frame
+				if increasing_interact_value >= 100:
+					interact_pick_up_to_hand()  # Call function2 when it reaches 100
+
+func interact_pick_up_to_inventory():
+	print_debug("item to inventory")
+
+func interact_pick_up_to_hand():
+	print_debug("item to hand")
 
 func drop_ground_item(_item : InventoryItem):
 	world.instance_ground_item(StaticData.create_item_from_id(_item.item_id), drop_position.global_position)

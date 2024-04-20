@@ -1,7 +1,10 @@
 extends RigidBody3D
 
+const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.tres")
+
 @onready var mesh_instance = $MeshInstance3D
 @onready var collision_shape = $CollisionShape3D
+
 
 var inv_item : InventoryItem : set = set_inv_item
 func set_inv_item(value):
@@ -36,7 +39,13 @@ func set_mesh_parameters():
 		return
 	
 	var aabb = mesh_instance.mesh.get_aabb()
-	collision_shape.shape.size = (aabb.size*0.5)*scale
+	collision_shape.shape.size = (aabb.size*0.75)*scale
+
+func toggle_highlight(toggle : bool):
+	if toggle:
+		mesh_instance.set_surface_override_material(0, HIGHLIGHT_MATERIAL)
+	else:
+		mesh_instance.set_surface_override_material(0, null)
 
 func randomize_rotation():
 	var random_x = randf() * 2.0 * PI  # Random angle between 0 and 2π radians

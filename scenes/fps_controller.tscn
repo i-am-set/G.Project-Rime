@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=94 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/player/inventory_logic.gd" id="5_m68ou"]
 [ext_resource type="Resource" uid="uid://dr285553q3o4n" path="res://resources/weapons/weap_nothing.tres" id="5_srgsy"]
 [ext_resource type="Theme" uid="uid://cjxg2tt7m1r7e" path="res://ui/themes/debug.tres" id="5_tib1u"]
+[ext_resource type="FontFile" uid="uid://du5dlc2aksu23" path="res://ui/fonts/FiraCode/FiraCode-Light.ttf" id="6_8rsuq"]
 [ext_resource type="Script" path="res://scripts/game/debug.gd" id="6_kecrd"]
 [ext_resource type="Shader" path="res://shaders/2d/blur_shader.gdshader" id="7_5ppov"]
 [ext_resource type="ButtonGroup" uid="uid://cyodex2xc22hm" path="res://ui/button_groups/display_mode_button_group.tres" id="7_7h2ag"]
@@ -837,7 +838,7 @@ near = 0.01
 
 [node name="LookAtRayCast" type="RayCast3D" parent="CameraController/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-target_position = Vector3(0, 0, -2)
+target_position = Vector3(0, 0, -3)
 collision_mask = 4
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="CameraController/Camera3D"]
@@ -854,6 +855,18 @@ transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
 transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.55)
 WEAPON_TYPE = ExtResource("5_srgsy")
 sway_noise = SubResource("NoiseTexture2D_33bd6")
+
+[node name="LookAtLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27095, -3.51657)
+visibility_range_end = 10.0
+offset = Vector2(0, 45.98)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture_filter = 1
+font = ExtResource("6_8rsuq")
+font_size = 16
+outline_size = 10
 
 [node name="DropPosition" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.40458, -0.367773)
@@ -1642,6 +1655,15 @@ custom_minimum_size = Vector2(3, 3)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+fill_mode = 4
 
 [node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("7_f1ve2")
