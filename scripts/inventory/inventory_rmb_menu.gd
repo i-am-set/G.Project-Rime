@@ -41,6 +41,14 @@ func update_item_mesh():
 func base_button_function():
 	hide()
 
+func _on_split_one_pressed():
+	right_clicked_item_ref["subinventory"].split_item_one(right_clicked_item_ref)
+	base_button_function()
+
+func _on_split_half_pressed():
+	right_clicked_item_ref["subinventory"].split_item_half(right_clicked_item_ref)
+	base_button_function()
+
 func _on_drop_one_pressed():
 	right_clicked_item_ref["subinventory"].drop_item_one(right_clicked_item_ref)
 	base_button_function()
@@ -48,3 +56,4 @@ func _on_drop_one_pressed():
 func _on_drop_all_pressed():
 	right_clicked_item_ref["subinventory"].drop_item_all(right_clicked_item_ref)
 	base_button_function()
+

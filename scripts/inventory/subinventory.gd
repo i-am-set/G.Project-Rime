@@ -152,7 +152,7 @@ func can_stack_item(_item : InventoryItem, _stack_size : int, _drop_cell : Vecto
 		return true
 	return false
 
-func try_quick_add_item(_item : InventoryItem, _stack_size : int):
+func try_quick_add_item(_item : InventoryItem, _stack_size : int) -> bool:
 	for _cell in inventory_cells:
 		if get_stackable_items(_item, _stack_size, _cell, Vector2(_item.item_width, _item.item_height)) != null:
 			try_add_item(_item, _stack_size, _cell)
@@ -161,6 +161,21 @@ func try_quick_add_item(_item : InventoryItem, _stack_size : int):
 		if !is_space_occupied(_cell, Vector2(_item.item_width, _item.item_height)):
 			try_add_item(_item, _stack_size, _cell)
 			return true
+	
+	return false
+
+func try_split_item_stack(_item : InventoryItem, _new_stack_size : int) -> bool:
+	for _cell in inventory_cells:
+		if !is_space_occupied(_cell, Vector2(_item.item_width, _item.item_height)):
+			var new_item = ITEM_RECT.instantiate()
+			new_item.inv_item = _item
+			new_item.position = cell_to_position(_cell)
+			new_item.current_stack = _new_stack_size
+			add_child(new_item)
+			items.append({"item" : _item, "item_rect" : new_item, "cell" : _cell, "subinventory" : self})
+			update_grid()
+			return true
+	
 	return false
 
 func try_add_item(_item : InventoryItem, _stack_size : int, _drop_cell : Vector2) -> bool:
@@ -186,30 +201,53 @@ func try_add_item(_item : InventoryItem, _stack_size : int, _drop_cell : Vector2
 	update_grid()
 	return true
 
-func drop_ground_item_backend(_dropped_item : InventoryItem):
+func drop_ground_item_backend(_dropped_item : InventoryItem, _stack_amount : int):
 	var player = inventory.fps_controller
-	player.WORLD.instance_ground_item(_dropped_item, player.drop_position.global_position)
+	player.world.instance_ground_item(_dropped_item, _stack_amount, player.drop_position.global_position)
+
+func split_item_one(_item : Dictionary):
+	var _cached_item : InventoryItem = _item["item"]
+	var _cached_stack_size : int = _item["item_rect"].current_stack
+	
+	var old_stack_size: int = _cached_stack_size - 1
+	var new_stack_size: int = 1
+	
+	if try_split_item_stack(_cached_item, new_stack_size):
+		_item["item_rect"].current_stack = old_stack_size
+	
+	update_grid()
+
+func split_item_half(_item : Dictionary):
+	var _cached_item : InventoryItem = _item["item"]
+	var _cached_stack_size : int = _item["item_rect"].current_stack
+	
+	var old_stack_size: int = _cached_stack_size / 2 + _cached_stack_size % 2
+	var new_stack_size: int = _cached_stack_size - old_stack_size
+	
+	if try_split_item_stack(_cached_item, new_stack_size):
+		_item["item_rect"].current_stack = old_stack_size
+	
+	update_grid()
 
 func drop_item_one(_item : Dictionary):
-	var cached_item : InventoryItem = _item["item"]
+	var _cached_item : InventoryItem = _item["item"]
 	
 	if _item["item_rect"].current_stack > 1:
 		_item["item_rect"].current_stack -= 1
 	else:
 		remove_item(_item)
 	
-	drop_ground_item_backend(cached_item)
+	drop_ground_item_backend(_cached_item, 1)
 	
 	update_grid()
 
 func drop_item_all(_item : Dictionary):
-	var cached_item_stack_amount : int = _item["item_rect"].current_stack
-	var cached_item : InventoryItem = _item["item"]
+	var _cached_item_stack_amount : int = _item["item_rect"].current_stack
+	var _cached_item : InventoryItem = _item["item"]
 	
 	remove_item(_item)
 	
-	for i in cached_item_stack_amount:
-		drop_ground_item_backend(cached_item)
+	drop_ground_item_backend(_cached_item, _cached_item_stack_amount)
 	
 	update_grid()
 

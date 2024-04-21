@@ -6,6 +6,8 @@ const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.t
 @onready var collision_shape = $CollisionShape3D
 
 
+var stack_amount : int = 1
+
 var inv_item : InventoryItem : set = set_inv_item
 func set_inv_item(value):
 	inv_item = value

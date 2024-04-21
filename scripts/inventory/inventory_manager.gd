@@ -25,6 +25,27 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("mouse_click"):
 		handle_click(event, get_global_mouse_position() - global_position)
+	
+	if event.is_action_pressed("drop_item_one"):
+		var _mouse_pos = get_global_mouse_position() - global_position
+		for _subinventory in subinventories:
+			if _subinventory.get_rect().has_point(_mouse_pos):
+				var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_mouse_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
+				var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
+				if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
+					var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
+					_subinventory.drop_item_one(_item)
+	
+	elif event.is_action_pressed("drop_item_all"):
+		var _mouse_pos = get_global_mouse_position() - global_position
+		for _subinventory in subinventories:
+			if _subinventory.get_rect().has_point(_mouse_pos):
+				var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_mouse_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
+				var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
+				if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
+					var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
+					_subinventory.drop_item_all(_item)
+	
 
 func _process(delta):
 	mouse_pos = get_global_mouse_position()
@@ -89,6 +110,8 @@ func handle_click(event, _click_pos : Vector2):
 					if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
 						var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
 						ShowRmbMenu(_item)
+				elif event.is_action_pressed("middle_mouse_click"):
+					pass
 
 func add_subinventory(_subinventory : Control):
 	subinventories_container.add_child(_subinventory)

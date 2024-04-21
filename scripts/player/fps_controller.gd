@@ -7,10 +7,11 @@ extends CharacterBody3D
 @onready var pause_menu = $UserInterface/PauseMenu
 @onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator
 @onready var inventory_menu = $UserInterface/InventoryMenu
+@onready var inventory = $UserInterface/InventoryMenu/inventory
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
 @onready var world = $"../.."
-@onready var drop_position = $DropPosition
+@onready var drop_position = $CameraController/Camera3D/DropPosition
 @onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
 @onready var look_at_label = $LookAtLabel
 
@@ -23,7 +24,6 @@ extends CharacterBody3D
 @export var PLAYERSTATEMACHINE : StateMachine
 @export var WEAPON_CONTROLLER : WeaponController
 @export var USERINTERFACE : Control
-@export var GRASS_EMITTER : GPUParticles3D
 @export var WEAPONVIEWPORT : SubViewportContainer
 
 var _is_authorized_user : bool = false
@@ -94,13 +94,14 @@ func _input(event):
 		increasing_interact_value = 0  # Reset the increasing value
 
 	if event.is_action_released("interact"):
-		if increasing_interact_value > 0 and increasing_interact_value < 100:
-			# Reset values if released while value is above 0 but below 100
+		if look_at_collider != null:
+			if increasing_interact_value > 0 and increasing_interact_value < 100:
+				# Reset values if released while value is above 0 but below 100
+				is_holding_interact = false
+				increasing_interact_value = 0
+			elif increasing_interact_value == 0:
+				interact_pick_up_to_inventory()
 			is_holding_interact = false
-			increasing_interact_value = 0
-		elif increasing_interact_value == 0:
-			interact_pick_up_to_inventory()
-		is_holding_interact = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_authorized_user == true:
@@ -156,6 +157,9 @@ func _ready():
 		Global.player = self
 		
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
+		POSTP_DITHER.visible = true
+		POSTP_OUTLINE.visible = true
 		
 		_steam_ID = Steam.getSteamID()
 		
@@ -304,12 +308,18 @@ func looking_process():
 		if look_at_collider != null:
 			look_at_collider.toggle_highlight(false)
 		look_at_collider = look_at_ray_cast.get_collider()
-		look_at_collider.toggle_highlight(true)
-		look_at_label_anchor = look_at_collider.global_position
-		look_at_label.text = look_at_collider.inv_item.item_name
+		if look_at_collider != null:
+			look_at_collider.toggle_highlight(true)
+			look_at_label_anchor = look_at_collider.global_position
+			var _stack_amount = look_at_collider.stack_amount
+			if _stack_amount > 1:
+				look_at_label.text = str(look_at_collider.inv_item.item_name, " (", look_at_collider.stack_amount, ")")
+			else:
+				look_at_label.text = look_at_collider.inv_item.item_name
 	else:
 		if look_at_collider != null:
 			look_at_collider.toggle_highlight(false)
+			look_at_collider = null
 		look_at_label.text = ""
 
 func interact_process(delta):
@@ -323,7 +333,10 @@ func interact_process(delta):
 					interact_pick_up_to_hand()  # Call function2 when it reaches 100
 
 func interact_pick_up_to_inventory():
-	print_debug("item to inventory")
+	if inventory.try_to_pick_up_item(look_at_collider.inv_item, look_at_collider.stack_amount) != null:
+		look_at_collider.queue_free()
+		look_at_label.text = ""
+		look_at_collider = null
 
 func interact_pick_up_to_hand():
 	print_debug("item to hand")
@@ -463,7 +476,7 @@ func c_create_item_from_id(item_to_create_id : String, number_of_item : int):
 		process_step += 1
 		if process_step % 10 == 0:
 			await get_tree().process_frame
-		world.instance_ground_item(StaticData.create_item_from_id(item_to_create_id), drop_position.global_position)
+		world.instance_ground_item(StaticData.create_item_from_id(item_to_create_id), 1, drop_position.global_position)
 
 func c_teleport_player_to_player(ori_player_name : String, des_player_name : String) -> void:
 	var ori_is_self = false

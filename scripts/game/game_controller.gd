@@ -152,12 +152,13 @@ func recieve_set_time_request(set_time : int) -> void:
 func get_current_time() -> int:
 	return sky_box.timeOfDay
 
-func instance_ground_item(dropped_inv_item : InventoryItem, drop_position : Vector3):
-	var new_ground_item = GROUND_ITEM.instantiate()
-	new_ground_item.inv_item = dropped_inv_item
+func instance_ground_item(_dropped_inv_item : InventoryItem, _stack_amount : int, _drop_position : Vector3):
+	var _new_ground_item = GROUND_ITEM.instantiate()
+	_new_ground_item.inv_item = _dropped_inv_item
+	_new_ground_item.stack_amount = _stack_amount
 	
-	ground_objects.add_child(new_ground_item)
-	new_ground_item.position = drop_position
+	ground_objects.add_child(_new_ground_item)
+	_new_ground_item.position = _drop_position
 
 func read_all_p2p_packets(read_count: int = 0):
 	if read_count >= Global.PACKET_READ_LIMIT:

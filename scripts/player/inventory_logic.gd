@@ -6,6 +6,7 @@ const info_offset: Vector2 = Vector2(20, 0)
 @onready var temperature_map = $silhouette_panel/temperature_map
 @onready var temperature_map_material = temperature_map.material
 @onready var animation_player = $AnimationPlayer
+@onready var inventory = $inventory
 var player_data
 
 func _ready() -> void:
@@ -24,6 +25,7 @@ func toggle_inventory():
 	if Global.IS_PAUSED || Global.IS_IN_CONSOLE:
 		self.visible == false
 		Global.IS_IN_INVENTORY == false
+		inventory.HideHeldItemPreview()
 		animation_player.play("RESET")
 		return
 	else:
@@ -34,6 +36,7 @@ func toggle_inventory():
 			animation_player.play("blur_start")
 			update_temperature_map_colors()
 		else:
+			inventory.HideHeldItemPreview()
 			animation_player.play("RESET")
 
 func update_temperature_map_colors():

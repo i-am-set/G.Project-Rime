@@ -67,11 +67,11 @@ RichTextLabel/font_sizes/normal_font_size = 12
 RichTextLabel/fonts/normal_font = ExtResource("3_y6oxa")
 
 [node name="inventory_rmb_menu" type="Control"]
-custom_minimum_size = Vector2(300, 150)
+custom_minimum_size = Vector2(125, 0)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 300.0
-offset_bottom = 150.0
+offset_right = 125.0
+offset_bottom = 120.0
 mouse_filter = 2
 theme = SubResource("Theme_60u4v")
 script = ExtResource("1_3tt4f")
@@ -269,5 +269,7 @@ light_energy = 0.1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.36)
 mesh = ExtResource("4_mxq8e")
 
+[connection signal="pressed" from="Dropdown/DropDownVBox/SplitOne" to="." method="_on_split_one_pressed"]
+[connection signal="pressed" from="Dropdown/DropDownVBox/SplitHalf" to="." method="_on_split_half_pressed"]
 [connection signal="pressed" from="Dropdown/DropDownVBox/DropOne" to="." method="_on_drop_one_pressed"]
 [connection signal="pressed" from="Dropdown/DropDownVBox/DropAll" to="." method="_on_drop_all_pressed"]
