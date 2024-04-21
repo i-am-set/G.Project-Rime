@@ -104,7 +104,7 @@ cloudCoverage = 0.5
 [node name="MapGenerator" type="Node3D" parent="."]
 script = ExtResource("2_l6eyd")
 octaves = 10
-persistance = 0.55
+persistance = 0.525
 meshHeightCurve = ExtResource("4_bp6yq")
 regions = [SubResource("Resource_rrn6f"), SubResource("Resource_qiy2y"), SubResource("Resource_p26xn"), SubResource("Resource_tjvym"), SubResource("Resource_bbt57"), SubResource("Resource_5ytf7")]
 

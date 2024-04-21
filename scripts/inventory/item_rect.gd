@@ -1,6 +1,7 @@
 extends Control
 
-@onready var texture_rect = $TextureRect
+@onready var display = $Display
+@onready var highlight_mask = $Display/HighlightMask
 @onready var stack_label : Label = $StackLabel
 
 var subinventory : Control
@@ -44,11 +45,14 @@ func update_current_stack():
 
 func hover_item():
 	if mouse_is_over:
-		if texture_rect.texture != null:
-			texture_rect.scale = Vector2(max_scale, max_scale)
+		if display.texture != null:
+			display.scale = Vector2(max_scale, max_scale)
 	else:
-		if texture_rect.texture != null:
-			texture_rect.scale = Vector2(1, 1)
+		if display.texture != null:
+			display.scale = Vector2(1, 1)
+
+func highlight_item_display(toggle : bool):
+	highlight_mask.visible = toggle
 
 func define_tooltip_timer():
 	tooltip_timer = Timer.new()

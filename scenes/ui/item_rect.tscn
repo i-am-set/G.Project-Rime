@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdwxe80vw400y"]
+[gd_scene load_steps=6 format=3 uid="uid://bdwxe80vw400y"]
 
 [ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="1_6wolk"]
 [ext_resource type="Script" path="res://scripts/inventory/item_rect.gd" id="1_61j55"]
@@ -8,8 +8,13 @@ Label/colors/font_shadow_color = Color(0, 0, 0, 0.729412)
 Label/font_sizes/font_size = 10
 Label/fonts/font = ExtResource("1_6wolk")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_qp53d"]
-viewport_path = NodePath("SubViewport")
+[sub_resource type="Gradient" id="Gradient_3fg8h"]
+offsets = PackedFloat32Array(0.005)
+colors = PackedColorArray(0.932157, 0.241083, 0.643407, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aehmp"]
+gradient = SubResource("Gradient_3fg8h")
+width = 1
 
 [node name="item_rect" type="Control"]
 layout_mode = 3
@@ -19,7 +24,7 @@ offset_bottom = 30.0
 theme = SubResource("Theme_34mqv")
 script = ExtResource("1_61j55")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Display" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,19 +32,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(16, 16)
-texture = SubResource("ViewportTexture_qp53d")
+texture = SubResource("GradientTexture1D_aehmp")
+
+[node name="HighlightMask" type="ColorRect" parent="Display"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.458824)
 
 [node name="StackLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -2.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 10
 text = "1"
-horizontal_alignment = 2
-vertical_alignment = 2
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

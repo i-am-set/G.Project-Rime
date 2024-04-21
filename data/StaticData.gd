@@ -33,7 +33,7 @@ func create_item_from_id(item_id : String) -> InventoryItem:
 	new_item.item_height = item_data[item_id]["item_height"]
 	new_item.stack_size = item_data[item_id]["stack_size"]
 	new_item.item_weight = item_data[item_id]["item_weight"]
-	if item_data[item_id].has("item_mesh"):
+	if item_data[item_id]["item_mesh"] != null:
 		new_item.item_mesh = load(item_data[item_id]["item_mesh"])
 	else:
 		new_item.item_mesh = MISSING_MESH_MODEL

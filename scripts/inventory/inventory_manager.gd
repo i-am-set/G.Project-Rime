@@ -49,8 +49,8 @@ func _input(event):
 
 func _process(delta):
 	mouse_pos = get_global_mouse_position()
+	held_item_preview_follow_mouse()
 	tooltip_follow_mouse()
-	held_item_follow_mouse()
 	queue_redraw()
 
 func _draw():
@@ -80,10 +80,31 @@ func handle_click(event, _click_pos : Vector2):
 				HideRmbMenu()
 		for _subinventory in subinventories:
 			if _subinventory.get_rect().has_point(_click_pos):
-				if event.is_action_pressed("left_mouse_click"):
+				if event.is_action_pressed("quick_move_item"):
+					if held_item_reference != null:
+						if _subinventory.try_quick_add_item(held_item_reference, held_item_reference["item_rect"].current_stack):
+							held_item_subinventory.remove_item(held_item_reference)
+							HideHeldItemPreview()
+						else:
+							print_debug("Subinventory full...")
+					else:
+						var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
+						var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
+						
+						if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
+							var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
+							print_debug("Occupied! Trying to quick move ", _item["item"].item_name, " ; Stack size is ", _item["item_rect"].current_stack)
+							if _subinventory.try_quick_add_item(_item, _item["item_rect"].current_stack):
+								_subinventory.remove_item(_item)
+							else:
+								print_debug("Failed... Subinventory full...")
+						else:
+							print_debug("Empty...")
+				elif event.is_action_pressed("left_mouse_click"):
 					if held_item_reference != null:
 						var drop_cell_position = _subinventory.get_closest_cell_position(held_item_preview.position - _subinventory.global_position)
 						var drop_cell = _subinventory.position_to_cell(drop_cell_position)
+						
 						if _subinventory.try_add_item(held_item_reference["item"], held_item_reference["item_rect"].current_stack, drop_cell):
 							held_item_subinventory.remove_item(held_item_reference)
 							HideHeldItemPreview()
@@ -92,29 +113,77 @@ func handle_click(event, _click_pos : Vector2):
 					else:
 						var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
 						var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
-						print(_subinventory.name, closest_cell_to_click)
 						
 						if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
 							var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
 							var _inv_item = _item["item"]
-							print("Occupied! Picking up ", _inv_item.item_name, " ; Stack size is ", _item["item_rect"].current_stack)
+							print_debug("Occupied! Picking up ", _inv_item.item_name, " ; Stack size is ", _item["item_rect"].current_stack)
 							held_item_reference = _item
 							held_item_subinventory = _subinventory
 							held_item_preview.set_preview_size(Vector2(_inv_item.item_width, _inv_item.item_height))
-							held_item_preview.show()
+							held_item_preview.set_preview_stack_label(_item["item_rect"].current_stack)
+							ShowHeldItemPreview()
 						else:
-							print("Empty...")
+							print_debug("Empty...")
 				elif event.is_action_pressed("right_mouse_click"):
-					var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
-					var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
-					if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
-						var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
-						ShowRmbMenu(_item)
+					if held_item_reference != null:
+						var _drop_cell_position = _subinventory.get_closest_cell_position(held_item_preview.position - _subinventory.global_position)
+						var _drop_cell = _subinventory.position_to_cell(_drop_cell_position)
+						if _subinventory.get_item_in_cell(_drop_cell) != held_item_reference:
+							if held_item_reference["item_rect"].current_stack > 1:
+									_subinventory.split_item_one(held_item_reference, _drop_cell)
+									held_item_preview.set_preview_stack_label(held_item_reference["item_rect"].current_stack)
+							else:
+								if _subinventory.try_add_item(held_item_reference["item"], held_item_reference["item_rect"].current_stack, _drop_cell):
+									held_item_subinventory.remove_item(held_item_reference)
+									HideHeldItemPreview()
+								else:
+									print_debug("Space occupied.")
+					else:
+						var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
+						var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
+						if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
+							var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
+							ShowRmbMenu(_item)
 				elif event.is_action_pressed("middle_mouse_click"):
-					pass
+					if held_item_reference != null:
+						var _drop_cell_position = _subinventory.get_closest_cell_position(held_item_preview.position - _subinventory.global_position)
+						var _drop_cell = _subinventory.position_to_cell(_drop_cell_position)
+						if _subinventory.get_item_in_cell(_drop_cell) != held_item_reference:
+							if held_item_reference["item_rect"].current_stack > 1:
+									_subinventory.split_item_half(held_item_reference, _drop_cell)
+									held_item_preview.set_preview_stack_label(held_item_reference["item_rect"].current_stack)
+							else:
+								if _subinventory.try_add_item(held_item_reference["item"], held_item_reference["item_rect"].current_stack, _drop_cell):
+									held_item_subinventory.remove_item(held_item_reference)
+									HideHeldItemPreview()
+								else:
+									print_debug("Space occupied.")
+					else:
+						var closest_cell_position_to_click = _subinventory.get_closest_cell_position(_click_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
+						var closest_cell_to_click = _subinventory.position_to_cell(closest_cell_position_to_click)
+						
+						if _subinventory.is_space_occupied(closest_cell_to_click, Vector2.ONE):
+							var _item = _subinventory.get_item_in_cell(closest_cell_to_click)
+							var _inv_item = _item["item"]
+							print_debug("Occupied! Picking up ", _inv_item.item_name, " ; Stack size is ", _item["item_rect"].current_stack)
+							held_item_reference = _item
+							held_item_subinventory = _subinventory
+							held_item_preview.set_preview_size(Vector2(_inv_item.item_width, _inv_item.item_height))
+							held_item_preview.set_preview_stack_label(_item["item_rect"].current_stack)
+							ShowHeldItemPreview()
+						else:
+							print_debug("Empty...")
+				
+				# Update grid of subinventory that was clicked in
+				_subinventory.update_grid()
 
 func add_subinventory(_subinventory : Control):
 	subinventories_container.add_child(_subinventory)
+
+func ShowHeldItemPreview():
+	held_item_preview.display.texture = held_item_reference["item_rect"].display.texture
+	held_item_preview.show()
 
 func HideHeldItemPreview():
 	held_item_preview.hide()
@@ -137,16 +206,18 @@ func ShowRmbMenu(_item : Dictionary):
 func HideRmbMenu():
 	rmb_menu.hide()
 
-func held_item_follow_mouse():
+func held_item_preview_follow_mouse():
 	if held_item_reference != null:
-		held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["item"].item_width, held_item_reference["item"].item_height) * Global.INV_CELL_SIZE * 0.5 # Follow the mouse's x position
+		held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["item"].item_width, held_item_reference["item"].item_height) * Global.INV_CELL_SIZE * 0.5
 
 func tooltip_follow_mouse():
 	tooltip.position = mouse_pos
 
 func try_to_pick_up_item(_picked_up_item : InventoryItem, _stack_size : int) -> Control:
+	var _new_item : Dictionary = {"item" : _picked_up_item}
+	
 	for _subinventory in subinventories:
-		if _subinventory.try_quick_add_item(_picked_up_item, _stack_size):
+		if _subinventory.try_quick_add_item(_new_item, _stack_size):
 			return _subinventory
 	
 	return null
