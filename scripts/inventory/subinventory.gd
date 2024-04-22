@@ -41,6 +41,7 @@ func _draw():
 func update_grid():
 	for _item in items:
 		var _item_rect = _item["item_rect"]
+		_item_rect.display.texture = _item["inv_item"].item_image
 		_item_rect.position = cell_to_position(_item["cell"])
 		if inventory.held_item_subinventory == self:
 			if _item == inventory.held_item_reference:
@@ -232,7 +233,7 @@ func try_quick_split_item_stack(_item : Dictionary, _new_stack_size : int) -> bo
 func try_split_item_stack(_item : Dictionary, _new_stack_size : int, _drop_cell : Vector2, _rotated : bool) -> bool:
 	var _inv_item = _item["inv_item"]
 	
-	if can_stack_item(_inv_item, _new_stack_size, _drop_cell, _rotated):
+	if can_stack_item(_item, _new_stack_size, _drop_cell, _rotated):
 		var _item_rotation_vector : Vector2 = get_rotation_vector(_item["inv_item"], _item["rotated"])
 		
 		var _stackable_item : Dictionary = get_stackable_items(_inv_item, _new_stack_size, _drop_cell, _item_rotation_vector)

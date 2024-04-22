@@ -1,10 +1,10 @@
+ColorRect
 OmniLight3D
 Camera3D
 Node3D
 SubViewport
 Sprite2D
 MeshInstance3D
-ColorRect
 Control
 TextureRect
 RemoteTransform2D
@@ -12,4 +12,3 @@ Label
 TextureProgressBar
 ProgressBar
 Label3D
-CenterContainer

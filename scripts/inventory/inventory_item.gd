@@ -9,6 +9,7 @@ class_name InventoryItem
 @export var stack_size: int
 @export var item_weight: int
 @export var item_mesh: ArrayMesh
+@export var item_image: Texture
 
 # Optional: Provide a function to display basic info
 func _to_string() -> String:

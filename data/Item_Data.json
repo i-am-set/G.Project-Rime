@@ -2,8 +2,8 @@
   "a000001": {
     "item_name": "Flint",
     "item_width": 1,
-    "item_height": 1,
-    "stack_size": 5,
+    "item_height": 2,
+    "stack_size": 1,
     "item_weight": 1,
     "item_mesh": "res://meshes/items/resources/flint_item_model.obj"
   },
@@ -11,24 +11,24 @@
     "item_name": "Pebble",
     "item_width": 1,
     "item_height": 1,
-    "stack_size": 10,
+    "stack_size": 5,
     "item_weight": 0.25,
     "item_mesh": null
   },
   "a000003": {
-    "item_name": "Small Stone",
-    "item_width": 1,
-    "item_height": 1,
-    "stack_size": 5,
-    "item_weight": 1,
-    "item_mesh": null
-  },
-  "a000004": {
     "item_name": "Stone",
     "item_width": 2,
     "item_height": 2,
     "stack_size": 1,
     "item_weight": 4,
+    "item_mesh": null
+  },
+  "a000004": {
+    "item_name": "Null",
+    "item_width": 1,
+    "item_height": 1,
+    "stack_size": 1,
+    "item_weight": 1,
     "item_mesh": null
   },
   "a000005": {
@@ -37,7 +37,7 @@
     "item_height": 2,
     "stack_size": 10,
     "item_weight": 0.25,
-    "item_mesh": null
+    "item_mesh": "res://meshes/items/resources/twig_item_model.obj"
   },
   "a000006": {
     "item_name": "Stick",

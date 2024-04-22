@@ -42,3 +42,5 @@ res://scripts/inventory/inventory_manager.gd
 res://scripts/utility/mesh_to_texture_tool_script.gd
 res://scenes/utility/mesh_to_texture_tool.tscn
 res://data/StaticData.gd
+res://scripts/inventory/inventory_item.gd
+res://scripts/inventory/subinventory.gd
