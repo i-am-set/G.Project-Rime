@@ -43,3 +43,4 @@ res://scripts/inventory/held_item_preview.gd
 res://scripts/inventory/subinventory.gd
 res://scripts/inventory/item_rect.gd
 res://data/StaticData.gd
+res://addons/diagnosticlist/DiagnosticProvider.gd

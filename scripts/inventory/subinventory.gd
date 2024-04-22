@@ -18,23 +18,25 @@ func _ready():
 	update_grid()
 
 func _process(delta):
-	queue_redraw()
+	if Global.IS_IN_INVENTORY:
+		queue_redraw()
 
 func _draw():
-	var circle_radius = 2  # Adjust as needed
-	var circle_color = Color(1, 0, 0)  # Red color
-	
-	var closest_cell_to_preview = get_closest_cell_position(held_item_preview.global_position - global_position)
+	if Global.IS_IN_INVENTORY:
+		var circle_radius = 2  # Adjust as needed
+		var circle_color = Color(1, 0, 0)  # Red color
+		
+		var closest_cell_position_to_preview = get_closest_cell_position(held_item_preview.global_position - global_position)
 
-	draw_circle(closest_cell_to_preview + (Global.INV_CELL_SIZE * 0.5), 5, Color.RED)
-	
-	draw_line(Vector2(0,0), Vector2(columns*Global.INV_CELL_SIZE.x, 0), circle_color, 4)
-	draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, 0), Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
-	draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), Vector2(0, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
-	draw_line(Vector2(0, rows*Global.INV_CELL_SIZE.y), Vector2(0,0), circle_color, 4)
-	
-	for _cell in inventory_cells:
-		draw_circle(cell_to_position(_cell) + (Global.INV_CELL_SIZE * 0.5), circle_radius, circle_color)
+		draw_circle(closest_cell_position_to_preview + (Global.INV_CELL_SIZE * 0.5), 5, Color.RED)
+		
+		draw_line(Vector2(0,0), Vector2(columns*Global.INV_CELL_SIZE.x, 0), circle_color, 4)
+		draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, 0), Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
+		draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), Vector2(0, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
+		draw_line(Vector2(0, rows*Global.INV_CELL_SIZE.y), Vector2(0,0), circle_color, 4)
+		
+		for _cell in inventory_cells:
+			draw_circle(cell_to_position(_cell) + (Global.INV_CELL_SIZE * 0.5), circle_radius, circle_color)
 
 func update_grid():
 	for _item in items:
@@ -75,17 +77,23 @@ func position_to_cell(_pos : Vector2) -> Vector2:
 func cell_to_position(_cell : Vector2) -> Vector2:
 	return _cell * Global.INV_CELL_SIZE
 
+func get_rotation_vector(_item : InventoryItem, _rotated : bool) -> Vector2:
+	if !_rotated:
+		return Vector2(_item.item_width, _item.item_height)
+	else:
+		return Vector2(_item.item_height, _item.item_width)
+
 func get_stackable_items(_dropped_item : InventoryItem, _stack_size : int, _drop_cell : Vector2, _item_size : Vector2):
 	var cells_to_occupy = get_occupied_cells(_drop_cell, _item_size)
 	
 	# Check if space for an item is free
 	for _item in items:
 		if _item != inventory.held_item_reference:
-			if _item["item"].item_id == _dropped_item.item_id:
+			if _item["inv_item"].item_id == _dropped_item.item_id:
 				for _cell in cells_to_occupy:
-					var _occupied_cells = get_occupied_cells(_item["cell"], Vector2(_item["item"].item_width, _item["item"].item_height))
+					var _occupied_cells = get_occupied_cells(_item["cell"], Vector2(_item["inv_item"].item_width, _item["inv_item"].item_height))
 					if _cell in _occupied_cells:
-						if _item["item_rect"].current_stack + _stack_size <= _item["item"].stack_size:
+						if _item["item_rect"].current_stack + _stack_size <= _item["inv_item"].stack_size:
 							print_debug(_cell, " is stackable!")
 							return _item
 						else:
@@ -93,30 +101,32 @@ func get_stackable_items(_dropped_item : InventoryItem, _stack_size : int, _drop
 							return null
 	return null
 
-func try_stack_transfer(_dropped_item : InventoryItem, _droppped_stack_size : int, _drop_cell : Vector2, _item_size : Vector2):
+func try_stack_transfer(_dropped_item : Dictionary, _dropped_stack_size : int, _drop_cell : Vector2, _item_size : Vector2):
 	var cells_to_occupy = get_occupied_cells(_drop_cell, _item_size)
 	
 	# Check if space for an item is free
 	for _item in items:
-		if _item != inventory.held_item_reference:
-			if _item["item"].item_id == _dropped_item.item_id:
+		if _item != _dropped_item:
+			var _inv_item = _item["inv_item"]
+			var _item_rect = _item["item_rect"]
+			
+			if _inv_item.item_id == _dropped_item["inv_item"].item_id:
 				for _cell in cells_to_occupy:
-					var _occupied_cells = get_occupied_cells(_item["cell"], Vector2(_item["item"].item_width, _item["item"].item_height))
+					var _occupied_cells = get_occupied_cells(_item["cell"], Vector2(_inv_item.item_width, _inv_item.item_height))
 					if _cell in _occupied_cells:
-						if _item["item_rect"].current_stack + _droppped_stack_size > _item["item"].stack_size && _droppped_stack_size >= _item["item_rect"].current_stack:
-							var total_amount_transfering = _droppped_stack_size + _item["item_rect"].current_stack
-							
-							inventory.held_item_reference["item_rect"].current_stack = total_amount_transfering - _item["item"].stack_size
-							_item["item_rect"].current_stack = _item["item"].stack_size
+						var total_amount_transfering = _dropped_stack_size + _item_rect.current_stack
+						
+						if _item_rect.current_stack < _inv_item.stack_size && total_amount_transfering > _inv_item.stack_size && _dropped_stack_size >= _item_rect.current_stack:
+							_dropped_item["item_rect"].current_stack = total_amount_transfering -_inv_item.stack_size
+							_item_rect.current_stack = _inv_item.stack_size
 							print_debug(_cell, " stack transfered!")
 							return true
 						else:
 							printerr("Logic failed!")
-							return false
 	return false
 
-func is_space_occupied(_drop_cell : Vector2, _item_size : Vector2):
-	var cells_to_occupy = get_occupied_cells(_drop_cell, _item_size)
+func is_space_occupied(_drop_cell : Vector2, _item_shape : Vector2):
+	var cells_to_occupy = get_occupied_cells(_drop_cell, _item_shape)
 	
 	# Check if any cell is outside the bounds of the inventory grid
 	for cell in cells_to_occupy:
@@ -128,7 +138,9 @@ func is_space_occupied(_drop_cell : Vector2, _item_size : Vector2):
 	for _item in items:
 		if _item != inventory.held_item_reference:
 			for _cell in cells_to_occupy:
-				var _occupied_cells = get_occupied_cells(_item["cell"], Vector2(_item["item"].item_width, _item["item"].item_height))
+				var _item_rotation_vector : Vector2 = get_rotation_vector(_item["inv_item"], _item["rotated"])
+				
+				var _occupied_cells = get_occupied_cells(_item["cell"], _item_rotation_vector)
 				if _cell in _occupied_cells:
 					print_debug(_cell, " is occupied...")
 					return true
@@ -143,150 +155,178 @@ func get_occupied_cells(_starting_cell : Vector2, _item_size : Vector2) -> Array
 
 func get_item_in_cell(_cell : Vector2):
 	for _item in items:
-		var _occupied_cells = get_occupied_cells(_item["cell"], Vector2(_item["item"].item_width, _item["item"].item_height))
+		var _item_rotation_vector : Vector2 = get_rotation_vector(_item["inv_item"], _item["rotated"])
+		
+		var _occupied_cells = get_occupied_cells(_item["cell"], _item_rotation_vector)
 		if _cell in _occupied_cells:
 			return _item
 	
 	return null
 
-func can_add_item(_item : InventoryItem, _drop_cell : Vector2) -> bool:
-	if is_space_occupied(_drop_cell, Vector2(_item.item_width, _item.item_height)):
+func can_add_item(_item : InventoryItem, _drop_cell : Vector2, _rotated : bool) -> bool:
+	var _rotation_vector : Vector2 = get_rotation_vector(_item, _rotated)
+	
+	if is_space_occupied(_drop_cell, _rotation_vector):
 		return false
 	return true
 
-func can_stack_item(_item : InventoryItem, _stack_size : int, _drop_cell : Vector2) -> bool:
-	if get_stackable_items(_item, _stack_size, _drop_cell, Vector2(_item.item_width, _item.item_height)) != null:
+func can_stack_item(_item : Dictionary, _stack_size : int, _drop_cell : Vector2, _rotated : bool) -> bool:
+	var _item_rotation_vector : Vector2 = get_rotation_vector(_item["inv_item"], _rotated)
+	
+	if get_stackable_items(_item["inv_item"], _stack_size, _drop_cell, _item_rotation_vector) != null:
 		return true
 	return false
 
-func try_quick_add_item(_inv_item : Dictionary, _stack_size : int) -> bool:
-	var _item = _inv_item["item"]
+func try_quick_stack_transfer_item(_item : Dictionary, _stack_size : int) -> bool:
+	var _inv_item = _item["inv_item"]
 	
 	for _cell in inventory_cells:
-		if get_item_in_cell(_cell) != _inv_item:
-			if get_stackable_items(_item, _stack_size, _cell, Vector2(_item.item_width, _item.item_height)) != null:
-				try_add_item(_item, _stack_size, _cell)
-				return true
-			if try_stack_transfer(_item, _stack_size, _cell, Vector2(_item.item_width, _item.item_height)):
-				return true
-	for _cell in inventory_cells:
-		if !is_space_occupied(_cell, Vector2(_item.item_width, _item.item_height)):
-			try_add_item(_item, _stack_size, _cell)
-			return true
+		var _item_in_cell = get_item_in_cell(_cell)
+		if _item_in_cell != null:
+			if _item_in_cell != _item:
+				if try_stack_transfer(_item, _stack_size, _cell, Vector2(_inv_item.item_width, _inv_item.item_height)):
+					return true
 	
 	return false
 
-func try_quick_split_item_stack(_item : InventoryItem, _new_stack_size : int) -> bool:
+func try_quick_add_item(_item : Dictionary, _stack_size : int) -> bool:
+	var _inv_item = _item["inv_item"]
+	
 	for _cell in inventory_cells:
-		if !is_space_occupied(_cell, Vector2(_item.item_width, _item.item_height)):
-			var new_item = ITEM_RECT.instantiate()
-			new_item.inv_item = _item
-			new_item.position = cell_to_position(_cell)
-			new_item.current_stack = _new_stack_size
-			add_child(new_item)
-			items.append({"item" : _item, "item_rect" : new_item, "cell" : _cell, "subinventory" : self})
+		if get_item_in_cell(_cell) != _item:
+			if get_stackable_items(_inv_item, _stack_size, _cell, get_rotation_vector(_item["inv_item"], false)) != null: # not rotated
+				try_add_item(_item, _stack_size, _cell, false)
+				update_grid()
+				return true
+			if get_stackable_items(_inv_item, _stack_size, _cell, get_rotation_vector(_item["inv_item"], true)) != null: # rotated
+				try_add_item(_item, _stack_size, _cell, true)
+				update_grid()
+				return true
+	for _cell in inventory_cells:
+		if !is_space_occupied(_cell, get_rotation_vector(_item["inv_item"], false)): # not rotated
+			try_add_item(_item, _stack_size, _cell, false)
+			update_grid()
+			return true
+		if !is_space_occupied(_cell, get_rotation_vector(_item["inv_item"], true)): # rotated
+			try_add_item(_item, _stack_size, _cell, true)
 			update_grid()
 			return true
 	
 	return false
 
-func try_split_item_stack(_item : InventoryItem, _new_stack_size : int, _drop_cell : Vector2) -> bool:
-	if can_stack_item(_item, _new_stack_size, _drop_cell):
-		var _stackable_item : Dictionary = get_stackable_items(_item, _new_stack_size, _drop_cell, Vector2(_item.item_width, _item.item_height))
+func try_quick_split_item_stack(_item : Dictionary, _new_stack_size : int) -> bool:
+	var _inv_item = _item["inv_item"]
+	
+	for _cell in inventory_cells:
+		if !is_space_occupied(_cell, get_rotation_vector(_item["inv_item"], false)): # not rotated
+			add_new_item_backend(_inv_item, _new_stack_size, _cell, false)
+			update_grid()
+			return true
+		if !is_space_occupied(_cell, get_rotation_vector(_item["inv_item"], true)): # rotated
+			add_new_item_backend(_inv_item, _new_stack_size, _cell, true)
+			update_grid()
+			return true
+	
+	return false
+
+func try_split_item_stack(_item : Dictionary, _new_stack_size : int, _drop_cell : Vector2, _rotated : bool) -> bool:
+	var _inv_item = _item["inv_item"]
+	
+	if can_stack_item(_inv_item, _new_stack_size, _drop_cell, _rotated):
+		var _item_rotation_vector : Vector2 = get_rotation_vector(_item["inv_item"], _item["rotated"])
+		
+		var _stackable_item : Dictionary = get_stackable_items(_inv_item, _new_stack_size, _drop_cell, _item_rotation_vector)
 		_stackable_item["item_rect"].current_stack += _new_stack_size
 		return true
 	
-	if !can_add_item(_item, _drop_cell):
+	if !can_add_item(_inv_item, _drop_cell, _rotated):
 		return false
 	
-	
-	var new_item = ITEM_RECT.instantiate()
-	new_item.inv_item = _item
-	new_item.position = cell_to_position(_drop_cell)
-	new_item.current_stack = _new_stack_size
-	add_child(new_item)
-	items.append({"item" : _item, "item_rect" : new_item, "cell" : _drop_cell, "subinventory" : self})
+	add_new_item_backend(_inv_item, _new_stack_size, _drop_cell, _rotated)
 	update_grid()
 	return true
 	
 	return false
 
-func try_add_item(_inv_item : InventoryItem, _stack_size : int, _drop_cell : Vector2) -> bool:
-	if can_stack_item(_inv_item, _stack_size, _drop_cell):
-		var _stackable_item : Dictionary = get_stackable_items(_inv_item, _stack_size, _drop_cell, Vector2(_inv_item.item_width, _inv_item.item_height))
+func try_add_item(_item : Dictionary, _stack_size : int, _drop_cell : Vector2, _rotated : bool) -> bool:
+	var _inv_item = _item["inv_item"]
+	var _item_rotation_vector : Vector2 = get_rotation_vector(_item["inv_item"], _rotated)
+	
+	if can_stack_item(_item, _stack_size, _drop_cell, _rotated):
+		var _stackable_item : Dictionary = get_stackable_items(_inv_item, _stack_size, _drop_cell, _item_rotation_vector)
 		_stackable_item["item_rect"].current_stack += _stack_size
 		return true
 	
-	if try_stack_transfer(_inv_item, _stack_size, _drop_cell, Vector2(_inv_item.item_width, _inv_item.item_height)):
+	if try_stack_transfer(_item, _stack_size, _drop_cell, _item_rotation_vector):
 		inventory.held_item_preview.set_preview_stack_label(inventory.held_item_reference["item_rect"].current_stack)
 		return false
 	
-	if !can_add_item(_inv_item, _drop_cell):
+	if !can_add_item(_inv_item, _drop_cell, _rotated):
 		return false
 	
-	var new_item = ITEM_RECT.instantiate()
-	new_item.inv_item = _inv_item
-	new_item.position = cell_to_position(_drop_cell)
-	new_item.current_stack = _stack_size
-	add_child(new_item)
-	items.append({"item" : _inv_item, "item_rect" : new_item, "cell" : _drop_cell, "subinventory" : self})
+	add_new_item_backend(_inv_item, _stack_size, _drop_cell, _rotated)
 	update_grid()
 	return true
+
+func add_new_item_backend(_inv_item : InventoryItem, _stack_size : int, _cell : Vector2, _rotated : bool):
+	var new_item = ITEM_RECT.instantiate()
+	new_item.inv_item = _inv_item
+	new_item.current_stack = _stack_size
+	new_item.position = cell_to_position(_cell)
+	new_item.is_rotated = _rotated
+	add_child(new_item)
+	append_item_to_items(_inv_item, new_item, _cell, self, _rotated)
 
 func drop_ground_item_backend(_dropped_item : InventoryItem, _stack_amount : int):
 	var player = inventory.fps_controller
 	player.world.instance_ground_item(_dropped_item, _stack_amount, player.drop_position.global_position)
 
-func split_item_one(_item : Dictionary, _drop_cell : Vector2):
-	var _cached_item : InventoryItem = _item["item"]
+func split_item_one(_item : Dictionary, _drop_cell : Vector2, _rotated : bool):
 	var _cached_stack_size : int = _item["item_rect"].current_stack
 	
 	var old_stack_size: int = _cached_stack_size - 1
 	var new_stack_size: int = 1
 	
-	if try_split_item_stack(_cached_item, new_stack_size, _drop_cell):
+	if try_split_item_stack(_item, new_stack_size, _drop_cell, _rotated):
 		_item["item_rect"].current_stack = old_stack_size
 	
 	update_grid()
 
-func split_item_half(_item : Dictionary, _drop_cell : Vector2):
-	var _cached_item : InventoryItem = _item["item"]
+func split_item_half(_item : Dictionary, _drop_cell : Vector2, _rotated : bool):
 	var _cached_stack_size : int = _item["item_rect"].current_stack
 	
 	var old_stack_size: int = _cached_stack_size / 2 + _cached_stack_size % 2
 	var new_stack_size: int = _cached_stack_size - old_stack_size
 	
-	if try_split_item_stack(_cached_item, new_stack_size, _drop_cell):
+	if try_split_item_stack(_item, new_stack_size, _drop_cell, _rotated):
 		_item["item_rect"].current_stack = old_stack_size
 	
 	update_grid()
 
 func quick_split_item_one(_item : Dictionary):
-	var _cached_item : InventoryItem = _item["item"]
 	var _cached_stack_size : int = _item["item_rect"].current_stack
 	
 	var old_stack_size: int = _cached_stack_size - 1
 	var new_stack_size: int = 1
 	
-	if try_quick_split_item_stack(_cached_item, new_stack_size):
+	if try_quick_split_item_stack(_item, new_stack_size):
 		_item["item_rect"].current_stack = old_stack_size
 	
 	update_grid()
 
 func quick_split_item_half(_item : Dictionary):
-	var _cached_item : InventoryItem = _item["item"]
 	var _cached_stack_size : int = _item["item_rect"].current_stack
 	
 	var old_stack_size: int = _cached_stack_size / 2 + _cached_stack_size % 2
 	var new_stack_size: int = _cached_stack_size - old_stack_size
 	
-	if try_quick_split_item_stack(_cached_item, new_stack_size):
+	if try_quick_split_item_stack(_item, new_stack_size):
 		_item["item_rect"].current_stack = old_stack_size
 	
 	update_grid()
 
 func drop_item_one(_item : Dictionary):
-	var _cached_item : InventoryItem = _item["item"]
+	var _cached_item : InventoryItem = _item["inv_item"]
 	
 	if _item["item_rect"].current_stack > 1:
 		_item["item_rect"].current_stack -= 1
@@ -299,7 +339,7 @@ func drop_item_one(_item : Dictionary):
 
 func drop_item_all(_item : Dictionary):
 	var _cached_item_stack_amount : int = _item["item_rect"].current_stack
-	var _cached_item : InventoryItem = _item["item"]
+	var _cached_item : InventoryItem = _item["inv_item"]
 	
 	remove_item(_item)
 	
@@ -311,3 +351,6 @@ func remove_item(_item : Dictionary):
 	items.erase(_item)
 	_item["item_rect"].queue_free()
 	update_grid()
+
+func append_item_to_items(_item : InventoryItem, _item_rect : Control, _cell : Vector2, _sub_inventory : Control, _rotated : bool):
+	items.append({"inv_item" : _item, "item_rect" : _item_rect, "cell" : _cell, "subinventory" : _sub_inventory, "rotated" : _rotated})

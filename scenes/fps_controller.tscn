@@ -1575,14 +1575,25 @@ size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
 columns = 4
 
-[node name="GhostPreview" type="ColorRect" parent="UserInterface/InventoryMenu"]
-visible = false
+[node name="Selector" type="Control" parent="UserInterface/InventoryMenu"]
 layout_mode = 2
-offset_right = 50.0
-offset_bottom = 50.0
+anchors_preset = 0
+offset_right = 30.0
+offset_bottom = 30.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-color = Color(0.745098, 0.0823529, 0.454902, 0.556863)
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="UserInterface/InventoryMenu/Selector"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(15, 15)
+mouse_filter = 2
+color = Color(1, 1, 1, 0.392157)
 
 [node name="Tooltip" parent="UserInterface/InventoryMenu" instance=ExtResource("22_m7qam")]
 
@@ -1590,7 +1601,6 @@ color = Color(0.745098, 0.0823529, 0.454902, 0.556863)
 layout_mode = 1
 
 [node name="held_item_preview" type="Control" parent="UserInterface/InventoryMenu"]
-visible = false
 anchors_preset = 0
 offset_right = 2.0
 offset_bottom = 2.0

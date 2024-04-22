@@ -1,15 +1,14 @@
+ColorRect
+Control
 TextureRect
 RemoteTransform2D
-ColorRect
 Label
 TextureProgressBar
 ProgressBar
 Label3D
 CenterContainer
-Control
 Node3D
 RayCast3D
 Button
 RichTextLabel
 HBoxContainer
-VBoxContainer

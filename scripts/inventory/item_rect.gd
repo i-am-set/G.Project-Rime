@@ -9,6 +9,10 @@ var held_item_preview : Control
 var mouse_is_over = false
 var max_scale : float = 1.25
 var tooltip_timer: Timer
+var is_rotated : bool = false:
+	set(new_value):
+		is_rotated = new_value
+		rotate_item_rect()
 
 var current_stack : int : set = set_current_stack
 func set_current_stack(value):
@@ -29,27 +33,32 @@ func _process(delta):
 	subinventory = get_parent()
 	held_item_preview = subinventory.held_item_preview
 
-func _physics_process(delta):
-	hover_item()
+func rotate_item_rect():
+	if display == null:
+		display = get_node("Display")
+	if is_rotated:
+		display.rotation_degrees = -90
+		display.modulate = Color.GOLD
+	else:
+		display.rotation_degrees = 0
+		display.modulate = Color.WHITE
 
 func update_item_size():
 	size = Vector2(inv_item.item_width, inv_item.item_height) * Global.INV_CELL_SIZE
+	
+	if display == null:
+		display = get_node("Display")
+	
+	display.pivot_offset = Global.INV_CELL_SIZE * 0.5
 
 func update_current_stack():
 	if stack_label == null:
 		stack_label = $StackLabel
-	if current_stack > 1:
-		stack_label.text = str(current_stack)
-	else:
-		stack_label.text = ""
-
-func hover_item():
-	if mouse_is_over:
-		if display.texture != null:
-			display.scale = Vector2(max_scale, max_scale)
-	else:
-		if display.texture != null:
-			display.scale = Vector2(1, 1)
+	stack_label.text = str(current_stack)
+	#if current_stack > 1:
+		#stack_label.text = str(current_stack)
+	#else:
+		#stack_label.text = ""
 
 func highlight_item_display(toggle : bool):
 	highlight_mask.visible = toggle
