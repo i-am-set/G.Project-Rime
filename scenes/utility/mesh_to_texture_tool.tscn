@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmvb6trpov2to"]
+
+[ext_resource type="Script" path="res://scripts/utility/mesh_to_texture_tool_script.gd" id="1_xd0qr"]
+[ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="2_l5020"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1nglg"]
+viewport_path = NodePath("SubViewport")
+
+[node name="MeshToTextureTool" type="Node3D"]
+script = ExtResource("1_xd0qr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("ViewportTexture_1nglg")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+own_world_3d = true
+transparent_bg = true
+
+[node name="Node3D" type="Node3D" parent="SubViewport"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D"]
+mesh = ExtResource("2_l5020")
+skeleton = NodePath("../../..")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.931786)
+fov = 20.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewport/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98922, 0.746138, 0)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewport/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.93306, 0.339256, 0)

@@ -1,3 +1,9 @@
+OmniLight3D
+Camera3D
+Node3D
+SubViewport
+Sprite2D
+MeshInstance3D
 ColorRect
 Control
 TextureRect
@@ -7,8 +13,3 @@ TextureProgressBar
 ProgressBar
 Label3D
 CenterContainer
-Node3D
-RayCast3D
-Button
-RichTextLabel
-HBoxContainer

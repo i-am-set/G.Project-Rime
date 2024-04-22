@@ -39,8 +39,6 @@ res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
 res://scripts/inventory/inventory_manager.gd
-res://scripts/inventory/held_item_preview.gd
-res://scripts/inventory/subinventory.gd
-res://scripts/inventory/item_rect.gd
+res://scripts/utility/mesh_to_texture_tool_script.gd
+res://scenes/utility/mesh_to_texture_tool.tscn
 res://data/StaticData.gd
-res://addons/diagnosticlist/DiagnosticProvider.gd

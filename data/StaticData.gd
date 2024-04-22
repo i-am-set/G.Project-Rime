@@ -1,12 +1,22 @@
 extends Node
 
+const MESH_TO_TEXTURE_TOOL = preload("res://scenes/utility/mesh_to_texture_tool.tscn")
+
 var item_data
 var item_data_file_path = "res://data/Item_Data.json"
+var mesh_to_texture_tool
 
 const MISSING_MESH_MODEL = preload("res://meshes/utility/missing_mesh_model.obj")
 
 func _ready():
+	mesh_to_texture_tool = MESH_TO_TEXTURE_TOOL.instantiate()
+	
 	item_data = import_json_file(item_data_file_path)
+	
+	for _item in item_data.keys():
+		var _item_mesh : ArrayMesh = load(_item["item_mesh"])
+		var _item_name : String = _item["item_name"]
+		mesh_to_texture_tool.process_image(_item_mesh, _item_name.replace(" ", "_"))
 	
 	Console.create_command("get_item_list", self.c_list_all_items, "Lists all items and their IDs.")
 

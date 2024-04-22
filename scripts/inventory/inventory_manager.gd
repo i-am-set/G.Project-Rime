@@ -26,28 +26,7 @@ func _ready():
 func _input(event):
 	if Global.IS_IN_INVENTORY:
 		if event is InputEventMouseMotion:
-			var _mouse_pos = mouse_pos - global_position
-			for _subinventory in subinventories:
-				if _subinventory.get_rect().has_point(_mouse_pos):
-					if held_item_reference != null:
-						var closest_cell_position = _subinventory.get_closest_cell_position(_mouse_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
-						var closest_cell = _subinventory.position_to_cell(closest_cell_position)
-						selector.size = held_item_reference["item_rect"].size
-						selector.get_child(0).rotation_degrees = held_item_preview.display.rotation_degrees
-						selector.position = closest_cell_position + _subinventory.global_position # bug - ghost preview isn't centered on weird shaped objects
-					else:
-						var closest_cell_position = _subinventory.get_closest_cell_position(_mouse_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
-						var closest_cell = _subinventory.position_to_cell(closest_cell_position)
-						if _subinventory.is_space_occupied(closest_cell, Vector2.ONE):
-							var _item = _subinventory.get_item_in_cell(closest_cell)
-							if _item != null:
-								selector.size = _item["item_rect"].size
-								selector.get_child(0).rotation_degrees = _item["item_rect"].display.rotation_degrees
-								selector.position = _subinventory.cell_to_position(_item["cell"]) + _subinventory.global_position
-						else:
-							selector.size = Global.INV_DEFAULT_CELL_SIZE
-							selector.rotation_degrees = 0
-							selector.position = closest_cell_position + _subinventory.global_position
+			ghost_preview_logic()
 		
 		if event.is_action_pressed("mouse_click"):
 			handle_click(event, mouse_pos - global_position)
@@ -74,6 +53,7 @@ func _input(event):
 		if event.is_action_pressed("rotate_held_item"):
 			if held_item_preview.visible && held_item_reference != null:
 				held_item_preview.is_rotated = !held_item_preview.is_rotated
+				Input.warp_mouse(mouse_pos)
 
 func _process(delta):
 	mouse_pos = get_global_mouse_position()
@@ -292,4 +272,26 @@ func c_give_item(item_id: String, number_of_item: int = 1) -> void:
 	if items_ignored > 0:
 		Console.print_line("Ignored [color=LIGHT_CORAL]%d[/color] '[color=GOLD]%s[/color]'." % [items_ignored, new_item.item_name])
 
-
+func ghost_preview_logic():
+	var _mouse_pos = mouse_pos - global_position
+	for _subinventory in subinventories:
+		if _subinventory.get_rect().has_point(_mouse_pos):
+			if held_item_reference != null:
+				var closest_cell_position = _subinventory.get_closest_cell_position(held_item_preview.position - _subinventory.global_position)
+				var closest_cell = _subinventory.position_to_cell(closest_cell_position)
+				selector.size = held_item_reference["item_rect"].size
+				selector.get_child(0).rotation_degrees = held_item_preview.display.rotation_degrees
+				selector.position = closest_cell_position + _subinventory.global_position # bug - ghost preview isn't centered on weird shaped objects
+			else:
+				var closest_cell_position = _subinventory.get_closest_cell_position(_mouse_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
+				var closest_cell = _subinventory.position_to_cell(closest_cell_position)
+				if _subinventory.is_space_occupied(closest_cell, Vector2.ONE):
+					var _item = _subinventory.get_item_in_cell(closest_cell)
+					if _item != null:
+						selector.size = _item["item_rect"].size
+						selector.get_child(0).rotation_degrees = _item["item_rect"].display.rotation_degrees
+						selector.position = _subinventory.cell_to_position(_item["cell"]) + _subinventory.global_position
+				else:
+					selector.size = Global.INV_DEFAULT_CELL_SIZE
+					selector.rotation_degrees = 0
+					selector.position = closest_cell_position + _subinventory.global_position

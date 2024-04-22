@@ -1,3 +1,5 @@
+res://scenes/utility
+res://scripts/utility
 D:/!Temp/!Builds/test6 4-20-2024
 res://materials/utility
 D:/!Temp/!Builds/test5 4-17-2024
@@ -11,7 +13,6 @@ res://data
 res://resources/weapons
 res://shaders
 res://ui/button_groups
-res://scenes/utility
 res://resources
 res://scripts/player
 c:/Users/SethLaptop/wkspaces/!Builds
@@ -19,5 +20,3 @@ res://textures/ui
 res://shaders/2d
 res://addons/godot-console/scripts
 res://
-res://materials
-res://scenes/resourceobjects/nature/nodes/colliders
