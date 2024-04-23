@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://ca0qt70ydcxfg"]
+
+[ext_resource type="Script" path="res://scripts/inventory/held_item_preview.gd" id="1_wjh4w"]
+[ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="2_w0gfa"]
+
+[sub_resource type="Theme" id="Theme_dyc67"]
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.729412)
+Label/font_sizes/font_size = 10
+Label/fonts/font = ExtResource("2_w0gfa")
+
+[node name="held_item_preview" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 2.0
+offset_bottom = 2.0
+script = ExtResource("1_wjh4w")
+
+[node name="Display" type="TextureRect" parent="."]
+layout_mode = 1
+expand_mode = 1
+
+[node name="StackLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_dyc67")
+text = "1"

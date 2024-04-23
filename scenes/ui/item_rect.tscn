@@ -16,7 +16,7 @@ offset_bottom = 30.0
 theme = SubResource("Theme_34mqv")
 script = ExtResource("1_61j55")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="DisplayBackground" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,12 +27,7 @@ color = Color(0.745098, 0.745098, 0.745098, 0.376471)
 
 [node name="Display" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-expand_mode = 2
+expand_mode = 1
 
 [node name="HighlightMask" type="ColorRect" parent="Display"]
 visible = false

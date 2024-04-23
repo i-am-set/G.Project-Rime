@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=94 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -39,9 +39,9 @@
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
 [ext_resource type="Script" path="res://scripts/inventory/inventory_manager.gd" id="20_mmuft"]
 [ext_resource type="Script" path="res://scripts/inventory/subinventory.gd" id="21_g0f63"]
-[ext_resource type="Script" path="res://scripts/inventory/held_item_preview.gd" id="22_8y7sx"]
 [ext_resource type="PackedScene" uid="uid://nvpqhb7ntek8" path="res://scenes/ui/inventory_tooltip.tscn" id="22_m7qam"]
 [ext_resource type="PackedScene" uid="uid://b4kiu73xi3i07" path="res://scenes/ui/inventory_rmb_menu.tscn" id="23_xmp0g"]
+[ext_resource type="PackedScene" uid="uid://ca0qt70ydcxfg" path="res://scenes/ui/held_item_preview.tscn" id="25_8skjh"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nitno"]
@@ -766,11 +766,6 @@ shadow_color = Color(0, 0, 0, 0.301961)
 shadow_size = 40
 shadow_offset = Vector2(0, 27.51)
 
-[sub_resource type="Theme" id="Theme_dyc67"]
-Label/colors/font_shadow_color = Color(0, 0, 0, 0.729412)
-Label/font_sizes/font_size = 10
-Label/fonts/font = ExtResource("7_22y7g")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
 
@@ -878,7 +873,7 @@ outline_size = 10
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"JumpStart", &"Walking", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1600,31 +1595,7 @@ color = Color(1, 1, 1, 0.392157)
 [node name="RmbMenu" parent="UserInterface/InventoryMenu" instance=ExtResource("23_xmp0g")]
 layout_mode = 1
 
-[node name="held_item_preview" type="Control" parent="UserInterface/InventoryMenu"]
-visible = false
-anchors_preset = 0
-offset_right = 2.0
-offset_bottom = 2.0
-script = ExtResource("22_8y7sx")
-
-[node name="Display" type="TextureRect" parent="UserInterface/InventoryMenu/held_item_preview"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-expand_mode = 2
-
-[node name="StackLabel" type="Label" parent="UserInterface/InventoryMenu/held_item_preview"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_dyc67")
-text = "1"
+[node name="held_item_preview" parent="UserInterface/InventoryMenu" instance=ExtResource("25_8skjh")]
 
 [node name="Debug" type="Control" parent="UserInterface"]
 layout_mode = 1

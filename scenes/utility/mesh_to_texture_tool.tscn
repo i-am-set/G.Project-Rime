@@ -13,7 +13,6 @@ script = ExtResource("1_xd0qr")
 texture = SubResource("ViewportTexture_1nglg")
 
 [node name="SubViewport" type="SubViewport" parent="."]
-transparent_bg = true
 size = Vector2i(256, 256)
 
 [node name="Node3D" type="Node3D" parent="SubViewport"]

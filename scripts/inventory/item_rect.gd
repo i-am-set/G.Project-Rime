@@ -1,6 +1,7 @@
 extends Control
 
 @onready var display = $Display
+@onready var display_background = $DisplayBackground
 @onready var highlight_mask = $Display/HighlightMask
 @onready var stack_label : Label = $StackLabel
 
@@ -35,30 +36,43 @@ func _process(delta):
 
 func rotate_item_rect():
 	if display == null:
-		display = get_node("Display")
+		display = $Display
+	if display_background == null:
+		display_background = $DisplayBackground
+	
 	if is_rotated:
-		display.rotation_degrees = -90
-		display.modulate = Color.GOLD
+		if inv_item.item_width > 2 || inv_item.item_height > 2:
+			display.rotation_degrees = 90
+			display_background.rotation_degrees = 90
+			display.modulate = Color.GOLD
+		else:
+			display.rotation_degrees = -90
+			display_background.rotation_degrees = -90
+			display.modulate = Color.GOLD
 	else:
 		display.rotation_degrees = 0
+		display_background.rotation_degrees = 0
 		display.modulate = Color.WHITE
 
 func update_item_size():
 	size = Vector2(inv_item.item_width, inv_item.item_height) * Global.INV_CELL_SIZE
 	
 	if display == null:
-		display = get_node("Display")
+		display = $Display
+	if display_background == null:
+		display_background = $DisplayBackground
 	
+	display.size = Vector2(inv_item.item_width, inv_item.item_height) * Global.INV_CELL_SIZE
 	display.pivot_offset = Global.INV_CELL_SIZE * 0.5
+	display_background.pivot_offset = Global.INV_CELL_SIZE * 0.5
 
 func update_current_stack():
 	if stack_label == null:
 		stack_label = $StackLabel
-	stack_label.text = str(current_stack)
-	#if current_stack > 1:
-		#stack_label.text = str(current_stack)
-	#else:
-		#stack_label.text = ""
+	if current_stack > 1:
+		stack_label.text = str(current_stack)
+	else:
+		stack_label.text = ""
 
 func highlight_item_display(toggle : bool):
 	highlight_mask.visible = toggle

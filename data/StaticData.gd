@@ -47,7 +47,7 @@ func process_mesh_to_images():
 		else:
 			_item_mesh = MISSING_MESH_MODEL
 		var _item_width : int = item_data[_item]["item_width"]
-		var _item_height : int = item_data[_item]["item_width"]
+		var _item_height : int = item_data[_item]["item_height"]
 		var _item_name : String = item_data[_item]["item_name"]
 		await mesh_to_texture_tool.process_image(_item_mesh, _item_name.to_lower().replace(" ", "_"), _item_width, _item_height)
 		print_debug("Processed image for ", _item_name)

@@ -17,6 +17,7 @@ func process_image(_mesh : ArrayMesh, _name : String, _width_multiplier : int, _
 	sub_viewport.own_world_3d = true
 	
 	sub_viewport.size = Vector2(base_image_resolution * _width_multiplier, base_image_resolution * _height_multiplier)
+	print(Vector2(base_image_resolution * _width_multiplier, base_image_resolution * _height_multiplier))
 	
 	mesh_instance_3d.mesh = _mesh
 	await get_tree().create_timer(0.2).timeout
