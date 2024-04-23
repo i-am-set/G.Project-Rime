@@ -22,7 +22,6 @@ res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/utility/mesh_height_curve.tres
 res://shaders/snow_post_processesing.gdshader
-res://scripts/inventory/held_item_preview.gd
 res://scenes/fps_controller.tscn
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
@@ -31,4 +30,10 @@ res://scenes/maingame/ground_item.tscn
 res://scenes/ui/item_rect.tscn
 res://scenes/ui/inventory_rmb_menu.tscn
 res://scenes/utility/mesh_to_texture_tool.tscn
+res://data/StaticData.gd
+res://data/Item_Data.json
+res://scripts/inventory/held_item_preview.gd
+res://scripts/inventory/item_rect.gd
 res://scripts/inventory/inventory_manager.gd
+res://scripts/utility/mesh_to_texture_tool_script.gd
+res://scripts/inventory/ground_item.gd

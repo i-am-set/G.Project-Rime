@@ -13,17 +13,19 @@ script = ExtResource("1_xd0qr")
 texture = SubResource("ViewportTexture_1nglg")
 
 [node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
 size = Vector2i(256, 256)
 
 [node name="Node3D" type="Node3D" parent="SubViewport"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D"]
-transform = Transform3D(1, 0, 0, 0, 0.962616, -0.270869, 0, 0.270869, 0.962616, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = ExtResource("2_6w6qm")
 skeleton = NodePath("../../..")
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.931786)
+projection = 1
 fov = 40.0
 size = 0.65
 

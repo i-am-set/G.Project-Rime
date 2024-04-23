@@ -40,19 +40,21 @@ func rotate_item_rect():
 	if display_background == null:
 		display_background = $DisplayBackground
 	
-	if is_rotated:
-		if inv_item.item_width > 2 || inv_item.item_height > 2:
-			display.rotation_degrees = 90
-			display_background.rotation_degrees = 90
-			display.modulate = Color.GOLD
+	if is_rotated && inv_item.item_width != inv_item.item_height:
+		if inv_item.item_width > 1:
+			display.pivot_offset = Global.INV_CELL_SIZE * 0.5 * Vector2(inv_item.item_width, inv_item.item_width)
+			display_background.pivot_offset = Global.INV_CELL_SIZE * 0.5 * Vector2(inv_item.item_width, inv_item.item_width)
 		else:
-			display.rotation_degrees = -90
-			display_background.rotation_degrees = -90
-			display.modulate = Color.GOLD
+			display.pivot_offset = Global.INV_CELL_SIZE * 0.5
+			display_background.pivot_offset = Global.INV_CELL_SIZE * 0.5 * Vector2(inv_item.item_width, inv_item.item_width)
+		display.rotation_degrees = -90
+		display_background.rotation_degrees = -90
+		#display.modulate = Color.GOLD
 	else:
 		display.rotation_degrees = 0
 		display_background.rotation_degrees = 0
-		display.modulate = Color.WHITE
+		#display.modulate = Color.WHITE
+		display.pivot_offset = Global.INV_CELL_SIZE * 0.5
 
 func update_item_size():
 	size = Vector2(inv_item.item_width, inv_item.item_height) * Global.INV_CELL_SIZE

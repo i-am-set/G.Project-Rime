@@ -1,24 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://co4ekrifuc318"]
+[gd_scene load_steps=3 format=3 uid="uid://co4ekrifuc318"]
 
 [ext_resource type="Script" path="res://scripts/inventory/ground_item.gd" id="1_v12ep"]
 [ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="2_rithw"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_dardh"]
-size = Vector3(0.25, 0.25, 0.25)
-
 [node name="ground_item" type="RigidBody3D"]
 collision_layer = 4
-collision_mask = 13
+collision_mask = 9
 continuous_cd = true
 max_contacts_reported = 4
 contact_monitor = true
 script = ExtResource("1_v12ep")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visibility_range_end = 100.0
 mesh = ExtResource("2_rithw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0093689, 0, -0.00146484)
-shape = SubResource("BoxShape3D_dardh")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

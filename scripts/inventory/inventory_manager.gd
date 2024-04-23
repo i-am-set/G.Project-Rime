@@ -19,6 +19,7 @@ var held_item_subinventory : Control = null
 var mouse_pos : Vector2
 
 func _ready():
+	HideHeldItemPreview()
 	HideTooltip()
 	HideRmbMenu()
 	Console.create_command("give", self.c_give_item, "Quick adds the given item by ID into if space is available; Does nothing if no space.")
@@ -65,7 +66,7 @@ func _draw():
 	var circle_radius = 2  # Adjust as needed
 	var circle_color = Color(1, 0, 0)  # Red color
 	
-	#draw_circle(get_closest_cell_position(held_item_preview.global_position - global_position), 5, Color.RED)
+	#draw_circle(held_item_preview.global_position - global_position, 5, Color.PURPLE)
 	draw_circle(get_global_mouse_position() - global_position, 3, Color.GREEN)
 	
 	#for _subinventory in subinventories:
@@ -228,10 +229,13 @@ func HideRmbMenu():
 
 func held_item_preview_follow_mouse():
 	if held_item_reference != null:
+		# Adjust pivot based on rotation
+		var offset = Vector2()
 		if !held_item_preview.is_rotated:
-			held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["inv_item"].item_width, held_item_reference["inv_item"].item_height) * Global.INV_CELL_SIZE * 0.5
+			offset = Vector2(held_item_reference["inv_item"].item_width, held_item_reference["inv_item"].item_height) * Global.INV_CELL_SIZE * 0.5
 		else:
-			held_item_preview.position = get_global_mouse_position() - Vector2(held_item_reference["inv_item"].item_height, held_item_reference["inv_item"].item_width) * Global.INV_CELL_SIZE * 0.5
+			offset = Vector2(held_item_reference["inv_item"].item_height, held_item_reference["inv_item"].item_width) * Global.INV_CELL_SIZE * 0.5
+		held_item_preview.position = get_global_mouse_position() - offset
 
 func tooltip_follow_mouse():
 	tooltip.position = mouse_pos
@@ -281,17 +285,21 @@ func ghost_preview_logic():
 				var closest_cell = _subinventory.position_to_cell(closest_cell_position)
 				selector.size = held_item_reference["item_rect"].size
 				selector.get_child(0).rotation_degrees = held_item_preview.display.rotation_degrees
-				selector.position = closest_cell_position + _subinventory.global_position # bug - ghost preview isn't centered on weird shaped objects
+				selector.get_child(0).pivot_offset = held_item_preview.display.pivot_offset
+				selector.position = closest_cell_position + _subinventory.global_position
 			else:
 				var closest_cell_position = _subinventory.get_closest_cell_position(_mouse_pos - _subinventory.position - Global.INV_CELL_SIZE * 0.5)
 				var closest_cell = _subinventory.position_to_cell(closest_cell_position)
 				if _subinventory.is_space_occupied(closest_cell, Vector2.ONE):
 					var _item = _subinventory.get_item_in_cell(closest_cell)
 					if _item != null:
+						var _inv_item = _item["inv_item"]
 						selector.size = _item["item_rect"].size
 						selector.get_child(0).rotation_degrees = _item["item_rect"].display.rotation_degrees
+						selector.get_child(0).pivot_offset = held_item_preview.get_correct_pivot(Vector2(_inv_item.item_width, _inv_item.item_height))
 						selector.position = _subinventory.cell_to_position(_item["cell"]) + _subinventory.global_position
 				else:
 					selector.size = Global.INV_DEFAULT_CELL_SIZE
 					selector.rotation_degrees = 0
+					selector.get_child(0).pivot_offset = Global.INV_CELL_SIZE * 0.5
 					selector.position = closest_cell_position + _subinventory.global_position

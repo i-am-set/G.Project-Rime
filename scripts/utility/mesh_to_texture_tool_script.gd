@@ -15,6 +15,7 @@ func process_image(_mesh : ArrayMesh, _name : String, _width_multiplier : int, _
 		mesh_instance_3d = $SubViewport/Node3D/MeshInstance3D
 	
 	sub_viewport.own_world_3d = true
+	sub_viewport.transparent_bg = true
 	
 	sub_viewport.size = Vector2(base_image_resolution * _width_multiplier, base_image_resolution * _height_multiplier)
 	print(Vector2(base_image_resolution * _width_multiplier, base_image_resolution * _height_multiplier))
