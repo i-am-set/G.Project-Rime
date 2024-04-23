@@ -17,6 +17,9 @@ script = ExtResource("1_wjh4w")
 
 [node name="Display" type="TextureRect" parent="."]
 layout_mode = 1
+offset_right = 120.0
+offset_bottom = 60.0
+rotation = 1.5708
 expand_mode = 1
 
 [node name="StackLabel" type="Label" parent="."]

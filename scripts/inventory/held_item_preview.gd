@@ -14,7 +14,7 @@ func _ready():
 
 func rotate_preview():
 	if is_rotated:
-		if inv_item_size.x > 2 || inv_item_size.y > 2:
+		if inv_item_size.x > inv_item_size.y:
 			display.rotation_degrees = 90
 			display.modulate = Color.GOLD
 		else:
