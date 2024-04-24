@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://ccubq0hf8glbo"
+path="res://.godot/imported/stick_item_model.obj-87b7b09bdca52915e5e105f544dffaf1.mesh"
+
+[deps]
+
+files=["res://.godot/imported/stick_item_model.obj-87b7b09bdca52915e5e105f544dffaf1.mesh"]
+
+source_file="res://meshes/items/resources/stick_item_model.obj"
+dest_files=["res://.godot/imported/stick_item_model.obj-87b7b09bdca52915e5e105f544dffaf1.mesh", "res://.godot/imported/stick_item_model.obj-87b7b09bdca52915e5e105f544dffaf1.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

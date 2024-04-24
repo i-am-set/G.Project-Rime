@@ -1,6 +1,8 @@
 extends Node
 
 const MESH_TO_TEXTURE_TOOL = preload("res://scenes/utility/mesh_to_texture_tool.tscn")
+const MESH_TO_TEXTURE_FILE_PATH = "res://textures/items/"
+const peanut = "res://textures/peanut/"
 
 var item_data
 var item_data_file_path = "res://data/Item_Data.json"

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://baeuve385i05"
+path="res://.godot/imported/stone_item_model.obj-1cd485931519558343114615b63728c7.mesh"
+
+[deps]
+
+files=["res://.godot/imported/stone_item_model.obj-1cd485931519558343114615b63728c7.mesh"]
+
+source_file="res://meshes/items/resources/stone_item_model.obj"
+dest_files=["res://.godot/imported/stone_item_model.obj-1cd485931519558343114615b63728c7.mesh", "res://.godot/imported/stone_item_model.obj-1cd485931519558343114615b63728c7.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

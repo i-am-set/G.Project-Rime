@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bgn6yrr4udgyw"
+path="res://.godot/imported/pebble_item_model.obj-7b2f859dd794693e8edea072561ef530.mesh"
+
+[deps]
+
+files=["res://.godot/imported/pebble_item_model.obj-7b2f859dd794693e8edea072561ef530.mesh"]
+
+source_file="res://meshes/items/resources/pebble_item_model.obj"
+dest_files=["res://.godot/imported/pebble_item_model.obj-7b2f859dd794693e8edea072561ef530.mesh", "res://.godot/imported/pebble_item_model.obj-7b2f859dd794693e8edea072561ef530.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
