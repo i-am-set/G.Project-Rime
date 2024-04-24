@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dmvb6trpov2to"]
 
 [ext_resource type="Script" path="res://scripts/utility/mesh_to_texture_tool_script.gd" id="1_xd0qr"]
-[ext_resource type="ArrayMesh" uid="uid://dk5vs1wiuocdv" path="res://meshes/utility/missing_mesh_model.obj" id="2_6w6qm"]
+[ext_resource type="ArrayMesh" uid="uid://p1sto0xe3o0x" path="res://meshes/items/resources/branch_item_model.obj" id="2_pbv3o"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_1nglg"]
 viewport_path = NodePath("SubViewport")
@@ -14,19 +14,18 @@ texture = SubResource("ViewportTexture_1nglg")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 transparent_bg = true
-size = Vector2i(256, 256)
+size = Vector2i(384, 768)
 
 [node name="Node3D" type="Node3D" parent="SubViewport"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport/Node3D"]
-mesh = ExtResource("2_6w6qm")
+mesh = ExtResource("2_pbv3o")
 skeleton = NodePath("../../..")
 
 [node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0302469, 0.931786)
 projection = 1
 fov = 40.0
-size = 0.65
 
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewport/Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.98922, 0.746138, 1)

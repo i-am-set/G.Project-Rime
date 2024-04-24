@@ -39,6 +39,7 @@ func _draw():
 			draw_circle(cell_to_position(_cell) + (Global.INV_CELL_SIZE * 0.5), circle_radius, circle_color)
 
 func update_grid():
+	set_up_cell_grid()
 	for _item in items:
 		var _item_rect = _item["item_rect"]
 		_item_rect.display.texture = _item["inv_item"].item_image
@@ -57,6 +58,7 @@ func set_up_cell_grid():
 	custom_minimum_size = Global.INV_CELL_SIZE * Vector2(columns, rows)
 	
 	# Set up the inventory size
+	inventory_cells.clear()
 	for i in range(rows):
 		for j in range(columns):
 			var _cell = Vector2(j, i)

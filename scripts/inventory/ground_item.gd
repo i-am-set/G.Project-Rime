@@ -48,8 +48,10 @@ func set_mesh_parameters():
 func toggle_highlight(toggle : bool):
 	if toggle:
 		mesh_instance.set_surface_override_material(0, HIGHLIGHT_MATERIAL)
+		mesh_instance.set_surface_override_material(1, HIGHLIGHT_MATERIAL)
 	else:
 		mesh_instance.set_surface_override_material(0, null)
+		mesh_instance.set_surface_override_material(1, null)
 
 func randomize_rotation():
 	var random_x = randf() * 2.0 * PI  # Random angle between 0 and 2π radians

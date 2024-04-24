@@ -299,7 +299,7 @@ func ghost_preview_logic():
 						selector.get_child(0).pivot_offset = held_item_preview.get_correct_pivot(Vector2(_inv_item.item_width, _inv_item.item_height))
 						selector.position = _subinventory.cell_to_position(_item["cell"]) + _subinventory.global_position
 				else:
-					selector.size = Global.INV_DEFAULT_CELL_SIZE
+					selector.size = Global.INV_CELL_SIZE
 					selector.rotation_degrees = 0
 					selector.get_child(0).pivot_offset = Global.INV_CELL_SIZE * 0.5
 					selector.position = closest_cell_position + _subinventory.global_position

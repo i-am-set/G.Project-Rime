@@ -3,6 +3,7 @@ extends Node3D
 @onready var sub_viewport = $SubViewport
 @onready var viewport_texture = $ViewportTexture
 @onready var mesh_instance_3d = $SubViewport/Node3D/MeshInstance3D
+@onready var camera_3d = $SubViewport/Node3D/Camera3D
 
 var base_image_resolution : int = 128
 
@@ -18,7 +19,9 @@ func process_image(_mesh : ArrayMesh, _name : String, _width_multiplier : int, _
 	sub_viewport.transparent_bg = true
 	
 	sub_viewport.size = Vector2(base_image_resolution * _width_multiplier, base_image_resolution * _height_multiplier)
-	print(Vector2(base_image_resolution * _width_multiplier, base_image_resolution * _height_multiplier))
+	camera_3d.size = 0.13*(_height_multiplier) + 0.24
+	print_debug(_name, " ", camera_3d.size)
+	print_debug(Vector2(base_image_resolution * _width_multiplier, base_image_resolution * _height_multiplier))
 	
 	mesh_instance_3d.mesh = _mesh
 	await get_tree().create_timer(0.2).timeout

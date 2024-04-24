@@ -50,7 +50,7 @@
 	"a000007": {
 		"item_name": "Branch",
 		"item_width": 2,
-		"item_height": 5,
+		"item_height": 10,
 		"stack_size": 1,
 		"item_weight": 2,
 		"item_mesh": "res://meshes/items/resources/branch_item_model.obj"
@@ -61,7 +61,7 @@
 		"item_height": 6,
 		"stack_size": 1,
 		"item_weight": 8,
-		"item_mesh": "res://meshes/items/resources/branch_item_model.obj"
+		"item_mesh": "res://meshes/items/resources/log_item_model.obj"
 	},
 	"a000009": {
 		"item_name": "Plant Fiber",
