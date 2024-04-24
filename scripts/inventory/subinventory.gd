@@ -2,9 +2,8 @@ extends Control
 
 const ITEM_RECT = preload("res://scenes/ui/item_rect.tscn")
 
-@onready var inventory = $"../.."
-@onready var held_item_preview = $"../../../held_item_preview"
 
+@export var inventory : Control
 @export var rows : int = 2
 @export var columns : int = 2
 
@@ -13,7 +12,6 @@ var items : Array[Dictionary] = [] # Stores item data and positions
 
 func _ready():
 	Global.inv_cell_size_updated.connect(update_grid)
-	
 	set_up_cell_grid()
 	update_grid()
 
@@ -26,7 +24,7 @@ func _draw():
 		var circle_radius = 2  # Adjust as needed
 		var circle_color = Color(1, 0, 0)  # Red color
 		
-		var closest_cell_position_to_preview = get_closest_cell_position(held_item_preview.global_position - global_position)
+		var closest_cell_position_to_preview = get_closest_cell_position(inventory.held_item_preview.global_position - global_position)
 
 		draw_circle(closest_cell_position_to_preview + (Global.INV_CELL_SIZE * 0.5), 5, Color.RED)
 		

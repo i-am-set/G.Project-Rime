@@ -1,3 +1,4 @@
+HBoxContainer
 SpotLight3D
 CollisionShape3D
 ColorRect
@@ -12,4 +13,3 @@ TextureRect
 RemoteTransform2D
 Label
 TextureProgressBar
-ProgressBar

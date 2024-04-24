@@ -873,7 +873,7 @@ outline_size = 10
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpStart", &"Walking", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1551,24 +1551,54 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 15
 
-[node name="subinventory" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/inventory/subinventories"]
+layout_mode = 2
+
+[node name="subinventory" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
+inventory = NodePath("../../..")
 rows = 4
 columns = 6
 
-[node name="subinventory2" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories"]
+[node name="subinventory2" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
+inventory = NodePath("../../..")
+rows = 4
+columns = 6
+
+[node name="subinventory3" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("21_g0f63")
+inventory = NodePath("../../..")
+rows = 4
+columns = 6
+
+[node name="subinventory" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("21_g0f63")
+inventory = NodePath("../..")
+rows = 4
+columns = 6
+
+[node name="subinventory2" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
+layout_mode = 2
+size_flags_horizontal = 0
+script = ExtResource("21_g0f63")
+inventory = NodePath("../..")
 rows = 10
 columns = 18
 
-[node name="subinventory3" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories"]
+[node name="subinventory3" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
+inventory = NodePath("../..")
 columns = 4
 
 [node name="Selector" type="Control" parent="UserInterface/InventoryMenu"]

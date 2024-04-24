@@ -32,7 +32,7 @@ func _ready():
 
 func _process(delta):
 	subinventory = get_parent()
-	held_item_preview = subinventory.held_item_preview
+	held_item_preview = subinventory.inventory.held_item_preview
 
 func rotate_item_rect():
 	if display == null:

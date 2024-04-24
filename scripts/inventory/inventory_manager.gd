@@ -10,8 +10,7 @@ extends Control
 
 var subinventories : Array = [] :
 	get:
-		subinventories.clear()
-		return subinventories_container.get_children()
+		return get_subinventories()
 
 var held_item_reference = null
 var held_item_subinventory : Control = null
@@ -197,6 +196,20 @@ func handle_click(event, _click_pos : Vector2):
 				####################################################################################################
 				# Update grid of subinventory that was clicked in
 				_subinventory.update_grid()
+
+func get_subinventories():
+	var _subinventories : Array[Control]
+	var _subinventories_container_children = subinventories_container.get_children()
+	for i in _subinventories_container_children:
+		if i.has_method("update_grid"):
+			_subinventories.append(i)
+		else:
+			var _children = i.get_children()
+			for j in _children:
+				if j is Control:
+					_subinventories.append(j)
+	
+	return _subinventories
 
 func add_subinventory(_subinventory : Control):
 	subinventories_container.add_child(_subinventory)
