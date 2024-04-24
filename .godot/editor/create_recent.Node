@@ -1,3 +1,4 @@
+SpotLight3D
 CollisionShape3D
 ColorRect
 OmniLight3D
@@ -12,4 +13,3 @@ RemoteTransform2D
 Label
 TextureProgressBar
 ProgressBar
-Label3D

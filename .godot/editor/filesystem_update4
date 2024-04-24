@@ -39,8 +39,3 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://data/Item_Data.json
-res://scripts/utility/mesh_to_texture_tool_script.gd
-res://scripts/inventory/ground_item.gd
-res://scripts/inventory/inventory_manager.gd
-res://scripts/inventory/subinventory.gd
