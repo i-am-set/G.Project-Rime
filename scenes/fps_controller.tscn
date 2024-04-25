@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=96 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -765,6 +765,11 @@ corner_radius_bottom_left = 10
 shadow_color = Color(0, 0, 0, 0.301961)
 shadow_size = 40
 shadow_offset = Vector2(0, 27.51)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hcl1o"]
+
+[sub_resource type="Theme" id="Theme_7s2dk"]
+Panel/styles/panel = SubResource("StyleBoxFlat_hcl1o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
@@ -1549,12 +1554,13 @@ script = ExtResource("20_mmuft")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = SubResource("Theme_7s2dk")
 theme_override_constants/separation = 15
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/inventory/subinventories"]
 layout_mode = 2
 
-[node name="subinventory" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
+[node name="subinventory" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
@@ -1562,7 +1568,7 @@ inventory = NodePath("../../..")
 rows = 4
 columns = 6
 
-[node name="subinventory2" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
+[node name="subinventory2" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
@@ -1570,7 +1576,7 @@ inventory = NodePath("../../..")
 rows = 4
 columns = 6
 
-[node name="subinventory3" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
+[node name="subinventory3" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
@@ -1578,7 +1584,7 @@ inventory = NodePath("../../..")
 rows = 4
 columns = 6
 
-[node name="subinventory" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
+[node name="subinventory" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
@@ -1586,7 +1592,7 @@ inventory = NodePath("../..")
 rows = 4
 columns = 6
 
-[node name="subinventory2" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
+[node name="subinventory2" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")
@@ -1594,7 +1600,7 @@ inventory = NodePath("../..")
 rows = 10
 columns = 18
 
-[node name="subinventory3" type="Control" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
+[node name="subinventory3" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("21_g0f63")

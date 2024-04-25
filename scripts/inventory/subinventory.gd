@@ -16,26 +16,40 @@ func _ready():
 	set_up_cell_grid()
 	update_grid()
 
-func _process(delta):
-	if Global.IS_IN_INVENTORY:
-		queue_redraw()
+#func _process(delta):
+	#if Global.IS_IN_INVENTORY:
+		#queue_redraw()
 
 func _draw():
 	if Global.IS_IN_INVENTORY:
-		var circle_radius = 2  # Adjust as needed
-		var circle_color = Color(1, 0, 0)  # Red color
+			# Fetch the inter-cell spacing from a global configuration or directly define here
+		var cell_width = Global.INV_CELL_SIZE.x
+		var cell_height = Global.INV_CELL_SIZE.y
 		
-		var closest_cell_position_to_preview = get_closest_cell_position(inventory.held_item_preview.global_position - global_position)
+		# Draw vertical lines for columns
+		for i in range(columns + 1):
+			var x = i * cell_width
+			draw_line(Vector2(x, 0), Vector2(x, rows * cell_height), Color(1, 1, 1))
+		
+		# Draw horizontal lines for rows
+		for j in range(rows + 1):
+			var y = j * cell_height
+			draw_line(Vector2(0, y), Vector2(columns * cell_width, y), Color(1, 1, 1))
 
-		draw_circle(closest_cell_position_to_preview + (Global.INV_CELL_SIZE * 0.5), 5, Color.RED)
-		
-		draw_line(Vector2(0,0), Vector2(columns*Global.INV_CELL_SIZE.x, 0), circle_color, 4)
-		draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, 0), Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
-		draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), Vector2(0, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
-		draw_line(Vector2(0, rows*Global.INV_CELL_SIZE.y), Vector2(0,0), circle_color, 4)
-		
-		for _cell in inventory_cells:
-			draw_circle(cell_to_position(_cell) + (Global.INV_CELL_SIZE * 0.5), circle_radius, circle_color)
+		#var circle_radius = 2  # Adjust as needed
+		#var circle_color = Color(1, 0, 0)  # Red color
+		#
+		#var closest_cell_position_to_preview = get_closest_cell_position(inventory.held_item_preview.global_position - global_position)
+#
+		#draw_circle(closest_cell_position_to_preview + (Global.INV_CELL_SIZE * 0.5), 5, Color.RED)
+		#
+		#draw_line(Vector2(0,0), Vector2(columns*Global.INV_CELL_SIZE.x, 0), circle_color, 4)
+		#draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, 0), Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
+		#draw_line(Vector2(columns*Global.INV_CELL_SIZE.x, rows*Global.INV_CELL_SIZE.y), Vector2(0, rows*Global.INV_CELL_SIZE.y), circle_color, 4)
+		#draw_line(Vector2(0, rows*Global.INV_CELL_SIZE.y), Vector2(0,0), circle_color, 4)
+		#
+		#for _cell in inventory_cells:
+			#draw_circle(cell_to_position(_cell) + (Global.INV_CELL_SIZE * 0.5), circle_radius, circle_color)
 
 func update_grid():
 	set_up_cell_grid()

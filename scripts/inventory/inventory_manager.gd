@@ -57,7 +57,7 @@ func _process(delta):
 	mouse_pos = get_global_mouse_position()
 	held_item_preview_follow_mouse()
 	tooltip_follow_mouse()
-	queue_redraw()
+	#queue_redraw()
 
 func _draw():
 	var circle_radius = 2  # Adjust as needed
