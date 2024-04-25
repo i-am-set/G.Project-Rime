@@ -1,4 +1,5 @@
 extends Control
+class_name Subinventory
 
 const ITEM_RECT = preload("res://scenes/ui/item_rect.tscn")
 

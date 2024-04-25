@@ -8,9 +8,7 @@ extends Control
 @onready var selector = $"../Selector"
 @onready var subinventories_container = $subinventories
 
-var subinventories : Array = [] :
-	get:
-		return get_subinventories()
+var subinventories : Array[Subinventory] = []
 
 var held_item_reference = null
 var held_item_subinventory : Control = null
@@ -197,17 +195,20 @@ func handle_click(event, _click_pos : Vector2):
 				# Update grid of subinventory that was clicked in
 				_subinventory.update_grid()
 
-func get_subinventories():
-	var _subinventories : Array[Control]
-	var _subinventories_container_children = subinventories_container.get_children()
-	for i in _subinventories_container_children:
-		if i.has_method("update_grid"):
-			_subinventories.append(i)
+func set_subinventories():
+	subinventories = get_subinventories()
+
+func get_subinventories(node = null) -> Array[Subinventory]:
+	if node == null:
+		node = subinventories_container
+	var _node_children = node.get_children()
+	
+	var _subinventories : Array[Subinventory] = []
+	for child in _node_children:
+		if child is Subinventory:
+			_subinventories.append(child)
 		else:
-			var _children = i.get_children()
-			for j in _children:
-				if j is Control:
-					_subinventories.append(j)
+			_subinventories += get_subinventories(child)
 	
 	return _subinventories
 
@@ -262,33 +263,6 @@ func try_to_pick_up_item(_picked_up_item : InventoryItem, _stack_size : int) -> 
 	
 	return null
 
-func c_give_item(item_id: String, number_of_item: int = 1) -> void:
-	var new_item = StaticData.create_item_from_id(item_id)
-	var items_added := 0
-	var items_ignored := 0
-	var inventory_destinations := {}
-	
-	for i in range(number_of_item):
-		var _inventory_destination = try_to_pick_up_item(new_item, 1)
-		
-		if _inventory_destination != null:
-			items_added += 1
-			if _inventory_destination.name in inventory_destinations:
-				inventory_destinations[_inventory_destination.name] += 1
-			else:
-				inventory_destinations[_inventory_destination.name] = 1
-		else:
-			items_ignored += 1
-	
-	# Printing messages for items placed in inventories
-	if items_added > 0:
-		for key in inventory_destinations.keys():
-			Console.print_line("Placed [color=LIGHT_GREEN]" + str(inventory_destinations[key]) + "[/color] '[color=GOLD]" + new_item.item_name + "[/color]' in [color=SKY_BLUE]'" + key + "'[/color].")
-	
-	# Printing message for dropped items
-	if items_ignored > 0:
-		Console.print_line("Ignored [color=LIGHT_CORAL]%d[/color] '[color=GOLD]%s[/color]'." % [items_ignored, new_item.item_name])
-
 func ghost_preview_logic():
 	var _mouse_pos = mouse_pos - global_position
 	for _subinventory in subinventories:
@@ -316,3 +290,34 @@ func ghost_preview_logic():
 					selector.rotation_degrees = 0
 					selector.get_child(0).pivot_offset = Global.INV_CELL_SIZE * 0.5
 					selector.position = closest_cell_position + _subinventory.global_position
+
+func c_give_item(item_id: String, number_of_item: int = 1) -> void:
+	var new_item = StaticData.create_item_from_id(item_id)
+	var items_added := 0
+	var items_ignored := 0
+	var inventory_destinations := {}
+	
+	Console.print_line("Trying to give %d '[color=GOLD]%s[/color]'..." % [number_of_item, new_item.item_name])
+	
+	for i in range(number_of_item):
+		await get_tree().process_frame
+		var _inventory_destination = try_to_pick_up_item(new_item, 1)
+		
+		if _inventory_destination != null:
+			items_added += 1
+			if _inventory_destination.name in inventory_destinations:
+				inventory_destinations[_inventory_destination.name] += 1
+			else:
+				inventory_destinations[_inventory_destination.name] = 1
+		else:
+			items_ignored += 1
+	
+	# Printing messages for items placed in inventories
+	if items_added > 0:
+		for key in inventory_destinations.keys():
+			Console.print_line("Placed [color=LIGHT_GREEN]" + str(inventory_destinations[key]) + "[/color] '[color=GOLD]" + new_item.item_name + "[/color]' in [color=SKY_BLUE]'" + key + "'[/color].")
+	
+	# Printing message for dropped items
+	if items_ignored > 0:
+		Console.print_line("Ignored [color=LIGHT_CORAL]%d[/color] '[color=GOLD]%s[/color]'." % [items_ignored, new_item.item_name])
+
