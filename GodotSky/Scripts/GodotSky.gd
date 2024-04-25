@@ -7,7 +7,7 @@ signal temperature_set
 @export_category("GodotSky Control")
 @export_range(0,2400,0.01) var timeOfDay : float = 1200.0
 @export var simulateTime : bool = false
-@export_range(0,10,0.005) var rateOfTime : float = 0.1
+@export_range(0,10,0.0005) var rateOfTime : float = 0.1
 @export_range(0,360,0.1) var skyRotation : float = 0.0
 @export_enum("Static", "2D Dynamic") var cloudType : String = "Static"
 @export_range(0,1,0.001) var cloudCoverage : float = 0.5

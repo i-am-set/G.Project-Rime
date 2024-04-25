@@ -198,7 +198,7 @@ common/physics_ticks_per_second=40
 
 [rendering]
 
-lights_and_shadows/directional_shadow/soft_shadow_filter_quality=3
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=5
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 reflections/reflection_atlas/reflection_size=1024
 textures/default_filters/anisotropic_filtering_level=0

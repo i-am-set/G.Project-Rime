@@ -1,8 +1,8 @@
+ColorRect
 Panel
 HBoxContainer
 SpotLight3D
 CollisionShape3D
-ColorRect
 OmniLight3D
 Camera3D
 Node3D
@@ -12,4 +12,3 @@ MeshInstance3D
 Control
 TextureRect
 RemoteTransform2D
-Label
