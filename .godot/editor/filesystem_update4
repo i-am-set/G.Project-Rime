@@ -22,6 +22,7 @@ res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/utility/mesh_height_curve.tres
 res://shaders/snow_post_processesing.gdshader
+res://scripts/player/inventory/inventory_manager.gd
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
 res://scenes/maingame/world.tscn
@@ -39,4 +40,7 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://GodotSky/Scripts/GodotSky.gd
+res://scripts/player/inventory_logic.gd
+res://scripts/player/fps_controller.gd
+res://scripts/player/inventory/inv_item_rect.gd
+res://scenes/ui/inv_item_rect.tscn

@@ -1,4 +1,4 @@
-[gd_scene load_steps=101 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=102 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://scripts/game/options_setting.gd" id="7_8cwra"]
 [ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="7_22y7g"]
 [ext_resource type="FontFile" uid="uid://dacj8wfcnya4p" path="res://ui/fonts/FiraCode/FiraCode-Bold.ttf" id="7_705ql"]
+[ext_resource type="FontFile" uid="uid://ib15q14c37gy" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf" id="7_dw6kc"]
 [ext_resource type="Script" path="res://scripts/player/state_machine.gd" id="7_f1ve2"]
 [ext_resource type="Texture2D" uid="uid://gjrd62lhvw1l" path="res://textures/ui/slider_grabber.png" id="7_g41i3"]
 [ext_resource type="Texture2D" uid="uid://dxhuibh5ps6gd" path="res://textures/ui/ui_male_silhouette.png" id="7_j4uj2"]
@@ -37,10 +38,11 @@
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
-[ext_resource type="Script" path="res://scripts/inventory/inventory_manager.gd" id="20_mmuft"]
-[ext_resource type="Script" path="res://scripts/inventory/subinventory.gd" id="21_g0f63"]
+[ext_resource type="Script" path="res://scripts/player/inventory/inventory_manager.gd" id="21_kj22e"]
 [ext_resource type="PackedScene" uid="uid://nvpqhb7ntek8" path="res://scenes/ui/inventory_tooltip.tscn" id="22_m7qam"]
+[ext_resource type="PackedScene" uid="uid://b7jlc7vkdspss" path="res://scenes/ui/inv_item_rect.tscn" id="22_n7hvp"]
 [ext_resource type="PackedScene" uid="uid://b4kiu73xi3i07" path="res://scenes/ui/inventory_rmb_menu.tscn" id="23_xmp0g"]
+[ext_resource type="FontFile" uid="uid://cf7l4aqnldkhh" path="res://ui/fonts/Icons/icon-font.ttf" id="24_qylyo"]
 [ext_resource type="PackedScene" uid="uid://ca0qt70ydcxfg" path="res://scenes/ui/held_item_preview.tscn" id="25_8skjh"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
 
@@ -536,6 +538,12 @@ _data = {
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cvmy6"]
 length = 0.75
 
+[sub_resource type="Theme" id="Theme_w86jh"]
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.776471)
+Label/constants/shadow_offset_x = 2
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = ExtResource("7_dw6kc")
+
 [sub_resource type="Shader" id="Shader_5rneh"]
 code = "shader_type canvas_item;
 
@@ -835,11 +843,6 @@ shadow_color = Color(0, 0, 0, 0.301961)
 shadow_size = 40
 shadow_offset = Vector2(0, 27.51)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hcl1o"]
-
-[sub_resource type="Theme" id="Theme_7s2dk"]
-Panel/styles/panel = SubResource("StyleBoxFlat_hcl1o")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
 
@@ -962,7 +965,7 @@ outline_size = 10
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -980,6 +983,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+theme = SubResource("Theme_w86jh")
 
 [node name="Vignette" type="ColorRect" parent="UserInterface"]
 material = SubResource("ShaderMaterial_vqy7e")
@@ -1523,8 +1527,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ny6q8")
 [node name="TopPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.38
 anchor_right = 1.0
 anchor_bottom = 0.136
+offset_left = 0.379944
 offset_top = -7.0
 offset_right = 1.0
 offset_bottom = -0.400009
@@ -1535,9 +1541,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 [node name="MainPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.38
 anchor_top = 0.136
 anchor_right = 1.0
 anchor_bottom = 0.94
+offset_left = 0.379944
 offset_top = -0.400009
 offset_right = 1.0
 grow_horizontal = 2
@@ -1547,9 +1555,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_8in0f")
 [node name="BottomPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.38
 anchor_top = 0.94
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 0.379944
 offset_top = -6.10352e-05
 offset_right = 1.0
 offset_bottom = 10.0
@@ -1560,12 +1570,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.136
-anchor_right = 0.367
-anchor_bottom = 0.94
-offset_top = -0.400009
-offset_right = 0.166992
-grow_horizontal = 2
+anchor_right = 0.38
+anchor_bottom = 1.0
+offset_right = 0.379944
 grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
@@ -1574,10 +1581,13 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_7m4jl")
 self_modulate = Color(0.482353, 0.482353, 0.482353, 0.32549)
 layout_mode = 1
 anchors_preset = -1
+anchor_top = 0.093
 anchor_right = 0.695
-anchor_bottom = 1.0
-offset_right = -0.0200195
-offset_bottom = 6.10352e-05
+anchor_bottom = 0.907
+offset_left = -41.855
+offset_top = 0.299995
+offset_right = 41.835
+offset_bottom = -0.300049
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -1615,6 +1625,71 @@ texture = ExtResource("15_girel")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu"]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.38
+anchor_top = 0.136
+anchor_right = 1.001
+anchor_bottom = 0.94
+offset_left = 0.379944
+offset_top = -0.400009
+offset_right = -0.599121
+offset_bottom = -6.10352e-05
+script = ExtResource("21_kj22e")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/InventoryManager"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="item_0" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer" instance=ExtResource("22_n7hvp")]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UserInterface/InventoryMenu/InventoryManager"]
+layout_mode = 0
+offset_right = 484.0
+offset_bottom = 708.0
+theme_override_fonts/normal_font = ExtResource("24_qylyo")
+bbcode_enabled = true
+text = " arrowhead
+ bowie-knife
+ carrot
+ claw-hammer
+ clothespin
+ crossbow
+ cube
+ falling-leaf
+ folded-paper
+ grain-bundle
+ high-grass
+ hoodie
+ hot-dog
+ invisible
+ light-backpack
+ light-buld
+ load
+ log
+ metal-bar
+ mushroom-gills
+ oak-leaf
+ paper-bag-folded
+ rolled-cloth
+ rubber-boot
+ save
+ stone-block
+ stone-pile
+ top-hat
+ t-shirt
+ underwear-shorts"
+
 [node name="TooltipPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 visible = false
 layout_mode = 1
@@ -1631,77 +1706,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_drgx6")
 
-[node name="inventory" type="ScrollContainer" parent="UserInterface/InventoryMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.367
-anchor_top = 0.136
-anchor_right = 1.001
-anchor_bottom = 0.94
-offset_left = 0.166992
-offset_top = -0.400009
-offset_right = 0.400879
-offset_bottom = -6.10352e-05
-script = ExtResource("20_mmuft")
-
-[node name="subinventories" type="VBoxContainer" parent="UserInterface/InventoryMenu/inventory"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = SubResource("Theme_7s2dk")
-theme_override_constants/separation = 15
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu/inventory/subinventories"]
-layout_mode = 2
-
-[node name="subinventory" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("21_g0f63")
-inventory = NodePath("../../..")
-rows = 4
-columns = 6
-
-[node name="subinventory2" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("21_g0f63")
-inventory = NodePath("../../..")
-rows = 4
-columns = 6
-
-[node name="subinventory3" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories/HBoxContainer" node_paths=PackedStringArray("inventory")]
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("21_g0f63")
-inventory = NodePath("../../..")
-rows = 4
-columns = 6
-
-[node name="subinventory" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("21_g0f63")
-inventory = NodePath("../..")
-rows = 4
-columns = 6
-
-[node name="subinventory2" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("21_g0f63")
-inventory = NodePath("../..")
-rows = 10
-columns = 18
-
-[node name="subinventory3" type="Panel" parent="UserInterface/InventoryMenu/inventory/subinventories" node_paths=PackedStringArray("inventory")]
-layout_mode = 2
-size_flags_horizontal = 0
-script = ExtResource("21_g0f63")
-inventory = NodePath("../..")
-columns = 4
-
 [node name="Selector" type="Control" parent="UserInterface/InventoryMenu"]
+visible = false
 layout_mode = 2
 anchors_preset = 0
 offset_right = 30.0
@@ -1722,11 +1728,14 @@ mouse_filter = 2
 color = Color(1, 1, 1, 0.392157)
 
 [node name="Tooltip" parent="UserInterface/InventoryMenu" instance=ExtResource("22_m7qam")]
+visible = false
 
 [node name="RmbMenu" parent="UserInterface/InventoryMenu" instance=ExtResource("23_xmp0g")]
+visible = false
 layout_mode = 1
 
 [node name="held_item_preview" parent="UserInterface/InventoryMenu" instance=ExtResource("25_8skjh")]
+visible = false
 
 [node name="Debug" type="Control" parent="UserInterface"]
 layout_mode = 1

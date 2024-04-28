@@ -34,9 +34,8 @@ func toggle_inventory():
 		Global.capture_mouse(!visible)
 		if visible == true:
 			animation_player.play("blur_start")
-			inventory.set_subinventories()
 		else:
-			inventory.HideHeldItemPreview()
+			#inventory.HideHeldItemPreview()
 			animation_player.play("RESET")
 
 func update_temperature_map_colors():

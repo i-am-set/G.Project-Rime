@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7jlc7vkdspss"]
+
+[ext_resource type="Script" path="res://scripts/player/inventory/inv_item_rect.gd" id="1_5qmgd"]
+[ext_resource type="FontFile" uid="uid://f4xyvh4a4y32" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Light.ttf" id="2_q5m0o"]
+
+[node name="item_0" type="Panel"]
+visible = false
+custom_minimum_size = Vector2(0, 30)
+script = ExtResource("1_5qmgd")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = -11.0
+offset_right = 158.0
+offset_bottom = 12.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_q5m0o")
+theme_override_font_sizes/font_size = 16

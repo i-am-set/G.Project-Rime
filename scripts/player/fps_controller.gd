@@ -7,7 +7,7 @@ extends CharacterBody3D
 @onready var pause_menu = $UserInterface/PauseMenu
 @onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator
 @onready var inventory_menu = $UserInterface/InventoryMenu
-@onready var inventory = $UserInterface/InventoryMenu/inventory
+@onready var inventory_manager = $UserInterface/InventoryMenu/InventoryManager
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
 @onready var world = $"../.."
@@ -333,7 +333,7 @@ func interact_process(delta):
 					interact_pick_up_to_hand()  # Call function2 when it reaches 100
 
 func interact_pick_up_to_inventory():
-	if inventory.try_to_pick_up_item(look_at_collider.inv_item, look_at_collider.stack_amount) != null:
+	if inventory_manager.try_to_pick_up_item(look_at_collider.inv_item.item_id, look_at_collider.stack_amount) != false:
 		look_at_collider.queue_free()
 		look_at_label.text = ""
 		look_at_collider = null

@@ -1,11 +1,8 @@
+C:/Users/sethg/wkspaces/G.Project-Rime/ui/fonts/IBM Plex Sans Condensed
 res://scenes/ui
 res://scenes/utility
 res://scripts/utility
-D:/!Temp/!Builds/test6 4-20-2024
 res://materials/utility
-D:/!Temp/!Builds/test5 4-17-2024
-D:/!Temp/!Builds/test4 4-17-2024
-C:/Users/SethLaptop/wkspaces/!Builds
 res://scripts/game
 res://scripts/inventory
 res://scenes/maingame
@@ -15,7 +12,6 @@ res://shaders
 res://ui/button_groups
 res://resources
 res://scripts/player
-c:/Users/SethLaptop/wkspaces/!Builds
 res://textures/ui
 res://shaders/2d
 res://addons/godot-console/scripts
