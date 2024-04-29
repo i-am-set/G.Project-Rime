@@ -692,6 +692,11 @@ expand_margin_left = 30.0
 expand_margin_right = 30.0
 
 [sub_resource type="Theme" id="Theme_d6bwr"]
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.854902)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/font_sizes/font_size = 16
+Label/fonts/font = ExtResource("7_dw6kc")
 MarginContainer/constants/margin_bottom = 4
 MarginContainer/constants/margin_left = 4
 MarginContainer/constants/margin_top = 4
@@ -965,7 +970,7 @@ outline_size = 10
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1625,17 +1630,80 @@ texture = ExtResource("15_girel")
 expand_mode = 1
 stretch_mode = 4
 
+[node name="Divider" type="ColorRect" parent="UserInterface/InventoryMenu"]
+layout_mode = 0
+offset_left = 753.0
+offset_top = 122.0
+offset_right = 755.0
+offset_bottom = 846.0
+color = Color(0.321569, 0.321569, 0.321569, 0.196078)
+
+[node name="InventoryHeader" type="Control" parent="UserInterface/InventoryMenu"]
+anchors_preset = 0
+offset_left = 608.0
+offset_top = 98.0
+offset_right = 1600.0
+offset_bottom = 120.0
+
+[node name="HeaderInventoryLabel" type="Label" parent="UserInterface/InventoryMenu/InventoryHeader"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.143
+anchor_bottom = 1.0
+offset_right = 0.143997
+text = "INVENTORY"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="HeaderItemNameLabel" type="Label" parent="UserInterface/InventoryMenu/InventoryHeader"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.181
+anchor_right = 0.277
+anchor_bottom = 1.0
+offset_left = 0.447998
+offset_right = 0.216003
+text = "NAME"
+vertical_alignment = 1
+uppercase = true
+
+[node name="HeaderItemTypeLabel" type="Label" parent="UserInterface/InventoryMenu/InventoryHeader"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.181
+anchor_right = 0.277
+anchor_bottom = 1.0
+offset_left = 588.448
+offset_right = 588.216
+text = "TYPE"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="HeaderItemWeightLabel" type="Label" parent="UserInterface/InventoryMenu/InventoryHeader"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.181
+anchor_right = 0.277
+anchor_bottom = 1.0
+offset_left = 668.448
+offset_right = 668.216
+text = "Weight"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
 [node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu"]
 layout_mode = 2
 anchors_preset = 0
-anchor_left = 0.38
+anchor_left = 0.474
 anchor_top = 0.136
-anchor_right = 1.001
+anchor_right = 0.994
 anchor_bottom = 0.94
-offset_left = 0.379944
+offset_left = 0.0739136
 offset_top = -0.400009
-offset_right = -0.599121
-offset_bottom = -6.10352e-05
+offset_right = 0.593994
 script = ExtResource("21_kj22e")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/InventoryManager"]
@@ -1653,7 +1721,8 @@ size_flags_horizontal = 3
 [node name="item_0" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer" instance=ExtResource("22_n7hvp")]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UserInterface/InventoryMenu/InventoryManager"]
+[node name="LabelList" type="RichTextLabel" parent="UserInterface/InventoryMenu/InventoryManager"]
+visible = false
 layout_mode = 0
 offset_right = 484.0
 offset_bottom = 708.0
@@ -1819,14 +1888,6 @@ ACCELERATION = 0.075
 unique_name_in_owner = true
 script = ExtResource("10_ssjb3")
 SPEED = 12.0
-ACCELERATION = null
-DECELERATION = null
-TOP_ANIM_SPEED = null
-WEAPON_BOB_SPD = null
-WEAPON_BOB_H = null
-WEAPON_BOB_V = null
-WEAPON_PULL_DOWN_DISTANCE = null
-WEAPON_PULL_DOWN_SPEED = null
 
 [node name="CrouchingPlayerState" type="Node" parent="PlayerStateMachine"]
 script = ExtResource("11_4t53l")

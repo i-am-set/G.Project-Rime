@@ -24,6 +24,7 @@ func initialize_subinventory_slots():
 	for i in range(1, 30):
 		subinventory.append(empty_slot)
 		var _new_inv_item_rect = INV_ITEM_RECT.instantiate()
+		_new_inv_item_rect.hide()
 		v_box_container.add_child(_new_inv_item_rect)
 
 func initialize_item_rects():

@@ -1,130 +1,114 @@
 {
-	"a000001": {
-		"item_name": "Flint",
-		"item_width": 1,
-		"item_height": 2,
-		"stack_size": 1,
-		"item_weight": 1,
-		"item_mesh": "res://meshes/items/resources/flint_item_model.obj"
-	},
-	"a000002": {
-		"item_name": "Pebble",
-		"item_width": 1,
-		"item_height": 1,
-		"stack_size": 5,
-		"item_weight": 0.25,
-		"item_mesh": "res://meshes/items/resources/pebble_item_model.obj"
-	},
-	"a000003": {
-		"item_name": "Stone",
-		"item_width": 3,
-		"item_height": 3,
-		"stack_size": 1,
-		"item_weight": 4,
-		"item_mesh": "res://meshes/items/resources/stone_item_model.obj"
-	},
-	"a000004": {
-		"item_name": "Null",
-		"item_width": 1,
-		"item_height": 1,
-		"stack_size": 1,
-		"item_weight": 1,
-		"item_mesh": null
-	},
-	"a000005": {
-		"item_name": "Twig",
-		"item_width": 1,
-		"item_height": 2,
-		"stack_size": 10,
-		"item_weight": 0.25,
-		"item_mesh": "res://meshes/items/resources/twig_item_model.obj"
-	},
-	"a000006": {
-		"item_name": "Stick",
-		"item_width": 1,
-		"item_height": 5,
-		"stack_size": 5,
-		"item_weight": 1,
-		"item_mesh": "res://meshes/items/resources/stick_item_model.obj"
-	},
-	"a000007": {
-		"item_name": "Branch",
-		"item_width": 2,
-		"item_height": 10,
-		"stack_size": 1,
-		"item_weight": 2,
-		"item_mesh": "res://meshes/items/resources/branch_item_model.obj"
-	},
-	"a000008": {
-		"item_name": "Log",
-		"item_width": 3,
-		"item_height": 6,
-		"stack_size": 1,
-		"item_weight": 8,
-		"item_mesh": "res://meshes/items/resources/log_item_model.obj"
-	},
-	"a000009": {
-		"item_name": "Plant Fiber",
-		"item_width": 1,
-		"item_height": 2,
-		"stack_size": 20,
-		"item_weight": 0.1,
-		"item_mesh": null
-	},
-	"a000010": {
-		"item_name": "Tree Bark",
-		"item_width": 1,
-		"item_height": 2,
-		"stack_size": 5,
-		"item_weight": 0.5,
-		"item_mesh": null
-	},
-	"a000011": {
-		"item_name": "Cloth",
-		"item_width": 1,
-		"item_height": 2,
-		"stack_size": 10,
-		"item_weight": 0.1,
-		"item_mesh": null
-	},
-	"a000012": {
-		"item_name": "Metal Scrap",
-		"item_width": 2,
-		"item_height": 2,
-		"stack_size": 5,
-		"item_weight": 1,
-		"item_mesh": null
-	},
-	"a000013": {
-		"item_name": "Glass Shards",
-		"item_width": 1,
-		"item_height": 1,
-		"stack_size": 10,
-		"item_weight": 0.25,
-		"item_mesh": null
-	},
-	"a000014": {
-		"item_name": "Loose Wires",
-		"item_width": 1,
-		"item_height": 2,
-		"stack_size": 10,
-		"item_weight": 0.25,
-		"item_mesh": null
-	},
-	"a000015": {
-		"item_name": "Plastic Scrap",
-		"item_width": 2,
-		"item_height": 2,
-		"stack_size": 10,
-		"item_weight": 0.25,
-		"item_mesh": null
-	},
-	"a000016": {
-		"item_name": "Rubber Fragments",
-		"item_width": 2,
-		"item_height": 2,
-		"stack_size": 5,
-		"item_weight": 0.25,
-		"item_mesh": null
-	}
+  "a000001": {
+    "item_name": "Flint",
+    "item_type": 1,
+    "item_weight": 1,
+    "item_size": 2,
+    "item_mesh": "res://meshes/items/resources/flint_item_model.obj"
+  },
+  "a000002": {
+    "item_name": "Pebble",
+    "item_type": 1,
+    "item_weight": 0.25,
+    "item_size": 1,
+    "item_mesh": "res://meshes/items/resources/pebble_item_model.obj"
+  },
+  "a000003": {
+    "item_name": "Stone",
+    "item_type": 1,
+    "item_weight": 4,
+    "item_size": 3,
+    "item_mesh": "res://meshes/items/resources/stone_item_model.obj"
+  },
+  "a000004": {
+    "item_name": "Null",
+    "item_type": 0,
+    "item_weight": 1,
+    "item_size": 1,
+    "item_mesh": null
+  },
+  "a000005": {
+    "item_name": "Twig",
+    "item_type": 4,
+    "item_weight": 0.25,
+    "item_size": 2,
+    "item_mesh": "res://meshes/items/resources/twig_item_model.obj"
+  },
+  "a000006": {
+    "item_name": "Stick",
+    "item_type": 2,
+    "item_weight": 1,
+    "item_size": 3,
+    "item_mesh": "res://meshes/items/resources/stick_item_model.obj"
+  },
+  "a000007": {
+    "item_name": "Branch",
+    "item_type": 2,
+    "item_weight": 2,
+    "item_size": 5,
+    "item_mesh": "res://meshes/items/resources/branch_item_model.obj"
+  },
+  "a000008": {
+    "item_name": "Log",
+    "item_type": 2,
+    "item_weight": 8,
+    "item_size": 6,
+    "item_mesh": "res://meshes/items/resources/log_item_model.obj"
+  },
+  "a000009": {
+    "item_name": "Plant Fiber",
+    "item_type": 4,
+    "item_weight": 0.1,
+    "item_size": 1,
+    "item_mesh": null
+  },
+  "a000010": {
+    "item_name": "Tree Bark",
+    "item_type": 4,
+    "item_weight": 0.5,
+    "item_size": 1,
+    "item_mesh": null
+  },
+  "a000011": {
+    "item_name": "Cloth",
+    "item_type": 6,
+    "item_weight": 0.1,
+    "item_size": 1,
+    "item_mesh": null
+  },
+  "a000012": {
+    "item_name": "Metal Scrap",
+    "item_type": 3,
+    "item_weight": 1,
+    "item_size": 2,
+    "item_mesh": null
+  },
+  "a000013": {
+    "item_name": "Glass Shards",
+    "item_type": 1,
+    "item_weight": 0.25,
+    "item_size": 2,
+    "item_mesh": null
+  },
+  "a000014": {
+    "item_name": "Loose Wires",
+    "item_type": 5,
+    "item_weight": 0.25,
+    "item_size": 1,
+    "item_mesh": null
+  },
+  "a000015": {
+    "item_name": "Plastic Scrap",
+    "item_type": 5,
+    "item_weight": 0.25,
+    "item_size": 2,
+    "item_mesh": null
+  },
+  "a000016": {
+    "item_name": "Rubber Fragments",
+    "item_type": 0,
+    "item_weight": 0.25,
+    "item_size": null,
+    "item_mesh": null
+  }
 }
