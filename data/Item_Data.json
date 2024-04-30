@@ -29,7 +29,7 @@
   },
   "a000005": {
     "item_name": "Twig",
-    "item_type": 4,
+    "item_type": 2,
     "item_weight": 0.25,
     "item_size": 2,
     "item_mesh": "res://meshes/items/resources/twig_item_model.obj"
@@ -108,7 +108,7 @@
     "item_name": "Rubber Fragments",
     "item_type": 0,
     "item_weight": 0.25,
-    "item_size": null,
+    "item_size": 2,
     "item_mesh": null
   }
 }

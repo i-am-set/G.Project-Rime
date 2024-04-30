@@ -1,14 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://b7jlc7vkdspss"]
+[gd_scene load_steps=9 format=3 uid="uid://b7jlc7vkdspss"]
 
 [ext_resource type="Script" path="res://scripts/player/inventory/inv_item_rect.gd" id="1_5qmgd"]
 [ext_resource type="FontFile" uid="uid://cf7l4aqnldkhh" path="res://ui/fonts/Icons/icon-font.ttf" id="2_cy8y2"]
 [ext_resource type="FontFile" uid="uid://ib15q14c37gy" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf" id="3_x8fip"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l6biy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d100y"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.819608)
+corner_radius_top_left = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2dpmd"]
 
 [sub_resource type="Gradient" id="Gradient_etg7t"]
 offsets = PackedFloat32Array(0, 0.125, 0.529762, 1)
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.0392157, 1, 1, 1, 0.172549, 1, 1, 1, 0.282353)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.0392157, 1, 1, 1, 0.0352941, 1, 1, 1, 0.105882)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_wu0yv"]
 gradient = SubResource("Gradient_etg7t")
@@ -17,9 +22,10 @@ gradient = SubResource("Gradient_etg7t")
 texture = SubResource("GradientTexture1D_wu0yv")
 
 [node name="item_0" type="Panel"]
-custom_minimum_size = Vector2(0, 30)
+custom_minimum_size = Vector2(0, 23)
 offset_right = 878.0
 offset_bottom = 30.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_d100y")
 script = ExtResource("1_5qmgd")
 
 [node name="Button" type="Button" parent="."]
@@ -29,7 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_l6biy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_2dpmd")
 theme_override_styles/hover = SubResource("StyleBoxTexture_u33jd")
 
 [node name="IconLabel" type="Label" parent="."]

@@ -3,8 +3,6 @@ extends Control
 const info_offset: Vector2 = Vector2(20, 0)
 
 @onready var fps_controller = $"../.."
-@onready var temperature_map = $silhouette_panel/temperature_map
-@onready var temperature_map_material = temperature_map.material
 @onready var animation_player = $AnimationPlayer
 @onready var inventory = $inventory
 var player_data
@@ -37,11 +35,3 @@ func toggle_inventory():
 		else:
 			#inventory.HideHeldItemPreview()
 			animation_player.play("RESET")
-
-func update_temperature_map_colors():
-	temperature_map_material.set_shader_parameter("head_color", player_data.get_temperature_color(player_data.head_temperature))
-	temperature_map_material.set_shader_parameter("torso_color", player_data.get_temperature_color(player_data.torso_temperature))
-	temperature_map_material.set_shader_parameter("left_arm_color", player_data.get_temperature_color(player_data.left_arm_temperature))
-	temperature_map_material.set_shader_parameter("right_arm_color", player_data.get_temperature_color(player_data.right_arm_temperature))
-	temperature_map_material.set_shader_parameter("left_leg_color", player_data.get_temperature_color(player_data.left_leg_temperature))
-	temperature_map_material.set_shader_parameter("right_leg_color", player_data.get_temperature_color(player_data.right_leg_temperature))

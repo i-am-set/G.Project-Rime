@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=117 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -37,10 +37,12 @@
 [ext_resource type="Script" path="res://scripts/player/WeaponCamera.gd" id="16_577f2"]
 [ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
+[ext_resource type="FontFile" uid="uid://b8m7rk12l8ne" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Medium.ttf" id="19_k1d5d"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
 [ext_resource type="Script" path="res://scripts/player/inventory/inventory_manager.gd" id="21_kj22e"]
 [ext_resource type="PackedScene" uid="uid://nvpqhb7ntek8" path="res://scenes/ui/inventory_tooltip.tscn" id="22_m7qam"]
 [ext_resource type="PackedScene" uid="uid://b7jlc7vkdspss" path="res://scenes/ui/inv_item_rect.tscn" id="22_n7hvp"]
+[ext_resource type="Script" path="res://scripts/player/inventory/subinventory_manager.gd" id="23_j7u6g"]
 [ext_resource type="PackedScene" uid="uid://b4kiu73xi3i07" path="res://scenes/ui/inventory_rmb_menu.tscn" id="23_xmp0g"]
 [ext_resource type="FontFile" uid="uid://cf7l4aqnldkhh" path="res://ui/fonts/Icons/icon-font.ttf" id="24_qylyo"]
 [ext_resource type="PackedScene" uid="uid://ca0qt70ydcxfg" path="res://scenes/ui/held_item_preview.tscn" id="25_8skjh"]
@@ -538,7 +540,10 @@ _data = {
 [sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_cvmy6"]
 length = 0.75
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hj3dq"]
+
 [sub_resource type="Theme" id="Theme_w86jh"]
+Button/styles/focus = SubResource("StyleBoxEmpty_hj3dq")
 Label/colors/font_shadow_color = Color(0, 0, 0, 0.776471)
 Label/constants/shadow_offset_x = 2
 Label/constants/shadow_offset_y = 1
@@ -614,10 +619,10 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srfi1"]
 shader = ExtResource("7_5ppov")
-shader_parameter/amount = 1.5
+shader_parameter/amount = 2.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny6q8"]
-bg_color = Color(0.223529, 0.223529, 0.223529, 0.388235)
+bg_color = Color(0.133333, 0.133333, 0.133333, 0.517647)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jfu3c"]
 
@@ -691,7 +696,34 @@ corner_radius_top_right = 4
 expand_margin_left = 30.0
 expand_margin_right = 30.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp6ma"]
+bg_color = Color(0.333333, 0.333333, 0.333333, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.364706, 0.364706, 0.364706, 0.552941)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfpxa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o10mt"]
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7c2d"]
+content_margin_left = 6.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0.0823529)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ap6aa"]
+
 [sub_resource type="Theme" id="Theme_d6bwr"]
+Button/fonts/font = ExtResource("7_dw6kc")
 Label/colors/font_shadow_color = Color(0, 0, 0, 0.854902)
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
@@ -704,6 +736,11 @@ TabContainer/constants/side_margin = 30
 TabContainer/font_sizes/font_size = 12
 TabContainer/styles/panel = SubResource("StyleBoxFlat_yhjre")
 TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_iebnp")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_hp6ma")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_mfpxa")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_o10mt")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_s7c2d")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ap6aa")
 
 [sub_resource type="Animation" id="Animation_3l7ui"]
 length = 0.001
@@ -742,8 +779,12 @@ _data = {
 "blur_start": SubResource("Animation_pa7xc")
 }
 
+[sub_resource type="Theme" id="Theme_g173l"]
+Label/font_sizes/font_size = 12
+Label/fonts/font = ExtResource("19_k1d5d")
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cq2t0"]
-bg_color = Color(0.101961, 0.101961, 0.101961, 0.756863)
+bg_color = Color(0.0745098, 0.0745098, 0.0745098, 0.823529)
 border_width_top = 2
 border_width_bottom = 2
 border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
@@ -751,8 +792,13 @@ shadow_color = Color(0, 0, 0, 0.231373)
 shadow_size = 145
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8in0f"]
-bg_color = Color(0.101961, 0.101961, 0.101961, 0.419608)
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.654902)
 border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eeipv"]
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.556863)
+border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
+shadow_color = Color(0, 0, 0, 0.231373)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m4jl"]
 bg_color = Color(0.133333, 0.12549, 0.141176, 0.431373)
@@ -835,6 +881,28 @@ shader_parameter/left_leg_map = Color(1, 0, 0, 1)
 shader_parameter/left_leg_color = null
 shader_parameter/right_leg_map = Color(0, 1, 0, 1)
 shader_parameter/right_leg_color = null
+
+[sub_resource type="Gradient" id="Gradient_i5if1"]
+colors = PackedColorArray(0.215686, 0.215686, 0.215686, 0.403922, 0.165656, 0.165656, 0.165656, 0.560784)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tfsar"]
+gradient = SubResource("Gradient_i5if1")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g48xb"]
+gradient = SubResource("Gradient_i5if1")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_axnym"]
+offsets = PackedFloat32Array(0, 0.670213)
+colors = PackedColorArray(0, 0, 0, 0, 0.431373, 0.431373, 0.431373, 0.188235)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_783m0"]
+gradient = SubResource("Gradient_axnym")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drgx6"]
 bg_color = Color(0.101961, 0.101961, 0.101961, 0.270588)
@@ -970,7 +1038,7 @@ outline_size = 10
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1532,47 +1600,119 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ny6q8")
 [node name="TopPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.38
-anchor_right = 1.0
+anchor_left = 0.453
+anchor_right = 0.986
 anchor_bottom = 0.136
-offset_left = 0.379944
+offset_left = -0.346985
 offset_top = -7.0
-offset_right = 1.0
+offset_right = 0.385864
 offset_bottom = -0.400009
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_g173l")
 theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
+
+[node name="HeaderInventoryLabel" type="Label" parent="UserInterface/InventoryMenu/TopPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -22.0
+offset_right = -725.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "INVENTORIES"
+horizontal_alignment = 1
+vertical_alignment = 2
+uppercase = true
+
+[node name="HeaderItemNameLabel" type="Label" parent="UserInterface/InventoryMenu/TopPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 157.0
+offset_top = -22.0
+offset_right = -638.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 2
+uppercase = true
+
+[node name="HeaderItemTypeLabel" type="Label" parent="UserInterface/InventoryMenu/TopPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 680.0
+offset_top = -22.0
+offset_right = -112.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "TYPE"
+horizontal_alignment = 1
+vertical_alignment = 2
+uppercase = true
+
+[node name="HeaderItemWeightLabel" type="Label" parent="UserInterface/InventoryMenu/TopPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 757.0
+offset_top = -22.0
+offset_right = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Weight"
+horizontal_alignment = 1
+vertical_alignment = 2
+uppercase = true
 
 [node name="MainPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.38
+anchor_left = 0.453
 anchor_top = 0.136
-anchor_right = 1.0
-anchor_bottom = 0.94
-offset_left = 0.379944
+anchor_right = 0.986
+anchor_bottom = 1.0
+offset_left = -0.346985
 offset_top = -0.400009
-offset_right = 1.0
+offset_right = 0.385864
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8in0f")
 
+[node name="InventorySelectPanel" type="Panel" parent="UserInterface/InventoryMenu/MainPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.15
+anchor_bottom = 1.0
+offset_right = -0.350006
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_eeipv")
+
 [node name="BottomPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.38
 anchor_top = 0.94
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 0.379944
 offset_top = -6.10352e-05
-offset_right = 1.0
-offset_bottom = 10.0
+offset_right = 1.00293
+offset_bottom = 9.99982
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cq2t0")
 
 [node name="silhouette_panel" type="Panel" parent="UserInterface/InventoryMenu"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.38
@@ -1630,80 +1770,16 @@ texture = ExtResource("15_girel")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="Divider" type="ColorRect" parent="UserInterface/InventoryMenu"]
-layout_mode = 0
-offset_left = 753.0
-offset_top = 122.0
-offset_right = 755.0
-offset_bottom = 846.0
-color = Color(0.321569, 0.321569, 0.321569, 0.196078)
-
-[node name="InventoryHeader" type="Control" parent="UserInterface/InventoryMenu"]
-anchors_preset = 0
-offset_left = 608.0
-offset_top = 98.0
-offset_right = 1600.0
-offset_bottom = 120.0
-
-[node name="HeaderInventoryLabel" type="Label" parent="UserInterface/InventoryMenu/InventoryHeader"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.143
-anchor_bottom = 1.0
-offset_right = 0.143997
-text = "INVENTORY"
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
-
-[node name="HeaderItemNameLabel" type="Label" parent="UserInterface/InventoryMenu/InventoryHeader"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.181
-anchor_right = 0.277
-anchor_bottom = 1.0
-offset_left = 0.447998
-offset_right = 0.216003
-text = "NAME"
-vertical_alignment = 1
-uppercase = true
-
-[node name="HeaderItemTypeLabel" type="Label" parent="UserInterface/InventoryMenu/InventoryHeader"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.181
-anchor_right = 0.277
-anchor_bottom = 1.0
-offset_left = 588.448
-offset_right = 588.216
-text = "TYPE"
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="HeaderItemWeightLabel" type="Label" parent="UserInterface/InventoryMenu/InventoryHeader"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.181
-anchor_right = 0.277
-anchor_bottom = 1.0
-offset_left = 668.448
-offset_right = 668.216
-text = "Weight"
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
 [node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu"]
 layout_mode = 2
 anchors_preset = 0
 anchor_left = 0.474
 anchor_top = 0.136
-anchor_right = 0.994
+anchor_right = 1.001
 anchor_bottom = 0.94
-offset_left = 0.0739136
+offset_left = 103.074
 offset_top = -0.400009
-offset_right = 0.593994
+offset_right = -23.5991
 script = ExtResource("21_kj22e")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/InventoryManager"]
@@ -1713,12 +1789,65 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 10
 
-[node name="item_0" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer" instance=ExtResource("22_n7hvp")]
+[node name="_subinventory" type="VBoxContainer" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 2
+script = ExtResource("23_j7u6g")
+
+[node name="HeaderButton" type="TextureButton" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer/_subinventory"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 3
+action_mode = 0
+texture_normal = SubResource("GradientTexture2D_tfsar")
+texture_pressed = SubResource("GradientTexture2D_g48xb")
+texture_hover = SubResource("GradientTexture2D_783m0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer/_subinventory/HeaderButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_top = -1.0
+offset_right = 37.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.32549)
+theme_override_font_sizes/font_size = 12
+text = "Jacket"
+vertical_alignment = 1
+
+[node name="Capacity" type="Label" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer/_subinventory/HeaderButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_right = -677.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.32549)
+theme_override_font_sizes/font_size = 10
+text = "0/0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="item_0" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer/_subinventory" instance=ExtResource("22_n7hvp")]
 layout_mode = 2
 
 [node name="LabelList" type="RichTextLabel" parent="UserInterface/InventoryMenu/InventoryManager"]
