@@ -36,13 +36,13 @@ func set_mesh_parameters():
 	
 	mesh_instance.mesh = inv_item.item_mesh
 	
-	#if collision_shape.shape == null:
-		#print("Error: CollisionShape3D does not have a shape attached")
-		#return
+	if collision_shape.shape == null:
+		print("Error: CollisionShape3D does not have a shape attached")
+		return
 	
-	#var aabb = mesh_instance.mesh.get_aabb()
-	#collision_shape.shape.size = (aabb.size*0.75)*scale
-	collision_shape.shape = mesh_instance.mesh.create_convex_shape(false, true)
+	var aabb = mesh_instance.mesh.get_aabb()
+	collision_shape.shape.size = (aabb.size*1.5)*scale
+	#collision_shape.shape = mesh_instance.mesh.create_convex_shape(false, true)
 	
 
 func toggle_highlight(toggle : bool):

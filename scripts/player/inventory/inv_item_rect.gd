@@ -2,9 +2,9 @@ extends Control
 class_name InvItemRect
 
 @onready var icon_label: Label = $IconLabel
-@onready var name_label = $NameLabel
-@onready var type_label: Label = $TypeLabel
+@onready var name_label: Label = $NameLabel
 @onready var weight_label: Label = $WeightLabel
+@onready var weightlb_label: Label = $WeightLabel/WeightlbLabel
 
 var item_id : String = ""
 var item_stack : int = 0
@@ -40,8 +40,8 @@ func set_inv_item_rect_label():
 			_item_type = ItemType[_item_data_item_type]
 		
 		_item_weight = _item_data["item_weight"]
+		var _stack_weight : float = float(_item_weight) * item_stack
 		
 		icon_label.text = _item_icon
 		name_label.text = "%s (%d)" %[_item_data["item_name"], item_stack]
-		type_label.text = _item_type
-		weight_label.text = str(_item_weight)
+		weight_label.text = "%.2f" % _stack_weight

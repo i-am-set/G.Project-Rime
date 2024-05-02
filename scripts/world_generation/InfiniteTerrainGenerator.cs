@@ -10,7 +10,7 @@ public partial class InfiniteTerrainGenerator : Node3D
 {
 	const float scale = 3.0f;
 
-	const float viewerMoveThresholdForChunkUpdate = 5f;
+	const float viewerMoveThresholdForChunkUpdate = 3f;
 	const float sqrViewerMoveThresholdForChunkUpdate = viewerMoveThresholdForChunkUpdate * viewerMoveThresholdForChunkUpdate;
 	const float colliderGenerationDistanceThreshold = 35;
 

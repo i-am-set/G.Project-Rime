@@ -3,19 +3,19 @@ class_name SubinventoryManager
 
 const INV_ITEM_RECT = preload("res://scenes/ui/inv_item_rect.tscn")
 
-@onready var inventory_manager: InventoryManager = $"../../.."
+@onready var inventory_manager: InventoryManager = $"../.."
 @onready var header_button: TextureButton = $HeaderButton
 @onready var items_container = $ItemsContainer
-@onready var subinventory_name_label = $HeaderButton/Label
-@onready var capacity_label = $HeaderButton/CapacityLabel
+#@onready var subinventory_name_label = $HeaderButton/Label
+#@onready var capacity_label = $HeaderButton/CapacityLabel
 
-@export var capacity_color_normal: Color = Color(1, 1, 1)
-@export var capacity_color_almost_full: Color = Color(1, 0.5, 0.5)
-@export var capacity_color_full: Color = Color(1, 0, 0)
-@export var full_capacity_threshhold : float = 0.8
-@export var subinventory_capacity : int = 10
-var subinventory_quantity_held : int = 0
-var subinventory_slot_amount : int = subinventory_capacity + 1
+#@export var capacity_color_normal: Color = Color(1, 1, 1)
+#@export var capacity_color_almost_full: Color = Color(1, 0.5, 0.5)
+#@export var capacity_color_full: Color = Color(1, 0, 0)
+#@export var full_capacity_threshhold : float = 0.8
+#@export var subinventory_capacity : int = 10
+#var subinventory_quantity_held : int = 0
+var subinventory_slot_amount : int = 999
 
 var subinventory_contents : Array[Dictionary] = []
 var empty_slot : Dictionary = {"" : 0}
@@ -28,7 +28,7 @@ func initialize_subinventory():
 	await initialize_subinventory_slots()
 	await initialize_item_rects()
 	await update_subinventory()
-	subinventory_name_label.text = name
+	#subinventory_name_label.text = name
 
 func initialize_subinventory_slots():
 	for child in items_container.get_children():
@@ -64,16 +64,17 @@ func update_subinventory():
 		#items_container.hide()
 	#elif !is_empty && !items_container.visible:
 		#items_container.show()
-	
-	capacity_label.text = "%d/%d" %[subinventory_quantity_held, subinventory_capacity]
-	
-	var capacity_used_percentage : float = float(subinventory_quantity_held) / float(subinventory_capacity)
-	if capacity_used_percentage >= 1.0:
-		capacity_label.modulate = capacity_color_full
-	elif capacity_used_percentage >= full_capacity_threshhold:
-		capacity_label.modulate = capacity_color_almost_full
-	else:
-		capacity_label.modulate = capacity_color_normal
+	#
+	#capacity_label.text = "%d/%d" %[subinventory_quantity_held, subinventory_capacity]
+	#
+	#var capacity_used_percentage : float = float(subinventory_quantity_held) / float(subinventory_capacity)
+	#if capacity_used_percentage >= 1.0:
+		#capacity_label.modulate = capacity_color_full
+	#elif capacity_used_percentage >= full_capacity_threshhold:
+		#capacity_label.modulate = capacity_color_almost_full
+	#else:
+		#capacity_label.modulate = capacity_color_normal
+	pass
 
 func check_if_subinventory_empty() -> bool:
 	for i in subinventory_slot_amount:
@@ -84,7 +85,7 @@ func check_if_subinventory_empty() -> bool:
 
 func add_item(_item_slot : int, _picked_up_item_id : String, _stack_size : int):
 	var _new_item : Dictionary = {_picked_up_item_id : _stack_size}
-	var _picked_up_item_size : int = StaticData.item_data[_picked_up_item_id]["item_size"] * _stack_size
+	var _picked_up_item_weight : int = StaticData.item_data[_picked_up_item_id]["item_weight"] * _stack_size
 	
 	if subinventory_contents[_item_slot] == empty_slot:
 		subinventory_contents[_item_slot] = _new_item
@@ -95,7 +96,7 @@ func add_item(_item_slot : int, _picked_up_item_id : String, _stack_size : int):
 		printerr("Item slot is already occupied. Item slot ", _item_slot, " in ", name, ".")
 		return
 	
-	subinventory_quantity_held += _picked_up_item_size
+	inventory_manager.update_weight(inventory_manager.weight_current + _picked_up_item_weight)
 	
 	update_item_rects()
 	update_subinventory()

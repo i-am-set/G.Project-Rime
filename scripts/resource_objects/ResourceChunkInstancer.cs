@@ -357,7 +357,7 @@ public partial class ResourceChunkInstancer : Node3D
                                     resourceChild = (Node3D)resourceChildren[i];
                                     bodyChild = (CollisionShape3D)bodyChildren[i];
 
-                                    if (resourceChild.Visible){ childIndex = i;bodyChild.Disabled = false; GD.PrintErr(position); } else { bodyChild.Disabled = true; }
+                                    if (resourceChild.Visible){ childIndex = i;bodyChild.Disabled = false; } else { bodyChild.Disabled = true; }
                                 }
 
                                 if(childIndex <= -1){ GD.PrintErr("Zero visible children in ", resource, " : ", scene, " : ", position); }

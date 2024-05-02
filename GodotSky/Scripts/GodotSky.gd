@@ -161,10 +161,10 @@ func updateSky():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_temp_for_day()
-	await get_tree().create_timer(3).timeout
-	self.environment.sdfgi_enabled = false
-	await get_tree().create_timer(3).timeout
-	self.environment.sdfgi_enabled = true
+	#await get_tree().create_timer(3).timeout
+	#self.environment.sdfgi_enabled = false
+	#await get_tree().create_timer(3).timeout
+	#self.environment.sdfgi_enabled = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

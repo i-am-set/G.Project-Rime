@@ -28,8 +28,11 @@ fill_to = Vector2(1, 1)
 [node name="_subinventory" type="VBoxContainer"]
 theme_override_constants/separation = 0
 script = ExtResource("1_1f735")
+capacity_color_normal = null
 capacity_color_almost_full = Color(1, 0.705882, 0.556863, 1)
 capacity_color_full = Color(1, 0.356863, 0.290196, 1)
+full_capacity_threshhold = null
+subinventory_capacity = null
 
 [node name="HeaderButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(0, 15)

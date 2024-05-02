@@ -28,13 +28,14 @@ visibility_range_fade_mode = 1
 [node name="leaves" parent="." index="1"]
 material_override = ExtResource("3_5taxs")
 cast_shadow = 0
-lod_bias = 0.1
+lod_bias = 0.001
 visibility_range_end = 300.0
 visibility_range_end_margin = 20.0
 visibility_range_fade_mode = 1
 
 [node name="billboard" type="MeshInstance3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.9753, 0)
+visible = false
 material_override = SubResource("ShaderMaterial_qp0q4")
 visibility_range_begin = 300.0
 visibility_range_begin_margin = 20.0

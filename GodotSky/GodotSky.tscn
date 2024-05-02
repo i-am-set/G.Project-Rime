@@ -17,7 +17,7 @@ script = ExtResource("2_8wvsc")
 timeOfDay = 0.0
 rateOfTime = 0.001
 cloudType = "2D Dynamic"
-cloudCoverage = 0.0
+cloudCoverage = 0.41
 animateStaticClouds = false
 
 [node name="SunMoon" type="Node3D" parent="."]
