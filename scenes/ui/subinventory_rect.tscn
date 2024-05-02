@@ -1,0 +1,84 @@
+[gd_scene load_steps=8 format=3 uid="uid://f4o1255dc1s1"]
+
+[ext_resource type="Script" path="res://scripts/player/inventory/subinventory_manager.gd" id="1_1f735"]
+[ext_resource type="PackedScene" uid="uid://b7jlc7vkdspss" path="res://scenes/ui/inv_item_rect.tscn" id="2_7tpy1"]
+
+[sub_resource type="Gradient" id="Gradient_i5if1"]
+colors = PackedColorArray(0.215686, 0.215686, 0.215686, 0.403922, 0.165656, 0.165656, 0.165656, 0.560784)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tfsar"]
+gradient = SubResource("Gradient_i5if1")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g48xb"]
+gradient = SubResource("Gradient_i5if1")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_axnym"]
+offsets = PackedFloat32Array(0, 0.670213)
+colors = PackedColorArray(0, 0, 0, 0, 0.431373, 0.431373, 0.431373, 0.188235)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_783m0"]
+gradient = SubResource("Gradient_axnym")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[node name="_subinventory" type="VBoxContainer"]
+theme_override_constants/separation = 0
+script = ExtResource("1_1f735")
+capacity_color_almost_full = Color(1, 0.705882, 0.556863, 1)
+capacity_color_full = Color(1, 0.356863, 0.290196, 1)
+
+[node name="HeaderButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_vertical = 3
+action_mode = 0
+texture_normal = SubResource("GradientTexture2D_tfsar")
+texture_pressed = SubResource("GradientTexture2D_g48xb")
+texture_hover = SubResource("GradientTexture2D_783m0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HeaderButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_top = -1.0
+offset_right = 37.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.772549)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.705882)
+theme_override_font_sizes/font_size = 12
+text = "Jacket"
+vertical_alignment = 1
+
+[node name="CapacityLabel" type="Label" parent="HeaderButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_right = -677.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.772549)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.705882)
+theme_override_font_sizes/font_size = 10
+text = "0/0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemsContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="item_0" parent="ItemsContainer" instance=ExtResource("2_7tpy1")]
+layout_mode = 2

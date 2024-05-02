@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=111 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="Material" uid="uid://b4gwd5h7ixvct" path="res://materials/player.tres" id="2_7qda3"]
@@ -41,9 +41,8 @@
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
 [ext_resource type="Script" path="res://scripts/player/inventory/inventory_manager.gd" id="21_kj22e"]
 [ext_resource type="PackedScene" uid="uid://nvpqhb7ntek8" path="res://scenes/ui/inventory_tooltip.tscn" id="22_m7qam"]
-[ext_resource type="PackedScene" uid="uid://b7jlc7vkdspss" path="res://scenes/ui/inv_item_rect.tscn" id="22_n7hvp"]
-[ext_resource type="Script" path="res://scripts/player/inventory/subinventory_manager.gd" id="23_j7u6g"]
 [ext_resource type="PackedScene" uid="uid://b4kiu73xi3i07" path="res://scenes/ui/inventory_rmb_menu.tscn" id="23_xmp0g"]
+[ext_resource type="PackedScene" uid="uid://f4o1255dc1s1" path="res://scenes/ui/subinventory_rect.tscn" id="24_kij22"]
 [ext_resource type="FontFile" uid="uid://cf7l4aqnldkhh" path="res://ui/fonts/Icons/icon-font.ttf" id="24_qylyo"]
 [ext_resource type="PackedScene" uid="uid://ca0qt70ydcxfg" path="res://scenes/ui/held_item_preview.tscn" id="25_8skjh"]
 [ext_resource type="PackedScene" uid="uid://cnpwayblx3rs8" path="res://meshes/entities/low_poly_male.glb" id="35_60cqa"]
@@ -576,8 +575,8 @@ void fragment(){
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vqy7e"]
 shader = SubResource("Shader_5rneh")
-shader_parameter/vignette_intensity = 0.42
-shader_parameter/vignette_opacity = 0.643
+shader_parameter/vignette_intensity = 0.675
+shader_parameter/vignette_opacity = 0.05
 shader_parameter/vignette_rgb = Color(0.105882, 0.105882, 0.223529, 1)
 
 [sub_resource type="Animation" id="Animation_36kdk"]
@@ -792,7 +791,7 @@ shadow_color = Color(0, 0, 0, 0.231373)
 shadow_size = 145
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8in0f"]
-bg_color = Color(0.101961, 0.101961, 0.101961, 0.654902)
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.345098)
 border_color = Color(0.270588, 0.270588, 0.270588, 0.584314)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eeipv"]
@@ -881,28 +880,6 @@ shader_parameter/left_leg_map = Color(1, 0, 0, 1)
 shader_parameter/left_leg_color = null
 shader_parameter/right_leg_map = Color(0, 1, 0, 1)
 shader_parameter/right_leg_color = null
-
-[sub_resource type="Gradient" id="Gradient_i5if1"]
-colors = PackedColorArray(0.215686, 0.215686, 0.215686, 0.403922, 0.165656, 0.165656, 0.165656, 0.560784)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_tfsar"]
-gradient = SubResource("Gradient_i5if1")
-fill_from = Vector2(1, 0)
-fill_to = Vector2(1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_g48xb"]
-gradient = SubResource("Gradient_i5if1")
-fill_from = Vector2(1, 0)
-fill_to = Vector2(1, 1)
-
-[sub_resource type="Gradient" id="Gradient_axnym"]
-offsets = PackedFloat32Array(0, 0.670213)
-colors = PackedColorArray(0, 0, 0, 0, 0.431373, 0.431373, 0.431373, 0.188235)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_783m0"]
-gradient = SubResource("Gradient_axnym")
-fill_from = Vector2(1, 0)
-fill_to = Vector2(1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drgx6"]
 bg_color = Color(0.101961, 0.101961, 0.101961, 0.270588)
@@ -1038,7 +1015,7 @@ outline_size = 10
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -1649,12 +1626,28 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 680.0
+offset_left = 635.0
 offset_top = -22.0
-offset_right = -112.0
+offset_right = -157.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "TYPE"
+horizontal_alignment = 1
+vertical_alignment = 2
+uppercase = true
+
+[node name="HeaderItemSizeLabel" type="Label" parent="UserInterface/InventoryMenu/TopPanel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 700.0
+offset_top = -22.0
+offset_right = -92.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "SIZE"
 horizontal_alignment = 1
 vertical_alignment = 2
 uppercase = true
@@ -1665,9 +1658,9 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 757.0
+offset_left = 770.0
 offset_top = -22.0
-offset_right = -45.0
+offset_right = -32.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Weight"
@@ -1697,6 +1690,17 @@ anchor_bottom = 1.0
 offset_right = -0.350006
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_eeipv")
+
+[node name="Line" type="ColorRect" parent="UserInterface/InventoryMenu/MainPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 131.0
+offset_right = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.470588, 0.470588, 0.470588, 0.556863)
 
 [node name="BottomPanel" type="Panel" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
@@ -1787,67 +1791,34 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer"]
+[node name="SubinventoryContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 10
+theme_override_constants/separation = 15
 
-[node name="_subinventory" type="VBoxContainer" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="_subinventory" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/SubinventoryContainer" instance=ExtResource("24_kij22")]
 layout_mode = 2
-theme_override_constants/separation = 2
-script = ExtResource("23_j7u6g")
 
-[node name="HeaderButton" type="TextureButton" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer/_subinventory"]
-custom_minimum_size = Vector2(0, 15)
+[node name="_subinventory2" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/SubinventoryContainer" instance=ExtResource("24_kij22")]
 layout_mode = 2
-size_flags_vertical = 3
-action_mode = 0
-texture_normal = SubResource("GradientTexture2D_tfsar")
-texture_pressed = SubResource("GradientTexture2D_g48xb")
-texture_hover = SubResource("GradientTexture2D_783m0")
-ignore_texture_size = true
-stretch_mode = 0
 
-[node name="Label" type="Label" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer/_subinventory/HeaderButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 33.0
-offset_top = -1.0
-offset_right = 37.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.32549)
-theme_override_font_sizes/font_size = 12
-text = "Jacket"
-vertical_alignment = 1
+[node name="_subinventory3" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/SubinventoryContainer" instance=ExtResource("24_kij22")]
+layout_mode = 2
 
-[node name="Capacity" type="Label" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer/_subinventory/HeaderButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -1.0
-offset_right = -677.0
-offset_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.47451)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.32549)
-theme_override_font_sizes/font_size = 10
-text = "0/0"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="_subinventory4" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/SubinventoryContainer" instance=ExtResource("24_kij22")]
+layout_mode = 2
 
-[node name="item_0" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/VBoxContainer/_subinventory" instance=ExtResource("22_n7hvp")]
+[node name="_subinventory5" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/SubinventoryContainer" instance=ExtResource("24_kij22")]
+layout_mode = 2
+
+[node name="_subinventory6" parent="UserInterface/InventoryMenu/InventoryManager/ScrollContainer/SubinventoryContainer" instance=ExtResource("24_kij22")]
 layout_mode = 2
 
 [node name="LabelList" type="RichTextLabel" parent="UserInterface/InventoryMenu/InventoryManager"]

@@ -5,9 +5,7 @@
 [ext_resource type="FontFile" uid="uid://ib15q14c37gy" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf" id="3_x8fip"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d100y"]
-bg_color = Color(0.101961, 0.101961, 0.101961, 0.819608)
-corner_radius_top_left = 5
-corner_radius_bottom_left = 5
+bg_color = Color(0.101961, 0.101961, 0.101961, 0.298039)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2dpmd"]
 
@@ -80,19 +78,42 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -196.0
+offset_left = -218.0
 offset_top = -11.5
-offset_right = -120.0
+offset_right = -142.0
 offset_bottom = 11.5
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.823529)
+theme_override_colors/font_color = Color(1, 1, 1, 0.498039)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.431373)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_fonts/font = ExtResource("3_x8fip")
 theme_override_font_sizes/font_size = 16
 text = "Type"
-horizontal_alignment = 2
+horizontal_alignment = 1
+
+[node name="SizeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -153.0
+offset_top = -11.5
+offset_right = -77.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.498039)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.431373)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("3_x8fip")
+theme_override_font_sizes/font_size = 16
+text = "Size"
+horizontal_alignment = 1
 
 [node name="WeightLabel" type="Label" parent="."]
 layout_mode = 1
@@ -101,16 +122,17 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -116.0
+offset_left = -88.0
 offset_top = -11.5
-offset_right = -40.0
+offset_right = -12.0
 offset_bottom = 11.5
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.823529)
+theme_override_colors/font_color = Color(1, 1, 1, 0.498039)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.431373)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_fonts/font = ExtResource("3_x8fip")
 theme_override_font_sizes/font_size = 16
 text = "Weight"
-horizontal_alignment = 2
+horizontal_alignment = 1

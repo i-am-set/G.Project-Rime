@@ -122,6 +122,7 @@ script = ExtResource("9_8y3m7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1165.3, 74.0264, 1144.61)
 
 [node name="mountain_range_skybox_model_1" parent="." instance=ExtResource("11_bofon")]
+visible = false
 
 [node name="Ice" type="MeshInstance3D" parent="mountain_range_skybox_model_1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)

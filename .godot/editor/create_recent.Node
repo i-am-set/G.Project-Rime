@@ -1,12 +1,12 @@
+Panel
+ColorRect
 VBoxContainer
 Control
 VScrollBar
-Panel
 TextureButton
 TextureRect
 Label
 Button
-ColorRect
 RichTextLabel
 InventoryManager
 ScrollContainer

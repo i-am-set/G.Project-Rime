@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bufntssvubj16"]
+[gd_scene load_steps=15 format=3 uid="uid://bufntssvubj16"]
 
 [ext_resource type="Script" path="res://scripts/game/game_chat_controller.gd" id="1_bvp7h"]
-[ext_resource type="FontFile" uid="uid://dacj8wfcnya4p" path="res://ui/fonts/FiraCode/FiraCode-Bold.ttf" id="2_3ur0w"]
+[ext_resource type="FontFile" uid="uid://gnlsmuf5s1a8" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf" id="2_8mk7r"]
+[ext_resource type="FontFile" uid="uid://f4xyvh4a4y32" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Light.ttf" id="3_ge5sw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qt841"]
 
@@ -30,15 +31,15 @@ Button/colors/font_color = Color(0.87451, 0.87451, 0.87451, 0.192157)
 Button/colors/font_focus_color = Color(0.87451, 0.87451, 0.87451, 0.192157)
 Button/colors/font_hover_color = Color(0.87451, 0.87451, 0.87451, 0.192157)
 Button/colors/font_pressed_color = Color(0.87451, 0.87451, 0.87451, 0.192157)
-Button/fonts/font = ExtResource("2_3ur0w")
+Button/fonts/font = ExtResource("2_8mk7r")
 Button/styles/focus = SubResource("StyleBoxEmpty_qt841")
 Button/styles/hover = SubResource("StyleBoxFlat_aorpn")
 Button/styles/normal = SubResource("StyleBoxFlat_qmtdm")
 Button/styles/pressed = SubResource("StyleBoxFlat_e0u1s")
-Label/fonts/font = ExtResource("2_3ur0w")
+Label/fonts/font = ExtResource("3_ge5sw")
 LineEdit/colors/font_placeholder_color = Color(0.87451, 0.87451, 0.87451, 0.117647)
 LineEdit/font_sizes/font_size = 16
-LineEdit/fonts/font = ExtResource("2_3ur0w")
+LineEdit/fonts/font = ExtResource("2_8mk7r")
 LineEdit/styles/focus = SubResource("StyleBoxEmpty_v0brr")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_qmtdm")
 Panel/styles/panel = SubResource("StyleBoxFlat_5yhoa")
@@ -115,14 +116,14 @@ offset_top = 221.0
 offset_right = 484.0
 offset_bottom = 252.0
 theme_override_font_sizes/font_size = 16
-text = "Send Message"
+text = "SEND MESSAGE"
 
 [node name="LineEdit" type="LineEdit" parent="Chat/SendMessage"]
 layout_mode = 0
 offset_left = -352.0
 offset_right = -4.0
 offset_bottom = 31.0
-placeholder_text = "Your Message Here"
+placeholder_text = " YOUR MESSAGE HERE"
 caret_blink = true
 
 [node name="ChatHideTimer" type="Timer" parent="."]
