@@ -21,7 +21,7 @@ const SUBINVENTORY_RECT = preload("res://scenes/ui/subinventory_rect.tscn")
 
 @export var weight_capacity : float = 100
 var weight_current : float
-var empty_slot : Dictionary = {"" : 0}
+var empty_slot : Array = ["", 0]
 
 func _ready():
 	update_weight(0)
@@ -30,7 +30,7 @@ func try_to_pick_up_item(_picked_up_item_id : String, _stack_size : int) -> bool
 	var _picked_up_item_size : int = StaticData.item_data[_picked_up_item_id]["item_size"] * _stack_size
 	
 	for i in subinventory_container.subinventory_slot_amount:
-		if subinventory_container.subinventory_contents[i] == empty_slot ||  subinventory_container.subinventory_contents[i].has(_picked_up_item_id):
+		if subinventory_container.subinventory_contents[i] == empty_slot || subinventory_container.subinventory_contents[i] == _picked_up_item_id:
 			subinventory_container.add_item(i, _picked_up_item_id, _stack_size)
 			return true
 	

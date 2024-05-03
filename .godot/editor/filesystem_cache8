@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1714673884
+::res://::1714694128
 default_bus_layout.tres::AudioBusLayout::2270601301610636829::1711561254::0::1::::<><>::
 export_presets.cfg::TextFile::-1::1709527592::0::1::::<><>::
 icon.png::CompressedTexture2D::8402074799734168854::1709244751::1709244751::1::::<><>::
@@ -75,7 +75,7 @@ THIRDPARTY.txt::TextFile::-1::1709244750::0::1::::<><>::
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/::1709244751
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/Resources/::1709244751
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/_CodeSignature/::1709244751
-::res://addons/godot-jolt/windows/::1714663542
+::res://addons/godot-jolt/windows/::1714694121
 ::res://addons/godot-multimesh-scatter-main/::1709244751
 ::res://addons/godot-multimesh-scatter-main/addons/::1709244751
 ::res://addons/godot-multimesh-scatter-main/addons/multimesh_scatter/::1709244807
@@ -91,7 +91,7 @@ godotsteam.gdextension::GDExtension::-1::1709244751::0::1::::<><>::
 ::res://addons/godotsteam/osx/libgodotsteam.debug.framework/::1709244751
 ::res://addons/godotsteam/osx/libgodotsteam.framework/::1709244751
 ::res://addons/godotsteam/win32/::1709244751
-::res://addons/godotsteam/win64/::1714663542
+::res://addons/godotsteam/win64/::1714694121
 ::res://addons/hyperlog/::1711638200
 hyperlog.gd::GDScript::-1::1711638200::0::1::::<>Node<>::
 hyperlog.tscn::PackedScene::3502588488077250474::1711638200::0::1::::<><>::res://addons/hyperlog/hyperlog.gd<>uid://dkgwe3j8h4ol3::::res://addons/hyperlog/log_container.tscn<>res://addons/hyperlog/sketchboard.gd
@@ -465,7 +465,7 @@ func_set.svg::CompressedTexture2D::3879604340026706619::1711648999::1714663553::
 keyword.svg::CompressedTexture2D::6207690078285442569::1711648999::1714663553::1::::<><>::
 property.svg::CompressedTexture2D::7275546524774189827::1711648999::1714663553::1::::<><>::
 signal.svg::CompressedTexture2D::3303164025475872126::1711648999::1714663553::1::::<><>::
-::res://addons/Todo_Manager/::1714673880
+::res://addons/Todo_Manager/::1714694128
 ColourPicker.gd::GDScript::-1::1709244750::0::1::::<>HBoxContainer<>::
 Current.gd::GDScript::-1::1709244750::0::1::::<>Panel<>::
 Dock.gd::GDScript::-1::1709244750::0::1::::<>Control<>::
@@ -473,7 +473,7 @@ Pattern.gd::GDScript::-1::1709244750::0::1::::<>HBoxContainer<>::
 plugin.cfg::TextFile::-1::1709244750::0::1::::<><>::
 plugin.gd::GDScript::-1::1709244750::0::1::::<>EditorPlugin<>::
 Project.gd::GDScript::-1::1709244750::0::1::::<>Panel<>::
-todo.cfg::TextFile::-1::1714673880::0::1::::<><>::
+todo.cfg::TextFile::-1::1714694128::0::1::::<><>::
 todoItem_class.gd::GDScript::-1::1709244750::0::1::::<>RefCounted<>::
 todo_class.gd::GDScript::-1::1709244750::0::1::::<>RefCounted<>::
 ::res://addons/Todo_Manager/doc/::1709244750
@@ -495,8 +495,8 @@ Item_Data.json::JSON::-1::1714502004::0::1::::<><>::
 StaticData.gd::GDScript::-1::1714330751::0::1::::<>Node<>::
 ::res://editor/::1709679222
 Editor.tres::Theme::2429160166874541595::1709244751::0::1::::<><>::
-::res://GodotSky/::1714671598
-GodotSky.tscn::PackedScene::1837630904097988851::1714671598::0::1::::<><>::uid://wwq6f40kybqq::::res://GodotSky/WorldEnvironment/default_environment.tres<>res://GodotSky/Scripts/GodotSky.gd
+::res://GodotSky/::1714683433
+GodotSky.tscn::PackedScene::1837630904097988851::1714683433::0::1::::<><>::uid://wwq6f40kybqq::::res://GodotSky/WorldEnvironment/default_environment.tres<>res://GodotSky/Scripts/GodotSky.gd
 ::res://GodotSky/Presets/::1714663665
 sky_alien.tres::Resource/Resource::6544410459469313275::1709244750::0::1::::<><>::uid://b1tbkqimx4iet::::res://GodotSky/Presets/alien/alien_baseCloudColor.tres<>uid://bh23k3qavhkgs::::res://GodotSky/Presets/alien/alien_baseSkyColor.tres<>uid://5w2qftxpu37u::::res://GodotSky/Presets/alien/alien_horizonFogColor.tres<>uid://olcpo6r2vd1w::::res://GodotSky/Presets/alien/alien_moonGlowColor.tres<>uid://j16cr0mc33qr::::res://GodotSky/Presets/alien/alien_moonLight.tres<>uid://dfwsgpngfonpr::::res://GodotSky/Presets/default/moonLightIntensity.tres<>uid://ldtmjeqburwu::::res://GodotSky/Presets/default/overcastCloudColor.tres<>res://GodotSky/Presets/sky_presets.gd<>uid://cssgcr5l78yas::::res://GodotSky/Presets/alien/alien_sunDiscColor.tres<>uid://cql6exfjhd3eb::::res://GodotSky/Presets/alien/alien_sunGlowColor.tres<>uid://b6pfci202gt33::::res://GodotSky/Presets/alien/alien_sunLight.tres<>uid://cbqp5kavktxj0::::res://GodotSky/Presets/default/sunLightIntensity.tres
 sky_default.tres::Resource/SkyPreset::2087792749060201634::1714663664::0::1::::<><>::uid://byjfyuyrx807k::::res://GodotSky/Presets/default/baseCloudColor.tres<>uid://cgx4sl3aogvl1::::res://GodotSky/Presets/default/baseSkyColor.tres<>uid://djvanj1c4svii::::res://GodotSky/Presets/default/horizonFogColor.tres<>uid://ckf0fl5h3dsb7::::res://GodotSky/Presets/default/moonGlowColor.tres<>uid://ciih3pg7w7pdi::::res://GodotSky/Presets/default/moonLight.tres<>uid://ldtmjeqburwu::::res://GodotSky/Presets/default/overcastCloudColor.tres<>uid://dfwsgpngfonpr::::res://GodotSky/Presets/default/moonLightIntensity.tres<>res://GodotSky/Presets/sky_presets.gd<>uid://b8shggit3kluq::::res://GodotSky/Presets/default/sunDiscColor.tres<>uid://c04hwtwd421t::::res://GodotSky/Presets/default/sunGlowColor.tres<>uid://b34sugfjpq5gi::::res://GodotSky/Presets/default/sunLight.tres<>uid://cbqp5kavktxj0::::res://GodotSky/Presets/default/sunLightIntensity.tres
@@ -623,17 +623,17 @@ default_player_data.tres::Resource/Resource::4614957391611787845::1712083304::0:
 ::res://resources/weapons/::1714663665
 weap_hatchet.tres::Resource/Resource::3259054360923202259::1712434649::0::1::::<><>::res://scripts/player/weapons.gd<>uid://c4fnn07t5jqdl::::res://meshes/weapons/crowbar/mesh_crowbar.res
 weap_nothing.tres::Resource/Weapons::8410269450203235583::1714663665::0::1::::<><>::res://scripts/player/weapons.gd
-::res://scenes/::1714671598
-fps_controller.tscn::PackedScene::6748783654989162717::1714671598::0::1::::<><>::res://scripts/player/fps_controller.gd<>uid://b4gwd5h7ixvct::::res://materials/player.tres<>uid://v8g6dodhumyk::::res://meshes/weapons/weapon.tscn<>res://scripts/player/reticle.gd<>res://scripts/player/inventory_logic.gd<>uid://dr285553q3o4n::::res://resources/weapons/weap_nothing.tres<>uid://cjxg2tt7m1r7e::::res://ui/themes/debug.tres<>uid://du5dlc2aksu23::::res://ui/fonts/FiraCode/FiraCode-Light.ttf<>res://scripts/game/debug.gd<>res://shaders/2d/blur_shader.gdshader<>uid://cyodex2xc22hm::::res://ui/button_groups/display_mode_button_group.tres<>res://scripts/game/options_setting.gd<>uid://seeio8ulr1kf::::res://ui/fonts/FiraCode/FiraCode-Medium.ttf<>uid://dacj8wfcnya4p::::res://ui/fonts/FiraCode/FiraCode-Bold.ttf<>uid://ib15q14c37gy::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf<>res://scripts/player/state_machine.gd<>uid://gjrd62lhvw1l::::res://textures/ui/slider_grabber.png<>uid://dxhuibh5ps6gd::::res://textures/ui/ui_male_silhouette.png<>uid://cblhlwfgq7uv3::::res://ui/fonts/FiraCode/FiraCode-Regular.ttf<>uid://beqh5d5pjo0xa::::res://textures/ui/slider_grabber_disabled.png<>res://scripts/game/fps_label.gd<>res://scripts/player/IdlePlayerState.gd<>uid://bgnix38vyapog::::res://textures/ui/slider_grabber_highlighted.png<>res://scripts/player/WalkingPlayerState.gd<>res://scripts/player/SprintingPlayerState.gd<>res://scripts/player/CrouchingPlayerState.gd<>res://scripts/player/SlidingPlayerState.gd<>uid://bpp5x1786kour::::res://ui/button_groups/temperature_unit_button_group.tres<>res://scripts/player/JumpingPlayerState.gd<>res://scripts/player/FallingPlayerState.gd<>uid://bsysr2ekeswpu::::res://textures/screenshots/daylight_1_screenshot.png<>uid://cpghkj6kt0fr0::::res://textures/ui/ui_male_temperature_map.png<>uid://gkwxbmjelhno::::res://textures/ui/ui_male_temperature_map_mask.png<>res://scripts/player/WeaponViewport.gd<>uid://f4xyvh4a4y32::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Light.ttf<>res://scripts/player/WeaponCamera.gd<>uid://gnlsmuf5s1a8::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf<>uid://chpse68y216vv::::res://materials/post_processing_material.tres<>res://shaders/dithering_post_process.gdshader<>uid://b8m7rk12l8ne::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Medium.ttf<>res://scripts/player/floor_detector_script.gd<>res://addons/label_font_auto_sizer/label_auto_sizer.gd<>res://scripts/player/inventory/inventory_manager.gd<>uid://nvpqhb7ntek8::::res://scenes/ui/inventory_tooltip.tscn<>res://scripts/player/inventory/subinventory_manager.gd<>uid://b7jlc7vkdspss::::res://scenes/ui/inv_item_rect.tscn<>uid://b4kiu73xi3i07::::res://scenes/ui/inventory_rmb_menu.tscn<>uid://cf7l4aqnldkhh::::res://ui/fonts/Icons/icon-font.ttf<>uid://ca0qt70ydcxfg::::res://scenes/ui/held_item_preview.tscn<>uid://cnpwayblx3rs8::::res://meshes/entities/low_poly_male.glb
+::res://scenes/::1714683433
+fps_controller.tscn::PackedScene::6748783654989162717::1714683433::0::1::::<><>::res://scripts/player/fps_controller.gd<>uid://b4gwd5h7ixvct::::res://materials/player.tres<>uid://v8g6dodhumyk::::res://meshes/weapons/weapon.tscn<>res://scripts/player/reticle.gd<>res://scripts/player/inventory_logic.gd<>uid://dr285553q3o4n::::res://resources/weapons/weap_nothing.tres<>uid://cjxg2tt7m1r7e::::res://ui/themes/debug.tres<>uid://du5dlc2aksu23::::res://ui/fonts/FiraCode/FiraCode-Light.ttf<>res://scripts/game/debug.gd<>res://shaders/2d/blur_shader.gdshader<>uid://cyodex2xc22hm::::res://ui/button_groups/display_mode_button_group.tres<>res://scripts/game/options_setting.gd<>uid://seeio8ulr1kf::::res://ui/fonts/FiraCode/FiraCode-Medium.ttf<>uid://dacj8wfcnya4p::::res://ui/fonts/FiraCode/FiraCode-Bold.ttf<>uid://ib15q14c37gy::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf<>res://scripts/player/state_machine.gd<>uid://gjrd62lhvw1l::::res://textures/ui/slider_grabber.png<>uid://dxhuibh5ps6gd::::res://textures/ui/ui_male_silhouette.png<>uid://cblhlwfgq7uv3::::res://ui/fonts/FiraCode/FiraCode-Regular.ttf<>uid://beqh5d5pjo0xa::::res://textures/ui/slider_grabber_disabled.png<>res://scripts/game/fps_label.gd<>res://scripts/player/IdlePlayerState.gd<>uid://bgnix38vyapog::::res://textures/ui/slider_grabber_highlighted.png<>res://scripts/player/WalkingPlayerState.gd<>res://scripts/player/SprintingPlayerState.gd<>res://scripts/player/CrouchingPlayerState.gd<>res://scripts/player/SlidingPlayerState.gd<>uid://bpp5x1786kour::::res://ui/button_groups/temperature_unit_button_group.tres<>res://scripts/player/JumpingPlayerState.gd<>res://scripts/player/FallingPlayerState.gd<>uid://bsysr2ekeswpu::::res://textures/screenshots/daylight_1_screenshot.png<>uid://cpghkj6kt0fr0::::res://textures/ui/ui_male_temperature_map.png<>uid://gkwxbmjelhno::::res://textures/ui/ui_male_temperature_map_mask.png<>res://scripts/player/WeaponViewport.gd<>uid://f4xyvh4a4y32::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Light.ttf<>res://scripts/player/WeaponCamera.gd<>uid://gnlsmuf5s1a8::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf<>uid://chpse68y216vv::::res://materials/post_processing_material.tres<>res://shaders/dithering_post_process.gdshader<>uid://b8m7rk12l8ne::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Medium.ttf<>res://scripts/player/floor_detector_script.gd<>res://scripts/player/inventory/inventory_manager.gd<>uid://bi8vqxiodvx8h::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBold.ttf<>uid://nvpqhb7ntek8::::res://scenes/ui/inventory_tooltip.tscn<>res://scripts/player/inventory/subinventory_manager.gd<>uid://b7jlc7vkdspss::::res://scenes/ui/inv_item_rect.tscn<>uid://b4kiu73xi3i07::::res://scenes/ui/inventory_rmb_menu.tscn<>uid://ca0qt70ydcxfg::::res://scenes/ui/held_item_preview.tscn<>uid://cnpwayblx3rs8::::res://meshes/entities/low_poly_male.glb
 fps_peer.tscn::PackedScene::942474991438399530::1709244751::0::1::::<><>::res://scripts/player/fps_controller.gd<>uid://b4gwd5h7ixvct::::res://materials/player.tres<>res://scripts/player/state_machine.gd<>res://scripts/player/IdlePlayerState.gd<>res://scripts/player/WalkingPlayerState.gd<>res://scripts/player/SprintingPlayerState.gd<>res://scripts/player/CrouchingPlayerState.gd<>res://scripts/player/SlidingPlayerState.gd<>res://scripts/player/JumpingPlayerState.gd<>res://scripts/player/FallingPlayerState.gd
 level_007.tscn::PackedScene::536869319391513781::1711044840::0::1::::<><>::res://scripts/game/game_controller_old.gd<>uid://1gfropwtqfbn::::res://GodotSky/GodotSky.tscn<>uid://bnp8m2njv656s::::res://materials/nature/grass_clutter_material.tres<>uid://cn1gsy15bkaff::::res://materials/grid.tres<>uid://ivvpsi314b34::::res://textures/grid.jpg<>uid://c7xublrnupds4::::res://world/collisionmap/collisionmap.tscn<>uid://b11lm75hfbnky::::res://world/clipmap/clipmap.tscn<>uid://bm3se7nbvev48::::res://world/clipmap/clipmap_partition.tscn<>uid://diatixhqy12pa::::res://scenes/resource_instancer.tscn<>uid://b8k603xutcxip::::res://scenes/utility/skybox_scene.tscn<>uid://dwvyd6l34gxfr::::res://shaders/clutter_placing_shader.tres<>uid://8j7ckn1wqi4h::::res://meshes/nature/clutter/clutter_grass_1.obj
-mainmenu.tscn::PackedScene::2795170943604004317::1714671598::0::1::::<><>::res://scripts/steam/SteamLobby.gd<>res://scripts/game/mainmenu_controller.gd
+mainmenu.tscn::PackedScene::2795170943604004317::1714683433::0::1::::<><>::res://scripts/steam/SteamLobby.gd<>res://scripts/game/mainmenu_controller.gd
 normals_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 resource_instancer.tscn::PackedScene::7721941929008140922::1711055640::0::1::::<><>::res://scripts/resource_objects/ResourceInstancer.cs
 test_object.tscn::PackedScene::7210872927431446680::1711836717::0::1::::<><>::
-::res://scenes/maingame/::1714671600
-ground_item.tscn::PackedScene::5815613764605907317::1714671600::0::1::::<><>::res://scripts/inventory/ground_item.gd<>uid://y3y407hlkj35::::res://meshes/items/resources/flint_item_model.obj
-world.tscn::PackedScene::5572632680217570611::1714671600::0::1::::<><>::res://scripts/game/game_controller.gd<>uid://1gfropwtqfbn::::res://GodotSky/GodotSky.tscn<>res://scripts/world_generation/MapGenerator.cs<>res://scripts/world_generation/TerrainType.cs<>uid://cokndnhyl7pb3::::res://materials/world_gen_material.tres<>uid://bcgo5si7q5hok::::res://scenes/utility/mesh_height_curve.tres<>res://scripts/world_generation/InfiniteTerrainGenerator.cs<>res://scripts/world_generation/LODInfo.cs<>res://scripts/resource_objects/ResourceChunkInstancer.cs<>uid://dea3xq433l3uo::::res://scenes/utility/mountain_range_skybox_scene.tscn<>uid://vumnicjktnyy::::res://textures/nature/resource/pine/pinetree_branch_hd.png<>uid://cm7q5u3kq1ebq::::res://textures/nature/ground/ice/ice_raw_Base_Color.jpg<>uid://ch0lv4twi6jw8::::res://textures/nature/ground/ice/ice_raw_Height.png<>uid://ccfdl7dutavpr::::res://textures/nature/ground/ice/ice_raw_Normal.jpg<>uid://cvf2cm7f6n23::::res://textures/nature/ground/ice/ice_raw_Roughness.jpg
+::res://scenes/maingame/::1714683433
+ground_item.tscn::PackedScene::5815613764605907317::1714683433::0::1::::<><>::res://scripts/inventory/ground_item.gd<>uid://y3y407hlkj35::::res://meshes/items/resources/flint_item_model.obj
+world.tscn::PackedScene::5572632680217570611::1714683433::0::1::::<><>::res://scripts/game/game_controller.gd<>uid://1gfropwtqfbn::::res://GodotSky/GodotSky.tscn<>res://scripts/world_generation/MapGenerator.cs<>res://scripts/world_generation/TerrainType.cs<>uid://cokndnhyl7pb3::::res://materials/world_gen_material.tres<>uid://bcgo5si7q5hok::::res://scenes/utility/mesh_height_curve.tres<>res://scripts/world_generation/InfiniteTerrainGenerator.cs<>res://scripts/world_generation/LODInfo.cs<>res://scripts/resource_objects/ResourceChunkInstancer.cs<>uid://dea3xq433l3uo::::res://scenes/utility/mountain_range_skybox_scene.tscn<>uid://vumnicjktnyy::::res://textures/nature/resource/pine/pinetree_branch_hd.png<>uid://cm7q5u3kq1ebq::::res://textures/nature/ground/ice/ice_raw_Base_Color.jpg<>uid://ch0lv4twi6jw8::::res://textures/nature/ground/ice/ice_raw_Height.png<>uid://ccfdl7dutavpr::::res://textures/nature/ground/ice/ice_raw_Normal.jpg<>uid://cvf2cm7f6n23::::res://textures/nature/ground/ice/ice_raw_Roughness.jpg
 ::res://scenes/resourceobjects/::1709244751
 ::res://scenes/resourceobjects/nature/::1709507068
 ::res://scenes/resourceobjects/nature/clutter/::1710105503
@@ -673,13 +673,13 @@ _tall_pine_tree_2.tscn::PackedScene::2179727100725098324::1714663813::0::1::::<>
 col_birch_tree.tscn::PackedScene::4744692696264051936::1711045457::0::1::::<><>::
 col_pine_tree.tscn::PackedScene::4431183068660252659::1711045520::0::1::::<><>::
 col_tall_pine_tree.tscn::PackedScene::8081148697438849849::1711045299::0::1::::<><>::
-::res://scenes/ui/::1714671600
+::res://scenes/ui/::1714686889
 game_chat_controller.tscn::PackedScene::3801343670421907999::1714663671::0::1::::<><>::res://scripts/game/game_chat_controller.gd<>uid://gnlsmuf5s1a8::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf<>uid://f4xyvh4a4y32::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Light.ttf
 game_player_list_controller.tscn::PackedScene::4152908841455773118::1709244751::0::1::::<><>::res://scripts/game/game_player_list_controller.gd
 held_item_preview.tscn::PackedScene::4825457933668032524::1714268987::0::1::::<><>::res://scripts/inventory/held_item_preview.gd<>uid://seeio8ulr1kf::::res://ui/fonts/FiraCode/FiraCode-Medium.ttf
 inventory_rmb_menu.tscn::PackedScene::4443064103615411922::1714268987::0::1::::<><>::res://scripts/inventory/inventory_rmb_menu.gd<>res://shaders/2d/blur_shader.gdshader<>uid://seeio8ulr1kf::::res://ui/fonts/FiraCode/FiraCode-Medium.ttf<>uid://y3y407hlkj35::::res://meshes/items/resources/flint_item_model.obj
 inventory_tooltip.tscn::PackedScene::956746598403964717::1713811702::0::1::::<><>::uid://dacj8wfcnya4p::::res://ui/fonts/FiraCode/FiraCode-Bold.ttf<>res://scripts/inventory/inventory_tooltip.gd<>uid://seeio8ulr1kf::::res://ui/fonts/FiraCode/FiraCode-Medium.ttf
-inv_item_rect.tscn::PackedScene::4651716252052102258::1714671600::0::1::::<><>::res://scripts/player/inventory/inv_item_rect.gd<>uid://cf7l4aqnldkhh::::res://ui/fonts/Icons/icon-font.ttf<>res://addons/label_font_auto_sizer/label_auto_sizer.gd<>uid://bi8vqxiodvx8h::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBold.ttf<>uid://gnlsmuf5s1a8::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf
+inv_item_rect.tscn::PackedScene::4651716252052102258::1714686889::0::1::::<><>::res://scripts/player/inventory/inv_item_rect.gd<>uid://d1hh3q8v4ve62::::res://ui/fonts/Icons/icon-font.ttf<>uid://bi8vqxiodvx8h::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBold.ttf<>uid://ib15q14c37gy::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf<>uid://cssxl1qm0huhb::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-MediumItalic.ttf
 item_rect.tscn::PackedScene::2643808932081139574::1714268986::0::1::::<><>::uid://seeio8ulr1kf::::res://ui/fonts/FiraCode/FiraCode-Medium.ttf<>res://scripts/inventory/item_rect.gd<>uid://bvcdb1x5nqo6v::::res://textures/items/flint_thumbnail.png
 subinventory_rect.tscn::PackedScene::411709107439920614::1714668190::0::1::::<><>::res://scripts/player/inventory/subinventory_manager.gd<>uid://b7jlc7vkdspss::::res://scenes/ui/inv_item_rect.tscn
 ::res://scenes/utility/::1714671600
@@ -703,8 +703,8 @@ game_player_list_controller.gd::GDScript::-1::1713133778::0::1::::<>Control<>::
 global.gd::GDScript::-1::1713546730::0::1::::_Global<>Node<>::
 mainmenu_controller.gd::GDScript::-1::1713452681::0::1::::<>Control<>::
 options_setting.gd::GDScript::-1::1713546816::0::1::::<>ScrollContainer<>::
-::res://scripts/inventory/::1714330751
-ground_item.gd::GDScript::-1::1713975477::0::1::::<>RigidBody3D<>::
+::res://scripts/inventory/::1714677878
+ground_item.gd::GDScript::-1::1714677878::0::1::::<>RigidBody3D<>::
 held_item_preview.gd::GDScript::-1::1713898557::0::1::::<>Control<>::
 inventory_item.gd::GDScript::-1::1714330751::0::1::::InventoryItem<>Resource<>::
 inventory_rmb_menu.gd::GDScript::-1::1713714653::0::1::::<>Control<>::
@@ -712,11 +712,11 @@ inventory_tooltip.gd::GDScript::-1::1713313162::0::1::::<>Control<>::
 item_rect.gd::GDScript::-1::1713983780::0::1::::<>Control<>::
 old_inventory_manager.gd::GDScript::-1::1714016885::0::1::::<>Control<>::
 subinventory.gd::GDScript::-1::1714016885::0::1::::Subinventory<>Control<>::
-::res://scripts/player/::1714666051
+::res://scripts/player/::1714675376
 CrouchingPlayerState.gd::GDScript::-1::1712433447::0::1::::CrouchingPlayerState<>PlayerMovementState<>::
 FallingPlayerState.gd::GDScript::-1::1713134541::0::1::::FallingPlayerState<>PlayerMovementState<>::
 floor_detector_script.gd::GDScript::-1::1711416447::0::1::::<>RayCast3D<>::
-fps_controller.gd::GDScript::-1::1714666051::0::1::::Player<>CharacterBody3D<>::
+fps_controller.gd::GDScript::-1::1714675376::0::1::::Player<>CharacterBody3D<>::
 IdlePlayerState.gd::GDScript::-1::1712432139::0::1::::IdlePlayerState<>PlayerMovementState<>::
 init_weapon.gd::GDScript::-1::1713132337::0::1::::WeaponController<>Node3D<>::
 inventory_logic.gd::GDScript::-1::1714508391::0::1::::<>Control<>::
@@ -732,10 +732,10 @@ WalkingPlayerState.gd::GDScript::-1::1712433435::0::1::::WalkingPlayerState<>Pla
 WeaponCamera.gd::GDScript::-1::1709244751::0::1::::<>Camera3D<>::
 weapons.gd::GDScript::-1::1712433313::0::1::::Weapons<>Resource<>::
 WeaponViewport.gd::GDScript::-1::1709244751::0::1::::<>SubViewport<>::
-::res://scripts/player/inventory/::1714670236
-inventory_manager.gd::GDScript::-1::1714668451::0::1::::InventoryManager<>Control<>::
-inv_item_rect.gd::GDScript::-1::1714670236::0::1::::InvItemRect<>Control<>::
-subinventory_manager.gd::GDScript::-1::1714668386::0::1::::SubinventoryManager<>Control<>::
+::res://scripts/player/inventory/::1714683432
+inventory_manager.gd::GDScript::-1::1714683424::0::1::::InventoryManager<>Control<>::
+inv_item_rect.gd::GDScript::-1::1714683432::0::1::::InvItemRect<>Control<>::
+subinventory_manager.gd::GDScript::-1::1714681248::0::1::::SubinventoryManager<>Control<>::
 ::res://scripts/resource_objects/::1714658981
 ResourceChunkInstancer.cs::CSharpScript::-1::1714671594::0::1::::<>Node3D<>::
 ResourceController.cs::CSharpScript::-1::1713453232::0::1::::<>Node3D<>::
@@ -754,21 +754,21 @@ MapNoise.cs::CSharpScript::-1::1710114422::0::1::::<><>::
 MeshGenerator.cs::CSharpScript::-1::1711255577::0::1::::<><>::
 TerrainType.cs::CSharpScript::-1::1709851907::0::1::::TerrainType<>Resource<>::
 TextureGenerator.cs::CSharpScript::-1::1709853334::0::1::::<><>::
-::res://shaders/::1714671600
+::res://shaders/::1714686893
 billboard_shader.tres::Shader::2392010127147596709::1711129483::0::1::::<><>::
 bush_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 clutter_placing_shader.tres::Shader::8748232755687291991::1711129483::0::1::::<><>::
 default_object_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
-dithering_post_process.gdshader::Shader::-1::1714671600::0::1::::<><>::
+dithering_post_process.gdshader::Shader::-1::1714686893::0::1::::<><>::
 grass_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 grid.gdshader::Shader::-1::1709244751::0::1::::<><>::
 item_highlighter_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 leaf_shader.gdshader::Shader::-1::1714658981::0::1::::<><>::
-player_post_processesing.gdshader::Shader::-1::1714671600::0::1::::<><>::
-snow_post_processesing.gdshader::Shader::-1::1714671600::0::1::::<><>::
+player_post_processesing.gdshader::Shader::-1::1714686893::0::1::::<><>::
+snow_post_processesing.gdshader::Shader::-1::1714686893::0::1::::<><>::
 tree_shader.gdshader::Shader::-1::1714658981::0::1::::<><>::
-::res://shaders/2d/::1714671600
-blur_shader.gdshader::Shader::-1::1714671600::0::1::::<><>::
+::res://shaders/2d/::1714686893
+blur_shader.gdshader::Shader::-1::1714686893::0::1::::<><>::
 ::res://textures/::1713809838
 grid.jpg::CompressedTexture2D::606165484783000033::1709244751::1709244751::1::::<><>::
 industrial_sunset_puresky_4k.hdr::CompressedTexture2D::4231198947588975781::1709244752::1709244752::1::::<><>::
@@ -907,7 +907,7 @@ IBMPlexSansCondensed-SemiBoldItalic.ttf::FontFile::4213412307424247917::16826231
 IBMPlexSansCondensed-Thin.ttf::FontFile::1477577878034556328::1682623102::1714269896::1::::<><>::
 IBMPlexSansCondensed-ThinItalic.ttf::FontFile::8665121873559373582::1682623102::1714269896::1::::<><>::
 OFL.txt::TextFile::-1::1714269834::0::1::::<><>::
-::res://ui/fonts/Icons/::1714673884
+::res://ui/fonts/Icons/::1714673885
 Copy-Paste-Bin-Icons.txt::TextFile::-1::1714274172::0::1::::<><>::
 icon-font.ttf::FontFile::8999098543471142689::1714273820::1714673885::1::::<><>::
 ::res://ui/themes/::1709244752

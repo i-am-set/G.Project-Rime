@@ -17,8 +17,8 @@ const INV_ITEM_RECT = preload("res://scenes/ui/inv_item_rect.tscn")
 #var subinventory_quantity_held : int = 0
 var subinventory_slot_amount : int = 999
 
-var subinventory_contents : Array[Dictionary] = []
-var empty_slot : Dictionary = {"" : 0}
+var subinventory_contents : Array[Array] = []
+var empty_slot : Array = ["", 0]
 var item_rects : Array[Panel] = []
 
 func _ready() -> void:
@@ -52,8 +52,8 @@ func update_item_rects():
 		var _item_in_slot = subinventory_contents[i]
 		if _item_in_slot != empty_slot:
 			var _item_rect = item_rects[i]
-			var _item_id = _item_in_slot.keys()[0]
-			_item_rect.set_inv_item_rect_variables(_item_id, _item_in_slot[_item_id])
+			var _item_id = _item_in_slot[0]
+			_item_rect.set_inv_item_rect_variables(_item_id, _item_in_slot[1])
 			_item_rect.show()
 		else:
 			item_rects[i].hide()
@@ -84,19 +84,36 @@ func check_if_subinventory_empty() -> bool:
 	return true
 
 func add_item(_item_slot : int, _picked_up_item_id : String, _stack_size : int):
-	var _new_item : Dictionary = {_picked_up_item_id : _stack_size}
+	var _new_item : Array = [_picked_up_item_id, _stack_size]
+	var _item_slot_reference = subinventory_contents[_item_slot]
 	var _picked_up_item_weight : int = StaticData.item_data[_picked_up_item_id]["item_weight"] * _stack_size
 	
-	if subinventory_contents[_item_slot] == empty_slot:
+	if _item_slot_reference == empty_slot:
 		subinventory_contents[_item_slot] = _new_item
-	elif subinventory_contents[_item_slot].has(_picked_up_item_id):
-		var _cached_item_stack_size = subinventory_contents[_item_slot][_picked_up_item_id]
-		subinventory_contents[_item_slot][_picked_up_item_id] = _cached_item_stack_size + _stack_size
+	elif _item_slot_reference[0] == _picked_up_item_id:
+		var _cached_item_stack_size = _item_slot_reference[1]
+		_item_slot_reference[1] = _cached_item_stack_size + _stack_size
 	else:
 		printerr("Item slot is already occupied. Item slot ", _item_slot, " in ", name, ".")
 		return
 	
 	inventory_manager.update_weight(inventory_manager.weight_current + _picked_up_item_weight)
+	
+	update_item_rects()
+	update_subinventory()
+
+func remove_item(_item_slot : int, _remove_amount : int):
+	var _item_to_be_removed = subinventory_contents[_item_slot]
+	var _removed_item_weight : int = StaticData.item_data[_item_to_be_removed]["item_weight"] * _remove_amount
+	
+	if _item_to_be_removed != empty_slot:
+		var _cached_item_stack_size = _item_to_be_removed[1]
+		_item_to_be_removed[1] = _cached_item_stack_size - _remove_amount
+	else:
+		printerr("Item slot is empty, can't remove. Item slot ", _item_slot, " in ", name, ".")
+		return
+	
+	inventory_manager.update_weight(inventory_manager.weight_current - _removed_item_weight)
 	
 	update_item_rects()
 	update_subinventory()

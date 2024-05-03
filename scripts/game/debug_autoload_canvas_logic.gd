@@ -4,7 +4,6 @@ extends CanvasLayer
 @onready var game_chat_controller = $GameChatController
 @onready var game_player_list_controller = $GamePlayerListController
 
-
 var is_high_contrast : bool = false
 
 func _ready():
