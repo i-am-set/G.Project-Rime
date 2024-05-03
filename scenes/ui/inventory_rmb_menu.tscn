@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://b4kiu73xi3i07"]
 
-[ext_resource type="Script" path="res://scripts/inventory/inventory_rmb_menu.gd" id="1_3tt4f"]
+[ext_resource type="Script" path="res://scripts/player/inventory/inv_rmb_menu.gd" id="1_guv23"]
 [ext_resource type="Shader" path="res://shaders/2d/blur_shader.gdshader" id="2_y62ye"]
 [ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="3_y6oxa"]
 [ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="4_mxq8e"]
@@ -74,7 +74,7 @@ offset_right = 125.0
 offset_bottom = 120.0
 mouse_filter = 2
 theme = SubResource("Theme_60u4v")
-script = ExtResource("1_3tt4f")
+script = ExtResource("1_guv23")
 
 [node name="Dropdown" type="HBoxContainer" parent="."]
 layout_mode = 1

@@ -117,3 +117,22 @@ func remove_item(_item_slot : int, _remove_amount : int):
 	
 	update_item_rects()
 	update_subinventory()
+
+func drop_item_one(_item_slot : int, _item : Array):
+	if _item[1] > 1:
+		_item[1] -= 1
+	else:
+		remove_item(_item_slot, 1)
+	
+	#drop_ground_item_backend(_cached_item, 1)
+	
+	#update_grid()
+
+func drop_item_all(_item_slot : int, _item : Array):
+	var _cached_item_stack_amount : int = _item[1]
+	
+	remove_item(_item_slot, _cached_item_stack_amount)
+	#
+	#drop_ground_item_backend(_cached_item, _cached_item_stack_amount)
+	#
+	#update_grid()

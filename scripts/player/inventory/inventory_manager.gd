@@ -3,9 +3,12 @@ class_name InventoryManager
 
 const SUBINVENTORY_RECT = preload("res://scenes/ui/subinventory_rect.tscn")
 
+@onready var rmb_menu: Control = $"../../../../RmbMenu"
 @onready var scroll_container = $ScrollContainer
 @onready var subinventory_container = $ScrollContainer/SubinventoryContainer
 @onready var weight_label: Label = $"../TopDivider/Weight"
+
+var mouse_pos : Vector2
 
 #var garment_head_id : String = ""
 #var garment_face_id : String = ""
@@ -26,6 +29,9 @@ var empty_slot : Array = ["", 0]
 func _ready():
 	update_weight(0)
 
+func _process(delta):
+	mouse_pos = get_global_mouse_position()
+
 func try_to_pick_up_item(_picked_up_item_id : String, _stack_size : int) -> bool:
 	var _picked_up_item_size : int = StaticData.item_data[_picked_up_item_id]["item_size"] * _stack_size
 	
@@ -35,6 +41,15 @@ func try_to_pick_up_item(_picked_up_item_id : String, _stack_size : int) -> bool
 			return true
 	
 	return false
+
+func ShowRmbMenu(_item_slot : int):
+	rmb_menu.position = mouse_pos
+	rmb_menu.right_clicked_item_ref = _item_slot
+	rmb_menu.inv_item = subinventory_container.subinventory_contents[_item_slot]
+	rmb_menu.show()
+
+func HideRmbMenu():
+	rmb_menu.hide()
 
 func update_weight(_new_weight : int):
 	weight_current = _new_weight

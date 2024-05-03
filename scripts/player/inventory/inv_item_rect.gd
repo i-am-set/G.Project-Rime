@@ -1,6 +1,7 @@
 extends Control
 class_name InvItemRect
 
+@onready var inventory_manager: InventoryManager = $"../../../.."
 @onready var icon_label: Label = $IconLabel
 @onready var name_label: Label = $NameLabel
 @onready var weight_label: Label = $WeightLabel
