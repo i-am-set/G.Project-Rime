@@ -2,11 +2,13 @@ extends Control
 class_name InvItemRect
 
 @onready var inventory_manager: InventoryManager = $"../../../.."
+#@onready var subinventory_container: SubinventoryManager = $"../.."
 @onready var icon_label: Label = $IconLabel
 @onready var name_label: Label = $NameLabel
 @onready var weight_label: Label = $WeightLabel
 @onready var weightlb_label: Label = $WeightLabel/WeightlbLabel
 
+var item_slot : int = -1
 var item_id : String = ""
 var item_stack : int = 0
 
@@ -46,3 +48,6 @@ func set_inv_item_rect_label():
 		icon_label.text = _item_icon
 		name_label.text = "%s (%d)" %[_item_data["item_name"], item_stack]
 		weight_label.text = "%.2f" % _stack_weight
+
+func _on_item_pressed() -> void:
+	inventory_manager.ShowRmbMenu(item_slot)

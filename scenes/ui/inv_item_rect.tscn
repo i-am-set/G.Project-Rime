@@ -37,6 +37,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_2dpmd")
 theme_override_styles/hover = SubResource("StyleBoxTexture_u33jd")
+action_mode = 0
+button_mask = 2
 
 [node name="IconLabel" type="Label" parent="."]
 layout_mode = 1
@@ -118,3 +120,5 @@ theme_override_font_sizes/font_size = 14
 text = "lb."
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_item_pressed"]

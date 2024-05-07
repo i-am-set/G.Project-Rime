@@ -341,8 +341,8 @@ func interact_pick_up_to_inventory():
 func interact_pick_up_to_hand():
 	print_debug("item to hand")
 
-func drop_ground_item(_item : InventoryItem):
-	world.instance_ground_item(StaticData.create_item_from_id(_item.item_id), drop_position.global_position)
+func drop_ground_item(_item_id : String, _stack_amount : int):
+	world.instance_ground_item(StaticData.create_item_from_id(_item_id), _stack_amount, drop_position.global_position)
 
 func enable_postp_dither(toggle : bool) -> void:
 	POSTP_DITHER.get_surface_override_material(0).set_shader_parameter("dithering", toggle)

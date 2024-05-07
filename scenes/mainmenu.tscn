@@ -1,7 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bf3ab670oy0m8"]
+[gd_scene load_steps=8 format=3 uid="uid://bf3ab670oy0m8"]
 
 [ext_resource type="Script" path="res://scripts/steam/SteamLobby.gd" id="1_0trix"]
 [ext_resource type="Script" path="res://scripts/game/mainmenu_controller.gd" id="1_nfqda"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bh53q"]
+
+[sub_resource type="Theme" id="Theme_r1w8f"]
+Button/styles/focus = SubResource("StyleBoxEmpty_bh53q")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mxaob"]
 
@@ -20,6 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_r1w8f")
 script = ExtResource("1_nfqda")
 
 [node name="Multiplayer" type="Control" parent="."]

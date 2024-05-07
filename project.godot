@@ -193,7 +193,6 @@ rotate_held_item={
 
 [physics]
 
-common/physics_ticks_per_second=40
 3d/physics_engine="JoltPhysics3D"
 
 [rendering]

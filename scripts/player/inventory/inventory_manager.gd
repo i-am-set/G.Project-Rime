@@ -3,6 +3,7 @@ class_name InventoryManager
 
 const SUBINVENTORY_RECT = preload("res://scenes/ui/subinventory_rect.tscn")
 
+@onready var fps_controller: Player = $"../../../../../.."
 @onready var rmb_menu: Control = $"../../../../RmbMenu"
 @onready var scroll_container = $ScrollContainer
 @onready var subinventory_container = $ScrollContainer/SubinventoryContainer
@@ -36,7 +37,7 @@ func try_to_pick_up_item(_picked_up_item_id : String, _stack_size : int) -> bool
 	var _picked_up_item_size : int = StaticData.item_data[_picked_up_item_id]["item_size"] * _stack_size
 	
 	for i in subinventory_container.subinventory_slot_amount:
-		if subinventory_container.subinventory_contents[i] == empty_slot || subinventory_container.subinventory_contents[i] == _picked_up_item_id:
+		if subinventory_container.subinventory_contents[i] == empty_slot || subinventory_container.subinventory_contents[i][0] == _picked_up_item_id:
 			subinventory_container.add_item(i, _picked_up_item_id, _stack_size)
 			return true
 	
@@ -44,7 +45,7 @@ func try_to_pick_up_item(_picked_up_item_id : String, _stack_size : int) -> bool
 
 func ShowRmbMenu(_item_slot : int):
 	rmb_menu.position = mouse_pos
-	rmb_menu.right_clicked_item_ref = _item_slot
+	rmb_menu.right_clicked_item_slot = _item_slot
 	rmb_menu.inv_item = subinventory_container.subinventory_contents[_item_slot]
 	rmb_menu.show()
 

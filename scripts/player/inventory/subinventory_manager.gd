@@ -39,6 +39,7 @@ func initialize_subinventory_slots():
 	for i in subinventory_slot_amount:
 		subinventory_contents.append(empty_slot)
 		var _new_inv_item_rect = INV_ITEM_RECT.instantiate()
+		_new_inv_item_rect.item_slot = i
 		_new_inv_item_rect.hide()
 		items_container.add_child(_new_inv_item_rect)
 
@@ -76,6 +77,10 @@ func update_subinventory():
 		#capacity_label.modulate = capacity_color_normal
 	pass
 
+func drop_ground_item_backend(_dropped_item_id : String, _stack_amount : int):
+	var player = inventory_manager.fps_controller
+	player.drop_ground_item(_dropped_item_id, _stack_amount)
+
 func check_if_subinventory_empty() -> bool:
 	for i in subinventory_slot_amount:
 		if subinventory_contents[i] != empty_slot:
@@ -104,35 +109,39 @@ func add_item(_item_slot : int, _picked_up_item_id : String, _stack_size : int):
 
 func remove_item(_item_slot : int, _remove_amount : int):
 	var _item_to_be_removed = subinventory_contents[_item_slot]
-	var _removed_item_weight : int = StaticData.item_data[_item_to_be_removed]["item_weight"] * _remove_amount
+	var _removed_item_weight : float = StaticData.item_data[_item_to_be_removed[0]]["item_weight"] * _remove_amount
 	
 	if _item_to_be_removed != empty_slot:
-		var _cached_item_stack_size = _item_to_be_removed[1]
-		_item_to_be_removed[1] = _cached_item_stack_size - _remove_amount
+		_item_to_be_removed[1] -= _remove_amount
 	else:
 		printerr("Item slot is empty, can't remove. Item slot ", _item_slot, " in ", name, ".")
 		return
 	
 	inventory_manager.update_weight(inventory_manager.weight_current - _removed_item_weight)
 	
+	if _item_to_be_removed[1] < 1:
+		subinventory_contents[_item_slot] = empty_slot
+		item_rects[_item_slot].hide()
+	
 	update_item_rects()
 	update_subinventory()
 
 func drop_item_one(_item_slot : int, _item : Array):
-	if _item[1] > 1:
-		_item[1] -= 1
-	else:
-		remove_item(_item_slot, 1)
+	remove_item(_item_slot, 1)
 	
-	#drop_ground_item_backend(_cached_item, 1)
+	drop_ground_item_backend(_item[0], 1)
 	
-	#update_grid()
+	update_item_rects()
+	update_subinventory()
 
 func drop_item_all(_item_slot : int, _item : Array):
 	var _cached_item_stack_amount : int = _item[1]
 	
 	remove_item(_item_slot, _cached_item_stack_amount)
-	#
-	#drop_ground_item_backend(_cached_item, _cached_item_stack_amount)
+	
+	drop_ground_item_backend(_item[0], _cached_item_stack_amount)
 	#
 	#update_grid()
+	
+	update_item_rects()
+	update_subinventory()

@@ -37,7 +37,7 @@ func _process(delta):
 	#position = Vector2(clamped_x, clamped_y)
 
 func update_item_mesh():
-	mesh_container.mesh = StaticData.item_data[inv_item[0]]["item_mesh"]
+	mesh_container.mesh = load(StaticData.item_data[inv_item[0]]["item_mesh"])
 
 func base_button_function():
 	hide()
@@ -51,10 +51,10 @@ func base_button_function():
 	#base_button_function()
 
 func _on_drop_one_pressed():
-	inventory_manager.subinventory_container.drop_item_one(right_clicked_item_ref)
+	inventory_manager.subinventory_container.drop_item_one(right_clicked_item_slot, inv_item)
 	base_button_function()
 
 func _on_drop_all_pressed():
-	inventory_manager.subinventory_container.drop_item_all(right_clicked_item_ref)
+	inventory_manager.subinventory_container.drop_item_all(right_clicked_item_slot, inv_item)
 	base_button_function()
 
