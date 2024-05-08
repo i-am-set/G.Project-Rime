@@ -13,7 +13,7 @@ extends CharacterBody3D
 @onready var world = $"../.."
 @onready var drop_position = $CameraController/Camera3D/DropPosition
 @onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
-@onready var look_at_label = $LookAtLabel
+@onready var look_at_label: Label = $UserInterface/WAILA
 
 @export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -40,7 +40,7 @@ var _cached_position : Vector3
 var _cached_rotation : Vector3 
 var _steam_ID : int
 var _resource_spawn_radius : int
-var look_at_label_anchor : Vector3
+#var look_at_label_anchor : Vector3
 var look_at_collider
 var _current_rotation : float
 
@@ -203,9 +203,9 @@ func _physics_process(delta):
 		
 		if pause_menu.visible:
 			Global.IS_PAUSED = true
-
-func _process(delta):
-	look_at_label.global_position = look_at_label_anchor
+#
+#func _process(delta):
+	#look_at_label.global_position = look_at_label_anchor
 
 func update_gravity(delta) -> void:
 	if (_player_data.no_clip):
@@ -310,7 +310,7 @@ func looking_process():
 		look_at_collider = look_at_ray_cast.get_collider()
 		if look_at_collider != null:
 			look_at_collider.toggle_highlight(true)
-			look_at_label_anchor = look_at_collider.global_position
+			#look_at_label_anchor = look_at_collider.global_position
 			var _stack_amount = look_at_collider.stack_amount
 			if _stack_amount > 1:
 				look_at_label.text = str(look_at_collider.inv_item.item_name, " (", look_at_collider.stack_amount, ")")

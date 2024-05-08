@@ -1,4 +1,5 @@
 Label
+Label3D
 HBoxContainer
 Container
 LabelAutoSizer
@@ -11,4 +12,3 @@ Panel
 Control
 VScrollBar
 TextureButton
-TextureRect
