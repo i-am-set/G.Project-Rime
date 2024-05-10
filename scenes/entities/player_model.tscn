@@ -1,0 +1,99 @@
+[gd_scene load_steps=3 format=3 uid="uid://byuf6onu7acti"]
+
+[ext_resource type="PackedScene" uid="uid://ighvtmbew15t" path="res://meshes/entities/low_poly_male.glb" id="1_g8r8x"]
+[ext_resource type="Script" path="res://scripts/entity/start_ik.gd" id="2_k8kny"]
+
+[node name="low_poly_male" instance=ExtResource("1_g8r8x")]
+
+[node name="metarig" parent="." index="0"]
+transform = Transform3D(1.38336, 0, 0, 0, 1.38336, 0, 0, 0, 1.38336, 0, -0.1, 0)
+
+[node name="Skeleton3D" parent="metarig" index="0"]
+bones/0/rotation = Quaternion(0.12582, 0, 0, 0.992053)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/rotation = Quaternion(-0.0774641, 0, 0, 0.996995)
+bones/3/position = Vector3(0.000474975, 0.172475, 0.045475)
+bones/4/rotation = Quaternion(0.296475, 0.000474975, 0.000474975, 0.979475)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(-0.124525, 0.000474975, 0.000474975, 0.995475)
+bones/6/rotation = Quaternion(-0.089525, 0.000474975, 0.000474975, 0.995475)
+bones/7/rotation = Quaternion(-0.605155, -0.345862, -0.356134, 0.622363)
+bones/8/rotation = Quaternion(-0.135826, 0.666882, -0.468452, 0.563358)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(-0.00932562, 0.0685775, -0.0202307, 0.997397)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/rotation = Quaternion(0.0427321, 0.0766194, -0.035978, 0.995494)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(-0.605155, 0.345862, 0.356134, 0.622363)
+bones/12/rotation = Quaternion(-0.103317, -0.688103, 0.479262, 0.534928)
+bones/13/rotation = Quaternion(-0.0193705, -0.0184987, 0.0406311, 0.998815)
+bones/13/scale = Vector3(1, 1, 1)
+bones/14/rotation = Quaternion(-0.0049722, -0.381717, 0.00381079, 0.924258)
+bones/15/rotation = Quaternion(3.13469e-08, 0.696936, 0.717133, 3.0464e-08)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(3.13469e-08, 0.696936, 0.717133, 3.0464e-08)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(-0.152455, -0.793331, -0.285504, 0.515627)
+bones/18/rotation = Quaternion(-0.152455, 0.793331, 0.285504, 0.515627)
+bones/19/rotation = Quaternion(0.992468, 0.0257223, -0.00411158, 0.119699)
+bones/19/scale = Vector3(1, 1, 0.999998)
+bones/20/rotation = Quaternion(0.0098002, 0.00684984, -0.00479411, 0.999917)
+bones/20/scale = Vector3(1, 1, 1)
+bones/21/rotation = Quaternion(-0.498552, -0.019973, 0.0241157, 0.866294)
+bones/22/rotation = Quaternion(1.17651e-07, 0.961249, -0.275682, 3.01752e-07)
+bones/22/scale = Vector3(1, 1, 1)
+bones/23/rotation = Quaternion(0.679706, 0.679705, -0.194936, 0.194937)
+bones/24/rotation = Quaternion(0.993483, -0.0254256, 0.00514313, 0.110989)
+bones/24/scale = Vector3(1, 1, 0.999997)
+bones/26/rotation = Quaternion(-0.483401, 0.0199405, -0.0267621, 0.874763)
+bones/27/rotation = Quaternion(6.82014e-08, 0.961249, -0.275682, 1.87162e-07)
+bones/27/scale = Vector3(1, 1, 1)
+bones/28/rotation = Quaternion(0.679706, -0.679705, 0.194936, 0.194936)
+
+[node name="LeftLeg" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="1"]
+process_priority = 1
+root_bone = &"thigh.L"
+tip_bone = &"foot.L"
+use_magnet = true
+magnet = Vector3(0, 0, 100)
+target_node = NodePath("../../LeftLegIKTarget")
+script = ExtResource("2_k8kny")
+
+[node name="RightLeg" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="2"]
+process_priority = 1
+root_bone = &"thigh.R"
+tip_bone = &"foot.R"
+use_magnet = true
+magnet = Vector3(0, 0, 100)
+target_node = NodePath("../../RightLegIKTarget")
+script = ExtResource("2_k8kny")
+
+[node name="LeftArm" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="3"]
+process_priority = 1
+root_bone = &"upper_arm.L"
+tip_bone = &"hand.L"
+use_magnet = true
+magnet = Vector3(0, 0, -100)
+target_node = NodePath("../../LeftArmIKTarget")
+
+[node name="RightArm" type="SkeletonIK3D" parent="metarig/Skeleton3D" index="4"]
+process_priority = 1
+root_bone = &"upper_arm.R"
+tip_bone = &"hand.R"
+use_magnet = true
+magnet = Vector3(0, 0, -100)
+target_node = NodePath("../../RightArmIKTarget")
+
+[node name="LeftLegIKTarget" type="Marker3D" parent="metarig" index="1"]
+transform = Transform3D(1.38336, 0, 0, 0, -0.715914, -1.1837, 0, 1.1837, -0.715914, 0.180457, 0.0288666, 0.0439815)
+top_level = true
+
+[node name="RightLegIKTarget" type="Marker3D" parent="metarig" index="2"]
+transform = Transform3D(1.38336, 0, 0, 0, -0.584172, -1.25396, 0, 1.25396, -0.584172, -0.225558, 0.0538144, 0.0233082)
+top_level = true
+
+[node name="LeftArmIKTarget" type="Marker3D" parent="metarig" index="3"]
+transform = Transform3D(-0.722172, 0.0319727, 0, -0.0319727, -0.722172, 0, 0, 0, 0.722879, 0.326526, 1.02572, 0)
+
+[node name="RightArmIKTarget" type="Marker3D" parent="metarig" index="4"]
+transform = Transform3D(-0.485678, -0.0450721, 0.533516, 0.0667979, -0.719786, 0, 0.531233, 0.0492998, 0.487765, -0.317215, 1.00864, 0)

@@ -1,3 +1,5 @@
+SkeletonIK3D
+Marker3D
 Label
 Label3D
 HBoxContainer
@@ -10,5 +12,3 @@ VBoxContainer
 CanvasLayer
 Panel
 Control
-VScrollBar
-TextureButton

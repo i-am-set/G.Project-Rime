@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ighvtmbew15t"
-path="res://.godot/imported/low_poly_male.glb-4cf876731bcaa29a5c0838002c436c07.scn"
+uid="uid://bhwdk5ueanxam"
+path="res://.godot/imported/low_poly_male_unrigged.glb-3ea0f7a22ae9ffedb620802c016056ce.scn"
 
 [deps]
 
-source_file="res://meshes/entities/low_poly_male.glb"
-dest_files=["res://.godot/imported/low_poly_male.glb-4cf876731bcaa29a5c0838002c436c07.scn"]
+source_file="res://meshes/entities/low_poly_male_unrigged.glb"
+dest_files=["res://.godot/imported/low_poly_male_unrigged.glb-3ea0f7a22ae9ffedb620802c016056ce.scn"]
 
 [params]
 
