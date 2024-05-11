@@ -1,3 +1,4 @@
+res://scenes/entities/player_model.tscn
 res://GodotSky/Presets/default/sunLightIntensity.tres
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
