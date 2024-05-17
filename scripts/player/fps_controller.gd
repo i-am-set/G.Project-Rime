@@ -41,6 +41,7 @@ var _cached_position : Vector3
 var _cached_rotation : Vector3 
 var _steam_ID : int
 var _resource_spawn_radius : int
+var _forward_speed : float
 #var look_at_label_anchor : Vector3
 var look_at_collider
 var _current_rotation : float
@@ -265,9 +266,9 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			
 			# Calculate forward speed
 			var forward_direction = -transform.basis.z
-			var forward_speed = velocity.dot(forward_direction)
+			_forward_speed = velocity.dot(forward_direction)
 			
-			player_animation_tree.set("parameters/BlendSpace1D/blend_position", forward_speed)
+			player_animation_tree.set("parameters/BlendSpace1D/blend_position", _forward_speed)
 		
 		move_and_slide()
 		
@@ -275,7 +276,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			send_move_packet()
 
 func send_move_packet():
-	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation})
+	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation, "player_animation_value": _forward_speed})
 
 func update_velocity() -> void:
 	pass
