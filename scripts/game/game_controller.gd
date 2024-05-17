@@ -333,6 +333,8 @@ func process_data(packet_data : Dictionary):
 					player_instance.global_position = packet_data["player_position"]
 				if packet_data.has("player_rotation"):
 					player_instance.rotation = packet_data["player_rotation"]
+				if packet_data.has("player_animation_value"):
+					player_instance.player_animation_tree.set("parameters/BlendSpace1D/blend_position", packet_data["player_animation_value"])
 		elif packet_data["message"] == "time_set":
 			recieve_set_time_request(packet_data["time"])
 		elif packet_data["message"] == "temperature_set":
