@@ -97,7 +97,7 @@ func make_p2p_handshake() -> void:
 	send_p2p_packet(0, {"message": "handshake", "from": Global.STEAM_ID})
 
 func _on_skybox_temperature_set():
-	send_p2p_packet(0, {"message": "temperature_set", "temperature_high": Global.TEMPERATURE_HIGH, "temperature_low": Global.TEMPERATURE_LOW})
+	send_p2p_packet(0, {"message": "temperature_set", "temperature_high": Global.TEMPERATURE_HIGH_C, "temperature_low": Global.TEMPERATURE_LOW_C})
 
 func get_lobby_members() -> void:
 	_game_player_list_controller.get_lobby_members()

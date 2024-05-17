@@ -1,6 +1,5 @@
 class_name SprintingPlayerState extends PlayerMovementState
 
-@export var SPEED: float = 7.0
 @export var ACCELERATION : float = 0.1
 @export var DECELERATION : float = 0.6
 @export var TOP_ANIM_SPEED : float = 1.6
@@ -9,6 +8,9 @@ class_name SprintingPlayerState extends PlayerMovementState
 @export var WEAPON_BOB_V : float = 1.5
 @export var WEAPON_PULL_DOWN_DISTANCE : float = 0.075
 @export var WEAPON_PULL_DOWN_SPEED : float = 10
+
+var DEFAULT_SPEED: float = 8.0
+var SPEED: float = DEFAULT_SPEED
 
 func enter(previous_state) -> void:
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":

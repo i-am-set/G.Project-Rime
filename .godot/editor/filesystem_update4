@@ -40,3 +40,6 @@ res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
 res://scripts/game/game_controller.gd
+res://scripts/player/SprintingPlayerState.gd
+res://scripts/player/WalkingPlayerState.gd
+res://scripts/player/state_machine.gd

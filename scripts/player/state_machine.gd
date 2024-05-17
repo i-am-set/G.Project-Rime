@@ -2,6 +2,10 @@ class_name StateMachine
 
 extends Node
 
+@onready var walking_player_state: WalkingPlayerState = $WalkingPlayerState
+@onready var sprinting_player_state: SprintingPlayerState = %SprintingPlayerState
+
+
 @export var CURRENT_STATE : State
 var states: Dictionary = {}
 
@@ -17,8 +21,8 @@ func _ready():
 	CURRENT_STATE.enter(null)
 	
 	# Set console commands
-	Console.create_command("set_speed_sprint", self.c_set_speed_sprint, "Sets your sprint speed. Default is 12.0")
-	Console.create_command("set_speed_walk", self.c_set_speed_walk, "Sets your walk speed. Default is 6.0")
+	Console.create_command("set_speed_sprint", self.c_set_speed_sprint, "Sets your sprint speed. Default is " + str(walking_player_state.DEFAULT_SPEED))
+	Console.create_command("set_speed_walk", self.c_set_speed_walk, "Sets your walk speed. Default is " + str(sprinting_player_state.DEFAULT_SPEED))
 
 func _process(delta):
 	CURRENT_STATE.update(delta)

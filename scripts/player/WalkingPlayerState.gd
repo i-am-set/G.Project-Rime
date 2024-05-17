@@ -1,12 +1,14 @@
 class_name WalkingPlayerState extends PlayerMovementState
 
-@export var SPEED: float = 5.0
 @export var ACCELERATION : float = 0.1
 @export var DECELERATION : float = 0.6
 @export var TOP_ANIM_SPEED : float = 2.2
 @export var WEAPON_BOB_SPD : float = 6.0
 @export var WEAPON_BOB_H : float = 2.0
 @export var WEAPON_BOB_V : float = 1.0
+
+var DEFAULT_SPEED: float = 3.5
+var SPEED: float = DEFAULT_SPEED
 
 func enter(previous_state) -> void:
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":

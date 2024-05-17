@@ -266,7 +266,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			
 			# Calculate forward speed
 			var forward_direction = -transform.basis.z
-			_forward_speed = velocity.dot(forward_direction)
+			_forward_speed = velocity.dot(forward_direction) / 8
 			
 			player_animation_tree.set("parameters/BlendSpace1D/blend_position", _forward_speed)
 		
