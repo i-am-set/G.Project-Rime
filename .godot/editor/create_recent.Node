@@ -1,5 +1,8 @@
-SkeletonIK3D
+AnimationTree
+Node3D
+RayCast3D
 Marker3D
+SkeletonIK3D
 Label
 Label3D
 HBoxContainer
@@ -10,5 +13,3 @@ ColorRect
 Tree
 VBoxContainer
 CanvasLayer
-Panel
-Control

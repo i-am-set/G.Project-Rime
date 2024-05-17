@@ -3,7 +3,8 @@ class_name Player
 extends CharacterBody3D
 
 @onready var player_model = $CollisionShape3D/player_model
-@onready var legs_model = $CollisionShape3D/legs_model
+@onready var player_model_instance = $CollisionShape3D/player_model/low_poly_male/metarig/Skeleton3D/Cube_001
+@onready var player_animation_tree: AnimationTree = $CollisionShape3D/player_model/AnimationTree
 @onready var pause_menu = $UserInterface/PauseMenu
 @onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator
 @onready var inventory_menu = $UserInterface/InventoryMenu
@@ -56,17 +57,15 @@ var mass = 82
 
 func _authorize_user():
 	_is_authorized_user = true
-	player_model= get_node("CollisionShape3D/player_model")
-	legs_model = get_node("CollisionShape3D/legs_model")
-	player_model.visible = false
-	legs_model.visible = false
+	player_model = get_node("CollisionShape3D/player_model")
+	player_model_instance = get_node("CollisionShape3D/player_model/low_poly_male/metarig/Skeleton3D/Cube_001")
+	player_model_instance.cast_shadow = 3
 
 func _deauthorize_user():
 	_is_authorized_user = false
-	player_model= get_node("CollisionShape3D/player_model")
-	legs_model = get_node("CollisionShape3D/legs_model")
-	player_model.visible = true
-	legs_model.visible = false
+	player_model = get_node("CollisionShape3D/player_model")
+	player_model_instance = get_node("CollisionShape3D/player_model/low_poly_male/metarig/Skeleton3D/Cube_001")
+	player_model_instance.cast_shadow = 1
 
 func strip_into_peer():
 	remove_child(CAMERA_CONTROLLER)
@@ -263,6 +262,12 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			else:
 				velocity.x = move_toward(velocity.x, 0, deceleration)
 				velocity.z = move_toward(velocity.z, 0, deceleration)
+			
+			# Calculate forward speed
+			var forward_direction = -transform.basis.z
+			var forward_speed = velocity.dot(forward_direction)
+			
+			player_animation_tree.set("parameters/BlendSpace1D/blend_position", forward_speed)
 		
 		move_and_slide()
 		
