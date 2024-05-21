@@ -271,7 +271,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			_forward_speed = velocity.dot(forward_direction) / 8
 			_strafe_speed = velocity.dot(strafe_direction) / 8
 			
-			player_animation_tree.set("parameters/BlendSpace2D/blend_position", Vector2(_strafe_speed, _forward_speed))
+			player_animation_tree.set("parameters/MovementAnimBlend/blend_position", Vector2(_strafe_speed, _forward_speed))
 		
 		move_and_slide()
 		
@@ -279,7 +279,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			send_move_packet()
 
 func send_move_packet():
-	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation, "player_animation_value": Vector2(_strafe_speed, _forward_speed)})
+	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation, "player_animation_value": Vector2(_strafe_speed, _forward_speed), "player_crouch_animation_value": player_animation_tree.get("parameters/CrouchAnimBlend/blend_amount")})
 
 func update_velocity() -> void:
 	pass

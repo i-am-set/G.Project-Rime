@@ -5,7 +5,6 @@ extends Node
 @onready var walking_player_state: WalkingPlayerState = $WalkingPlayerState
 @onready var sprinting_player_state: SprintingPlayerState = %SprintingPlayerState
 
-
 @export var CURRENT_STATE : State
 var states: Dictionary = {}
 
