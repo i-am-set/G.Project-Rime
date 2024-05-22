@@ -5,11 +5,9 @@ const info_offset: Vector2 = Vector2(20, 0)
 @onready var fps_controller = $"../.."
 @onready var animation_player = $AnimationPlayer
 @onready var inventory = $inventory
-var player_data
 
 func _ready() -> void:
 	await fps_controller.ready
-	player_data = fps_controller._player_data
 	
 	self.visible = false
 	Global.IS_IN_INVENTORY = false

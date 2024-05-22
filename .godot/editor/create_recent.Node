@@ -1,3 +1,4 @@
+PlayerData
 AnimationTree
 Node3D
 RayCast3D
@@ -12,4 +13,3 @@ MarginContainer
 ColorRect
 Tree
 VBoxContainer
-CanvasLayer

@@ -2,6 +2,7 @@ class_name Player
 
 extends CharacterBody3D
 
+@onready var player_data: PlayerData = $PlayerData
 @onready var player_model = $CollisionShape3D/player_model
 @onready var player_model_instance = $CollisionShape3D/player_model/low_poly_male/metarig/Skeleton3D/Cube_001
 @onready var player_animation_tree: AnimationTree = $CollisionShape3D/player_model/AnimationTree
@@ -29,8 +30,6 @@ extends CharacterBody3D
 
 var _is_authorized_user : bool = false
 
-var _player_data : PlayerData
-
 var _mouse_input : bool = false
 var look_dir: Vector2 # Input direction for look/aim
 var _rotation_input : float
@@ -43,6 +42,7 @@ var _steam_ID : int
 var _resource_spawn_radius : int
 var _forward_speed : float
 var _strafe_speed : float
+var _crouch_speed_mod : float
 #var look_at_label_anchor : Vector3
 var look_at_collider
 var _current_rotation : float
@@ -153,8 +153,6 @@ func _ready():
 		
 		set_settings()
 		
-		_player_data = load("res://resources/default_player_data.tres")
-		
 		Global.player = self
 		
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -185,8 +183,16 @@ func _ready():
 		Console.create_command("postp_enable_dither", self.c_enable_postp_dither, "Toggles the dithering post process effect. Takes a true or false.")
 		Console.create_command("postp_set_color_depth", self.c_set_postp_color_depth, "Sets the color depth post process effect. 1 is minimum; 8 is maximum; 4 is default.")
 		Console.create_command("postp_enable_outline", self.c_enable_postp_outline, "Toggles the outline post process effect. Takes a true or false.")
-		Console.create_command("set_body_temperature", self.c_set_all_player_limb_temperature, "Sets the temperature of all body parts to the given value. 100.0 is default; 0.0 is min; 200.0 is max")
-		Console.create_command("get_body_temperature", self.c_get_all_player_limb_temperature, "Displays the body temperature of each body part. 100.0 is default; 0.0 is min; 200.0 is max")
+		Console.create_command("full_heal", self.c_full_heal_self, "Fully heals all parameters of self. Health, hunger, temperature, stamina.")
+		Console.create_command("kill", self.c_kill_self, "Kills self.")
+		Console.create_command("heal", self.c_heal_self, "Heals the player by the given amount.")
+		Console.create_command("damage", self.c_damage_self, "Damages the player by the given amount.")
+		Console.create_command("set_hunger", self.c_set_hunger, "Sets the players hunger. " + str(player_data.min_hunger) + " is minimum; " + str(player_data.max_hunger) + " is maximum")
+		Console.create_command("get_hunger", self.c_get_hunger, "Gets the players hunger. " + str(player_data.min_hunger) + " is minimum; " + str(player_data.max_hunger) + " is maximum")
+		Console.create_command("set_health", self.c_set_health, "Sets the players health. " + str(player_data.min_health) + " is minimum; " + str(player_data.max_health) + " is maximum")
+		Console.create_command("get_health", self.c_get_health, "Gets the players health. " + str(player_data.min_health) + " is minimum; " + str(player_data.max_health) + " is maximum")
+		#Console.create_command("set_body_temperature", self.c_set_all_player_limb_temperature, "Sets the temperature of all body parts to the given value. 100.0 is default; 0.0 is min; 200.0 is max")
+		#Console.create_command("get_body_temperature", self.c_get_all_player_limb_temperature, "Displays the body temperature of each body part. 100.0 is default; 0.0 is min; 200.0 is max")
 		Console.create_command("create_item", self.c_create_item_from_id, "Drops the number input of input item by ID in front of player.")
 
 func set_settings():
@@ -209,7 +215,7 @@ func _physics_process(delta):
 	#look_at_label.global_position = look_at_label_anchor
 
 func update_gravity(delta) -> void:
-	if (_player_data.no_clip):
+	if (player_data.no_clip):
 		pass
 	else:
 		var gravitational_force = gravity * mass
@@ -218,7 +224,7 @@ func update_gravity(delta) -> void:
 	
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
 	if _is_authorized_user == true:
-		if _player_data.no_clip:
+		if player_data.no_clip:
 			if Input.is_action_pressed("sprint"):
 				speed = speed * 6
 			else:
@@ -268,8 +274,8 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			# Calculate forward speed
 			var forward_direction = -transform.basis.z
 			var strafe_direction = transform.basis.x
-			_forward_speed = velocity.dot(forward_direction) / 8
-			_strafe_speed = velocity.dot(strafe_direction) / 8
+			_forward_speed = velocity.dot(forward_direction) / 8 + _crouch_speed_mod
+			_strafe_speed = velocity.dot(strafe_direction) / 8 + _crouch_speed_mod
 			
 			player_animation_tree.set("parameters/MovementAnimBlend/blend_position", Vector2(_strafe_speed, _forward_speed))
 		
@@ -390,34 +396,71 @@ func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	else:
 		Steam.sendP2PPacket(target, this_data, send_type, channel)
 
-func c_set_all_player_limb_temperature(temperature : float) -> void:
-	var rounded_temperature : int = temperature
-	_player_data.set_all_limb_temperature(rounded_temperature)
-	
-	Console.print_line("Set body temperature to " + str(rounded_temperature))
-
-func c_get_all_player_limb_temperature() -> void:
-	var body_temperatures: Dictionary = _player_data.get_all_limb_temperature()
-	var average_temperature : int = _player_data.get_average_limb_temperature()
-	
-	for body_part in body_temperatures.keys():
-		Console.print_line(body_part + " is at " + str(body_temperatures[body_part]))
-	Console.print_line("\n[color=GOLD]" + "Average: " + str(average_temperature) + "[/color]")
+#func c_set_all_player_limb_temperature(temperature : float) -> void:
+	#var rounded_temperature : int = temperature
+	#_player_data.set_all_limb_temperature(rounded_temperature)
+	#
+	#Console.print_line("Set body temperature to " + str(rounded_temperature))
+#
+#func c_get_all_player_limb_temperature() -> void:
+	#var body_temperatures: Dictionary = _player_data.get_all_limb_temperature()
+	#var average_temperature : int = _player_data.get_average_limb_temperature()
+	#
+	#for body_part in body_temperatures.keys():
+		#Console.print_line(body_part + " is at " + str(body_temperatures[body_part]))
+	#Console.print_line("\n[color=GOLD]" + "Average: " + str(average_temperature) + "[/color]")
 
 func c_get_world_seed():
 	Console.print_line(str(Global.WORLD_SEED))
 	Console.print_line(Steam.getLobbyData(Global.LOBBY_ID, "world_seed"))
 
 func c_set_no_clip() -> void:
-	_player_data.no_clip = !_player_data.no_clip
+	player_data.no_clip = !player_data.no_clip
 	
-	if (_player_data.no_clip == true):
+	if (player_data.no_clip == true):
 		Console.print_line("no_clip was enabled.")
 	else:
 		Console.print_line("no_clip was disabled.")
 	
-	if get_collision_mask_value(1) == _player_data.no_clip:
-		set_collision_mask_value(1, !_player_data.no_clip)
+	if get_collision_mask_value(1) == player_data.no_clip:
+		set_collision_mask_value(1, !player_data.no_clip)
+
+func c_full_heal_self() -> void:
+	player_data.set_health(player_data.max_health)
+	player_data.set_hunger(player_data.max_hunger)
+	player_data.set_temperature(player_data.max_temperature)
+	player_data.set_stamina(player_data.max_stamina)
+	Console.print_line("[color=Gold]Fully healed self./color]")
+
+func c_kill_self() -> void:
+	player_data.kill()
+	Console.print_line("[color=RED]Killed self.[/color]")
+
+func c_heal_self(heal : int) -> void:
+	var clamped_value = clampi(heal, 0, player_data.max_health)
+	player_data.heal_player(clamped_value)
+	Console.print_line("Healed self for [color=GOLD]" + str(clamped_value) + "[/color].")
+
+func c_damage_self(damage : int) -> void:
+	var clamped_value = clampi(damage, 0, player_data.max_health)
+	player_data.damage_player(clamped_value)
+	Console.print_line("Damaged self for [color=GOLD]" + str(clamped_value) + "[/color].")
+
+func c_set_health(health : int) -> void:
+	var clamped_value = clampi(health, player_data.min_health, player_data.max_health)
+	player_data.set_health(clamped_value)
+	Console.print_line("Hunger set to [color=GOLD]" + str(clamped_value) + "[/color].")
+
+func c_get_health() -> void:
+	Console.print_line("Current health is [color=GOLD]" + str(player_data.health) + "[/color].")
+
+func c_set_hunger(hunger : int) -> void:
+	var clamped_value = clampi(hunger, player_data.min_hunger, player_data.max_hunger)
+	player_data.set_hunger(clamped_value)
+	Console.print_line("Hunger set to [color=GOLD]" + str(clamped_value) + "[/color].")
+
+func c_get_hunger() -> void:
+	Console.print_line("Current hunger is [color=GOLD]" + str(player_data.hunger) + "[/color].")
 
 func c_set_fov(fov : int) -> void:
 	fov = set_fov(fov)

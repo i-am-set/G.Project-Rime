@@ -25,9 +25,11 @@ func enter(previous_state) -> void:
 		ANIMATION.seek(1.0, true)
 	
 	PLAYER.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", 1)
+	PLAYER._crouch_speed_mod = 0.35
 	
 func exit() -> void:
 	PLAYER.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", 0)
+	PLAYER._crouch_speed_mod = 0
 	RELEASED = false
 	
 	WEAPON.weapon_bob_amount = Vector2(0,0)

@@ -1,6 +1,6 @@
+PlayerData
 Weapons
 Curve
-PlayerData
 BitMap
 TerrainType
 Environment

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=2 format=3 uid="uid://b1fn8hnvr0176"]
+
+[ext_resource type="Script" path="res://scripts/player/player_data.gd" id="1_152nw"]
+
+[resource]
+script = ExtResource("1_152nw")
+god_mode = false
+no_clip = false
