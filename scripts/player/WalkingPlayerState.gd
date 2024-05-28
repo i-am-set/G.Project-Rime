@@ -32,7 +32,7 @@ func update(delta):
 	
 	set_animation_speed(PLAYER.velocity.length())
 	
-	if Input.is_action_pressed("sprint") and PLAYER.is_on_floor():
+	if Input.is_action_pressed("sprint") and PLAYER.is_on_floor() and PLAYER.player_data.stamina > 0 and not PLAYER.player_data.is_exhausted:
 		transition.emit("SprintingPlayerState")
 		
 	if Input.is_action_pressed("crouch") and PLAYER.is_on_floor():

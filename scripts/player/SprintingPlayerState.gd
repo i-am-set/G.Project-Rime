@@ -13,6 +13,8 @@ var DEFAULT_SPEED: float = 8.0
 var SPEED: float = DEFAULT_SPEED
 
 func enter(previous_state) -> void:
+	PLAYER.is_sprinting = true
+	
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":
 		await ANIMATION.animation_finished
 		ANIMATION.play("Sprinting",0.5,1.0)
@@ -20,7 +22,9 @@ func enter(previous_state) -> void:
 		ANIMATION.play("Sprinting",0.5,1.0)
 	
 func exit() -> void:
+	PLAYER.is_sprinting = false
 	ANIMATION.speed_scale = 1.0
+	PLAYER.player_data.set_stamina_regen_cooldown_timer()
 	
 	WEAPON.weapon_bob_amount = Vector2(0,0)
 	WEAPON.stop_run()
@@ -36,7 +40,8 @@ func update(delta):
 	
 	set_animation_speed(PLAYER.velocity.length())
 	
-	if Input.is_action_just_released("sprint") or PLAYER.velocity.length() == 0:
+	
+	if Input.is_action_just_released("sprint") or PLAYER.velocity.length() == 0 or PLAYER.player_data.stamina <= 0 or PLAYER.player_data.is_exhausted:
 		transition.emit("IdlePlayerState")
 		
 	if Input.is_action_just_pressed("crouch") and PLAYER.velocity.length() > 6:

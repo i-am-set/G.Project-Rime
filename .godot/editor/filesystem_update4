@@ -22,8 +22,6 @@ res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/utility/mesh_height_curve.tres
 res://shaders/snow_post_processesing.gdshader
-res://scripts/player/CrouchingPlayerState.gd
-res://scripts/player/fps_controller.gd
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
 res://scenes/maingame/world.tscn
@@ -40,7 +38,8 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://resources/player/player_stats.gd
-res://scripts/player/inventory/player_stats.gd
 res://scripts/player/player_data.gd
-res://scripts/player/inventory_logic.gd
+res://scripts/player/fps_controller.gd
+res://scripts/player/SprintingPlayerState.gd
+res://scripts/player/CrouchingPlayerState.gd
+res://scripts/player/WalkingPlayerState.gd

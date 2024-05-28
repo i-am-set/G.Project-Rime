@@ -47,6 +47,9 @@ var _crouch_speed_mod : float
 var look_at_collider
 var _current_rotation : float
 
+# state varialbes
+var is_sprinting : bool = false
+
 # interaction variables
 var is_holding_interact = false
 var interact_hold_time = 0.0

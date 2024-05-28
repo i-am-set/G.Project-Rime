@@ -1,3 +1,10 @@
+Timer
+Control
+AnimationPlayer
+Panel
+VBoxContainer
+HBoxContainer
+ProgressBar
 PlayerData
 AnimationTree
 Node3D
@@ -6,10 +13,3 @@ Marker3D
 SkeletonIK3D
 Label
 Label3D
-HBoxContainer
-Container
-LabelAutoSizer
-MarginContainer
-ColorRect
-Tree
-VBoxContainer

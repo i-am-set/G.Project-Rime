@@ -58,7 +58,7 @@ func update(delta):
 		if CROUCH_SHAPECAST.is_colliding() == false:
 			if Input.is_action_just_pressed("crouch"):
 				uncrouch()
-			if Input.is_action_pressed("sprint") and PLAYER.is_on_floor():
+			if Input.is_action_pressed("sprint") and PLAYER.is_on_floor() and PLAYER.player_data.stamina > 0 and not PLAYER.player_data.is_exhausted:
 				uncrouch()
 			elif Input.is_action_just_pressed("jump") and PLAYER.is_on_floor():
 				uncrouch()

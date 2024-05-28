@@ -8,6 +8,13 @@ signal hunger_depleted
 signal temperature_changed(diff : int)
 signal temperature_depleted
 signal stamina_depleted
+signal stamina_regened
+
+@onready var fps_controller: Player = $".."
+@onready var stamina_bar: Control = $"../UserInterface/Hud/StaminaBar"
+@onready var stamina_bar_left: ProgressBar = $"../UserInterface/Hud/StaminaBar/StaminaBarLeft"
+@onready var stamina_bar_right: ProgressBar = $"../UserInterface/Hud/StaminaBar/StaminaBarRight"
+@onready var stamina_bar_animation_player: AnimationPlayer = $"../UserInterface/Hud/StaminaBarAnimationPlayer"
 
 @export var god_mode : bool = false
 @export var no_clip : bool = false
@@ -22,18 +29,28 @@ const min_temperature : int = 0
 const max_hunger : int = 100
 const min_hunger : int = 0
 const hunger_decrease_amount = 1
+const stamina_decrease_amount = 1
+const stamina_regen_amount = 1
 
 var is_dead : bool = false
 var is_exhausted : bool = false
 var is_freezing : bool = false
 var is_starving : bool = false
 var health : int
-var stamina : int
+var stamina : float
 var temperature : int
 var hunger : int
 var hunger_damage : int = 1
 var hunger_decrease_rate : int = 1800
 var current_hunger_tick : int = 0
+var stamina_decrease_rate : int = 8
+var stamina_regen_rate : int = 3
+var current_stamina_tick : int = 0
+var current_stamina_regen_timer : float = 0
+var stamina_regen_timer_duration : float = 0.75
+var stamina_regen_timer_exhausted_duration : float = 2.5
+var can_regen_stamina : bool = true
+var not_exhausted_threshold : int = 10
 
 func _ready() -> void:
 	health = max_health
@@ -42,16 +59,10 @@ func _ready() -> void:
 	temperature = comfortable_temperature
 
 func _physics_process(delta: float) -> void:
-	current_hunger_tick += 1
-	
-	if current_hunger_tick >= hunger_decrease_rate:
-		current_hunger_tick = 0
-		
-		var new_hunger = hunger - hunger_decrease_amount
-		if is_starving:
-			damage_player(hunger_damage)
-		else:
-			set_hunger(new_hunger)
+	update_hunger_tick()
+	update_stamina_tick()
+	update_stamina_regen_cooldown(delta)
+	update_progress_bars(delta)
 
 func damage_player(damage : int):
 	var damaged_health = health - damage
@@ -147,7 +158,71 @@ func set_stamina(value : int):
 
 func exhausted():
 	is_exhausted = true
+	stamina_bar_animation_player.play("stamina_bar_exhausted_flash")
 	stamina_depleted.emit()
+
+func update_hunger_tick():
+	current_hunger_tick += 1
+	
+	if current_hunger_tick >= hunger_decrease_rate:
+		current_hunger_tick = 0
+		
+		var new_hunger = hunger - hunger_decrease_amount
+		if is_starving:
+			damage_player(hunger_damage)
+		else:
+			set_hunger(new_hunger)
+
+func update_stamina_tick():
+	if is_exhausted && stamina >= not_exhausted_threshold:
+		is_exhausted = false
+		stamina_bar_animation_player.play("RESET")
+		stamina_bar_animation_player.stop()
+	if stamina_bar.visible == false && stamina < max_stamina:
+		stamina_bar_animation_player.play("RESET")
+		stamina_bar_animation_player.stop()
+	
+	if fps_controller.is_sprinting:
+		if stamina > 0:
+			current_stamina_tick += 1
+			
+			if current_stamina_tick >= stamina_decrease_rate:
+				current_stamina_tick = 0
+				
+				var new_stamina = stamina - stamina_decrease_amount
+				set_stamina(new_stamina)
+	else:
+		if can_regen_stamina:
+			current_stamina_tick += 1
+			
+			if stamina < max_stamina && current_stamina_tick >= stamina_regen_rate:
+				current_stamina_tick = 0
+				
+				var new_stamina = stamina + stamina_regen_amount
+				set_stamina(new_stamina)
+			elif stamina >= max_stamina:
+				stamina_bar_animation_player.play("stamina_bar_hide_timer")
+				stamina_regened.emit()
+
+func set_stamina_regen_cooldown_timer():
+	can_regen_stamina = false
+	
+	if is_exhausted:
+		current_stamina_regen_timer = stamina_regen_timer_exhausted_duration
+	else:
+		current_stamina_regen_timer = stamina_regen_timer_duration
+
+func update_stamina_regen_cooldown(delta: float):
+	if current_stamina_regen_timer > 0:
+		current_stamina_regen_timer -= delta
+	else:
+		current_stamina_regen_timer = 0
+		can_regen_stamina = true
+
+func update_progress_bars(delta: float):
+	var _lerp_speed = delta * 8
+	stamina_bar_left.value = lerp(stamina_bar_left.value, stamina, _lerp_speed)
+	stamina_bar_right.value = lerp(stamina_bar_right.value, stamina, _lerp_speed)
 
 #var head_temperature : int = 100
 #var torso_temperature : int = 100
