@@ -39,7 +39,3 @@ res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
 res://scripts/player/player_data.gd
-res://scripts/player/fps_controller.gd
-res://scripts/player/SprintingPlayerState.gd
-res://scripts/player/CrouchingPlayerState.gd
-res://scripts/player/WalkingPlayerState.gd

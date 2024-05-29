@@ -12,6 +12,8 @@ signal stamina_regened
 
 @onready var fps_controller: Player = $".."
 @onready var stamina_bar: Control = $"../UserInterface/Hud/StaminaBar"
+@onready var health_bar: ProgressBar = $"../UserInterface/Hud/HBoxContainer/HealthBar"
+@onready var hunger_bar: ProgressBar = $"../UserInterface/Hud/HBoxContainer/HungerBar"
 @onready var stamina_bar_left: ProgressBar = $"../UserInterface/Hud/StaminaBar/StaminaBarLeft"
 @onready var stamina_bar_right: ProgressBar = $"../UserInterface/Hud/StaminaBar/StaminaBarRight"
 @onready var stamina_bar_animation_player: AnimationPlayer = $"../UserInterface/Hud/StaminaBarAnimationPlayer"
@@ -223,6 +225,8 @@ func update_progress_bars(delta: float):
 	var _lerp_speed = delta * 8
 	stamina_bar_left.value = lerp(stamina_bar_left.value, stamina, _lerp_speed)
 	stamina_bar_right.value = lerp(stamina_bar_right.value, stamina, _lerp_speed)
+	health_bar.value = health
+	hunger_bar.value = hunger
 
 #var head_temperature : int = 100
 #var torso_temperature : int = 100

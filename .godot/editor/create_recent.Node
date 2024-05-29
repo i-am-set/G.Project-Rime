@@ -1,3 +1,4 @@
+TextureProgressBar
 Timer
 Control
 AnimationPlayer
@@ -12,4 +13,3 @@ RayCast3D
 Marker3D
 SkeletonIK3D
 Label
-Label3D
