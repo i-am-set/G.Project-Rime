@@ -1,3 +1,5 @@
+GPUParticles3D
+ProgressBar
 TextureProgressBar
 Timer
 Control
@@ -5,11 +7,9 @@ AnimationPlayer
 Panel
 VBoxContainer
 HBoxContainer
-ProgressBar
 PlayerData
 AnimationTree
 Node3D
 RayCast3D
 Marker3D
 SkeletonIK3D
-Label
