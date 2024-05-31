@@ -16,6 +16,7 @@ extends CharacterBody3D
 @onready var drop_position = $CameraController/Camera3D/DropPosition
 @onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
 @onready var look_at_label: Label = $UserInterface/WAILA
+@onready var debug_panel: PanelContainer = $UserInterface/Debug/DebugPanel
 
 @export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -47,7 +48,7 @@ var _crouch_speed_mod : float
 var look_at_collider
 var _current_rotation : float
 
-# state varialbes
+# state variables
 var is_sprinting : bool = false
 
 # interaction variables
@@ -316,10 +317,14 @@ func set_sensitivity(sensitivity : float) -> float:
 	return sensitivity
 
 func debug_process():
-	Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)
-	Global.debug.add_property("ShapeCast", CROUCH_SHAPECAST.is_colliding(), 2)
-	Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
-	Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
+	if debug_panel.visible:
+		Global.debug.add_property("Velocity","%.2f" % velocity.length(), 2)
+		Global.debug.add_property("ShapeCast", CROUCH_SHAPECAST.is_colliding(), 2)
+		Global.debug.add_property("Collision Pos", $CollisionShape3D.position , 2)
+		Global.debug.add_property("Mouse Rotation", _rotation_input, 2)
+		Global.debug.add_property("Heart Rate", player_data.current_heart_rate_bpm, 2)
+		Global.debug.add_property("Breathe Sine", player_data.breath_sine_wave, 2)
+		Global.debug.add_property("Has Exhaled", player_data.has_exhaled, 2)
 
 func looking_process():
 	if look_at_ray_cast.is_colliding():

@@ -10,7 +10,9 @@ signal temperature_depleted
 signal stamina_depleted
 signal stamina_regened
 
+@onready var breath_particle: GPUParticles3D = $"../CameraController/Camera3D/BreathParticle"
 @onready var fps_controller: Player = $".."
+@onready var player_state_machine: StateMachine = $"../PlayerStateMachine"
 @onready var stamina_bar: Control = $"../UserInterface/Hud/StaminaBar"
 @onready var health_bar: ProgressBar = $"../UserInterface/Hud/HBoxContainer/HealthBar"
 @onready var hunger_bar: ProgressBar = $"../UserInterface/Hud/HBoxContainer/HungerBar"
@@ -53,6 +55,42 @@ var stamina_regen_timer_duration : float = 0.75
 var stamina_regen_timer_exhausted_duration : float = 2.5
 var can_regen_stamina : bool = true
 var not_exhausted_threshold : int = 10
+var current_heart_rate_tick : int = 0
+var current_heart_rate_bpm : float = 75
+var desired_heart_rate_bpm : float = 75
+var intensity_heart_rate : float = 1
+var restfulness_heart_rate : float = 1
+var resting_heart_rate_bpm : float = 65.0
+var min_heart_rate_bpm : float = 55.0
+var max_heart_rate_bpm : float = 180.0
+var breath_sine_wave : float
+var breathing_speed : float = current_heart_rate_bpm / 60
+var breathing_time_passed : float = 0.0
+var has_exhaled : bool = false
+
+var state_to_heart_rate = {
+	"IdlePlayerState": resting_heart_rate_bpm,
+	"WalkingPlayerState": 120,
+	"SprintingPlayerState": 165,
+	"CrouchingPlayerState": 100,
+	"JumpingPlayerState": 180
+}
+
+var state_to_intensity = {
+	"IdlePlayerState": 1,
+	"WalkingPlayerState": 2,
+	"SprintingPlayerState": 4,
+	"CrouchingPlayerState": 1,
+	"JumpingPlayerState": 5
+}
+
+var state_to_restfulness = {
+	"IdlePlayerState": 5,
+	"WalkingPlayerState": 3,
+	"SprintingPlayerState": 1,
+	"CrouchingPlayerState": 4,
+	"JumpingPlayerState": 1
+}
 
 func _ready() -> void:
 	health = max_health
@@ -63,6 +101,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	update_hunger_tick()
 	update_stamina_tick()
+	update_heart_rate_tick(delta)
+	update_breathing_tick(delta)
 	update_stamina_regen_cooldown(delta)
 	update_progress_bars(delta)
 
@@ -205,6 +245,60 @@ func update_stamina_tick():
 			elif stamina >= max_stamina:
 				stamina_bar_animation_player.play("stamina_bar_hide_timer")
 				stamina_regened.emit()
+
+func update_heart_rate_tick(delta : float):
+	current_heart_rate_tick += 1;
+	
+	match player_state_machine.CURRENT_STATE.name:
+		"IdlePlayerState":
+			desired_heart_rate_bpm = state_to_heart_rate["IdlePlayerState"]
+			intensity_heart_rate = state_to_intensity["IdlePlayerState"]
+			restfulness_heart_rate = state_to_restfulness["IdlePlayerState"]
+		"WalkingPlayerState":
+			desired_heart_rate_bpm = state_to_heart_rate["WalkingPlayerState"]
+			intensity_heart_rate = state_to_intensity["WalkingPlayerState"]
+			restfulness_heart_rate = state_to_restfulness["WalkingPlayerState"]
+		"SprintingPlayerState":
+			desired_heart_rate_bpm = state_to_heart_rate["SprintingPlayerState"]
+			intensity_heart_rate = state_to_intensity["SprintingPlayerState"]
+			restfulness_heart_rate = state_to_restfulness["SprintingPlayerState"]
+		"CrouchingPlayerState":
+			desired_heart_rate_bpm = state_to_heart_rate["CrouchingPlayerState"]
+			intensity_heart_rate = state_to_intensity["CrouchingPlayerState"]
+			restfulness_heart_rate = state_to_restfulness["CrouchingPlayerState"]
+		"JumpingPlayerState":
+			desired_heart_rate_bpm = state_to_heart_rate["JumpingPlayerState"]
+			intensity_heart_rate = state_to_intensity["JumpingPlayerState"]
+			restfulness_heart_rate = state_to_restfulness["JumpingPlayerState"]
+	
+	var _temp_heart_rate : float = current_heart_rate_bpm
+	
+	if current_heart_rate_bpm > desired_heart_rate_bpm:
+		if current_heart_rate_tick >= 1000 / restfulness_heart_rate:
+			current_heart_rate_tick = 0
+			_temp_heart_rate -= 1
+			current_heart_rate_bpm = clamp(_temp_heart_rate, min_heart_rate_bpm, max_heart_rate_bpm)
+	elif current_heart_rate_bpm < desired_heart_rate_bpm:
+		if current_heart_rate_tick >= 600 / (intensity_heart_rate*2):
+			current_heart_rate_tick = 0
+			_temp_heart_rate += 1
+			current_heart_rate_bpm = clamp(_temp_heart_rate, min_heart_rate_bpm, max_heart_rate_bpm)
+	else:
+		_temp_heart_rate = desired_heart_rate_bpm
+		current_heart_rate_bpm = clamp(_temp_heart_rate, min_heart_rate_bpm, max_heart_rate_bpm)
+
+func update_breathing_tick(delta : float):
+	breathing_time_passed += delta * breathing_speed
+	breath_sine_wave = sin(breathing_time_passed)
+	
+	if breath_sine_wave < 0:
+		if !has_exhaled:
+			breath_particle.restart()
+			breath_particle.emitting = true
+			has_exhaled = true
+	else:
+		breath_particle.emitting = false
+		has_exhaled = false
 
 func set_stamina_regen_cooldown_timer():
 	can_regen_stamina = false

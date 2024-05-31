@@ -23,13 +23,13 @@ func _ready():
 	
 func _process(_delta):
 	if debug_panel.visible:
-			Global.debug.add_property("FPS", frames_per_second, 0)
-			var _temp_stats : String = Global.get_all_temperature_stats_debug()
-			Global.debug.add_property("Temperature", _temp_stats, 2)
-			display_indicators()
-		# Use delta time to get approx frames per second and round to two decimal places !Disable VSync if fps is stuck at 60!
+		Global.debug.add_property("FPS", frames_per_second, 0)
+		var _temp_stats : String = Global.get_all_temperature_stats_debug()
+		Global.debug.add_property("Temperature", _temp_stats, 2)
+		display_indicators()
+	# Use delta time to get approx frames per second and round to two decimal places !Disable VSync if fps is stuck at 60!
 #			frames_per_second = "%.2f" % (1.0/delta) # Gets frames per second every frame
-			frames_per_second = str(Engine.get_frames_per_second()) # Gets frames per second every second
+		frames_per_second = str(Engine.get_frames_per_second()) # Gets frames per second every second
 #			property.text = property.name + ": " + frames_per_second
 
 func display_indicators():

@@ -14,8 +14,8 @@ func _ready():
 
 func _process(delta):
 	adjust_reticle_lines()
-	
-	Global.debug.add_property("Reticle Color",Color(DOT_COLOR),4)
+	#
+	#Global.debug.add_property("Reticle Color",Color(DOT_COLOR),4)
 
 func _draw():
 	draw_circle(Vector2(0,0),DOT_RADIUS,DOT_COLOR)
