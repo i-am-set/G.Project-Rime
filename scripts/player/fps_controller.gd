@@ -17,6 +17,7 @@ extends CharacterBody3D
 @onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
 @onready var look_at_label: Label = $UserInterface/WAILA
 @onready var debug_panel: PanelContainer = $UserInterface/Debug/DebugPanel
+@onready var sound_manager: Node = $SoundManager
 
 @export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)

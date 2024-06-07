@@ -3630,9 +3630,9 @@ _subresources={
 "slices/amount": 0
 },
 "run_backward": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
+"save_to_file/path": "res://meshes/entities/animation/low_poly_male/run_backward.res",
 "settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -5429,9 +5429,9 @@ _subresources={
 "slices/amount": 0
 },
 "run_forward": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
+"save_to_file/path": "res://meshes/entities/animation/low_poly_male/run_forward.res",
 "settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -7228,9 +7228,9 @@ _subresources={
 "slices/amount": 0
 },
 "run_left": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
+"save_to_file/path": "res://meshes/entities/animation/low_poly_male/run_left.res",
 "settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -9027,9 +9027,9 @@ _subresources={
 "slices/amount": 0
 },
 "run_right": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
+"save_to_file/path": "res://meshes/entities/animation/low_poly_male/run_right.res",
 "settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -10826,9 +10826,9 @@ _subresources={
 "slices/amount": 0
 },
 "walk_backward": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
+"save_to_file/path": "res://meshes/entities/animation/low_poly_male/walk_backward.res",
 "settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -12625,9 +12625,9 @@ _subresources={
 "slices/amount": 0
 },
 "walk_forward": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
+"save_to_file/path": "res://meshes/entities/animation/low_poly_male/walk_forward.res",
 "settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -14424,9 +14424,9 @@ _subresources={
 "slices/amount": 0
 },
 "walk_left": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
+"save_to_file/path": "res://meshes/entities/animation/low_poly_male/walk_left.res",
 "settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -16223,9 +16223,9 @@ _subresources={
 "slices/amount": 0
 },
 "walk_right": {
-"save_to_file/enabled": false,
+"save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "",
+"save_to_file/path": "res://meshes/entities/animation/low_poly_male/walk_right.res",
 "settings/loop_mode": 1,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,

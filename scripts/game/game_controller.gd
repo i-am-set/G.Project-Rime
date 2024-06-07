@@ -109,6 +109,7 @@ func _input(_event):
 
 func initialize():
 	raw_wind_direction = Vector2.RIGHT.rotated(randf() * 2 * PI)
+	set_current_wind_direction()
 
 func display_message(message):
 	_game_chat_controller.display_message(message)
@@ -383,18 +384,25 @@ func process_data(packet_data : Dictionary):
 		if packet_data["message"] == "move":
 			if packet_data.has("steam_id") && Global.LOBBY_PEER_INSTANCES.has(packet_data["steam_id"]):
 				var player_instance = Global.LOBBY_PEER_INSTANCES[packet_data["steam_id"]]
-				if packet_data.has("player_position"):
-					player_instance.global_position = packet_data["player_position"]
-				if packet_data.has("player_rotation"):
-					player_instance.rotation = packet_data["player_rotation"]
-				if packet_data.has("player_animation_value"):
-					player_instance.player_animation_tree.set("parameters/MovementAnimBlend/blend_position", packet_data["player_animation_value"])
-				if packet_data.has("player_animation_value"):
-					player_instance.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", packet_data["player_crouch_animation_value"])
+				#if packet_data.has("player_position"):
+				player_instance.global_position = packet_data["player_position"]
+				#if packet_data.has("player_rotation"):
+				player_instance.rotation = packet_data["player_rotation"]
+				#if packet_data.has("player_animation_value"):
+				player_instance.player_animation_tree.set("parameters/MovementAnimBlend/blend_position", packet_data["player_animation_value"])
+				#if packet_data.has("player_animation_value"):
+				player_instance.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", packet_data["player_crouch_animation_value"])
 		elif packet_data["message"] == "time_set":
 			recieve_set_time_request(packet_data["time"])
 		elif packet_data["message"] == "set_wind_direction":
 			Global.WIND_DIRECTION = packet_data["wind_direction"]
+		elif packet_data["message"] == "footstep":
+			if packet_data.has("steam_id") && Global.LOBBY_PEER_INSTANCES.has(packet_data["steam_id"]):
+				var player_instance = Global.LOBBY_PEER_INSTANCES[packet_data["steam_id"]]
+				if packet_data["foot"] == 0:
+					player_instance.sound_manager.footstep_left_logic()
+				elif packet_data["foot"] == 1:
+					player_instance.sound_manager.footstep_right_logic()
 		elif packet_data["message"] == "temperature_set":
 			Global.TEMPERATURE_HIGH == packet_data["temperature_high"]
 			Global.TEMPERATURE_LOW == packet_data["temperature_low"]
