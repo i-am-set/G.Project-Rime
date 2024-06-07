@@ -87,11 +87,11 @@ func displace_amb_3d_node_crow():
 
 func footstep_left():
 	footstep_left_logic()
-	send_p2p_packet(0, {"message": "footstep", "steam_id": fps_controller._steam_ID, "foot": 0})
+	#send_p2p_packet(0, {"message": "footstep", "steam_id": fps_controller._steam_ID, "foot": 0})
 
 func footstep_right():
 	footstep_right_logic()
-	send_p2p_packet(0, {"message": "footstep", "steam_id": fps_controller._steam_ID, "foot": 1})
+	#send_p2p_packet(0, {"message": "footstep", "steam_id": fps_controller._steam_ID, "foot": 1})
 
 func footstep_left_logic():
 	var footstep_index : int = previous_footstep_index

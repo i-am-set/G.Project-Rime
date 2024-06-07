@@ -29,6 +29,7 @@ extends CharacterBody3D
 @export var WEAPON_CONTROLLER : WeaponController
 @export var USERINTERFACE : Control
 @export var WEAPONVIEWPORT : SubViewportContainer
+@export var PLAYER_DATA: Node
 
 var _is_authorized_user : bool = false
 
@@ -87,6 +88,8 @@ func strip_into_peer():
 	WEAPONVIEWPORT.queue_free()
 	remove_child(PLAYERSTATEMACHINE)
 	PLAYERSTATEMACHINE.queue_free()
+	remove_child(PLAYER_DATA)
+	PLAYER_DATA.queue_free()
 
 func _input(event):
 	if event.is_action_pressed("ui_scroll_up"):
