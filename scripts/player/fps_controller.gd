@@ -129,6 +129,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			look_dir = event.relative * 0.001
 			_rotate_camera()
 			looking_process()
+			send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_rotation": rotation})
 
 func toggle_pause_menu():
 	pause_menu.visible = !pause_menu.visible

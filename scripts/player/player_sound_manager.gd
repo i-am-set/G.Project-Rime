@@ -86,12 +86,14 @@ func displace_amb_3d_node_crow():
 	amb_distant_crows_position = fps_controller.position + Vector3(x, y, z)
 
 func footstep_left():
-	if fps_controller.velocity > Vector3.ZERO && fps_controller.is_on_floor():
+	if fps_controller._is_authorized_user && fps_controller.is_on_floor():
 		footstep_left_logic()
+		send_p2p_packet(0, {"message": "footstep", "steam_id": fps_controller._steam_ID, "foot": 0})
 
 func footstep_right():
-	if fps_controller.velocity > Vector3.ZERO && fps_controller.is_on_floor():
+	if fps_controller._is_authorized_user && fps_controller.is_on_floor():
 		footstep_right_logic()
+		send_p2p_packet(0, {"message": "footstep", "steam_id": fps_controller._steam_ID, "foot": 0})
 
 func footstep_left_logic():
 	var footstep_index : int = previous_footstep_index
