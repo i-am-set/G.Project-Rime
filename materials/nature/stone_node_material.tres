@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://bieqbvtgqfik1"]
 
 [ext_resource type="Shader" path="res://shaders/default_object_shader.gdshader" id="1_a128m"]
-[ext_resource type="Texture2D" uid="uid://y63brf315vrj" path="res://textures/nature/resource/stone/Rock020_1K-JPG_Color.jpg" id="2_gmvow"]
+[ext_resource type="Texture2D" uid="uid://wn5mm48tcxvp" path="res://textures/nature/resource/low_res/Rock020_quarterRes-PNG_Color.png" id="2_kbrx2"]
 [ext_resource type="Texture2D" uid="uid://53hvo0gssgyl" path="res://textures/nature/resource/stone/Rock020_1K-JPG_NormalDX.jpg" id="3_3ffa3"]
 [ext_resource type="Texture2D" uid="uid://bhgfq3xentspc" path="res://textures/nature/resource/stone/Rock020_1K-JPG_Roughness.jpg" id="4_vawgr"]
 
@@ -15,6 +15,6 @@ shader_parameter/metallic_texture_channel = null
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/normal_scale = 1.5
-shader_parameter/texture_albedo = ExtResource("2_gmvow")
+shader_parameter/texture_albedo = ExtResource("2_kbrx2")
 shader_parameter/texture_roughness = ExtResource("4_vawgr")
 shader_parameter/texture_normal = ExtResource("3_3ffa3")

@@ -1,10 +1,10 @@
 [gd_resource type="ShaderMaterial" load_steps=8 format=3 uid="uid://c2nkb05uya11k"]
 
 [ext_resource type="Shader" path="res://shaders/tree_shader.gdshader" id="1_r2qe0"]
-[ext_resource type="Texture2D" uid="uid://dy66mgbs1v1ca" path="res://textures/nature/resource/pine/Pine_1K-JPG_Color.jpg" id="2_r1nh5"]
-[ext_resource type="Texture2D" uid="uid://q41258iqao71" path="res://textures/nature/resource/pine/Pine_1K-JPG_NormalGL.jpg" id="3_u3iw1"]
-[ext_resource type="Texture2D" uid="uid://ce2yyap265544" path="res://textures/nature/resource/pine/Pine_1K-JPG_Roughness.jpg" id="4_dnv87"]
-[ext_resource type="Texture2D" uid="uid://dpgcpnnku2nb" path="res://textures/nature/ground/snow/Snow010A_1K-JPG_Color.jpg" id="5_3mg53"]
+[ext_resource type="Texture2D" uid="uid://dhlstolrkdcxd" path="res://textures/nature/resource/low_res/Pine_quarterRes-PNG_Color.png" id="2_fl3r7"]
+[ext_resource type="Texture2D" uid="uid://dha2ymudjatsy" path="res://textures/nature/resource/low_res/Pine_quarterRes-PNG_NormalGL.png" id="3_fgm6q"]
+[ext_resource type="Texture2D" uid="uid://dj3q0fy21jkhi" path="res://textures/nature/resource/low_res/Pine_quarterRes-PNG_Roughness.png" id="4_2h546"]
+[ext_resource type="Texture2D" uid="uid://cmeoy3uyt80ou" path="res://textures/nature/ground/snow/lowres/Snow010A_quarterRes-JPG_Color.jpg" id="5_ywshf"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_tfb5t"]
 frequency = 0.0055
@@ -24,8 +24,8 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = null
 shader_parameter/sway_strength = 0.05
 shader_parameter/sway_phase_len = 8.0
-shader_parameter/texture_albedo = ExtResource("2_r1nh5")
-shader_parameter/tree_base_texture = ExtResource("5_3mg53")
+shader_parameter/texture_albedo = ExtResource("2_fl3r7")
+shader_parameter/tree_base_texture = ExtResource("5_ywshf")
 shader_parameter/tree_base_noise_texture = SubResource("NoiseTexture2D_3pdg4")
-shader_parameter/texture_roughness = ExtResource("4_dnv87")
-shader_parameter/texture_normal = ExtResource("3_u3iw1")
+shader_parameter/texture_roughness = ExtResource("4_2h546")
+shader_parameter/texture_normal = ExtResource("3_fgm6q")

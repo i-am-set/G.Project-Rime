@@ -3,7 +3,7 @@
 shader_type spatial;
 render_mode blend_mix,depth_draw_always,cull_disabled;
 uniform vec4 albedo : source_color = vec4(112, 112, 112, 255);
-uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform sampler2D texture_albedo : source_color,filter_nearest,repeat_enable;
 uniform vec4 backlight : source_color;
 uniform float roughness : hint_range(0,1);
 uniform vec3 uv1_scale;

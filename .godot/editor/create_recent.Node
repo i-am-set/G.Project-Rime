@@ -1,11 +1,11 @@
+GPUParticles3D
+MeshInstance3D
+Node
 AudioStreamPlayer3D
 Node3D
 RemoteTransform3D
-Node
-MeshInstance3D
 Timer
 AudioStreamPlayer
-GPUParticles3D
 TextureProgressBar
 Control
 AnimationPlayer

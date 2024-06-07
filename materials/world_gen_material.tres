@@ -3,12 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://8sdukqwokvk7" path="res://textures/nature/ground/mud/Mud_1K-JPG_NormalGL.jpg" id="1_akvps"]
 [ext_resource type="Texture2D" uid="uid://dr38by1vkwg0l" path="res://textures/nature/ground/mud/Mud_1K-JPG_Roughness.jpg" id="2_e183d"]
 [ext_resource type="Texture2D" uid="uid://cfvws841gt138" path="res://textures/nature/ground/mud/Mud_1K-JPG_Color.jpg" id="3_bu6ya"]
-[ext_resource type="Texture2D" uid="uid://d01cxu2knbkiq" path="res://textures/nature/ground/rock/Rock031_1K-JPG_NormalGL.jpg" id="4_42iq7"]
-[ext_resource type="Texture2D" uid="uid://bhha87e6tj7r" path="res://textures/nature/ground/rock/Rock031_1K-JPG_Roughness.jpg" id="5_irl5l"]
-[ext_resource type="Texture2D" uid="uid://cccxi7sq6foe2" path="res://textures/nature/ground/rock/Rock031_1K-JPG_Color.jpg" id="6_wa71t"]
-[ext_resource type="Texture2D" uid="uid://c5ys4utdtltr8" path="res://textures/nature/ground/snow/Snow010A_1K-JPG_NormalDX.jpg" id="7_be1s1"]
-[ext_resource type="Texture2D" uid="uid://bouqcydnwr4v5" path="res://textures/nature/ground/snow/Snow010A_1K-JPG_Roughness.jpg" id="8_02xe2"]
-[ext_resource type="Texture2D" uid="uid://dpgcpnnku2nb" path="res://textures/nature/ground/snow/Snow010A_1K-JPG_Color.jpg" id="9_8q87d"]
+[ext_resource type="Texture2D" uid="uid://7qfqxd3mbhov" path="res://textures/nature/ground/rock/low_res/Rock031_quarterRes-JPG_NormalGL.jpg" id="4_6xsjr"]
+[ext_resource type="Texture2D" uid="uid://bdftke5g3ji3o" path="res://textures/nature/ground/rock/low_res/Rock031_quarterRes-JPG_Roughness.jpg" id="5_7lxa5"]
+[ext_resource type="Texture2D" uid="uid://4lpjdqocbavy" path="res://textures/nature/ground/rock/low_res/Rock031_quarterRes-JPG_Color.jpg" id="6_3gevx"]
+[ext_resource type="Texture2D" uid="uid://c5nsqa5x54jgj" path="res://textures/nature/ground/snow/lowres/Snow010A_quarterRes-JPG_NormalDX.jpg" id="7_8j06i"]
+[ext_resource type="Texture2D" uid="uid://brnybg0yg363x" path="res://textures/nature/ground/snow/lowres/Snow010A_quarterRes-JPG_Roughness.jpg" id="8_wddyc"]
+[ext_resource type="Texture2D" uid="uid://cmeoy3uyt80ou" path="res://textures/nature/ground/snow/lowres/Snow010A_quarterRes-JPG_Color.jpg" id="9_jsktb"]
 
 [sub_resource type="Shader" id="Shader_xfsc2"]
 code = "shader_type spatial;
@@ -17,15 +17,15 @@ uniform float roughness : hint_range(0,1);
 uniform float normal_map_scale = 1.0;
 
 uniform vec3 snow_color: source_color = vec3(0.79,0.87,0.95);
-uniform sampler2D snow_texture;
-uniform sampler2D rock_texture;
-uniform sampler2D mud_texture;
-uniform sampler2D snow_normal_texture;
-uniform sampler2D rock_normal_texture;
-uniform sampler2D mud_normal_texture;
-uniform sampler2D snow_roughness_texture;
-uniform sampler2D rock_roughness_texture;
-uniform sampler2D mud_roughness_texture;
+uniform sampler2D snow_texture: source_color,filter_nearest;
+uniform sampler2D rock_texture: source_color,filter_nearest;
+uniform sampler2D mud_texture: source_color,filter_nearest;
+uniform sampler2D snow_normal_texture: source_color,filter_nearest;
+uniform sampler2D rock_normal_texture: source_color,filter_nearest;
+uniform sampler2D mud_normal_texture: source_color,filter_nearest;
+uniform sampler2D snow_roughness_texture: source_color,filter_nearest;
+uniform sampler2D rock_roughness_texture: source_color,filter_nearest;
+uniform sampler2D mud_roughness_texture: source_color,filter_nearest;
 
 uniform float min_rock_slope:hint_range(0.0,1.0) = 0.5;
 uniform float max_snow_slope:hint_range(0.0,1.0) = 0.9;
@@ -122,19 +122,19 @@ void fragment(){
 [resource]
 render_priority = 0
 shader = SubResource("Shader_xfsc2")
-shader_parameter/roughness = 0.75
-shader_parameter/normal_map_scale = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/normal_map_scale = 1.5
 shader_parameter/snow_color = Color(0.721569, 0.870588, 0.952941, 1)
 shader_parameter/min_rock_slope = 0.79
 shader_parameter/max_snow_slope = 0.881
 shader_parameter/min_rocksnow_height = -8.0
 shader_parameter/max_mud_height = 3.97
-shader_parameter/snow_texture = ExtResource("9_8q87d")
-shader_parameter/rock_texture = ExtResource("6_wa71t")
+shader_parameter/snow_texture = ExtResource("9_jsktb")
+shader_parameter/rock_texture = ExtResource("6_3gevx")
 shader_parameter/mud_texture = ExtResource("3_bu6ya")
-shader_parameter/snow_normal_texture = ExtResource("7_be1s1")
-shader_parameter/rock_normal_texture = ExtResource("4_42iq7")
+shader_parameter/snow_normal_texture = ExtResource("7_8j06i")
+shader_parameter/rock_normal_texture = ExtResource("4_6xsjr")
 shader_parameter/mud_normal_texture = ExtResource("1_akvps")
-shader_parameter/snow_roughness_texture = ExtResource("8_02xe2")
-shader_parameter/rock_roughness_texture = ExtResource("5_irl5l")
+shader_parameter/snow_roughness_texture = ExtResource("8_wddyc")
+shader_parameter/rock_roughness_texture = ExtResource("5_7lxa5")
 shader_parameter/mud_roughness_texture = ExtResource("2_e183d")

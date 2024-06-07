@@ -1,15 +1,15 @@
 shader_type spatial;
 render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
 uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform sampler2D texture_albedo : source_color,filter_nearest,repeat_enable;
 uniform sampler2D texture_noise;
 uniform sampler2D tree_base_texture : source_color;
 uniform sampler2D tree_base_noise_texture;
 uniform float tree_base_height = 1;
 uniform float tree_base_darkness = 0.2;
 uniform float roughness : hint_range(0,1);
-uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
-uniform sampler2D texture_normal : hint_roughness_normal,filter_linear_mipmap,repeat_enable;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_nearest,repeat_enable;
+uniform sampler2D texture_normal : hint_roughness_normal,filter_nearest,repeat_enable;
 uniform float normal_scale : hint_range(-16,16);
 uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;

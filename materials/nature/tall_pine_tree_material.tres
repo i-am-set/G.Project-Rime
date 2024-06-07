@@ -1,10 +1,10 @@
 [gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://bnywi5e0vvxx6"]
 
 [ext_resource type="Shader" path="res://shaders/tree_shader.gdshader" id="1_mcmvl"]
-[ext_resource type="Texture2D" uid="uid://dy66mgbs1v1ca" path="res://textures/nature/resource/pine/Pine_1K-JPG_Color.jpg" id="2_dllys"]
-[ext_resource type="Texture2D" uid="uid://q41258iqao71" path="res://textures/nature/resource/pine/Pine_1K-JPG_NormalGL.jpg" id="3_16exw"]
-[ext_resource type="Texture2D" uid="uid://ce2yyap265544" path="res://textures/nature/resource/pine/Pine_1K-JPG_Roughness.jpg" id="4_v7gq3"]
-[ext_resource type="Texture2D" uid="uid://ds7r7drk2iyf6" path="res://textures/nature/resource/birch/BirchBase_1K-JPG_Color.jpg" id="5_xyfds"]
+[ext_resource type="Texture2D" uid="uid://dhlstolrkdcxd" path="res://textures/nature/resource/low_res/Pine_quarterRes-PNG_Color.png" id="2_lkuxs"]
+[ext_resource type="Texture2D" uid="uid://dha2ymudjatsy" path="res://textures/nature/resource/low_res/Pine_quarterRes-PNG_NormalGL.png" id="3_piesx"]
+[ext_resource type="Texture2D" uid="uid://dj3q0fy21jkhi" path="res://textures/nature/resource/low_res/Pine_quarterRes-PNG_Roughness.png" id="4_hupw8"]
+[ext_resource type="Texture2D" uid="uid://yxl53ti6ledf" path="res://textures/nature/resource/low_res/BirchBase_quarterRes-PNG_Color.png" id="5_6f5bw"]
 
 [resource]
 render_priority = 0
@@ -18,7 +18,7 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = null
 shader_parameter/sway_strength = 0.05
 shader_parameter/sway_phase_len = 8.0
-shader_parameter/texture_albedo = ExtResource("2_dllys")
-shader_parameter/tree_base_texture = ExtResource("5_xyfds")
-shader_parameter/texture_roughness = ExtResource("4_v7gq3")
-shader_parameter/texture_normal = ExtResource("3_16exw")
+shader_parameter/texture_albedo = ExtResource("2_lkuxs")
+shader_parameter/tree_base_texture = ExtResource("5_6f5bw")
+shader_parameter/texture_roughness = ExtResource("4_hupw8")
+shader_parameter/texture_normal = ExtResource("3_piesx")

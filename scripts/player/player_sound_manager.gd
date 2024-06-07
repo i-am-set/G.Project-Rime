@@ -34,10 +34,10 @@ const FOOTSTEP_SOUNDS : Array[AudioStreamWAV] = [
 ]
 
 @onready var fps_controller: Player = $".."
-@onready var amb_distant_crows: AudioStreamPlayer3D = $AmbDistantCrows
-@onready var crow_cooldown_timer: Timer = $AmbDistantCrows/CrowCooldownTimer
-@onready var wind_audio_player: Node3D = $WindAudioPlayer
-@onready var wind_secondary_audio_player: Node3D = $WindSecondaryAudioPlayer
+@onready var amb_distant_crows: AudioStreamPlayer3D = $AmbientSounds/AmbDistantCrows
+@onready var crow_cooldown_timer: Timer = $AmbientSounds/AmbDistantCrows/CrowCooldownTimer
+@onready var wind_audio_player: Node3D = $AmbientSounds/WindAudioPlayer
+@onready var wind_secondary_audio_player: Node3D = $AmbientSounds/WindSecondaryAudioPlayer
 @onready var sfx_left_footstep: AudioStreamPlayer3D = $SfxLeftFootstep
 @onready var sfx_right_footstep: AudioStreamPlayer3D = $SfxRightFootstep
 
