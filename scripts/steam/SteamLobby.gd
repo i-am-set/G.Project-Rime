@@ -39,7 +39,7 @@ func _ready():
 
 func _physics_process(delta):
 	# If the player is connected, read packets
-	if Global.LOBBY_ID > 0:
+	if Global.LOBBY_ID != 0:
 		read_all_p2p_packets()
 		
 		if !createLobbyButton.disabled:
@@ -200,6 +200,8 @@ func _on_lobby_created(connect: int, this_lobby_id: int) -> void:
 		# Set the lobby ID
 		Global.LOBBY_ID = this_lobby_id
 		Steam.setLobbyData(this_lobby_id, "is_started", "false")
+		Steam.setLobbyData(this_lobby_id, "owner_id", str(Global.STEAM_ID))
+		print_debug("LOBBY CREATED SUCCESSFULLY")
 		display_message("Created lobby: " + lobbySetName.text)
 
 		# Set this lobby as joinable, just in case, though this should be done by default
@@ -239,7 +241,6 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			await initialize_game(int(Steam.getLobbyData(this_lobby_id, "world_seed")))
 			print_debug(int(Steam.getLobbyData(this_lobby_id, "world_seed")))
 			await get_tree().change_scene_to_file(Global.WORLD_PATH)
-			# bug - multiplayer lobby joining game on lobby join AND seed is broken
 		
 	# Else it failed for some reason
 	else:

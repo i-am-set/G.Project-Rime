@@ -71,7 +71,7 @@ func _physics_process(delta):
 	var _authorized_player_position = _authorized_player.position
 	
 	# If the player is connected, read packets
-	if Global.LOBBY_ID > 0:
+	if Global.LOBBY_ID != 0:
 		read_all_p2p_packets()
 	
 	move_objects_to_player(_authorized_player_position)
@@ -139,7 +139,7 @@ func attach_player_to_world(player_instance: Node3D):
 	_collision_map.physics_body = player_instance
 	_clip_map.player_character = player_instance
 
-# opt - Within this .cs script, there is a "cachedPosition" variable that could theoretically eat up memory forever; impliment a simple clearer every x seconds/minutes or do a distance calc every x seconds/minutes
+# Within this .cs script, there is a "cachedPosition" variable that could theoretically eat up memory forever; impliment a simple clearer every x seconds/minutes or do a distance calc every x seconds/minutes
 func send_players_data_to_resource_instancer(_authorized_player_position, _authorized_player_resource_spawn_radius):
 	_resource_instancer.authorizedPlayerPosition = _authorized_player_position
 	_resource_instancer.authorizedPlayerResourceSpawnRadius = _authorized_player_resource_spawn_radius

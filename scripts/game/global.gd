@@ -48,6 +48,7 @@ var TEMPERATURE_HIGH_C : float = MAX_TEMPERATURE_C
 var TEMPERATURE_LOW_C : float = TEMPERATURE_HIGH_C - 3
 var SUN_WARMTH_MULTIPLIER : float = 1.0
 var SPAWN_POINT := Vector2.ZERO
+var WIND_DIRECTION : Vector2 = Vector2.RIGHT
 
 # Options Variables
 var MOUSE_CAPTURED := false

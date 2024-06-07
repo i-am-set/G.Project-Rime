@@ -1,4 +1,5 @@
-res://scenes/fps_controller.tscn
+res://default_bus_layout.tres
+res://scenes/maingame/world.tscn
 res://GodotSky/Presets/default/sunLightIntensity.tres
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
@@ -22,9 +23,9 @@ res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/utility/mesh_height_curve.tres
 res://shaders/snow_post_processesing.gdshader
+res://scenes/fps_controller.tscn
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
-res://scenes/maingame/world.tscn
 res://scenes/maingame/ground_item.tscn
 res://scenes/ui/inv_item_rect.tscn
 res://scenes/utility/debug_autoload_canvas.tscn
@@ -38,3 +39,12 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
+res://scripts/game/ambient_sound_manager.gd
+res://scripts/game/global.gd
+res://scripts/game/game_controller.gd
+res://scripts/steam/SteamLobby.gd
+res://GodotSky/Scripts/GodotSky.gd
+res://addons/anthonyec.camera_preview/plugin.gd
+res://addons/anthonyec.camera_preview/preview.gd
+res://scripts/game/game_controller_old.gd
+res://scripts/game/mainmenu_controller.gd

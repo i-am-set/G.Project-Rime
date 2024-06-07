@@ -27,6 +27,8 @@ signal temperature_set
 @onready var sun : DirectionalLight3D = $SunMoon/Sun/SunLight
 @onready var moon : DirectionalLight3D = $SunMoon/Moon/MoonLight
 @onready var sky : WorldEnvironment = $"."
+@onready var world: Node3D = $".."
+
 
 var sunPosition : float = 0.0
 var moonPosition : float = 0.0
@@ -41,8 +43,8 @@ func simulateDay():
 	if (simulateTime == true):
 		timeOfDay += rateOfTime
 		if (timeOfDay >= 2400.0):
-			set_temp_for_day()
 			timeOfDay = 0.0
+			set_temp_for_day()
 		Global.TIME_OF_DAY = snapped(timeOfDay, 0.01)
 		if Global.GLOBAL_TICK % 100 == 0:
 			update_temperature()
@@ -57,26 +59,27 @@ func update_temperature():
 	
 
 func set_temp_for_day():
-	var temperature_high
-	var temperature_low
-	
-	var temperature_max_increase = 15
-	
-	cached_temperature = Global.CURRENT_TEMPERATURE_C
-	
-	if cached_temperature + temperature_max_increase > Global.MAX_TEMPERATURE_C:
-		temperature_high = cached_temperature + randf_range(-3, 0)
-	elif cached_temperature - 3 < Global.MIN_TEMPERATURE:
-		temperature_high = cached_temperature + randf_range(0, temperature_max_increase)
-	else:
-		temperature_high = cached_temperature + randf_range(-3, temperature_max_increase)
-	
-	temperature_low = temperature_high - randf_range(1, 6)
-	
-	Global.TEMPERATURE_HIGH_C = temperature_high
-	Global.TEMPERATURE_LOW_C = temperature_low
-	
-	emit_signal("temperature_set")
+	if world._is_server_host:
+		var temperature_high
+		var temperature_low
+		
+		var temperature_max_increase = 15
+		
+		cached_temperature = Global.CURRENT_TEMPERATURE_C
+		
+		if cached_temperature + temperature_max_increase > Global.MAX_TEMPERATURE_C:
+			temperature_high = cached_temperature + randf_range(-3, 0)
+		elif cached_temperature - 3 < Global.MIN_TEMPERATURE:
+			temperature_high = cached_temperature + randf_range(0, temperature_max_increase)
+		else:
+			temperature_high = cached_temperature + randf_range(-3, temperature_max_increase)
+		
+		temperature_low = temperature_high - randf_range(1, 6)
+		
+		Global.TEMPERATURE_HIGH_C = temperature_high
+		Global.TEMPERATURE_LOW_C = temperature_low
+		
+		emit_signal("temperature_set")
 
 # Update sun and moon based on current time of day 
 func updateLights():

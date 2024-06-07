@@ -317,7 +317,7 @@ offset_bottom = 0.0599995
 theme_override_font_sizes/font_size = 16
 text = "LIST OF LOBBIES:"
 
-[node name="Button" type="Button" parent="."]
+[node name="SingleplayerDebugButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.985
@@ -337,4 +337,4 @@ text = "S/"
 [connection signal="pressed" from="Multiplayer/LeaveLobby" to="Multiplayer" method="_on_leave_lobby_pressed"]
 [connection signal="pressed" from="Multiplayer/SendMessage" to="Multiplayer" method="_on_send_message_pressed"]
 [connection signal="pressed" from="Multiplayer/LobbyPopup/ClosePopup" to="Multiplayer" method="_on_close_popup_pressed"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="SingleplayerDebugButton" to="." method="_on_singleplayer_debug_button_pressed"]
