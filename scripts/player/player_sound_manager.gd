@@ -33,6 +33,16 @@ const FOOTSTEP_SOUNDS : Array[AudioStreamWAV] = [
 	preload("res://sound/sfx/footsteps/sfx_snow_footstep-16.wav")
 ]
 
+var previous_exhale_index : int = 0
+const EXHALE_SOUNDS : Array[AudioStreamWAV] = [
+	preload("res://sound/sfx/human/breathing/exhale/soft_exhale-01.wav"),
+	preload("res://sound/sfx/human/breathing/exhale/soft_exhale-02.wav"),
+	preload("res://sound/sfx/human/breathing/exhale/soft_exhale-03.wav"),
+	preload("res://sound/sfx/human/breathing/exhale/soft_exhale-04.wav"),
+	preload("res://sound/sfx/human/breathing/exhale/soft_exhale-05.wav"),
+	preload("res://sound/sfx/human/breathing/exhale/soft_exhale-06.wav")
+]
+
 @onready var fps_controller: Player = $".."
 @onready var amb_distant_crows: AudioStreamPlayer3D = $AmbientSounds/AmbDistantCrows
 @onready var crow_cooldown_timer: Timer = $AmbientSounds/AmbDistantCrows/CrowCooldownTimer
@@ -115,10 +125,17 @@ func footstep_right_logic():
 		sfx_right_footstep.play()
 
 func play_exhale():
-	sfx_exhale_inhale.play()
+	var exhale_index : int = previous_exhale_index
+	while exhale_index == previous_exhale_index:
+		exhale_index = randi() % EXHALE_SOUNDS.size()
+	if !sfx_exhale_inhale.playing:
+		sfx_exhale_inhale.stream = EXHALE_SOUNDS[exhale_index]
+		sfx_exhale_inhale.pitch_scale = randf_range(0.95, 1.05)
+		sfx_exhale_inhale.play()
 
 func play_inhale():
-	sfx_exhale_inhale.play()
+	pass
+	#sfx_exhale_inhale.play()
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel

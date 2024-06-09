@@ -25,8 +25,6 @@ res://shaders/snow_post_processesing.gdshader
 res://shaders/leaf_shader.gdshader
 res://shaders/tree_shader.gdshader
 res://shaders/default_object_shader.gdshader
-res://scripts/player/player_data.gd
-res://scripts/player/player_sound_manager.gd
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
 res://scenes/maingame/world.tscn
@@ -43,3 +41,5 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
+res://scripts/player/player_sound_manager.gd
+res://scripts/player/player_data.gd

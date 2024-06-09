@@ -65,7 +65,6 @@ var resting_heart_rate_bpm : float = 65.0
 var min_heart_rate_bpm : float = 55.0
 var max_heart_rate_bpm : float = 180.0
 var breath_sine_wave : float
-var breathing_speed : float = current_heart_rate_bpm / 60
 var breathing_time_passed : float = 0.0
 var has_exhaled : bool = false
 
@@ -289,6 +288,12 @@ func update_heart_rate_tick(delta : float):
 		current_heart_rate_bpm = clamp(_temp_heart_rate, min_heart_rate_bpm, max_heart_rate_bpm)
 
 func update_breathing_tick(delta : float):
+	var breathing_speed : float = 1
+	if current_heart_rate_bpm <= 80:
+		breathing_speed = current_heart_rate_bpm / 60
+	else:
+		breathing_speed = current_heart_rate_bpm / 30
+	
 	breathing_time_passed += delta * breathing_speed
 	breath_sine_wave = sin(breathing_time_passed)
 	

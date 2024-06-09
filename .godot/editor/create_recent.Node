@@ -1,9 +1,9 @@
+RemoteTransform3D
 AudioStreamPlayer3D
 GPUParticles3D
 MeshInstance3D
 Node
 Node3D
-RemoteTransform3D
 Timer
 AudioStreamPlayer
 TextureProgressBar

@@ -5,14 +5,14 @@
 [resource]
 render_priority = 2
 shader = ExtResource("1_e11ls")
-shader_parameter/outlineColor = Color(0, 0, 0, 0.78)
+shader_parameter/outlineColor = Color(0, 0, 0, 0.788235)
 shader_parameter/depth_threshold = 0.025
 shader_parameter/normal_threshold = 0.5
 shader_parameter/normal_smoothing = 0.5
 shader_parameter/max_thickness = 1.5
 shader_parameter/min_thickness = 0.5
 shader_parameter/max_distance = 35.0
-shader_parameter/min_distance = 28.625
+shader_parameter/min_distance = 28.0
 shader_parameter/grazing_fresnel_power = 5.0
 shader_parameter/grazing_angle_mask_power = 1.0
 shader_parameter/grazing_angle_modulation_factor = 50.0
