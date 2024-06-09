@@ -19,6 +19,7 @@ signal stamina_regened
 @onready var stamina_bar_left: ProgressBar = $"../UserInterface/Hud/StaminaBar/StaminaBarLeft"
 @onready var stamina_bar_right: ProgressBar = $"../UserInterface/Hud/StaminaBar/StaminaBarRight"
 @onready var stamina_bar_animation_player: AnimationPlayer = $"../UserInterface/Hud/StaminaBarAnimationPlayer"
+@onready var sound_manager = $"../SoundManager"
 
 @export var god_mode : bool = false
 @export var no_clip : bool = false
@@ -294,11 +295,14 @@ func update_breathing_tick(delta : float):
 	if breath_sine_wave < 0:
 		if !has_exhaled:
 			breath_particle.restart()
-			breath_particle.emitting = true
+			breath_particle.emitting = true 
+			sound_manager.play_exhale()
 			has_exhaled = true
 	else:
-		breath_particle.emitting = false
-		has_exhaled = false
+		if has_exhaled:
+			breath_particle.emitting = false
+			sound_manager.play_inhale()
+			has_exhaled = false
 
 func set_stamina_regen_cooldown_timer():
 	can_regen_stamina = false

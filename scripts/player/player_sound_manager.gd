@@ -40,6 +40,7 @@ const FOOTSTEP_SOUNDS : Array[AudioStreamWAV] = [
 @onready var wind_secondary_audio_player: Node3D = $AmbientSounds/WindSecondaryAudioPlayer
 @onready var sfx_left_footstep: AudioStreamPlayer3D = $SfxLeftFootstep
 @onready var sfx_right_footstep: AudioStreamPlayer3D = $SfxRightFootstep
+@onready var sfx_exhale_inhale = $SfxExhaleInhale
 
 
 var wind_audio_players_default_volume : int = -20
@@ -113,6 +114,11 @@ func footstep_right_logic():
 		sfx_right_footstep.pitch_scale = randf_range(0.95, 1.05)
 		sfx_right_footstep.play()
 
+func play_exhale():
+	sfx_exhale_inhale.play()
+
+func play_inhale():
+	sfx_exhale_inhale.play()
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel
