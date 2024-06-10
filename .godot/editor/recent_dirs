@@ -1,3 +1,4 @@
+res://ui/button_groups
 res://meshes/entities/animation/low_poly_male
 res://resources/inventory
 res://scripts/entity
@@ -13,7 +14,6 @@ res://scenes/maingame
 res://data
 res://resources/weapons
 res://shaders
-res://ui/button_groups
 res://resources
 res://scripts/player
 res://textures/ui

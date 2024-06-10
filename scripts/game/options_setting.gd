@@ -25,6 +25,10 @@ extends ScrollContainer
 @onready var sens_slider = $HBoxContainer/VBoxContainer/_Sensitivity/SensSlider
 @onready var sensamount_label = $HBoxContainer/VBoxContainer/_Sensitivity/AmountLabel
 
+@onready var low_quality_shadow_button = $HBoxContainer/VBoxContainer/_Shadow_Quality/ShadowQualities/LowQualityShadow
+@onready var high_quality_shadow_button = $HBoxContainer/VBoxContainer/_Shadow_Quality/ShadowQualities/HighQualityShadow
+@onready var ultra_quality_shadow_button = $HBoxContainer/VBoxContainer/_Shadow_Quality/ShadowQualities/UltraQualityShadow
+
 @onready var dithering_checkbox = $HBoxContainer/VBoxContainer/_PostP_Dither/dithering_checkbox
 
 @onready var outline_checkbox = $HBoxContainer/VBoxContainer/_PostP_Outline/outline_checkbox
@@ -78,6 +82,19 @@ func Check_Variables():
 		resolution_option_button.set_disabled(false)
 		windowed_button.set_pressed_no_signal(true)
 		_on_windowed_button_up()
+	
+	if ProjectSettings.get_setting_with_override("rendering/lights_and_shadows/directional_shadow/size") <= 512:
+		_on_low_quality_shadow_button_up()
+		low_quality_shadow_button.set_pressed_no_signal(true)
+	elif ProjectSettings.get_setting_with_override("rendering/lights_and_shadows/directional_shadow/size") <= 1024:
+		_on_high_quality_shadow_button_up()
+		high_quality_shadow_button.set_pressed_no_signal(true)
+	elif ProjectSettings.get_setting_with_override("rendering/lights_and_shadows/directional_shadow/size") <= 4096:
+		_on_ultra_quality_shadow_button_up()
+		ultra_quality_shadow_button.set_pressed_no_signal(true)
+	else:
+		_on_high_quality_shadow_button_up()
+		high_quality_shadow_button.set_pressed_no_signal(true)
 	
 	vsync_checkbox.set_pressed_no_signal(Global.IS_VSYNC_ENABLED)
 	_on_vsync_checkbox_toggled(Global.IS_VSYNC_ENABLED)
@@ -236,3 +253,15 @@ func _on_celsius_button_up():
 
 func _on_fahrenheit_button_up():
 	Global.DISPLAY_FARENHEIT = true
+
+func _on_low_quality_shadow_button_up():
+	RenderingServer.directional_shadow_atlas_set_size(512, true)
+	RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
+
+func _on_high_quality_shadow_button_up():
+	RenderingServer.directional_shadow_atlas_set_size(1024, true)
+	RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+
+func _on_ultra_quality_shadow_button_up():
+	RenderingServer.directional_shadow_atlas_set_size(4096, true)
+	RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_ULTRA)
