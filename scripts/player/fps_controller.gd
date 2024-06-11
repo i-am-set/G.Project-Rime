@@ -145,6 +145,8 @@ func toggle_pause_menu():
 		capture_mouse()
 		Global.IS_PAUSED = false
 		pause_animator.play("RESET")
+	
+	pause_menu.pressed_back()
 
 func capture_mouse():
 	Global.capture_mouse(true)
@@ -177,11 +179,11 @@ func _ready():
 		CROUCH_SHAPECAST.add_exception($".")
 		
 		if CAMERA_CONTROLLER != null:
-			set_fov(Global.FIELD_OF_VIEW)
+			set_fov()
 		enable_postp_dither(Global.POSTP_DITHER_ON)
 		enable_postp_dither(Global.POSTP_OUTLINE_ON)
 		
-		set_sensitivity(Global.MOUSE_SENSITIVITY)
+		set_sensitivity()
 		
 		# Set console commands
 		Console.create_command("no_clip", self.c_set_no_clip, "Toggles no_clip for self.")
@@ -302,24 +304,29 @@ func send_move_packet():
 func update_velocity() -> void:
 	pass
 
-func set_fov(fov : int) -> int:
+func settings_applied():
+	set_fov()
+	set_sensitivity()
+	enable_postp_outline(Global.POSTP_OUTLINE_ON)
+
+func set_fov() -> int:
+	var fov = Global.FIELD_OF_VIEW
 	if fov < Global.MIN_FOV:
 		fov = Global.MIN_FOV
 	elif fov > Global.MAX_FOV:
 		fov = Global.MAX_FOV
 	
-	Global.FIELD_OF_VIEW = fov
 	CAMERA_CONTROLLER.fov = fov
 	
 	return fov
 
-func set_sensitivity(sensitivity : float) -> float:
+func set_sensitivity() -> float:
+	var sensitivity = Global.MOUSE_SENSITIVITY
 	if sensitivity < Global.MIN_SENSITIVITY:
 		sensitivity = Global.MIN_SENSITIVITY
 	elif sensitivity > Global.MAX_SENSITIVITY:
 		sensitivity = Global.MAX_SENSITIVITY
 	
-	Global.MOUSE_SENSITIVITY = sensitivity
 	MOUSE_SENSITIVITY = sensitivity
 	
 	return sensitivity
@@ -479,7 +486,8 @@ func c_get_hunger() -> void:
 	Console.print_line("Current hunger is [color=GOLD]" + str(player_data.hunger) + "[/color].")
 
 func c_set_fov(fov : int) -> void:
-	fov = set_fov(fov)
+	Global.FIELD_OF_VIEW = fov
+	fov = set_fov()
 	
 	Console.print_line("Field of view set to " + str(fov) + ".")
 

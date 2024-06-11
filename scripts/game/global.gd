@@ -58,8 +58,7 @@ var IS_VSYNC_ENABLED := true
 var FIELD_OF_VIEW : int = 75
 var POSTP_OUTLINE_ON := true
 var POSTP_DITHER_ON := true
-var RES_SCALE_PERCENT : int = 100
-var DISPLAY_FARENHEIT = false
+var TEMPERATURE_UNIT = 0 # 0 is C; 1 is F
 
 # Player Variables
 var INV_CELL_SIZE = INV_DEFAULT_CELL_SIZE:
@@ -145,32 +144,32 @@ func leave_lobby():
 	IS_IN_GAME = false
 
 func get_current_temperature_display() -> float:
-	if DISPLAY_FARENHEIT:
+	if TEMPERATURE_UNIT == 1:
 		return snapped(CURRENT_TEMPERATURE_C * 9.0/5.0 + 32.0, 0.1)
 	return snapped(CURRENT_TEMPERATURE_C, 0.1)
 
 func get_temperature_high_display() -> float:
-	if DISPLAY_FARENHEIT:
+	if TEMPERATURE_UNIT == 1:
 		return snapped(TEMPERATURE_HIGH_C * 9.0/5.0 + 32.0, 0.1)
 	return snapped(TEMPERATURE_HIGH_C, 0.1)
 	
 func get_temperature_low_display() -> float:
-	if DISPLAY_FARENHEIT:
+	if TEMPERATURE_UNIT == 1:
 		return snapped(TEMPERATURE_LOW_C * 9.0/5.0 + 32.0, 0.1)
 	return snapped(TEMPERATURE_LOW_C, 0.1)
 
 func get_temperature_max_display() -> float:
-	if DISPLAY_FARENHEIT:
+	if TEMPERATURE_UNIT == 1:
 		return snapped(MAX_TEMPERATURE_C * 9.0/5.0 + 32.0, 0.1)
 	return snapped(MAX_TEMPERATURE_C, 0.1)
 	
 func get_temperature_min_display() -> float:
-	if DISPLAY_FARENHEIT:
+	if TEMPERATURE_UNIT == 1:
 		return snapped(MIN_TEMPERATURE_C * 9.0/5.0 + 32.0, 0.1)
 	return snapped(MIN_TEMPERATURE_C, 0.1)
 
 func get_temperature_sign_display() -> String:
-	if DISPLAY_FARENHEIT:
+	if TEMPERATURE_UNIT == 1:
 		return "°F"
 	return "°C"
 

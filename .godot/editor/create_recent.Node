@@ -1,14 +1,14 @@
 HBoxContainer
+TabBar
+Panel
 VBoxContainer
+ColorRect
 Button
 Label
 AudioStreamPlayer
 Control
 TextureRect
-ColorRect
 MarginContainer
 OptionButton
-Panel
 RemoteTransform3D
 AudioStreamPlayer3D
-GPUParticles3D

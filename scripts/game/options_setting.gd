@@ -53,7 +53,6 @@ var Resolutions: Dictionary = {"3840x2160":Vector2i(3840,2160),
 								"1280x720":Vector2i(1280,720),
 								"1024x600":Vector2i(1024,600),
 								"800x600": Vector2i(800,600)}
-								
 
 func _ready():
 	await get_tree().process_frame
@@ -167,13 +166,11 @@ func _on_resolution_option_button_item_selected(index):
 	Center_Window()
 
 func Center_Window():
-	var Centre_Screen = DisplayServer.screen_get_position()+DisplayServer.screen_get_size()/2
+	var Center_Screen = DisplayServer.screen_get_position()+DisplayServer.screen_get_size()/2
 	var Window_Size = get_window().get_size_with_decorations()
-	get_window().set_position(Centre_Screen-Window_Size/2)
+	get_window().set_position(Center_Screen-Window_Size/2)
 
 func _on_scale_slider_value_changed(value):
-	Global.RES_SCALE_PERCENT = value
-	
 	var Resolution_Scale = value/100.00
 	var Resolution_Text = str(round(get_window().get_size().x*Resolution_Scale))+"x"+str(round(get_window().get_size().y*Resolution_Scale))
 	
