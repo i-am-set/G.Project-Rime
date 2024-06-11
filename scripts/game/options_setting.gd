@@ -1,6 +1,6 @@
 extends ScrollContainer
 
-@onready var fps_controller = $"../../.."
+@onready var fps_controller = $"../../../.."
 
 @onready var fullscreen_button = $HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Fullscreen
 @onready var borderless_button = $HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Borderless

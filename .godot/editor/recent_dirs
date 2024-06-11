@@ -1,3 +1,5 @@
+res://scripts/game
+res://shaders
 res://ui/button_groups
 res://meshes/entities/animation/low_poly_male
 res://resources/inventory
@@ -8,12 +10,10 @@ C:/Users/sethg/wkspaces/G.Project-Rime/ui/fonts/IBM Plex Sans Condensed
 res://scenes/utility
 res://scripts/utility
 res://materials/utility
-res://scripts/game
 res://scripts/inventory
 res://scenes/maingame
 res://data
 res://resources/weapons
-res://shaders
 res://resources
 res://scripts/player
 res://textures/ui

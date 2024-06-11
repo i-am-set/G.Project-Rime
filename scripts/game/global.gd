@@ -54,7 +54,6 @@ var WIND_DIRECTION : Vector2 = Vector2.RIGHT
 var MOUSE_CAPTURED := false
 var RENDER_DISTANCE = 2
 var MOUSE_SENSITIVITY : float = 1
-var LOD_BIAS : float = 0.25
 var IS_VSYNC_ENABLED := true
 var FIELD_OF_VIEW : int = 75
 var POSTP_OUTLINE_ON := true
