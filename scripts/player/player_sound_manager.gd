@@ -51,6 +51,8 @@ const EXHALE_SOUNDS : Array[AudioStreamWAV] = [
 @onready var sfx_left_footstep: AudioStreamPlayer3D = $SfxLeftFootstep
 @onready var sfx_right_footstep: AudioStreamPlayer3D = $SfxRightFootstep
 @onready var sfx_exhale_inhale = $SfxExhaleInhale
+@onready var sfx_button_hover: AudioStreamPlayer = $SfxButtonHover
+@onready var sfx_button_click: AudioStreamPlayer = $SfxButtonClick
 
 
 var wind_audio_players_default_volume : int = -20
@@ -136,6 +138,12 @@ func play_exhale():
 func play_inhale():
 	pass
 	#sfx_exhale_inhale.play()
+
+func play_button_hover():
+	sfx_button_hover.play()
+
+func play_button_click():
+	sfx_button_click.play()
 
 func send_p2p_packet(target: int, packet_data: Dictionary) -> void:
 	# Set the send_type and channel

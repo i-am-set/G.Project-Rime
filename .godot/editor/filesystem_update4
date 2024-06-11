@@ -41,6 +41,6 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/game/config_file_handler.gd
-res://scripts/game/global.gd
-res://scripts/game/options_setting.gd
+res://scripts/player/player_sound_manager.gd
+res://scripts/player/fps_controller.gd
+res://scripts/game/pause_menu_manager.gd

@@ -220,7 +220,7 @@ func _physics_process(delta):
 		_cached_position = global_position
 		_cached_rotation = rotation
 		
-		if pause_menu.visible:
+		if pause_menu.visible && !Global.IS_PAUSED:
 			Global.IS_PAUSED = true
 #
 #func _process(delta):

@@ -1,7 +1,9 @@
-Button
 HBoxContainer
-Control
 VBoxContainer
+Button
+Label
+AudioStreamPlayer
+Control
 TextureRect
 ColorRect
 MarginContainer
@@ -10,6 +12,3 @@ Panel
 RemoteTransform3D
 AudioStreamPlayer3D
 GPUParticles3D
-MeshInstance3D
-Node
-Node3D
