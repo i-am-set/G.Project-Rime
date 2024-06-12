@@ -77,7 +77,7 @@ var ssil_quality : int
 var ssao_quality : int
 var outline : bool
 # controls
-var mouse_sensitivity : int
+var mouse_sensitivity : float
 
 func _physics_process(delta: float) -> void:
 	if visible:
@@ -241,117 +241,148 @@ func are_settings_different() -> bool:
 	
 	return false
 
-#func get_settings_different() -> Dictionary:
-	#var different_settings : Dictionary = {}
-	#var settings = {
-		#"fov": [fov, _current_game_settings["fov"]],
-		#"temperature_unit": [temperature_unit, _current_game_settings["temperature_unit"]],
-		#"display_mode": [display_mode, _current_video_settings["display_mode"]],
-		#"resolution": [resolution, _current_video_settings["resolution"]],
-		#"upscaler": [upscaler, _current_video_settings["upscaler"]],
-		#"vsync": [vsync, _current_video_settings["vsync"]],
-		#"screen_select": [screen_select, _current_video_settings["screen_select"]],
-		#"shadow_quality": [shadow_quality, _current_video_settings["shadow_quality"]],
-		#"shadow_filter": [shadow_filter, _current_video_settings["shadow_filter"]],
-		#"ssil_quality": [ssil_quality, _current_video_settings["ssil_quality"]],
-		#"ssao_quality": [ssao_quality, _current_video_settings["ssao_quality"]],
-		#"outline": [outline, _current_video_settings["outline"]],
-		#"mouse_sensitivity": [mouse_sensitivity, _current_control_settings["mouse_sensitivity"]]
-	#}
-	#
-	#for setting in settings:
-		#if settings[setting][0] != settings[setting][1]:
-			#different_settings[settings] = settings[setting][0]
-	#
-	#return different_settings
+func get_settings_different() -> Array:
+	var different_settings : Array = []
+	var settings = {
+		"fov": [fov, _current_game_settings["fov"]],
+		"temperature_unit": [temperature_unit, _current_game_settings["temperature_unit"]],
+		"display_mode": [display_mode, _current_video_settings["display_mode"]],
+		"resolution": [resolution, _current_video_settings["resolution"]],
+		"upscaler": [upscaler, _current_video_settings["upscaler"]],
+		"vsync": [vsync, _current_video_settings["vsync"]],
+		"screen_select": [screen_select, _current_video_settings["screen_select"]],
+		"shadow_quality": [shadow_quality, _current_video_settings["shadow_quality"]],
+		"shadow_filter": [shadow_filter, _current_video_settings["shadow_filter"]],
+		"ssil_quality": [ssil_quality, _current_video_settings["ssil_quality"]],
+		"ssao_quality": [ssao_quality, _current_video_settings["ssao_quality"]],
+		"outline": [outline, _current_video_settings["outline"]],
+		"mouse_sensitivity": [mouse_sensitivity, _current_control_settings["mouse_sensitivity"]]
+	}
+	
+	for setting in settings.keys():
+		if settings[setting][0] != settings[setting][1]:
+			different_settings.append(setting)
+	
+	return different_settings
 
 func backed_out():
 	initialized = false
 
 func apply_settings():
-	if Global.FIELD_OF_VIEW != fov:
-		Global.FIELD_OF_VIEW = fov
+	var different_settings : Array = get_settings_different()
 	
-	if Global.TEMPERATURE_UNIT != temperature_unit:
-		Global.TEMPERATURE_UNIT = temperature_unit
+	if different_settings.has("fov"):
+		if Global.FIELD_OF_VIEW != fov:
+			Global.FIELD_OF_VIEW = fov
+		
+		print_debug("Changing 'FOV'")
+		ConfigFileHandler.save_setting("game", "fov", fov)
+	if different_settings.has("temperature_unit"):
+		if Global.TEMPERATURE_UNIT != temperature_unit:
+			Global.TEMPERATURE_UNIT = temperature_unit
+		
+		ConfigFileHandler.save_setting("game", "temperature_unit", temperature_unit)
+	if different_settings.has("display_mode"):
+		if display_mode == 0:
+			get_window().set_mode(Window.MODE_WINDOWED)
+			Center_Window()
+		elif display_mode == 1:
+			get_window().set_mode(Window.MODE_FULLSCREEN)
+		elif display_mode == 2:
+			get_window().set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
+		else:
+			get_window().set_mode(Window.MODE_WINDOWED)
+			Center_Window()
+		
+		ConfigFileHandler.save_setting("video", "display_mode", display_mode)
+	if different_settings.has("resolution"):
+		if (Resolutions[resolution].x >= DisplayServer.screen_get_size().x || Resolutions[resolution].y >= DisplayServer.screen_get_size().y):
+			get_window().set_size(DisplayServer.screen_get_size())
+		else:
+			get_window().set_size(Resolutions[resolution])
+		
+		ConfigFileHandler.save_setting("video", "resolution", resolution)
+	if different_settings.has("upscaler"):
+		var Resolution_Scale = upscaler/100.00
+		get_viewport().set_scaling_3d_scale(Resolution_Scale)
+		
+		ConfigFileHandler.save_setting("video", "upscaler", upscaler)
+	if different_settings.has("vsync"):
+		if vsync == true:
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+		else:
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+		
+		ConfigFileHandler.save_setting("video", "vsync", vsync)
+	if different_settings.has("screen_select"):
+		var _window = get_window()
+		var _cached_mode = _window.get_mode()
+		_window.set_mode(Window.MODE_WINDOWED)
+		_window.set_current_screen(screen_select)
+		
+		if _cached_mode == Window.MODE_FULLSCREEN:
+			_window.set_mode(Window.MODE_FULLSCREEN)
+		elif _cached_mode == Window.MODE_EXCLUSIVE_FULLSCREEN:
+			_window.set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
+		
+		ConfigFileHandler.save_setting("video", "screen_select", screen_select)
+	if different_settings.has("shadow_quality"):
+		if shadow_quality == 0:
+			RenderingServer.directional_shadow_atlas_set_size(512, true)
+		elif shadow_quality == 1:
+			RenderingServer.directional_shadow_atlas_set_size(1024, true)
+		elif shadow_quality == 2:
+			RenderingServer.directional_shadow_atlas_set_size(4096, true)
+		else:
+			RenderingServer.directional_shadow_atlas_set_size(1024, true)
+		
+		ConfigFileHandler.save_setting("video", "shadow_quality", shadow_quality)
+	if different_settings.has("shadow_filter"):
+		if shadow_filter == 0:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
+		elif shadow_filter == 1:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+		elif shadow_filter == 2:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_ULTRA)
+		else:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+		
+		ConfigFileHandler.save_setting("video", "shadow_filter", shadow_filter)
+	if different_settings.has("ssil_quality"):
+		if ssil_quality == 0:
+			ProjectSettings.set("rendering/environment/ssil/quality", 0)
+		elif ssil_quality == 1:
+			ProjectSettings.set("rendering/environment/ssil/quality", 2)
+		elif ssil_quality == 2:
+			ProjectSettings.set("rendering/environment/ssil/quality", 3)
+		else:
+			ProjectSettings.set("rendering/environment/ssil/quality", 2)
+		ProjectSettings.save()
+		
+		ConfigFileHandler.save_setting("video", "ssil_quality", ssil_quality)
+	if different_settings.has("ssao_quality"):
+		if ssao_quality == 0:
+			ProjectSettings.set("rendering/environment/ssao/quality", 0)
+		elif ssao_quality == 1:
+			ProjectSettings.set("rendering/environment/ssao/quality", 2)
+		elif ssao_quality == 2:
+			ProjectSettings.set("rendering/environment/ssao/quality", 3)
+		else:
+			ProjectSettings.set("rendering/environment/ssao/quality", 2)
+		ProjectSettings.save()
+		
+		ConfigFileHandler.save_setting("video", "ssao_quality", ssao_quality)
+	if different_settings.has("outline"):
+		if Global.POSTP_OUTLINE_ON != outline:
+			Global.POSTP_OUTLINE_ON = outline
+		
+		ConfigFileHandler.save_setting("video", "outline", outline)
+	if different_settings.has("mouse_sensitivity"):
+		if Global.MOUSE_SENSITIVITY != mouse_sensitivity:
+			Global.MOUSE_SENSITIVITY = mouse_sensitivity
+		
+		ConfigFileHandler.save_setting("controls", "mouse_sensitivity", mouse_sensitivity)
 	
-	if display_mode == 0:
-		get_window().set_mode(Window.MODE_WINDOWED)
-		Center_Window()
-	elif display_mode == 1:
-		get_window().set_mode(Window.MODE_FULLSCREEN)
-	elif display_mode == 2:
-		get_window().set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
-	else:
-		get_window().set_mode(Window.MODE_WINDOWED)
-		Center_Window()
-	
-	if (Resolutions[resolution].x >= DisplayServer.screen_get_size().x || Resolutions[resolution].y >= DisplayServer.screen_get_size().y):
-		get_window().set_size(DisplayServer.screen_get_size())
-	else:
-		get_window().set_size(Resolutions[resolution])
-	
-	var Resolution_Scale = upscaler/100.00
-	get_viewport().set_scaling_3d_scale(Resolution_Scale)
-	
-	if vsync == true:
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
-	else:
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	
-	var _window = get_window()
-	var _cached_mode = _window.get_mode()
-	_window.set_mode(Window.MODE_WINDOWED)
-	_window.set_current_screen(screen_select)
-	
-	if _cached_mode == Window.MODE_FULLSCREEN:
-		_window.set_mode(Window.MODE_FULLSCREEN)
-	elif _cached_mode == Window.MODE_EXCLUSIVE_FULLSCREEN:
-		_window.set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
-	
-	if shadow_quality == 0:
-		RenderingServer.directional_shadow_atlas_set_size(512, true)
-	elif shadow_quality == 1:
-		RenderingServer.directional_shadow_atlas_set_size(1024, true)
-	elif shadow_quality == 2:
-		RenderingServer.directional_shadow_atlas_set_size(4096, true)
-	else:
-		RenderingServer.directional_shadow_atlas_set_size(1024, true)
-	
-	if shadow_filter == 0:
-		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
-	elif shadow_filter == 1:
-		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
-	elif shadow_filter == 2:
-		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_ULTRA)
-	else:
-		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
-	
-	if ssil_quality == 0:
-		ProjectSettings.set("rendering/environment/ssil/quality", 0)
-	elif ssil_quality == 1:
-		ProjectSettings.set("rendering/environment/ssil/quality", 2)
-	elif ssil_quality == 2:
-		ProjectSettings.set("rendering/environment/ssil/quality", 3)
-	else:
-		ProjectSettings.set("rendering/environment/ssil/quality", 2)
-	ProjectSettings.save()
-	
-	if ssao_quality == 0:
-		ProjectSettings.set("rendering/environment/ssao/quality", 0)
-	elif ssao_quality == 1:
-		ProjectSettings.set("rendering/environment/ssao/quality", 2)
-	elif ssao_quality == 2:
-		ProjectSettings.set("rendering/environment/ssao/quality", 3)
-	else:
-		ProjectSettings.set("rendering/environment/ssao/quality", 2)
-	ProjectSettings.save()
-	
-	if Global.POSTP_OUTLINE_ON != outline:
-		Global.POSTP_OUTLINE_ON = outline
-	
-	if Global.MOUSE_SENSITIVITY != mouse_sensitivity:
-		Global.MOUSE_SENSITIVITY = mouse_sensitivity
 	
 	fps_controller.settings_applied()
 	intialize_settings()

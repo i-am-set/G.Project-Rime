@@ -20,13 +20,13 @@ func _ready():
 		config.set_value("video", "ssao_quality", 1)
 		config.set_value("video", "outline", true)
 		
-		config.set_value("controls", "mouse_sensitivity", 1)
+		config.set_value("controls", "mouse_sensitivity", 1.0)
 		
 		config.save(CONFIG_FILE_PATH)
 	else:
 		config.load(CONFIG_FILE_PATH)
 
-func save_video_setting(type : String, key : String, value):
+func save_setting(type : String, key : String, value):
 	config.set_value(type, key, value)
 	config.save(CONFIG_FILE_PATH)
 
