@@ -1,3 +1,5 @@
+AnimationTree
+MeshInstance3D
 HBoxContainer
 TabBar
 Panel
@@ -11,4 +13,3 @@ TextureRect
 MarginContainer
 OptionButton
 RemoteTransform3D
-AudioStreamPlayer3D

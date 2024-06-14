@@ -16,7 +16,7 @@ func pressed_resume():
 	fps_controller.toggle_pause_menu()
 
 func pressed_settings():
-	settings_page.intialize_settings()
+	settings_page.initialize_settings()
 	hide_all_pages()
 	settings_page.visible = true
 

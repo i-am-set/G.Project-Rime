@@ -24,6 +24,16 @@ const MIN_SENSITIVITY = 0.1
 const MAX_SENSITIVITY = 3
 const MIN_SPEED = 0
 const MAX_SPEED = 1000
+const Resolutions: Dictionary = {"3840x2160":Vector2i(3840,2160),
+								"2560x1440":Vector2i(2560,1080),
+								"1920x1080":Vector2i(1920,1080),
+								"1600x900":Vector2i(1600,900),
+								"1536x864":Vector2i(1536,864),
+								"1440x900":Vector2i(1440,900),
+								"1366x768":Vector2i(1366,768),
+								"1280x720":Vector2i(1280,720),
+								"1024x600":Vector2i(1024,600),
+								"800x600": Vector2i(800,600)}
 
 # Steam Variables
 var OWNED := false
@@ -53,7 +63,7 @@ var WIND_DIRECTION : Vector2 = Vector2.RIGHT
 # Options Variables
 var MOUSE_CAPTURED := false
 var RENDER_DISTANCE = 2
-var MOUSE_SENSITIVITY : float = 1
+var MOUSE_SENSITIVITY : float = 1.0
 var IS_VSYNC_ENABLED := true
 var FIELD_OF_VIEW : int = 75
 var POSTP_OUTLINE_ON := true
@@ -182,3 +192,117 @@ func get_all_temperature_stats_debug() -> String:
 	var max_t := get_temperature_max_display()
 	
 	return ("\nCurrent: %d%s\nLow: %d%s  High: %d%s\nMin: %d%s  Max: %d%s\n" % [cur_t, sign_t, lo_t, sign_t, hi_t, sign_t, min_t, sign_t, max_t, sign_t,])
+
+func Center_Window():
+	var Center_Screen = DisplayServer.screen_get_position()+DisplayServer.screen_get_size()/2
+	var Window_Size = get_window().get_size_with_decorations()
+	get_window().set_position(Center_Screen-Window_Size/2)
+
+func initialize_settings():
+	var _current_game_settings = ConfigFileHandler.load_settings("game")
+	var _current_video_settings = ConfigFileHandler.load_settings("video")
+	var _current_control_settings = ConfigFileHandler.load_settings("controls")
+	
+	# game
+	var fov : int = _current_game_settings["fov"]
+	var temperature_unit : int = _current_game_settings["temperature_unit"]
+	# video
+	var display_mode : int = _current_video_settings["display_mode"]
+	var resolution : String = _current_video_settings["resolution"]
+	var upscaler : int = _current_video_settings["upscaler"]
+	var vsync : bool = _current_video_settings["vsync"]
+	var screen_select : int = _current_video_settings["screen_select"]
+	var shadow_quality : int = _current_video_settings["shadow_quality"]
+	var shadow_filter : int = _current_video_settings["shadow_filter"]
+	var ssil_quality : int = _current_video_settings["ssil_quality"]
+	var ssao_quality : int = _current_video_settings["ssao_quality"]
+	var outline : bool = _current_video_settings["outline"]
+	# controls
+	var mouse_sensitivity : float =  _current_control_settings["mouse_sensitivity"]
+	
+	
+	
+############################################
+	FIELD_OF_VIEW = fov
+############################################
+	TEMPERATURE_UNIT = temperature_unit
+############################################
+	if display_mode == 0:
+		get_window().set_mode(Window.MODE_WINDOWED)
+		Center_Window()
+	elif display_mode == 1:
+		get_window().set_mode(Window.MODE_FULLSCREEN)
+	elif display_mode == 2:
+		get_window().set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
+	else:
+		get_window().set_mode(Window.MODE_WINDOWED)
+		Center_Window()
+############################################
+	if display_mode == 0:
+		if Resolutions.has(resolution):
+			if (Resolutions[resolution].x >= DisplayServer.screen_get_size().x || Resolutions[resolution].y >= DisplayServer.screen_get_size().y):
+				get_window().set_size(DisplayServer.screen_get_size())
+			else:
+				get_window().set_size(Resolutions[resolution])
+		else:
+			get_window().set_size(Vector2(1600, 900))
+############################################
+	var Resolution_Scale = upscaler/100.00
+	get_viewport().set_scaling_3d_scale(Resolution_Scale)
+############################################
+	if vsync == true:
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+	else:
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+############################################
+	var _window = get_window()
+	var _cached_mode = _window.get_mode()
+	_window.set_mode(Window.MODE_WINDOWED)
+	_window.set_current_screen(screen_select)
+	if _cached_mode == Window.MODE_FULLSCREEN:
+		_window.set_mode(Window.MODE_FULLSCREEN)
+	elif _cached_mode == Window.MODE_EXCLUSIVE_FULLSCREEN:
+		_window.set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
+############################################
+	if shadow_quality == 0:
+		RenderingServer.directional_shadow_atlas_set_size(512, true)
+	elif shadow_quality == 1:
+		RenderingServer.directional_shadow_atlas_set_size(1024, true)
+	elif shadow_quality == 2:
+		RenderingServer.directional_shadow_atlas_set_size(4096, true)
+	else:
+		RenderingServer.directional_shadow_atlas_set_size(1024, true)
+############################################
+	if shadow_filter == 0:
+		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_HARD)
+	elif shadow_filter == 1:
+		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+	elif shadow_filter == 2:
+		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_ULTRA)
+	else:
+		RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.SHADOW_QUALITY_SOFT_LOW)
+############################################
+	if ssil_quality == 0:
+		ProjectSettings.set("rendering/environment/ssil/quality", 0)
+	elif ssil_quality == 1:
+		ProjectSettings.set("rendering/environment/ssil/quality", 2)
+	elif ssil_quality == 2:
+		ProjectSettings.set("rendering/environment/ssil/quality", 3)
+	else:
+		ProjectSettings.set("rendering/environment/ssil/quality", 2)
+	ProjectSettings.save()
+############################################
+	if ssao_quality == 0:
+		ProjectSettings.set("rendering/environment/ssao/quality", 0)
+	elif ssao_quality == 1:
+		ProjectSettings.set("rendering/environment/ssao/quality", 2)
+	elif ssao_quality == 2:
+		ProjectSettings.set("rendering/environment/ssao/quality", 3)
+	else:
+		ProjectSettings.set("rendering/environment/ssao/quality", 2)
+	ProjectSettings.save()
+############################################
+	POSTP_OUTLINE_ON = outline
+############################################
+	MOUSE_SENSITIVITY = mouse_sensitivity
+############################################

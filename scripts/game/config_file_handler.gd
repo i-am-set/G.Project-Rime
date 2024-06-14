@@ -5,6 +5,11 @@ var config = ConfigFile.new()
 const CONFIG_FILE_PATH = "user://config.ini"
 
 func _ready():
+	initialize()
+	
+	await Global.initialize_settings()
+
+func initialize():
 	if !FileAccess.file_exists(CONFIG_FILE_PATH):
 		config.set_value("game", "fov", 75)
 		config.set_value("game", "temperature_unit", 0)

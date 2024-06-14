@@ -4,7 +4,7 @@ extends CharacterBody3D
 
 @onready var player_data: PlayerData = $PlayerData
 @onready var player_model = $CollisionShape3D/player_model
-@onready var player_model_instance = $CollisionShape3D/player_model/low_poly_male/metarig/Skeleton3D/Cube_001
+@onready var player_model_instance: MeshInstance3D = $CollisionShape3D/player_model/male_player_model_01/Armature/Skeleton3D/Cube
 @onready var player_animation_tree: AnimationTree = $CollisionShape3D/player_model/AnimationTree
 @onready var pause_menu = $UserInterface/PauseMenu
 @onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator
@@ -65,13 +65,13 @@ var mass = 82
 func _authorize_user():
 	_is_authorized_user = true
 	player_model = get_node("CollisionShape3D/player_model")
-	player_model_instance = get_node("CollisionShape3D/player_model/low_poly_male/metarig/Skeleton3D/Cube_001")
+	player_model_instance = get_node("CollisionShape3D/player_model/male_player_model_01/Armature/Skeleton3D/Cube")
 	player_model_instance.cast_shadow = 3
 
 func _deauthorize_user():
 	_is_authorized_user = false
 	player_model = get_node("CollisionShape3D/player_model")
-	player_model_instance = get_node("CollisionShape3D/player_model/low_poly_male/metarig/Skeleton3D/Cube_001")
+	player_model_instance = get_node("CollisionShape3D/player_model/male_player_model_01/Armature/Skeleton3D/Cube")
 	player_model_instance.cast_shadow = 1
 
 func strip_into_peer():
@@ -299,7 +299,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			send_move_packet()
 
 func send_move_packet():
-	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation, "player_animation_value": Vector2(_strafe_speed, _forward_speed), "player_crouch_animation_value": player_animation_tree.get("parameters/CrouchAnimBlend/blend_amount")})
+	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation, "player_animation_value": Vector2(_strafe_speed, _forward_speed)})
 
 func update_velocity() -> void:
 	pass

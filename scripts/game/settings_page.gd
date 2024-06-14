@@ -87,7 +87,7 @@ func _physics_process(delta: float) -> void:
 			elif !apply_button.disabled && !are_settings_different():
 				apply_button.disabled = true
 
-func intialize_settings():
+func initialize_settings():
 	initialized = false
 	_current_game_settings = ConfigFileHandler.load_settings("game")
 	_current_video_settings = ConfigFileHandler.load_settings("video")
@@ -208,12 +208,16 @@ func set_settings_controls():
 func add_resolutions():
 	var ID = 0
 	
+	resolution_option_button.clear()
+	
 	for r in Resolutions:
 		resolution_option_button.add_item(r, ID)
 		ID += 1
 
 func get_screens():
 	var Screens = DisplayServer.get_screen_count()
+	
+	screen_selector.clear()
 	
 	for s in Screens:
 		screen_selector.add_item("Screen: "+str(s+1))
@@ -385,7 +389,7 @@ func apply_settings():
 	
 	
 	fps_controller.settings_applied()
-	intialize_settings()
+	initialize_settings()
 	apply_button.disabled = true
 
 func Center_Window():

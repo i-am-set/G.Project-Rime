@@ -24,11 +24,11 @@ func enter(previous_state) -> void:
 		ANIMATION.current_animation = "Crouching"
 		ANIMATION.seek(1.0, true)
 	
-	PLAYER.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", 1)
+	#PLAYER.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", 1)
 	PLAYER._crouch_speed_mod = 0.35
 	
 func exit() -> void:
-	PLAYER.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", 0)
+	#PLAYER.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", 0)
 	PLAYER._crouch_speed_mod = 0
 	RELEASED = false
 	
@@ -39,11 +39,11 @@ func update(delta):
 	PLAYER.update_input(SPEED,ACCELERATION,DECELERATION)
 	PLAYER.update_velocity()
 	
-	var blend_amount = PLAYER.player_animation_tree.get("parameters/CrouchAnimBlend/blend_amount")
+	#var blend_amount = PLAYER.player_animation_tree.get("parameters/CrouchAnimBlend/blend_amount")
 	var target_blend_amount = 0.75 if PLAYER.velocity != Vector3.ZERO else 1
 	
-	if blend_amount != target_blend_amount:
-		PLAYER.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", target_blend_amount)
+	#if blend_amount != target_blend_amount:
+		#PLAYER.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", target_blend_amount)
 	
 	WEAPON.sway_weapon(delta, false)
 	WEAPON._weapon_bob(delta, WEAPON_BOB_SPD, WEAPON_BOB_H, WEAPON_BOB_V)
