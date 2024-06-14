@@ -64,10 +64,11 @@ func _ready() -> void:
 	start_distant_crow_amb_cooldown_timer()
 
 func _physics_process(delta: float) -> void:
-	var current_wind_direction = Global.WIND_DIRECTION * 3
-	if current_wind_direction != cached_wind_direction:
-		wind_audio_player.position = fps_controller.position + Vector3(current_wind_direction.x, 2.5, current_wind_direction.y)
-		wind_secondary_audio_player.position = fps_controller.position + Vector3(-current_wind_direction.x, 2.5, -current_wind_direction.y)
+	if fps_controller._is_authorized_user:
+		var current_wind_direction = Global.WIND_DIRECTION * 3
+		if current_wind_direction != cached_wind_direction:
+			wind_audio_player.position = fps_controller.position + Vector3(current_wind_direction.x, 2.5, current_wind_direction.y)
+			wind_secondary_audio_player.position = fps_controller.position + Vector3(-current_wind_direction.x, 2.5, -current_wind_direction.y)
 
 func _on_sfx_distant_crows_finished() -> void:
 	start_distant_crow_amb_cooldown_timer()
