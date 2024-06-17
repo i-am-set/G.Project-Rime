@@ -12,6 +12,8 @@ var _current_control_settings
 @onready var celsius: Button = $VBoxContainer/Options_Settings/Game_Settings_Scroll/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Celsius
 @onready var fahrenheit: Button = $VBoxContainer/Options_Settings/Game_Settings_Scroll/HBoxContainer/VBoxContainer/_Temperature_Unit/DisplayModes/Fahrenheit
 
+@onready var fps_checkbox = $VBoxContainer/Options_Settings/Game_Settings_Scroll/HBoxContainer/VBoxContainer/_FPS_Display/fps_checkbox
+
 @onready var fullscreen: Button = $VBoxContainer/Options_Settings/Video_Settings_Scroll/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Fullscreen
 @onready var borderless: Button = $VBoxContainer/Options_Settings/Video_Settings_Scroll/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Borderless
 @onready var windowed: Button = $VBoxContainer/Options_Settings/Video_Settings_Scroll/HBoxContainer/VBoxContainer/_Display_Mode/DisplayModes/Windowed
@@ -64,7 +66,8 @@ var initialized : bool = false
 
 # game
 var fov : int
-var temperature_unit : int 
+var temperature_unit : int
+var display_fps : bool
 # video
 var display_mode : int
 var resolution : String
@@ -99,6 +102,7 @@ func initialize_settings():
 	# game
 	fov = _current_game_settings["fov"]
 	temperature_unit = _current_game_settings["temperature_unit"]
+	display_fps = _current_game_settings["display_fps"]
 	# video
 	display_mode = _current_video_settings["display_mode"]
 	resolution = _current_video_settings["resolution"]
@@ -129,6 +133,11 @@ func set_settings_controls():
 		celsius.set_pressed_no_signal(true)
 		temperature_unit = 0
 	
+	if display_fps == true:
+		fps_checkbox.set_pressed_no_signal(true)
+	else:
+		fps_checkbox.set_pressed_no_signal(false)
+	
 	# video
 	if display_mode == 0:
 		resolution_option_button.set_disabled(false)
@@ -158,7 +167,7 @@ func set_settings_controls():
 	
 	vsync_checkbox.button_pressed = vsync
 	
-	screen_selector.select(screen_select-1)
+	screen_selector.select(screen_select)
 	
 	if shadow_quality == 0:
 		low_quality_shadow.set_pressed_no_signal(true)
@@ -226,6 +235,7 @@ func are_settings_different() -> bool:
 	var settings = [
 		[fov, _current_game_settings["fov"]],
 		[temperature_unit, _current_game_settings["temperature_unit"]],
+		[display_fps, _current_game_settings["display_fps"]],
 		[display_mode, _current_video_settings["display_mode"]],
 		[resolution, _current_video_settings["resolution"]],
 		[upscaler, _current_video_settings["upscaler"]],
@@ -250,6 +260,7 @@ func get_settings_different() -> Array:
 	var settings = {
 		"fov": [fov, _current_game_settings["fov"]],
 		"temperature_unit": [temperature_unit, _current_game_settings["temperature_unit"]],
+		"display_fps": [display_fps, _current_game_settings["display_fps"]],
 		"display_mode": [display_mode, _current_video_settings["display_mode"]],
 		"resolution": [resolution, _current_video_settings["resolution"]],
 		"upscaler": [upscaler, _current_video_settings["upscaler"]],
@@ -286,6 +297,10 @@ func apply_settings():
 			Global.TEMPERATURE_UNIT = temperature_unit
 		
 		ConfigFileHandler.save_setting("game", "temperature_unit", temperature_unit)
+	if different_settings.has("display_fps"):
+		DebugAutoloadCanvas.toggle_display_fps(display_fps)
+		
+		ConfigFileHandler.save_setting("game", "display_fps", display_fps)
 	if different_settings.has("display_mode"):
 		if display_mode == 0:
 			get_window().set_mode(Window.MODE_WINDOWED)
@@ -468,3 +483,6 @@ func _on_outline_checkbox_toggled(toggled_on: bool) -> void:
 
 func _on_sens_slider_value_changed(value: float) -> void:
 	mouse_sensitivity = value
+
+func _on_fps_checkbox_toggled(toggled_on):
+	display_fps = toggled_on

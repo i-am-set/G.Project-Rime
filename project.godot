@@ -22,13 +22,13 @@ config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 
 [autoload]
 
-Global="*res://scripts/game/global.gd"
 ConfigFileHandler="*res://scripts/game/config_file_handler.gd"
 HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 Console="*res://addons/godot-console/scripts/console.gd"
 ConsoleMono="*res://addons/godot-console/scripts/ConsoleMono.cs"
 DebugAutoloadCanvas="*res://scenes/utility/debug_autoload_canvas.tscn"
 StaticData="*res://data/StaticData.gd"
+Global="*res://scripts/game/global.gd"
 
 [debug]
 
@@ -210,6 +210,8 @@ reflections/reflection_atlas/reflection_count=32
 global_illumination/gi/use_half_resolution=true
 shading/overrides/force_lambert_over_burley=true
 textures/default_filters/anisotropic_filtering_level=0
+environment/ssao/quality=0
+environment/ssil/quality=0
 textures/default_filters/texture_mipmap_bias=-1.0
 
 [shader_globals]

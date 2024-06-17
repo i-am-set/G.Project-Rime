@@ -34,6 +34,7 @@ script = ExtResource("1_of0p0")
 offset_left = 2.0
 offset_right = 134.0
 offset_bottom = 23.0
+size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("1_00isl")
 text = "144"
 script = ExtResource("2_a0et8")

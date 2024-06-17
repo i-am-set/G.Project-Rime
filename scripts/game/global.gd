@@ -68,7 +68,7 @@ var IS_VSYNC_ENABLED := true
 var FIELD_OF_VIEW : int = 75
 var POSTP_OUTLINE_ON := true
 var POSTP_DITHER_ON := true
-var TEMPERATURE_UNIT = 0 # 0 is C; 1 is F
+var TEMPERATURE_UNIT : int = 0 # 0 is C; 1 is F
 
 # Player Variables
 var INV_CELL_SIZE = INV_DEFAULT_CELL_SIZE:
@@ -206,6 +206,7 @@ func initialize_settings():
 	# game
 	var fov : int = _current_game_settings["fov"]
 	var temperature_unit : int = _current_game_settings["temperature_unit"]
+	var display_fps : bool = _current_game_settings["display_fps"]
 	# video
 	var display_mode : int = _current_video_settings["display_mode"]
 	var resolution : String = _current_video_settings["resolution"]
@@ -226,6 +227,8 @@ func initialize_settings():
 	FIELD_OF_VIEW = fov
 ############################################
 	TEMPERATURE_UNIT = temperature_unit
+############################################
+	DebugAutoloadCanvas.toggle_display_fps(display_fps)
 ############################################
 	if display_mode == 0:
 		get_window().set_mode(Window.MODE_WINDOWED)

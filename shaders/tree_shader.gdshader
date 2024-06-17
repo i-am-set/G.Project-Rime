@@ -63,9 +63,9 @@ vec4 textureNoTile( sampler2D samp, in vec2 uv )
 void vertex() {
 	float strength = COLOR.r * sway_strength;
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
-	VERTEX.x += sin(VERTEX.x * sway_phase_len * 1.123 + TIME * sway_speed) * strength;
-	VERTEX.y += sin(VERTEX.y * sway_phase_len + TIME * sway_speed * 1.12412) * strength;
-	VERTEX.z += sin(VERTEX.z * sway_phase_len * 0.9123 + TIME * sway_speed * 1.3123) * strength;
+	VERTEX.x += smoothstep(-1.0, 1.0, sin(VERTEX.x * sway_phase_len * 1.123 + TIME * sway_speed)) * strength;
+	VERTEX.y += smoothstep(-1.0, 1.0, sin(VERTEX.y * sway_phase_len + TIME * sway_speed * 1.12412)) * strength;
+	VERTEX.z += smoothstep(-1.0, 1.0, sin(VERTEX.z * sway_phase_len * 0.9123 + TIME * sway_speed * 1.3123)) * strength;
 }
 
 

@@ -1,3 +1,5 @@
+ConeTwistJoint3D
+SkeletonIK3D
 AnimationTree
 MeshInstance3D
 HBoxContainer
@@ -11,5 +13,3 @@ AudioStreamPlayer
 Control
 TextureRect
 MarginContainer
-OptionButton
-RemoteTransform3D

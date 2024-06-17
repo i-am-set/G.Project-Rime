@@ -13,6 +13,7 @@ func initialize():
 	if !FileAccess.file_exists(CONFIG_FILE_PATH):
 		config.set_value("game", "fov", 75)
 		config.set_value("game", "temperature_unit", 0)
+		config.set_value("game", "display_fps", false)
 		
 		config.set_value("video", "display_mode", 0)
 		config.set_value("video", "resolution", "1600x900")
