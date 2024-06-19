@@ -46,6 +46,7 @@ var _forward_speed : float
 var _strafe_speed : float
 var _head_movement : float
 var _crouch_speed_mod : float
+var _is_crouching : bool = false
 #var look_at_label_anchor : Vector3
 var look_at_collider
 var _current_rotation : float
@@ -172,6 +173,16 @@ func head_movement_logic(input : float):
 		output = lerp(0.4, 1.0, input)
 	_head_movement = output
 	return output
+
+func crouch_toggle(toggle : bool):
+	if toggle:
+		player_animation_tree.set("parameters/IsCrouching/blend_amount", 1)
+		_is_crouching = true
+		send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_crouch_animation_value": 1})
+	else:
+		player_animation_tree.set("parameters/IsCrouching/blend_amount", 0)
+		_is_crouching = false
+		send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_crouch_animation_value": 0})
 
 func _ready():
 	if _is_authorized_user == true:
@@ -300,10 +311,11 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			# Calculate forward speed
 			var forward_direction = -transform.basis.z
 			var strafe_direction = transform.basis.x
-			_forward_speed = velocity.dot(forward_direction) / 8 + _crouch_speed_mod
-			_strafe_speed = velocity.dot(strafe_direction) / 8 + _crouch_speed_mod
+			_forward_speed = velocity.dot(forward_direction) / 8
+			_strafe_speed = velocity.dot(strafe_direction) / 8
 			
 			player_animation_tree.set("parameters/MovementAnimBlend/blend_position", Vector2(_strafe_speed, _forward_speed))
+			player_animation_tree.set("parameters/CrouchMovementAnimBlend/blend_position", Vector2(_strafe_speed, _forward_speed))
 		
 		move_and_slide()
 		

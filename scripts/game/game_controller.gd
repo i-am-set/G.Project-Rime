@@ -390,10 +390,13 @@ func process_data(packet_data : Dictionary):
 					player_instance.rotation = packet_data["player_rotation"]
 				if packet_data.has("player_animation_value"):
 					player_instance.player_animation_tree.set("parameters/MovementAnimBlend/blend_position", packet_data["player_animation_value"])
+					player_instance.player_animation_tree.set("parameters/CrouchMovementAnimBlend/blend_position", packet_data["player_animation_value"])
 				if packet_data.has("player_head_animation_value"):
 					player_instance.player_animation_tree.set("parameters/looking_blend/blend_amount", packet_data["player_head_animation_value"])
 				if packet_data.has("player_crouch_animation_value"):
 					player_instance.player_animation_tree.set("parameters/CrouchAnimBlend/blend_amount", packet_data["player_crouch_animation_value"])
+				if packet_data.has("player_crouch_animation_value"):
+					player_instance.player_animation_tree.set("parameters/IsCrouching/blend_amount", packet_data["player_crouch_animation_value"])
 		elif packet_data["message"] == "time_set":
 			recieve_set_time_request(packet_data["time"])
 		elif packet_data["message"] == "set_wind_direction":
