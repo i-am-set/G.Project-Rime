@@ -1,4 +1,4 @@
-res://scenes/utility/debug_autoload_canvas.tscn
+res://scenes/fps_controller.tscn
 res://resources/weapons/weap_nothing.tres
 res://shaders/2d/blur_shader.gdshader
 res://shaders/player_post_processesing.gdshader
@@ -25,12 +25,13 @@ res://shaders/snow_post_processesing.gdshader
 res://shaders/leaf_shader.gdshader
 res://shaders/tree_shader.gdshader
 res://shaders/default_object_shader.gdshader
-res://scenes/fps_controller.tscn
+res://scripts/player/fps_controller.gd
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
 res://scenes/maingame/world.tscn
 res://scenes/maingame/ground_item.tscn
 res://scenes/ui/inv_item_rect.tscn
+res://scenes/utility/debug_autoload_canvas.tscn
 res://scenes/entities/player_model.tscn
 res://addons/godot-console/scripts/ConsoleMono.cs
 res://scripts/resource_objects/ResourceChunkInstancer.cs
@@ -41,4 +42,5 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://materials/nature/tall_pine_tree_material.tres
+res://scripts/player/player_sound_manager.gd
+res://scripts/game/game_controller.gd

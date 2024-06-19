@@ -1,3 +1,4 @@
+Camera3D
 ConeTwistJoint3D
 SkeletonIK3D
 AnimationTree
@@ -11,5 +12,3 @@ Button
 Label
 AudioStreamPlayer
 Control
-TextureRect
-MarginContainer

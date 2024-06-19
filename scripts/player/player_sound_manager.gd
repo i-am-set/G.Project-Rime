@@ -78,7 +78,7 @@ func _on_crow_cooldown_timer_timeout() -> void:
 	play_distant_crow_amb()
 
 func start_distant_crow_amb_cooldown_timer():
-	crow_cooldown_timer.wait_time = randi_range(1, 45)
+	crow_cooldown_timer.wait_time = randi_range(1, 85)
 	crow_cooldown_timer.start()
 
 func play_distant_crow_amb():

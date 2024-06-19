@@ -44,6 +44,7 @@ var _steam_ID : int
 var _resource_spawn_radius : int
 var _forward_speed : float
 var _strafe_speed : float
+var _head_movement : float
 var _crouch_speed_mod : float
 #var look_at_label_anchor : Vector3
 var look_at_collider
@@ -99,6 +100,7 @@ func _input(event):
 		print_debug("scroll up")
 	if event.is_action_pressed("ui_scroll_down"):
 		print_debug("scroll down")
+		#
 	
 	if event.is_action_pressed("interact"):
 		is_holding_interact = true
@@ -132,7 +134,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			look_dir = event.relative * 0.001
 			_rotate_camera()
 			looking_process()
-			send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_rotation": rotation})
+			send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_rotation": rotation, "player_head_animation_value": _head_movement})
 
 func toggle_pause_menu():
 	pause_menu.visible = !pause_menu.visible
@@ -157,10 +159,20 @@ func uncapture_mouse():
 func _rotate_camera(sens_mod: float = 1.0) -> void:
 	if Global.IS_PAUSED || Global.IS_IN_CONSOLE:
 		return
-		
+	
 	self.rotation.y -= look_dir.x * MOUSE_SENSITIVITY
 	CAMERA_CONTROLLER.rotation.x = clamp(CAMERA_CONTROLLER.rotation.x - look_dir.y * MOUSE_SENSITIVITY, -1.5, 1.5)
-	
+	player_animation_tree.set("parameters/looking_blend/blend_amount", head_movement_logic(CAMERA_CONTROLLER.rotation.x))
+
+func head_movement_logic(input : float):
+	var output = 0.0
+	if input < 0:
+		output = lerp(0.4, 0.0, -input)
+	else:
+		output = lerp(0.4, 1.0, input)
+	_head_movement = output
+	return output
+
 func _ready():
 	if _is_authorized_user == true:
 		capture_mouse()
@@ -300,6 +312,8 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 
 func send_move_packet():
 	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation, "player_animation_value": Vector2(_strafe_speed, _forward_speed)})
+
+func send_
 
 func update_velocity() -> void:
 	pass
