@@ -311,11 +311,15 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			# Calculate forward speed
 			var forward_direction = -transform.basis.z
 			var strafe_direction = transform.basis.x
-			_forward_speed = velocity.dot(forward_direction) / 8
-			_strafe_speed = velocity.dot(strafe_direction) / 8
 			
-			player_animation_tree.set("parameters/MovementAnimBlend/blend_position", Vector2(_strafe_speed, _forward_speed))
-			player_animation_tree.set("parameters/CrouchMovementAnimBlend/blend_position", Vector2(_strafe_speed, _forward_speed))
+			if _is_crouching:
+				_forward_speed = velocity.dot(forward_direction)
+				_strafe_speed = velocity.dot(strafe_direction)
+				player_animation_tree.set("parameters/CrouchMovementAnimBlend/blend_position", Vector2(_strafe_speed, _forward_speed))
+			else:
+				_forward_speed = velocity.dot(forward_direction) / 8
+				_strafe_speed = velocity.dot(strafe_direction) / 8
+				player_animation_tree.set("parameters/MovementAnimBlend/blend_position", Vector2(_strafe_speed, _forward_speed))
 		
 		move_and_slide()
 		
