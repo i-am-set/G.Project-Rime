@@ -313,8 +313,6 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 func send_move_packet():
 	send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_position": global_position, "player_rotation": rotation, "player_animation_value": Vector2(_strafe_speed, _forward_speed)})
 
-func send_
-
 func update_velocity() -> void:
 	pass
 
