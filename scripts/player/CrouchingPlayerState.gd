@@ -56,7 +56,8 @@ func update(delta):
 				uncrouch()
 				if ANIMATION.is_playing() and ANIMATION.current_animation == "Crouching":
 					await ANIMATION.animation_finished
-				transition.emit("JumpingPlayerState")
+				if PLAYER.player_data.try_exert_stamina(PLAYER.player_data.jump_stamina_requirement):
+					transition.emit("JumpingPlayerState")
 	
 	if Input.is_action_just_pressed("attack"):
 		WEAPON._attack()

@@ -1,4 +1,4 @@
-res://scenes/maingame/world.tscn
+res://scenes/fps_controller.tscn
 res://resources/weapons/weap_nothing.tres
 res://shaders/2d/blur_shader.gdshader
 res://shaders/player_post_processesing.gdshader
@@ -25,9 +25,9 @@ res://shaders/snow_post_processesing.gdshader
 res://shaders/leaf_shader.gdshader
 res://shaders/tree_shader.gdshader
 res://shaders/default_object_shader.gdshader
-res://scenes/fps_controller.tscn
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
+res://scenes/maingame/world.tscn
 res://scenes/maingame/ground_item.tscn
 res://scenes/ui/inv_item_rect.tscn
 res://scenes/utility/debug_autoload_canvas.tscn
@@ -41,3 +41,10 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
+res://scripts/player/player_data.gd
+res://scripts/player/state_machine.gd
+res://scripts/player/WalkingPlayerState.gd
+res://scripts/player/PlayerMovementState.gd
+res://scripts/player/SprintingPlayerState.gd
+res://scripts/player/CrouchingPlayerState.gd
+res://scripts/player/IdlePlayerState.gd

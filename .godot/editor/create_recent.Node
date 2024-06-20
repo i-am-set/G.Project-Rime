@@ -1,3 +1,5 @@
+GPUParticles3D
+GPUParticles2D
 Camera3D
 ConeTwistJoint3D
 SkeletonIK3D
@@ -10,5 +12,3 @@ VBoxContainer
 ColorRect
 Button
 Label
-AudioStreamPlayer
-Control

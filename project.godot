@@ -210,6 +210,7 @@ reflections/reflection_atlas/reflection_count=32
 global_illumination/gi/use_half_resolution=true
 shading/overrides/force_lambert_over_burley=true
 textures/default_filters/anisotropic_filtering_level=0
+environment/ssao/quality=0
 environment/ssil/quality=0
 textures/default_filters/texture_mipmap_bias=-1.0
 

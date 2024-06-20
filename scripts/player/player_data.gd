@@ -50,6 +50,7 @@ var hunger_decrease_rate : int = 1800
 var current_hunger_tick : int = 0
 var stamina_decrease_rate : int = 8
 var stamina_regen_rate : int = 3
+var jump_stamina_requirement : int = 10
 var current_stamina_tick : int = 0
 var current_stamina_regen_timer : float = 0
 var stamina_regen_timer_duration : float = 0.75
@@ -245,6 +246,21 @@ func update_stamina_tick():
 			elif stamina >= max_stamina:
 				stamina_bar_animation_player.play("stamina_bar_hide_timer")
 				stamina_regened.emit()
+
+func can_exert_stamina(_stamina_exerted : int) -> bool:
+	if stamina >= _stamina_exerted:
+		return true
+	return false
+
+func exert_stamina(_stamina_exerted : int):
+	if stamina >= _stamina_exerted:
+		set_stamina(stamina - _stamina_exerted)
+
+func try_exert_stamina(_stamina_exerted : int) -> bool:
+	if can_exert_stamina(_stamina_exerted):
+		exert_stamina(_stamina_exerted)
+		return true
+	return false
 
 func update_heart_rate_tick(delta : float):
 	current_heart_rate_tick += 1;
