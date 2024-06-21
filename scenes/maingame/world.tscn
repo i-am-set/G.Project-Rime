@@ -96,7 +96,7 @@ volume_db = -20.0
 bus = &"Music"
 
 [node name="SkyBox" parent="." instance=ExtResource("1_v0aj0")]
-timeOfDay = 1293.75
+timeOfDay = 700.0
 simulateTime = true
 rateOfTime = 0.005
 cloudCoverage = 0.5

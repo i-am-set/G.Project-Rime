@@ -5,7 +5,7 @@ signal temperature_set
 
 # General settings for time of day, on/off for simulating day and night cycle, rate of time, and overall rotation of the sky
 @export_category("GodotSky Control")
-@export_range(0,2400,0.01) var timeOfDay : float = 1200.0
+@export_range(0,2400,0.01) var timeOfDay : float = 700.0
 @export var simulateTime : bool = false
 @export_range(0,10,0.0005) var rateOfTime : float = 0.1
 @export_range(0,360,0.1) var skyRotation : float = 0.0

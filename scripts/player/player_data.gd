@@ -98,6 +98,8 @@ func _ready() -> void:
 	stamina = max_stamina
 	hunger = max_hunger
 	temperature = comfortable_temperature
+	
+	Console.create_command("god_mode", self.c_toggle_god_mode, "Toggles god mode on and off.")
 
 func _physics_process(delta: float) -> void:
 	update_hunger_tick()
@@ -346,6 +348,11 @@ func update_progress_bars(delta: float):
 	stamina_bar_right.value = lerp(stamina_bar_right.value, stamina, _lerp_speed)
 	health_bar.value = health
 	hunger_bar.value = hunger
+
+func c_toggle_god_mode():
+	god_mode = !god_mode
+	
+	Console.print_line("God mode is now " + str(god_mode))
 
 #var head_temperature : int = 100
 #var torso_temperature : int = 100

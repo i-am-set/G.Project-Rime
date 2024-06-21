@@ -2,18 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dda43y5dmh2h3"
-path.s3tc="res://.godot/imported/male_player_model_01_texture_01.png-5f525ca773468ac76ae3c55d8d50b4a6.s3tc.ctex"
+uid="uid://b0jthu66o6nw7"
+path.s3tc="res://.godot/imported/jeans_texture_01.png-ab9144f9e25b3215743dca79622af23f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={}
 
 [deps]
 
-source_file="res://meshes/entities/player_models/male_01_model/male_player_model_01_texture_01.png"
-dest_files=["res://.godot/imported/male_player_model_01_texture_01.png-5f525ca773468ac76ae3c55d8d50b4a6.s3tc.ctex"]
+source_file="res://textures/entities/player_models/clothing/jeans_texture_01.png"
+dest_files=["res://.godot/imported/jeans_texture_01.png-ab9144f9e25b3215743dca79622af23f.s3tc.ctex"]
 
 [params]
 
