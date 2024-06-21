@@ -234,7 +234,7 @@ func _ready():
 		#Console.create_command("set_body_temperature", self.c_set_all_player_limb_temperature, "Sets the temperature of all body parts to the given value. 100.0 is default; 0.0 is min; 200.0 is max")
 		#Console.create_command("get_body_temperature", self.c_get_all_player_limb_temperature, "Displays the body temperature of each body part. 100.0 is default; 0.0 is min; 200.0 is max")
 		Console.create_command("create_item", self.c_create_item_from_id, "Drops the number input of input item by ID in front of player.")
-		Console.create_command("third_person", self.c_third_person_view, "Changes camera view to one of three views; 0 = standard/first person; 1 = third person; 2 = front facing.")
+		Console.create_command("switch_pov", self.c_switch_pov, "Changes camera view to one of three views; 0 = standard/first person; 1 = third person; 2 = front facing.")
 
 func set_settings():
 	#CAMERA_CONTROLLER.far = Global.RENDER_DISTANCE*12 # opt - see if this would have even helped performance; can't use it with the skybox
@@ -586,7 +586,7 @@ func c_create_item_from_id(item_to_create_id : String, number_of_item : int):
 			await get_tree().process_frame
 		world.instance_ground_item(StaticData.create_item_from_id(item_to_create_id), 1, drop_position.global_position)
 
-func c_third_person_view(mode : int):
+func c_switch_pov(mode : int):
 	if mode == 0:
 		CAMERA_CONTROLLER.current = true
 		player_model_instance.cast_shadow = 3
