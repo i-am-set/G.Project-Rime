@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var player_data: PlayerData = $PlayerData
 @onready var player_model = $CollisionShape3D/player_model
 @onready var player_model_instance: MeshInstance3D = $CollisionShape3D/player_model/male_player_model_01/Armature/Skeleton3D/Cube
+@onready var animation_player: AnimationPlayer = $CollisionShape3D/player_model/male_player_model_01/AnimationPlayer
 @onready var player_animation_tree: AnimationTree = $CollisionShape3D/player_model/AnimationTree
 @onready var pause_menu = $UserInterface/PauseMenu
 @onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator

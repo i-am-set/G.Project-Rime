@@ -1,3 +1,4 @@
+res://meshes/entities/player_models/male_01_model/animations
 res://scripts/game
 res://shaders
 res://ui/button_groups
@@ -19,4 +20,3 @@ res://scripts/player
 res://textures/ui
 res://shaders/2d
 res://addons/godot-console/scripts
-res://
