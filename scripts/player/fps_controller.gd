@@ -5,6 +5,7 @@ extends CharacterBody3D
 @onready var player_data: PlayerData = $PlayerData
 @onready var player_model = $CollisionShape3D/player_model
 @onready var player_model_instance: MeshInstance3D = $CollisionShape3D/player_model/male_player_model_01/Armature/Skeleton3D/Cube
+@onready var arms_model: Node3D = $ArmsModel
 @onready var animation_player: AnimationPlayer = $CollisionShape3D/player_model/male_player_model_01/AnimationPlayer
 @onready var player_animation_tree: AnimationTree = $CollisionShape3D/player_model/AnimationTree
 @onready var pause_menu = $UserInterface/PauseMenu
@@ -71,14 +72,24 @@ func _authorize_user():
 	_is_authorized_user = true
 	player_model = get_node("CollisionShape3D/player_model")
 	player_model_instance = get_node("CollisionShape3D/player_model/male_player_model_01/Armature/Skeleton3D/Cube")
+	arms_model = get_node("ArmsModel")
 	CAMERA_CONTROLLER.current = true
-	player_model_instance.cast_shadow = 3
+	show_player_model_instance(false)
 
 func _deauthorize_user():
 	_is_authorized_user = false
 	player_model = get_node("CollisionShape3D/player_model")
 	player_model_instance = get_node("CollisionShape3D/player_model/male_player_model_01/Armature/Skeleton3D/Cube")
-	player_model_instance.cast_shadow = 1
+	arms_model = get_node("ArmsModel")
+	show_player_model_instance(true)
+
+func show_player_model_instance(toggle : bool):
+	if toggle:
+		player_model_instance.cast_shadow = 1
+		arms_model.visible = false
+	else:
+		player_model_instance.cast_shadow = 3
+		arms_model.visible = true
 
 func strip_into_peer():
 	remove_child(CAMERA_CONTROLLER)
@@ -173,8 +184,12 @@ func head_movement_logic(input : float):
 	var output = 0.0
 	if input < 0:
 		output = lerp(0.4, 0.0, -input)
+		arms_model.position.z = lerp(-0.14, 0.22, -input)
+		arms_model.position.y = 1.02
 	else:
 		output = lerp(0.4, 1.0, input)
+		arms_model.position.z = lerp(-0.14, -0.415, input)
+		arms_model.position.y = lerp(1.02, 1.4, input)
 	_head_movement = output
 	return output
 
@@ -590,16 +605,16 @@ func c_create_item_from_id(item_to_create_id : String, number_of_item : int):
 func c_switch_pov(mode : int):
 	if mode == 0:
 		CAMERA_CONTROLLER.current = true
-		player_model_instance.cast_shadow = 3
+		show_player_model_instance(false)
 	elif mode == 1:
 		third_person_camera.current = true
-		player_model_instance.cast_shadow = 1
+		show_player_model_instance(true)
 	elif mode == 2:
 		front_third_person_camera.current = true
-		player_model_instance.cast_shadow = 1
+		show_player_model_instance(true)
 	else:
 		CAMERA_CONTROLLER.current = true
-		player_model_instance.cast_shadow = 3
+		show_player_model_instance(false)
 
 func c_teleport_player_to_player(ori_player_name : String, des_player_name : String) -> void:
 	var ori_is_self = false
