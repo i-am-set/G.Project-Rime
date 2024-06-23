@@ -115,7 +115,7 @@ func footstep_left_logic():
 		footstep_index = randi() % FOOTSTEP_SOUNDS.size()
 	if !sfx_left_footstep.playing:
 		sfx_left_footstep.stream = FOOTSTEP_SOUNDS[footstep_index]
-		sfx_left_footstep.pitch_scale = randf_range(0.95, 1.05)
+		#sfx_left_footstep.pitch_scale = randf_range(0.95, 1.05)
 		sfx_left_footstep.play()
 
 func footstep_right_logic():
@@ -124,7 +124,7 @@ func footstep_right_logic():
 		footstep_index = randi() % FOOTSTEP_SOUNDS.size()
 	if !sfx_right_footstep.playing:
 		sfx_right_footstep.stream = FOOTSTEP_SOUNDS[footstep_index]
-		sfx_right_footstep.pitch_scale = randf_range(0.95, 1.05)
+		#sfx_right_footstep.pitch_scale = randf_range(0.95, 1.05)
 		sfx_right_footstep.play()
 
 func play_exhale():

@@ -3,6 +3,7 @@ extends Control
 var _current_game_settings
 var _current_video_settings
 var _current_control_settings
+var _current_audio_settings
 
 @onready var fps_controller: Player = $"../../.."
 
@@ -27,6 +28,11 @@ var _current_control_settings
 @onready var screen_selector: OptionButton = $VBoxContainer/Options_Settings/Video_Settings_Scroll/HBoxContainer/VBoxContainer/_Screen_Select/Screen_Selector
 
 @onready var sens_slider: HSlider = $VBoxContainer/Options_Settings/Controls_Settings_Scroll/HBoxContainer/VBoxContainer/_Sensitivity/SensSlider
+
+@onready var master_slider: HSlider = $VBoxContainer/Options_Settings/Audio_Settings_Scroll/HBoxContainer/VBoxContainer/Master/MasterSlider
+@onready var music_slider: HSlider = $VBoxContainer/Options_Settings/Audio_Settings_Scroll/HBoxContainer/VBoxContainer/Music/MusicSlider
+@onready var sfx_slider: HSlider = $VBoxContainer/Options_Settings/Audio_Settings_Scroll/HBoxContainer/VBoxContainer/SFX/SFXSlider
+@onready var ambience_slider: HSlider = $VBoxContainer/Options_Settings/Audio_Settings_Scroll/HBoxContainer/VBoxContainer/Ambience/AmbienceSlider
 
 @onready var low_quality_shadow: Button = $VBoxContainer/Options_Settings/Video_Settings_Scroll/HBoxContainer/VBoxContainer/_Shadow_Quality/ShadowQualities/LowQualityShadow
 @onready var high_quality_shadow: Button = $VBoxContainer/Options_Settings/Video_Settings_Scroll/HBoxContainer/VBoxContainer/_Shadow_Quality/ShadowQualities/HighQualityShadow
@@ -81,6 +87,11 @@ var ssao_quality : int
 var outline : bool
 # controls
 var mouse_sensitivity : float
+# audio
+var master_audio : int
+var music_audio : int
+var sfx_audio : int
+var ambience_audio : int
 
 func _physics_process(delta: float) -> void:
 	if visible:
@@ -95,6 +106,7 @@ func initialize_settings():
 	_current_game_settings = ConfigFileHandler.load_settings("game")
 	_current_video_settings = ConfigFileHandler.load_settings("video")
 	_current_control_settings = ConfigFileHandler.load_settings("controls")
+	_current_audio_settings = ConfigFileHandler.load_settings("audio")
 	
 	add_resolutions()
 	get_screens()
@@ -116,6 +128,11 @@ func initialize_settings():
 	outline = _current_video_settings["outline"]
 	# controls
 	mouse_sensitivity = _current_control_settings["mouse_sensitivity"]
+	# audio
+	master_audio = _current_audio_settings["master_audio"]
+	music_audio = _current_audio_settings["music_audio"]
+	sfx_audio = _current_audio_settings["sfx_audio"]
+	ambience_audio = _current_audio_settings["ambience_audio"]
 	
 	set_settings_controls()
 	
@@ -213,6 +230,12 @@ func set_settings_controls():
 	
 	# controls
 	sens_slider.value = mouse_sensitivity
+	
+	# audio
+	master_slider.value = master_audio
+	music_slider.value = music_audio
+	sfx_slider.value = sfx_audio
+	ambience_slider.value = ambience_audio
 
 func add_resolutions():
 	var ID = 0
@@ -246,7 +269,9 @@ func are_settings_different() -> bool:
 		[ssil_quality, _current_video_settings["ssil_quality"]],
 		[ssao_quality, _current_video_settings["ssao_quality"]],
 		[outline, _current_video_settings["outline"]],
-		[mouse_sensitivity, _current_control_settings["mouse_sensitivity"]]
+		[mouse_sensitivity, _current_control_settings["mouse_sensitivity"]],
+		[master_audio, _current_audio_settings["master_audio"]],
+		[music_audio, _current_audio_settings["music_audio"]]
 	]
 	
 	for setting in settings:
@@ -271,7 +296,9 @@ func get_settings_different() -> Array:
 		"ssil_quality": [ssil_quality, _current_video_settings["ssil_quality"]],
 		"ssao_quality": [ssao_quality, _current_video_settings["ssao_quality"]],
 		"outline": [outline, _current_video_settings["outline"]],
-		"mouse_sensitivity": [mouse_sensitivity, _current_control_settings["mouse_sensitivity"]]
+		"mouse_sensitivity": [mouse_sensitivity, _current_control_settings["mouse_sensitivity"]],
+		"master_audio": [master_audio, _current_audio_settings["master_audio"]],
+		"music_audio": [music_audio, _current_audio_settings["music_audio"]]
 	}
 	
 	for setting in settings.keys():
@@ -401,11 +428,33 @@ func apply_settings():
 			Global.MOUSE_SENSITIVITY = mouse_sensitivity
 		
 		ConfigFileHandler.save_setting("controls", "mouse_sensitivity", mouse_sensitivity)
+	if different_settings.has("master_audio"):
+		AudioServer.set_bus_volume_db(0, Convert_Percentage_To_Decibel(master_audio))
+		
+		ConfigFileHandler.save_setting("audio", "master_audio", master_audio)
+	if different_settings.has("music_audio"):
+		AudioServer.set_bus_volume_db(1, Convert_Percentage_To_Decibel(music_audio))
+		
+		ConfigFileHandler.save_setting("audio", "music_audio", music_audio)
+	if different_settings.has("sfx_audio"):
+		AudioServer.set_bus_volume_db(2, Convert_Percentage_To_Decibel(sfx_audio))
+		
+		ConfigFileHandler.save_setting("audio", "sfx_audio", sfx_audio)
+	if different_settings.has("ambience_audio"):
+		AudioServer.set_bus_volume_db(3, Convert_Percentage_To_Decibel(ambience_audio))
+		
+		ConfigFileHandler.save_setting("audio", "ambience_audio", ambience_audio)
 	
 	
 	fps_controller.settings_applied()
 	initialize_settings()
 	apply_button.disabled = true
+
+func Convert_Percentage_To_Decibel(percentage : float):
+	var scale : float = 20.0
+	var divisor : float = 50.0
+	
+	return scale * (log(percentage / divisor) / log(10))
 
 func Center_Window():
 	var Center_Screen = DisplayServer.screen_get_position()+DisplayServer.screen_get_size()/2
@@ -486,3 +535,15 @@ func _on_sens_slider_value_changed(value: float) -> void:
 
 func _on_fps_checkbox_toggled(toggled_on):
 	display_fps = toggled_on
+
+func _on_master_slider_value_changed(value: float) -> void:
+	master_audio = value
+
+func _on_music_slider_value_changed(value: float) -> void:
+	music_audio = value
+
+func _on_sfx_slider_value_changed(value: float) -> void:
+	sfx_audio = value
+
+func _on_ambience_slider_value_changed(value: float) -> void:
+	ambience_audio = value

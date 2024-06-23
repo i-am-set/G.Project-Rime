@@ -28,6 +28,18 @@ func initialize():
 		
 		config.set_value("controls", "mouse_sensitivity", 1.0)
 		
+		config.set_value("audio", "master_audio", 100.0)
+		config.set_value("audio", "music_audio", 100.0)
+		config.set_value("audio", "sfx_audio", 100.0)
+		config.set_value("audio", "ambience_audio", 100.0)
+		
+		#var master_audio : int
+		#var music_audio : int
+		#var sfx_audio : int
+		#var ambience_audio : int
+		
+		
+		
 		config.save(CONFIG_FILE_PATH)
 	else:
 		config.load(CONFIG_FILE_PATH)

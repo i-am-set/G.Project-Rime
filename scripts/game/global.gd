@@ -193,6 +193,12 @@ func get_all_temperature_stats_debug() -> String:
 	
 	return ("\nCurrent: %d%s\nLow: %d%s  High: %d%s\nMin: %d%s  Max: %d%s\n" % [cur_t, sign_t, lo_t, sign_t, hi_t, sign_t, min_t, sign_t, max_t, sign_t,])
 
+func Convert_Percentage_To_Decibel(percentage : float):
+	var scale : float = 20.0
+	var divisor : float = 50.0
+	
+	return scale * (log(percentage / divisor) / log(10))
+
 func Center_Window():
 	var Center_Screen = DisplayServer.screen_get_position()+DisplayServer.screen_get_size()/2
 	var Window_Size = get_window().get_size_with_decorations()
@@ -202,6 +208,7 @@ func initialize_settings():
 	var _current_game_settings = ConfigFileHandler.load_settings("game")
 	var _current_video_settings = ConfigFileHandler.load_settings("video")
 	var _current_control_settings = ConfigFileHandler.load_settings("controls")
+	var _current_audio_settings = ConfigFileHandler.load_settings("audio")
 	
 	# game
 	var fov : int = _current_game_settings["fov"]
@@ -220,6 +227,11 @@ func initialize_settings():
 	var outline : bool = _current_video_settings["outline"]
 	# controls
 	var mouse_sensitivity : float =  _current_control_settings["mouse_sensitivity"]
+	# audio
+	var master_audio = _current_audio_settings["master_audio"]
+	var music_audio = _current_audio_settings["music_audio"]
+	var sfx_audio = _current_audio_settings["sfx_audio"]
+	var ambience_audio = _current_audio_settings["ambience_audio"]
 	
 	
 	
@@ -309,3 +321,10 @@ func initialize_settings():
 ############################################
 	MOUSE_SENSITIVITY = mouse_sensitivity
 ############################################
+	AudioServer.set_bus_volume_db(0, Convert_Percentage_To_Decibel(master_audio))
+############################################
+	AudioServer.set_bus_volume_db(1, Convert_Percentage_To_Decibel(music_audio))
+############################################
+	AudioServer.set_bus_volume_db(2, Convert_Percentage_To_Decibel(sfx_audio))
+############################################
+	AudioServer.set_bus_volume_db(3, Convert_Percentage_To_Decibel(ambience_audio))
