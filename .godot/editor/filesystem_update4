@@ -58,3 +58,5 @@ res://meshes/entities/player_models/male_01_model/animations/anim_walk_forward.r
 res://meshes/entities/player_models/male_01_model/animations/anim_walk_left.res
 res://meshes/entities/player_models/male_01_model/animations/anim_walk_right.res
 res://scripts/player/WalkingPlayerState.gd
+res://scripts/player/CrouchingPlayerState.gd
+res://scripts/player/SprintingPlayerState.gd

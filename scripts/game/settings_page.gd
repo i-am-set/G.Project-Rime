@@ -271,7 +271,9 @@ func are_settings_different() -> bool:
 		[outline, _current_video_settings["outline"]],
 		[mouse_sensitivity, _current_control_settings["mouse_sensitivity"]],
 		[master_audio, _current_audio_settings["master_audio"]],
-		[music_audio, _current_audio_settings["music_audio"]]
+		[music_audio, _current_audio_settings["music_audio"]],
+		[sfx_audio, _current_audio_settings["sfx_audio"]],
+		[ambience_audio, _current_audio_settings["ambience_audio"]]
 	]
 	
 	for setting in settings:
@@ -298,7 +300,9 @@ func get_settings_different() -> Array:
 		"outline": [outline, _current_video_settings["outline"]],
 		"mouse_sensitivity": [mouse_sensitivity, _current_control_settings["mouse_sensitivity"]],
 		"master_audio": [master_audio, _current_audio_settings["master_audio"]],
-		"music_audio": [music_audio, _current_audio_settings["music_audio"]]
+		"music_audio": [music_audio, _current_audio_settings["music_audio"]],
+		"sfx_audio": [sfx_audio, _current_audio_settings["sfx_audio"]],
+		"ambience_audio": [ambience_audio, _current_audio_settings["ambience_audio"]]
 	}
 	
 	for setting in settings.keys():

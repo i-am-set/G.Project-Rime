@@ -44,10 +44,10 @@ const EXHALE_SOUNDS : Array[AudioStreamWAV] = [
 ]
 
 @onready var fps_controller: Player = $".."
-@onready var amb_distant_crows: AudioStreamPlayer3D = $AmbientSounds/AmbDistantCrows
-@onready var crow_cooldown_timer: Timer = $AmbientSounds/AmbDistantCrows/CrowCooldownTimer
-@onready var wind_audio_player: Node3D = $AmbientSounds/WindAudioPlayer
-@onready var wind_secondary_audio_player: Node3D = $AmbientSounds/WindSecondaryAudioPlayer
+@onready var amb_distant_crows: AudioStreamPlayer3D = $WorldSfxSounds/SfxDistantCrows
+@onready var crow_cooldown_timer: Timer = $WorldSfxSounds/SfxDistantCrows/CrowCooldownTimer
+@onready var wind_audio_player: Node3D = $WorldSfxSounds/WindAudioPlayer
+@onready var wind_secondary_audio_player: Node3D = $WorldSfxSounds/WindSecondaryAudioPlayer
 @onready var sfx_left_footstep: AudioStreamPlayer3D = $SfxLeftFootstep
 @onready var sfx_right_footstep: AudioStreamPlayer3D = $SfxRightFootstep
 @onready var sfx_exhale_inhale = $SfxExhaleInhale

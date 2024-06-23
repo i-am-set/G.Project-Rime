@@ -44,9 +44,6 @@ func update(delta):
 	if Input.is_action_just_released("sprint") or PLAYER.velocity.length() == 0 or PLAYER.player_data.stamina <= 0 or PLAYER.player_data.is_exhausted:
 		transition.emit("IdlePlayerState")
 		
-	if Input.is_action_just_pressed("crouch") and PLAYER.velocity.length() > 6:
-		transition.emit("SlidingPlayerState")
-		
 	if Input.is_action_just_pressed("jump") and PLAYER.is_on_floor():
 		if PLAYER.player_data.try_exert_stamina(PLAYER.player_data.jump_stamina_requirement):
 			transition.emit("JumpingPlayerState")

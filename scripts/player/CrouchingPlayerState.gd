@@ -18,11 +18,7 @@ func enter(previous_state) -> void:
 		await ANIMATION.animation_finished
 	
 	ANIMATION.speed_scale = 1.0
-	if previous_state.name != "SlidingPlayerState":
-		ANIMATION.play("Crouching", -1.0, CROUCH_SPEED)
-	elif previous_state.name == "SlidingPlayerState":
-		ANIMATION.current_animation = "Crouching"
-		ANIMATION.seek(1.0, true)
+	ANIMATION.play("Crouching", -1.0, CROUCH_SPEED)
 	
 	PLAYER.crouch_toggle(true)
 	
