@@ -11,7 +11,8 @@ func enter(previous_state) -> void:
 	arms_animation_player.play("falling")
 	
 func exit() -> void:
-	arms_animation_player.play("a_pose")
+	if arms_animation_player.current_animation == "falling":
+		arms_animation_player.play("a_pose")
 	
 func update(delta: float) -> void:
 	PLAYER.update_gravity(delta)
