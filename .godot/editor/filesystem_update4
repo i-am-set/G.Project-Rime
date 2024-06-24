@@ -42,3 +42,4 @@ res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
 res://scripts/player/fps_controller.gd
 res://scripts/player/WalkingPlayerState.gd
+res://scripts/player/player_sound_manager.gd

@@ -107,7 +107,7 @@ func footstep_left():
 func footstep_right():
 	if fps_controller._is_authorized_user && fps_controller.is_on_floor() && !fps_controller._is_crouching:
 		footstep_right_logic()
-		send_p2p_packet(0, {"message": "footstep", "steam_id": fps_controller._steam_ID, "foot": 0})
+		send_p2p_packet(0, {"message": "footstep", "steam_id": fps_controller._steam_ID, "foot": 1})
 
 func footstep_left_logic():
 	var footstep_index : int = previous_footstep_index
@@ -115,8 +115,7 @@ func footstep_left_logic():
 		footstep_index = randi() % FOOTSTEP_SOUNDS.size()
 	if !sfx_left_footstep.playing:
 		sfx_left_footstep.stream = FOOTSTEP_SOUNDS[footstep_index]
-		#sfx_left_footstep.pitch_scale = randf_range(0.95, 1.05)
-		sfx_left_footstep.play()
+	sfx_left_footstep.play()
 
 func footstep_right_logic():
 	var footstep_index : int = previous_footstep_index
@@ -124,8 +123,7 @@ func footstep_right_logic():
 		footstep_index = randi() % FOOTSTEP_SOUNDS.size()
 	if !sfx_right_footstep.playing:
 		sfx_right_footstep.stream = FOOTSTEP_SOUNDS[footstep_index]
-		#sfx_right_footstep.pitch_scale = randf_range(0.95, 1.05)
-		sfx_right_footstep.play()
+	sfx_right_footstep.play()
 
 func play_exhale():
 	var exhale_index : int = previous_exhale_index
