@@ -30,7 +30,7 @@ func update(delta):
 	WEAPON.sway_weapon(delta, false)
 	WEAPON._weapon_bob(delta, WEAPON_BOB_SPD, WEAPON_BOB_H, WEAPON_BOB_V)
 	
-	set_animation_speed(PLAYER.velocity.length())
+	#set_animation_speed(PLAYER.velocity.length())
 	
 	if Input.is_action_pressed("sprint") and PLAYER.is_on_floor() and PLAYER.player_data.stamina > 0 and not PLAYER.player_data.is_exhausted:
 		transition.emit("SprintingPlayerState")
@@ -51,6 +51,6 @@ func update(delta):
 	if Input.is_action_just_pressed("attack"):
 		WEAPON._attack()
 
-func set_animation_speed(spd):
-	var alpha = remap(spd, 0.0, SPEED, 0.0, 1.0)
-	ANIMATION.speed_scale = lerp(0.0, TOP_ANIM_SPEED, alpha)
+#func set_animation_speed(spd):
+	#var alpha = remap(spd, 0.0, SPEED, 0.0, 1.0)
+	#ANIMATION.speed_scale = lerp(0.0, TOP_ANIM_SPEED, alpha)

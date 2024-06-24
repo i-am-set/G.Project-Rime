@@ -17,9 +17,9 @@ func enter(previous_state) -> void:
 	
 	if ANIMATION.is_playing() and ANIMATION.current_animation == "JumpEnd":
 		await ANIMATION.animation_finished
-		ANIMATION.play("Sprinting",0.5,1.0)
+		ANIMATION.play("Sprinting")
 	else:
-		ANIMATION.play("Sprinting",0.5,1.0)
+		ANIMATION.play("Sprinting")
 	
 func exit() -> void:
 	PLAYER.is_sprinting = false
@@ -38,7 +38,7 @@ func update(delta):
 	WEAPON._weapon_bob(delta, WEAPON_BOB_SPD, WEAPON_BOB_H, WEAPON_BOB_V)
 	WEAPON.start_run(delta, WEAPON_PULL_DOWN_DISTANCE, WEAPON_PULL_DOWN_SPEED)
 	
-	set_animation_speed(PLAYER.velocity.length())
+	#set_animation_speed(PLAYER.velocity.length())
 	
 	
 	if Input.is_action_just_released("sprint") or PLAYER.velocity.length() == 0 or PLAYER.player_data.stamina <= 0 or PLAYER.player_data.is_exhausted:
@@ -51,6 +51,6 @@ func update(delta):
 	if PLAYER.velocity.y < -3.0 and !PLAYER.is_on_floor():
 		transition.emit("FallingPlayerState")
 
-func set_animation_speed(spd) -> void:
-	var alpha = remap(spd, 0.0, SPEED, 0.0, 1.0)
-	ANIMATION.speed_scale = lerp(0.0, TOP_ANIM_SPEED, alpha)
+#func set_animation_speed(spd) -> void:
+	#var alpha = remap(spd, 0.0, SPEED, 0.0, 1.0)
+	#ANIMATION.speed_scale = lerp(0.0, TOP_ANIM_SPEED, alpha)

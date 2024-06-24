@@ -4,12 +4,14 @@ class_name FallingPlayerState extends PlayerMovementState
 @export var ACCELERATION : float = 0.1
 @export var DECELERATION : float = 0.25
 @export var DOUBLE_JUMP_VELOCITY : float = 4.5
+@onready var arms_animation_player = $"../../CameraController/Camera3D/ArmsModel/male_arm_model/AnimationPlayer"
 
 func enter(previous_state) -> void:
 	ANIMATION.pause()
+	arms_animation_player.play("falling")
 	
 func exit() -> void:
-	pass
+	arms_animation_player.play("a_pose")
 	
 func update(delta: float) -> void:
 	PLAYER.update_gravity(delta)
