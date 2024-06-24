@@ -40,16 +40,3 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/player/fps_controller.gd
-res://scripts/player/WalkingPlayerState.gd
-res://scripts/player/player_sound_manager.gd
-res://meshes/entities/player_models/male_01_model/animations/anim_run_backwards.res
-res://meshes/entities/player_models/male_01_model/animations/anim_run_forward.res
-res://meshes/entities/player_models/male_01_model/animations/anim_run_left.res
-res://meshes/entities/player_models/male_01_model/animations/anim_run_right.res
-res://meshes/entities/player_models/male_01_model/animations/anim_walk_backwards.res
-res://meshes/entities/player_models/male_01_model/animations/anim_walk_forward.res
-res://meshes/entities/player_models/male_01_model/animations/anim_walk_left.res
-res://meshes/entities/player_models/male_01_model/animations/anim_walk_right.res
-res://scripts/player/FallingPlayerState.gd
-res://scripts/player/SprintingPlayerState.gd
