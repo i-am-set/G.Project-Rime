@@ -2,7 +2,6 @@ res://meshes/entities/player_models/male_01_model/animations
 res://scripts/game
 res://shaders
 res://ui/button_groups
-res://meshes/entities/animation/low_poly_male
 res://resources/inventory
 res://scripts/entity
 res://scenes/entities

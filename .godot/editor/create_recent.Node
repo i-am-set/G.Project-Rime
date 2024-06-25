@@ -1,3 +1,5 @@
+Decal
+MeshInstance3D
 AnimationTree
 RemoteTransform3D
 AnimationPlayer
@@ -11,4 +13,3 @@ HBoxContainer
 GPUParticles3D
 GPUParticles2D
 ConeTwistJoint3D
-MeshInstance3D

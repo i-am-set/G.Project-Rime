@@ -40,5 +40,3 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/player/SprintingPlayerState.gd
-res://scripts/player/FallingPlayerState.gd
