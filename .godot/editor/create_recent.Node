@@ -1,3 +1,4 @@
+OmniLight3D
 Decal
 MeshInstance3D
 AnimationTree
@@ -11,5 +12,3 @@ TextureRect
 Button
 HBoxContainer
 GPUParticles3D
-GPUParticles2D
-ConeTwistJoint3D

@@ -86,7 +86,7 @@ func _deauthorize_user():
 func show_player_model_instance(toggle : bool):
 	if toggle:
 		player_model_instance.cast_shadow = 1
-		arms_model.visible = true
+		arms_model.visible = false
 	else:
 		player_model_instance.cast_shadow = 3
 		arms_model.visible = true

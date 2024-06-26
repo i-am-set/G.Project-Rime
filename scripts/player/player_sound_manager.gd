@@ -123,7 +123,7 @@ func footstep_right_logic():
 		footstep_index = randi() % FOOTSTEP_SOUNDS.size()
 	if !sfx_right_footstep.playing:
 		sfx_right_footstep.stream = FOOTSTEP_SOUNDS[footstep_index]
-	sfx_right_footstep.play()
+		sfx_right_footstep.play()
 
 func play_exhale():
 	var exhale_index : int = previous_exhale_index

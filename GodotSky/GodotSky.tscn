@@ -15,10 +15,9 @@ environment = ExtResource("1_ico8d")
 camera_attributes = SubResource("CameraAttributesPractical_5u6gj")
 script = ExtResource("2_8wvsc")
 timeOfDay = 0.0
-rateOfTime = 0.001
-cloudType = "2D Dynamic"
-cloudCoverage = 0.41
+cloudCoverage = 0.4
 animateStaticClouds = false
+moonShadow = false
 
 [node name="SunMoon" type="Node3D" parent="."]
 
@@ -53,8 +52,9 @@ mesh = SubResource("SphereMesh_ackkx")
 
 [node name="MoonLight" type="DirectionalLight3D" parent="SunMoon/Moon"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-light_color = Color(0.195465, 0.222085, 0.341751, 1)
-light_energy = 0.0338982
+light_color = Color(0.196078, 0.223529, 0.341176, 1)
+light_energy = 0.31
+light_indirect_energy = 8.0
 shadow_enabled = true
 shadow_reverse_cull_face = true
 shadow_blur = 1.55
