@@ -41,6 +41,7 @@ func on_child_transition(new_state_name: StringName) -> void:
 	else:
 		push_warning("State does not exist")
 
+
 func c_set_speed_sprint(speed: float) -> void:
 	speed = min(speed, Global.MAX_SPEED)
 	speed = max(speed, Global.MIN_SPEED)

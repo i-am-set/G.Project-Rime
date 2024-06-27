@@ -1,13 +1,13 @@
+Camera3D
+MeshInstance3D
+Node3D
 OmniLight3D
 Decal
-MeshInstance3D
 AnimationTree
 RemoteTransform3D
 AnimationPlayer
 RayCast3D
-Node3D
 SkeletonIK3D
-Camera3D
 TextureRect
 Button
 HBoxContainer

@@ -7,11 +7,11 @@ class_name JumpingPlayerState extends PlayerMovementState
 @export_range(0.5,1.0,0.01) var INPUT_MULTIPLIER : float = 0.85
 
 func enter(previous_state) -> void:
+	PLAYER.player_data.set_stamina_regen_cooldown_timer()
 	PLAYER.velocity.y += JUMP_VELOCITY
 	ANIMATION.play("JumpStart")
-	
+
 func exit() -> void:
-	#DOUBLE_JUMP = false
 	pass
 
 func update(delta):
