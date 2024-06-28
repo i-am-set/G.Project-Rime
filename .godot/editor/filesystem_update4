@@ -30,6 +30,8 @@ res://scenes/maingame/world.tscn
 res://scenes/maingame/ground_item.tscn
 res://scenes/ui/inv_item_rect.tscn
 res://scenes/utility/debug_autoload_canvas.tscn
+res://scenes/test_ragdoll_scene2.tscn
+res://scenes/test_ragdoll_scene.tscn
 res://addons/godot-console/scripts/ConsoleMono.cs
 res://scripts/resource_objects/ResourceChunkInstancer.cs
 res://scripts/resource_objects/ResourceController.cs
@@ -39,9 +41,3 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/player/player_sound_manager.gd
-res://scripts/player/JumpingPlayerState.gd
-res://scripts/player/player_data.gd
-res://scripts/player/state_machine.gd
-res://scenes/test_ragdoll_scene.tscn
-res://scenes/test_ragdoll_scene2.tscn

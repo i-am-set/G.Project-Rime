@@ -1,3 +1,4 @@
+TextureRect
 Camera3D
 MeshInstance3D
 Node3D
@@ -8,7 +9,6 @@ RemoteTransform3D
 AnimationPlayer
 RayCast3D
 SkeletonIK3D
-TextureRect
 Button
 HBoxContainer
 GPUParticles3D
