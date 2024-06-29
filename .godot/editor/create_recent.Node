@@ -1,4 +1,10 @@
 TextureRect
+Panel
+ColorRect
+VBoxContainer
+GridContainer
+HBoxContainer
+Vircle
 Camera3D
 MeshInstance3D
 Node3D
@@ -6,9 +12,3 @@ OmniLight3D
 Decal
 AnimationTree
 RemoteTransform3D
-AnimationPlayer
-RayCast3D
-SkeletonIK3D
-Button
-HBoxContainer
-GPUParticles3D

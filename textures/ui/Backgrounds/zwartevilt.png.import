@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gy55576k0mld"
-path="res://.godot/imported/criss-cross.png-afae3ccefbfa68be887d97e92623c9fa.ctex"
+uid="uid://12wnrvs6lo13"
+path="res://.godot/imported/zwartevilt.png-463f566e553c599a22d786501b12377f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/ui/Backgrounds/criss-cross.png"
-dest_files=["res://.godot/imported/criss-cross.png-afae3ccefbfa68be887d97e92623c9fa.ctex"]
+source_file="res://textures/ui/Backgrounds/zwartevilt.png"
+dest_files=["res://.godot/imported/zwartevilt.png-463f566e553c599a22d786501b12377f.ctex"]
 
 [params]
 

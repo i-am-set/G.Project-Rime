@@ -3,7 +3,6 @@ extends Control
 const info_offset: Vector2 = Vector2(20, 0)
 
 @onready var fps_controller = $"../.."
-@onready var animation_player = $AnimationPlayer
 @onready var inventory = $inventory
 
 func _ready() -> void:
@@ -22,14 +21,8 @@ func toggle_inventory():
 		self.visible == false
 		Global.IS_IN_INVENTORY == false
 		inventory.HideHeldItemPreview()
-		animation_player.play("RESET")
 		return
 	else:
 		visible = !visible
 		Global.IS_IN_INVENTORY = visible
 		Global.capture_mouse(!visible)
-		if visible == true:
-			animation_player.play("blur_start")
-		else:
-			#inventory.HideHeldItemPreview()
-			animation_player.play("RESET")

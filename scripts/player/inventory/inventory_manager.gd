@@ -3,7 +3,7 @@ class_name InventoryManager
 
 const SUBINVENTORY_RECT = preload("res://scenes/ui/subinventory_rect.tscn")
 
-@onready var fps_controller: Player = $"../../../../../.."
+@onready var fps_controller: Player = $"../../../../../../.."
 @onready var rmb_menu: Control = $"../../../../RmbMenu"
 @onready var scroll_container = $ScrollContainer
 @onready var subinventory_container = $ScrollContainer/SubinventoryContainer
