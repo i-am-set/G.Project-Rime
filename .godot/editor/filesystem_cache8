@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1719616198
+::res://::1719682905
 default_bus_layout.tres::AudioBusLayout::2270601301610636829::1719099249::0::1::::<><>::
 export_presets.cfg::TextFile::-1::1709527592::0::1::::<><>::
 icon.png::CompressedTexture2D::8402074799734168854::1709244751::1709244751::1::::<><>::
@@ -83,7 +83,7 @@ THIRDPARTY.txt::TextFile::-1::1709244750::0::1::::<><>::
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/::1709244751
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/Resources/::1709244751
 ::res://addons/godot-jolt/macos/godot-jolt_macos_editor.framework/_CodeSignature/::1709244751
-::res://addons/godot-jolt/windows/::1719612119
+::res://addons/godot-jolt/windows/::1719682893
 ::res://addons/godot-multimesh-scatter-main/::1709244751
 ::res://addons/godot-multimesh-scatter-main/addons/::1709244751
 ::res://addons/godot-multimesh-scatter-main/addons/multimesh_scatter/::1709244807
@@ -99,7 +99,7 @@ godotsteam.gdextension::GDExtension::-1::1709244751::0::1::::<><>::
 ::res://addons/godotsteam/osx/libgodotsteam.debug.framework/::1709244751
 ::res://addons/godotsteam/osx/libgodotsteam.framework/::1709244751
 ::res://addons/godotsteam/win32/::1709244751
-::res://addons/godotsteam/win64/::1719612120
+::res://addons/godotsteam/win64/::1719682893
 ::res://addons/hyperlog/::1711638200
 hyperlog.gd::GDScript::-1::1711638200::0::1::::<>Node<>::
 hyperlog.tscn::PackedScene::3502588488077250474::1711638200::0::1::::<><>::res://addons/hyperlog/hyperlog.gd<>uid://dkgwe3j8h4ol3::::res://addons/hyperlog/log_container.tscn<>res://addons/hyperlog/sketchboard.gd
@@ -473,7 +473,7 @@ func_set.svg::CompressedTexture2D::3879604340026706619::1711648999::1719278980::
 keyword.svg::CompressedTexture2D::6207690078285442569::1711648999::1719278980::1::::<><>::
 property.svg::CompressedTexture2D::7275546524774189827::1711648999::1719278980::1::::<><>::
 signal.svg::CompressedTexture2D::3303164025475872126::1711648999::1719278980::1::::<><>::
-::res://addons/Todo_Manager/::1719632804
+::res://addons/Todo_Manager/::1719682904
 ColourPicker.gd::GDScript::-1::1709244750::0::1::::<>HBoxContainer<>::
 Current.gd::GDScript::-1::1709244750::0::1::::<>Panel<>::
 Dock.gd::GDScript::-1::1709244750::0::1::::<>Control<>::
@@ -481,7 +481,7 @@ Pattern.gd::GDScript::-1::1709244750::0::1::::<>HBoxContainer<>::
 plugin.cfg::TextFile::-1::1709244750::0::1::::<><>::
 plugin.gd::GDScript::-1::1709244750::0::1::::<>EditorPlugin<>::
 Project.gd::GDScript::-1::1709244750::0::1::::<>Panel<>::
-todo.cfg::TextFile::-1::1719612127::0::1::::<><>::
+todo.cfg::TextFile::-1::1719682904::0::1::::<><>::
 todoItem_class.gd::GDScript::-1::1709244750::0::1::::<>RefCounted<>::
 todo_class.gd::GDScript::-1::1709244750::0::1::::<>RefCounted<>::
 ::res://addons/Todo_Manager/doc/::1709244750
@@ -695,8 +695,8 @@ player_base_data.tres::Resource/Resource::4222501147880851327::1716322623::0::1:
 ::res://resources/weapons/::1719616096
 weap_hatchet.tres::Resource/Resource::3259054360923202259::1712434649::0::1::::<><>::res://scripts/player/weapons.gd<>uid://c4fnn07t5jqdl::::res://meshes/weapons/crowbar/mesh_crowbar.res
 weap_nothing.tres::Resource/Weapons::8410269450203235583::1719616096::0::1::::<><>::res://scripts/player/weapons.gd
-::res://scenes/::1719632805
-fps_controller.tscn::PackedScene::6748783654989162717::1719632804::0::1::::<><>::res://scripts/player/fps_controller.gd<>uid://cvcwpqk4pmogj::::res://meshes/entities/player_models/male_01_model/male_player_model_01.glb<>uid://b4gwd5h7ixvct::::res://materials/player.tres<>res://scripts/player/player_data.gd<>res://scripts/player/player_sound_manager.gd<>uid://v8g6dodhumyk::::res://meshes/weapons/weapon.tscn<>uid://88yxguqu610k::::res://sound/ambients/amb_wind_blowing.wav<>res://scripts/player/reticle.gd<>uid://hcgi2uwh4su4::::res://textures/Kenney'sParticles/PNG (Transparent)/smoke_07.png<>res://scripts/player/inventory_logic.gd<>uid://uqmdeu5jcvux::::res://sound/ambients/amb_wind_bass.wav<>uid://dr285553q3o4n::::res://resources/weapons/weap_nothing.tres<>uid://cjxg2tt7m1r7e::::res://ui/themes/debug.tres<>uid://ckn13v4d8v4uw::::res://sound/ambients/amb_wind_static.wav<>res://scripts/game/debug.gd<>res://shaders/2d/blur_shader.gdshader<>uid://cyodex2xc22hm::::res://ui/button_groups/display_mode_button_group.tres<>uid://seeio8ulr1kf::::res://ui/fonts/FiraCode/FiraCode-Medium.ttf<>uid://dacj8wfcnya4p::::res://ui/fonts/FiraCode/FiraCode-Bold.ttf<>uid://ib15q14c37gy::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf<>res://scripts/player/state_machine.gd<>uid://gjrd62lhvw1l::::res://textures/ui/slider_grabber.png<>uid://6id84o0nv4k2::::res://sound/sfx/birds/sfx_crow_call-01.wav<>uid://cblhlwfgq7uv3::::res://ui/fonts/FiraCode/FiraCode-Regular.ttf<>uid://beqh5d5pjo0xa::::res://textures/ui/slider_grabber_disabled.png<>res://scripts/game/fps_label.gd<>uid://brwe8houxfwm::::res://sound/sfx/footsteps/sfx_snow_footstep-01.wav<>res://scripts/player/IdlePlayerState.gd<>uid://bgnix38vyapog::::res://textures/ui/slider_grabber_highlighted.png<>uid://d0kkd73q8uhxn::::res://sound/sfx/ui/sfx_ui_button_hover.wav<>res://scripts/player/WalkingPlayerState.gd<>uid://ck47jv5gunc6n::::res://sound/sfx/ui/sfx_ui_button_click.wav<>res://scripts/player/SprintingPlayerState.gd<>res://scripts/player/CrouchingPlayerState.gd<>uid://btwotc1wxhsk1::::res://textures/entities/player_models/male_01_model/male_01_texture.png<>uid://bpp5x1786kour::::res://ui/button_groups/temperature_unit_button_group.tres<>res://scripts/player/JumpingPlayerState.gd<>uid://bhemuja52jc0n::::res://textures/entities/player_models/clothing/puffer_jacket_texture_01.png<>res://scripts/player/FallingPlayerState.gd<>uid://bsysr2ekeswpu::::res://textures/screenshots/daylight_1_screenshot.png<>uid://b0jthu66o6nw7::::res://textures/entities/player_models/clothing/jeans_texture_01.png<>uid://eb37fumt5yfd::::res://textures/entities/player_models/clothing/sneakers_texture_01.png<>res://scripts/player/WeaponViewport.gd<>uid://f4xyvh4a4y32::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Light.ttf<>res://scripts/player/WeaponCamera.gd<>uid://gnlsmuf5s1a8::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf<>uid://k2dmo87qklrk::::res://meshes/entities/player_models/male_01_model/animations/anim_walk_forward.res<>uid://c8yx2rl42xwxw::::res://meshes/entities/player_models/male_01_model/animations/anim_run_backwards.res<>uid://c7566rd4iimra::::res://meshes/entities/player_models/male_01_model/animations/anim_walk_backwards.res<>uid://bu6oaj4e7xc7s::::res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_backwards.res<>uid://bf285mjjecl2w::::res://meshes/entities/player_models/male_01_model/animations/anim_walk_left.res<>uid://chpse68y216vv::::res://materials/post_processing_material.tres<>uid://70upfipghvjt::::res://meshes/entities/player_models/male_01_model/animations/anim_run_forward.res<>uid://buhx16f7trw7l::::res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_forward.res<>res://shaders/dithering_post_process.gdshader<>uid://h6k0ypigcpvj::::res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_left.res<>uid://d14g3esn4llyi::::res://meshes/entities/player_models/male_01_model/animations/anim_run_left.res<>uid://c4woryqyfxxil::::res://meshes/entities/player_models/male_01_model/animations/anim_walk_right.res<>uid://l36s7bby4w45::::res://meshes/entities/player_models/male_01_model/animations/anim_run_right.res<>uid://b8m7rk12l8ne::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Medium.ttf<>res://scripts/player/floor_detector_script.gd<>uid://crwriegbjqw2k::::res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_right.res<>res://scripts/player/inventory/inventory_manager.gd<>uid://bi8vqxiodvx8h::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBold.ttf<>uid://nvpqhb7ntek8::::res://scenes/ui/inventory_tooltip.tscn<>uid://b4kiu73xi3i07::::res://scenes/ui/inventory_rmb_menu.tscn<>uid://ca0qt70ydcxfg::::res://scenes/ui/held_item_preview.tscn<>res://scripts/game/pause_menu_manager.gd<>uid://c42sfvywcr5gv::::res://meshes/entities/player_models/male_arms_model/male_arm_model.glb<>res://scripts/game/settings_page.gd<>uid://qgy4e6kjb26y::::res://ui/fonts/FiraCode/FiraCode-SemiBold.ttf<>uid://b1bajxug27g8d::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBoldItalic.ttf<>uid://dw7u7yaahfym6::::res://ui/button_groups/shadow_quality_button_group.tres<>uid://c6180svcrruw8::::res://ui/button_groups/shadow_filter_button_group.tres<>uid://qxij05leecnc::::res://ui/button_groups/ssil_quality_button_group.tres<>uid://d1rwdy7rhnv81::::res://ui/button_groups/ssao_quality_button_group.tres
+::res://scenes/::1719645436
+fps_controller.tscn::PackedScene::6748783654989162717::1719645436::0::1::::<><>::res://scripts/player/fps_controller.gd<>uid://cvcwpqk4pmogj::::res://meshes/entities/player_models/male_01_model/male_player_model_01.glb<>uid://b4gwd5h7ixvct::::res://materials/player.tres<>res://scripts/player/player_data.gd<>res://scripts/player/player_sound_manager.gd<>uid://v8g6dodhumyk::::res://meshes/weapons/weapon.tscn<>uid://88yxguqu610k::::res://sound/ambients/amb_wind_blowing.wav<>res://scripts/player/reticle.gd<>uid://hcgi2uwh4su4::::res://textures/Kenney'sParticles/PNG (Transparent)/smoke_07.png<>res://scripts/player/inventory_logic.gd<>uid://uqmdeu5jcvux::::res://sound/ambients/amb_wind_bass.wav<>uid://dr285553q3o4n::::res://resources/weapons/weap_nothing.tres<>uid://cjxg2tt7m1r7e::::res://ui/themes/debug.tres<>uid://ckn13v4d8v4uw::::res://sound/ambients/amb_wind_static.wav<>res://scripts/game/debug.gd<>res://shaders/2d/blur_shader.gdshader<>uid://cyodex2xc22hm::::res://ui/button_groups/display_mode_button_group.tres<>uid://seeio8ulr1kf::::res://ui/fonts/FiraCode/FiraCode-Medium.ttf<>uid://dacj8wfcnya4p::::res://ui/fonts/FiraCode/FiraCode-Bold.ttf<>uid://ib15q14c37gy::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf<>res://scripts/player/state_machine.gd<>uid://gjrd62lhvw1l::::res://textures/ui/slider_grabber.png<>uid://6id84o0nv4k2::::res://sound/sfx/birds/sfx_crow_call-01.wav<>uid://cblhlwfgq7uv3::::res://ui/fonts/FiraCode/FiraCode-Regular.ttf<>uid://beqh5d5pjo0xa::::res://textures/ui/slider_grabber_disabled.png<>res://scripts/game/fps_label.gd<>uid://brwe8houxfwm::::res://sound/sfx/footsteps/sfx_snow_footstep-01.wav<>res://scripts/player/IdlePlayerState.gd<>uid://bgnix38vyapog::::res://textures/ui/slider_grabber_highlighted.png<>uid://d0kkd73q8uhxn::::res://sound/sfx/ui/sfx_ui_button_hover.wav<>res://scripts/player/WalkingPlayerState.gd<>uid://ck47jv5gunc6n::::res://sound/sfx/ui/sfx_ui_button_click.wav<>res://scripts/player/SprintingPlayerState.gd<>res://scripts/player/CrouchingPlayerState.gd<>uid://btwotc1wxhsk1::::res://textures/entities/player_models/male_01_model/male_01_texture.png<>uid://bpp5x1786kour::::res://ui/button_groups/temperature_unit_button_group.tres<>res://scripts/player/JumpingPlayerState.gd<>uid://bhemuja52jc0n::::res://textures/entities/player_models/clothing/puffer_jacket_texture_01.png<>res://scripts/player/FallingPlayerState.gd<>uid://bsysr2ekeswpu::::res://textures/screenshots/daylight_1_screenshot.png<>uid://b0jthu66o6nw7::::res://textures/entities/player_models/clothing/jeans_texture_01.png<>uid://eb37fumt5yfd::::res://textures/entities/player_models/clothing/sneakers_texture_01.png<>res://scripts/player/WeaponViewport.gd<>uid://f4xyvh4a4y32::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Light.ttf<>res://scripts/player/WeaponCamera.gd<>uid://gnlsmuf5s1a8::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf<>uid://k2dmo87qklrk::::res://meshes/entities/player_models/male_01_model/animations/anim_walk_forward.res<>uid://c8yx2rl42xwxw::::res://meshes/entities/player_models/male_01_model/animations/anim_run_backwards.res<>uid://c7566rd4iimra::::res://meshes/entities/player_models/male_01_model/animations/anim_walk_backwards.res<>uid://bu6oaj4e7xc7s::::res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_backwards.res<>uid://bf285mjjecl2w::::res://meshes/entities/player_models/male_01_model/animations/anim_walk_left.res<>uid://chpse68y216vv::::res://materials/post_processing_material.tres<>uid://70upfipghvjt::::res://meshes/entities/player_models/male_01_model/animations/anim_run_forward.res<>uid://buhx16f7trw7l::::res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_forward.res<>res://shaders/dithering_post_process.gdshader<>uid://h6k0ypigcpvj::::res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_left.res<>uid://d14g3esn4llyi::::res://meshes/entities/player_models/male_01_model/animations/anim_run_left.res<>uid://c4woryqyfxxil::::res://meshes/entities/player_models/male_01_model/animations/anim_walk_right.res<>uid://l36s7bby4w45::::res://meshes/entities/player_models/male_01_model/animations/anim_run_right.res<>uid://b8m7rk12l8ne::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Medium.ttf<>res://scripts/player/floor_detector_script.gd<>uid://crwriegbjqw2k::::res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_right.res<>res://scripts/player/inventory/inventory_manager.gd<>uid://bi8vqxiodvx8h::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBold.ttf<>uid://nvpqhb7ntek8::::res://scenes/ui/inventory_tooltip.tscn<>uid://b4kiu73xi3i07::::res://scenes/ui/inventory_rmb_menu.tscn<>uid://ca0qt70ydcxfg::::res://scenes/ui/held_item_preview.tscn<>res://scripts/game/pause_menu_manager.gd<>uid://c42sfvywcr5gv::::res://meshes/entities/player_models/male_arms_model/male_arm_model.glb<>res://scripts/game/settings_page.gd<>uid://qgy4e6kjb26y::::res://ui/fonts/FiraCode/FiraCode-SemiBold.ttf<>uid://b1bajxug27g8d::::res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBoldItalic.ttf<>uid://dw7u7yaahfym6::::res://ui/button_groups/shadow_quality_button_group.tres<>uid://c6180svcrruw8::::res://ui/button_groups/shadow_filter_button_group.tres<>uid://qxij05leecnc::::res://ui/button_groups/ssil_quality_button_group.tres<>uid://d1rwdy7rhnv81::::res://ui/button_groups/ssao_quality_button_group.tres<>uid://bd8k2lii843vm::::res://textures/ui/measure units/40x40.png
 fps_peer.tscn::PackedScene::942474991438399530::1709244751::0::1::::<><>::res://scripts/player/fps_controller.gd<>uid://b4gwd5h7ixvct::::res://materials/player.tres<>res://scripts/player/state_machine.gd<>res://scripts/player/IdlePlayerState.gd<>res://scripts/player/WalkingPlayerState.gd<>res://scripts/player/SprintingPlayerState.gd<>res://scripts/player/CrouchingPlayerState.gd<>res://scripts/player/SlidingPlayerState.gd<>res://scripts/player/JumpingPlayerState.gd<>res://scripts/player/FallingPlayerState.gd
 level_007.tscn::PackedScene::536869319391513781::1718204037::0::1::::<><>::res://!old/scripts/game_controller_old.gd<>uid://1gfropwtqfbn::::res://GodotSky/GodotSky.tscn<>uid://bnp8m2njv656s::::res://materials/nature/grass_clutter_material.tres<>uid://cn1gsy15bkaff::::res://materials/grid.tres<>uid://ivvpsi314b34::::res://textures/grid.jpg<>res://world/collisionmap/collisionmap.tscn<>res://world/clipmap/clipmap.tscn<>res://world/clipmap/clipmap_partition.tscn<>uid://diatixhqy12pa::::res://scenes/resource_instancer.tscn<>uid://b8k603xutcxip::::res://scenes/utility/skybox_scene.tscn<>uid://dwvyd6l34gxfr::::res://shaders/clutter_placing_shader.tres<>uid://8j7ckn1wqi4h::::res://meshes/nature/clutter/clutter_grass_1.obj
 mainmenu.tscn::PackedScene::2795170943604004317::1719632804::0::1::::<><>::res://scripts/steam/SteamLobby.gd<>res://scripts/game/mainmenu_controller.gd
@@ -836,21 +836,21 @@ MapNoise.cs::CSharpScript::-1::1710114422::0::1::::<><>::
 MeshGenerator.cs::CSharpScript::-1::1711255577::0::1::::<><>::
 TerrainType.cs::CSharpScript::-1::1709851907::0::1::::TerrainType<>Resource<>::
 TextureGenerator.cs::CSharpScript::-1::1709853334::0::1::::<><>::
-::res://shaders/::1719632806
+::res://shaders/::1719648893
 billboard_shader.tres::Shader::2392010127147596709::1711129483::0::1::::<><>::
 bush_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 clutter_placing_shader.tres::Shader::8748232755687291991::1711129483::0::1::::<><>::
-default_object_shader.gdshader::Shader::-1::1719632806::0::1::::<><>::
-dithering_post_process.gdshader::Shader::-1::1719632806::0::1::::<><>::
+default_object_shader.gdshader::Shader::-1::1719648893::0::1::::<><>::
+dithering_post_process.gdshader::Shader::-1::1719648893::0::1::::<><>::
 grass_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
 grid.gdshader::Shader::-1::1709244751::0::1::::<><>::
 item_highlighter_shader.gdshader::Shader::-1::1711129483::0::1::::<><>::
-leaf_shader.gdshader::Shader::-1::1719632806::0::1::::<><>::
-player_post_processesing.gdshader::Shader::-1::1719632806::0::1::::<><>::
-snow_post_processesing.gdshader::Shader::-1::1719632806::0::1::::<><>::
-tree_shader.gdshader::Shader::-1::1719632806::0::1::::<><>::
-::res://shaders/2d/::1719632806
-blur_shader.gdshader::Shader::-1::1719632806::0::1::::<><>::
+leaf_shader.gdshader::Shader::-1::1719648893::0::1::::<><>::
+player_post_processesing.gdshader::Shader::-1::1719648893::0::1::::<><>::
+snow_post_processesing.gdshader::Shader::-1::1719648893::0::1::::<><>::
+tree_shader.gdshader::Shader::-1::1719648893::0::1::::<><>::
+::res://shaders/2d/::1719648893
+blur_shader.gdshader::Shader::-1::1719648893::0::1::::<><>::
 ::res://sound/::1717704564
 ::res://sound/ambients/::1717746968
 amb_distant_crows.wav::AudioStreamWAV::8385501179952951657::1717708992::1717712511::1::::<><>::
@@ -1202,7 +1202,7 @@ cheap_diagonal_fabric.png::CompressedTexture2D::5370063327713340180::1719610922:
 repeated-square-dark.png::CompressedTexture2D::5560291836433290774::1719598734::1719599034::1::::<><>::
 topography.png::CompressedTexture2D::5723380906313168::1719611318::1719611322::1::::<><>::
 zwartevilt.png::CompressedTexture2D::1882008049307640464::1719627706::1719627783::1::::<><>::
-::res://textures/ui/measure units/::1719645201
+::res://textures/ui/measure units/::1719645207
 40x40.png::CompressedTexture2D::2665767657378309950::1719645201::1719645207::1::::<><>::
 ::res://ui/::1711858353
 ::res://ui/button_groups/::1718021605
