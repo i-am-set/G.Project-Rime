@@ -31,13 +31,10 @@ func create_item_from_id(item_id : String) -> InventoryItem:
 	var new_item = InventoryItem.new()
 	new_item.item_id = item_id
 	new_item.item_name = item_data[item_id]["item_name"]
-	new_item.item_type = item_data[item_id]["item_type"]
-	new_item.item_weight = item_data[item_id]["item_weight"]
-	new_item.item_size = item_data[item_id]["item_size"]
-	if item_data[item_id]["item_mesh"] != null:
-		new_item.item_mesh = load(item_data[item_id]["item_mesh"])
-	else:
-		new_item.item_mesh = MISSING_MESH_MODEL
+	new_item.item_description = item_data[item_id]["item_description"]
+	new_item.item_type = item_data[item_id]["item_description"]
+	new_item.item_weight = round(randf_range(item_data[item_id]["item_weight_min"], item_data[item_id]["item_weight_max"]) * 100.0) / 100.0
+	print(new_item.item_weight)
 	
 	
 	return new_item

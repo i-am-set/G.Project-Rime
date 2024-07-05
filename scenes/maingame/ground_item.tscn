@@ -1,23 +1,39 @@
-[gd_scene load_steps=4 format=3 uid="uid://co4ekrifuc318"]
+[gd_scene load_steps=6 format=3 uid="uid://co4ekrifuc318"]
 
 [ext_resource type="Script" path="res://scripts/inventory/ground_item.gd" id="1_v12ep"]
-[ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="2_rithw"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_2gue8"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c3n7p"]
+load_path = "res://.godot/imported/ico_charcoal.png-00a3321366c90e893b7b907f02a257da.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdymh"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 2
+albedo_texture = SubResource("CompressedTexture2D_c3n7p")
+emission_enabled = true
+texture_filter = 0
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_wd4hg"]
+size = Vector2(0.65, 0.65)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yh0wp"]
+size = Vector3(0.2, 0.2, 0.2)
 
 [node name="ground_item" type="RigidBody3D"]
 collision_layer = 4
-collision_mask = 9
+collision_mask = 13
 continuous_cd = true
 max_contacts_reported = 4
 contact_monitor = true
 script = ExtResource("1_v12ep")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visibility_range_end = 100.0
-mesh = ExtResource("2_rithw")
+material_override = SubResource("StandardMaterial3D_xdymh")
+mesh = SubResource("QuadMesh_wd4hg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_2gue8")
+shape = SubResource("BoxShape3D_yh0wp")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

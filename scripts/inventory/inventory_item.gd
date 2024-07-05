@@ -5,8 +5,9 @@ class_name InventoryItem
 @export var item_id: String
 @export var item_name: String
 @export var item_type: int
+@export var item_description: String
 @export var item_weight: int
-@export var item_size: int
+@export var item_durability: int
 @export var item_mesh: ArrayMesh
 
 # Optional: Provide a function to display basic info

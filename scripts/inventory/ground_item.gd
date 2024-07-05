@@ -2,8 +2,28 @@ extends RigidBody3D
 
 const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.tres")
 
+@onready var ground_item: RigidBody3D = $"."
 @onready var mesh_instance = $MeshInstance3D
 @onready var collision_shape = $CollisionShape3D
+@onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+
+const ITEM_ICONS : Dictionary = {
+	"a000001" : preload("res://textures/items/icons/ico_flint.png"),
+	"a000002" : preload("res://textures/items/icons/ico_stone.png"),
+	"a000003" : preload("res://textures/items/icons/ico_pine_needles.png"),
+	"a000004" : preload("res://textures/items/icons/ico_dead_pine_needles.png"),
+	"a000005" : preload("res://textures/items/icons/ico_twigs.png"),
+	"a000006" : preload("res://textures/items/icons/ico_stick.png"),
+	"a000007" : preload("res://textures/items/icons/ico_log.png"),
+	"a000008" : preload("res://textures/items/icons/ico_charcoal.png"),
+	"a000009" : preload("res://textures/items/icons/ico_plant_fiber.png"),
+	"a000010" : preload("res://textures/items/icons/ico_tree_bark.png"),
+	"a000011" : preload("res://textures/items/icons/ico_cloth_fragment.png"),
+	"a000012" : preload("res://textures/items/icons/ico_metal_scrap.png"),
+	"a000013" : preload("res://textures/items/icons/ico_glass_shards.png"),
+	"a000014" : preload("res://textures/items/icons/ico_loose_wires.png"),
+	"a000015" : preload("res://textures/items/icons/ico_sharpened_flint.png")
+}
 
 
 var stack_amount : int = 1
@@ -16,42 +36,29 @@ func set_inv_item(value):
 
 
 func _ready():
-	randomize_rotation()
-	randomize_scale()
 	DebugDraw3D.draw_box(position, Quaternion.IDENTITY, Vector3.ONE * 0.5, Color.GOLD, true, 0.5)
+
+func _physics_process(delta: float) -> void:
+	mesh_instance_3d.global_position = global_position + Vector3(0, 0.25, 0)
 
 func update_item_parameters():
 	if is_node_ready():
-		set_mesh_parameters()
+		set_texture()
 		mass = inv_item.item_weight
 	else:
 		await ready
 		update_item_parameters()
 
-func set_mesh_parameters():
-	print_debug("updating item parameters")
-	if !mesh_instance.mesh:
-		print("Error: MeshInstance3D does not contain a mesh")
-		return
-	
-	mesh_instance.mesh = inv_item.item_mesh
-	
-	if collision_shape.shape == null:
-		print("Error: CollisionShape3D does not have a shape attached")
-		return
-	
-	var aabb = mesh_instance.mesh.get_aabb()
-	collision_shape.shape.size = (aabb.size*1.25)*scale
-	#collision_shape.shape = mesh_instance.mesh.create_convex_shape(false, true)
-	
+func set_texture():
+	var new_material = mesh_instance_3d.material_override.duplicate()
+	new_material.albedo_texture = ITEM_ICONS[inv_item.item_id]
+	mesh_instance_3d.material_override = new_material
 
 func toggle_highlight(toggle : bool):
-	var surface_count = mesh_instance.get_surface_override_material_count()  # Get the number of surfaces
-	for i in range(surface_count):
-		if toggle:
-			mesh_instance.set_surface_override_material(i, HIGHLIGHT_MATERIAL)
-		else:
-			mesh_instance.set_surface_override_material(i, null)
+	if toggle:
+		mesh_instance_3d.material_override.emission = Color.WHITE
+	else:
+		mesh_instance_3d.material_override.emission = Color.BLACK
 
 func randomize_rotation():
 	var random_x = randf() * 2.0 * PI  # Random angle between 0 and 2π radians
