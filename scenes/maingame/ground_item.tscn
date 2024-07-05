@@ -22,7 +22,7 @@ size = Vector2(0.65, 0.65)
 size = Vector3(0.2, 0.2, 0.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_060sh"]
-size = Vector3(0.5, 0.5, 0.5)
+size = Vector3(0.25, 0.25, 0.25)
 
 [node name="ground_item" type="RigidBody3D"]
 collision_layer = 4
@@ -45,4 +45,12 @@ collision_mask = 13
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_060sh")
 
+[node name="RepulsionArea" type="Area3D" parent="."]
+collision_layer = 524288
+collision_mask = 524288
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RepulsionArea"]
+shape = SubResource("BoxShape3D_060sh")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="area_entered" from="RepulsionArea" to="." method="_on_repulsion_area_area_entered"]

@@ -24,6 +24,7 @@ res://shaders/snow_post_processesing.gdshader
 res://shaders/leaf_shader.gdshader
 res://shaders/tree_shader.gdshader
 res://shaders/default_object_shader.gdshader
+res://scripts/inventory/ground_item.gd
 res://scenes/fps_controller.tscn
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
@@ -41,7 +42,3 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/inventory/ground_item.gd
-res://scripts/player/fps_controller.gd
-res://scripts/inventory/inventory_item.gd
-res://data/StaticData.gd

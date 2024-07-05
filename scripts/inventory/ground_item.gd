@@ -2,10 +2,11 @@ extends RigidBody3D
 
 const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.tres")
 
-@onready var ground_item: RigidBody3D = $"."
 @onready var mesh_instance = $MeshInstance3D
 @onready var collision_shape = $CollisionShape3D
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var area_3d = $Area3D
+@onready var repulsion_area = $RepulsionArea
 
 const ITEM_ICONS : Dictionary = {
 	"a000001" : preload("res://textures/items/icons/ico_flint.png"),
@@ -74,3 +75,8 @@ func _on_body_entered(body):
 	if body.collision_layer == 1:
 		await get_tree().create_timer(0.5).timeout
 		freeze = true
+
+func _on_repulsion_area_area_entered(area):
+	var diff : Vector3 = global_position - area.global_position
+	var new_velocity = diff.normalized()
+	apply_central_force(Vector3(10,0,0))
