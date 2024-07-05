@@ -190,6 +190,7 @@ rotate_held_item={
 3d_render/layer_2="Weapon"
 3d_physics/layer_1="World"
 3d_physics/layer_2="Entity"
+3d_physics/layer_3="Ground Items"
 2d_physics/layer_32="UI Elements"
 
 [physics]
