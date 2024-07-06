@@ -1,5 +1,7 @@
 CollisionShape3D
 Area3D
+Node3D
+RigidBody3D
 MeshInstance3D
 Sprite3D
 CanvasLayer
@@ -10,6 +12,3 @@ VBoxContainer
 GridContainer
 HBoxContainer
 Vircle
-Camera3D
-Node3D
-OmniLight3D

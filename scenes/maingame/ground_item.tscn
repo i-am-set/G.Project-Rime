@@ -18,14 +18,18 @@ billboard_mode = 1
 [sub_resource type="QuadMesh" id="QuadMesh_wd4hg"]
 size = Vector2(0.65, 0.65)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_yh0wp"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_0rtoa"]
 size = Vector3(0.2, 0.2, 0.2)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_060sh"]
-size = Vector3(0.25, 0.25, 0.25)
+[sub_resource type="BoxShape3D" id="BoxShape3D_oenaf"]
+size = Vector3(0.35, 0.35, 0.35)
 
 [node name="ground_item" type="RigidBody3D"]
-collision_layer = 4
+collision_layer = 8
+collision_mask = 9
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
 continuous_cd = true
 max_contacts_reported = 4
 contact_monitor = true
@@ -36,21 +40,13 @@ material_override = SubResource("StandardMaterial3D_xdymh")
 mesh = SubResource("QuadMesh_wd4hg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_yh0wp")
+shape = SubResource("BoxShape3D_0rtoa")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 4
-collision_mask = 13
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("BoxShape3D_060sh")
-
-[node name="RepulsionArea" type="Area3D" parent="."]
-collision_layer = 524288
-collision_mask = 524288
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RepulsionArea"]
-shape = SubResource("BoxShape3D_060sh")
+shape = SubResource("BoxShape3D_oenaf")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="area_entered" from="RepulsionArea" to="." method="_on_repulsion_area_area_entered"]
