@@ -393,18 +393,16 @@ func looking_process():
 	if look_at_ray_cast.is_colliding():
 		if look_at_collider != null:
 			look_at_collider.toggle_highlight(false)
+		
 		look_at_collider = look_at_ray_cast.get_collider().get_parent()
-		if look_at_collider != null:
+		if look_at_collider != null && look_at_collider.has_user_signal("focused"):
+			look_at_collider.emit_signal("focused")
 			look_at_collider.toggle_highlight(true)
-			#look_at_label_anchor = look_at_collider.global_position
-			var _stack_amount = look_at_collider.stack_amount
-			if _stack_amount > 1:
-				look_at_label.text = str(look_at_collider.inv_item.get_item_name(), " (", look_at_collider.stack_amount, ")")
-			else:
-				look_at_label.text = look_at_collider.inv_item.get_item_name()
+			look_at_label.text = "item"
 	else:
-		if look_at_collider != null:
-			look_at_collider.toggle_highlight(false)
+		if look_at_collider != null &&  look_at_collider.has_user_signal("unfocused"):
+			look_at_collider.emit_signal("unfocused")
+			look_at_collider.toggle_highlight(false) 
 			look_at_collider = null
 		look_at_label.text = ""
 

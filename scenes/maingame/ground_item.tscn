@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://co4ekrifuc318"]
+[gd_scene load_steps=8 format=3 uid="uid://co4ekrifuc318"]
 
 [ext_resource type="Script" path="res://scripts/inventory/ground_item.gd" id="1_v12ep"]
+[ext_resource type="Script" path="res://scripts/game/interaction_component.gd" id="2_epiyl"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c3n7p"]
 load_path = "res://.godot/imported/ico_charcoal.png-00a3321366c90e893b7b907f02a257da.s3tc.ctex"
@@ -22,7 +23,7 @@ size = Vector2(0.65, 0.65)
 size = Vector3(0.2, 0.2, 0.2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oenaf"]
-size = Vector3(0.35, 0.35, 0.35)
+size = Vector3(0.5, 0.5, 0.5)
 
 [node name="ground_item" type="RigidBody3D"]
 collision_layer = 8
@@ -48,5 +49,8 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_oenaf")
+
+[node name="InteractionComponent" type="Node" parent="."]
+script = ExtResource("2_epiyl")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

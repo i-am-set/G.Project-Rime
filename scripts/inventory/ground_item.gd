@@ -3,6 +3,8 @@ extends RigidBody3D
 const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.tres")
 
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var collision_shape_3d = $Area3D/CollisionShape3D
+
 
 const ITEM_ICONS : Dictionary = {
 	"a000001" : preload("res://textures/items/icons/ico_flint.png"),
@@ -24,6 +26,7 @@ const ITEM_ICONS : Dictionary = {
 
 
 var stack_amount : int = 1
+var is_highlighted : bool = false
 
 var inv_item : InventoryItem : set = set_inv_item
 func set_inv_item(value):
@@ -36,7 +39,9 @@ func _ready():
 	DebugDraw3D.draw_box(position, Quaternion.IDENTITY, Vector3.ONE * 0.5, Color.GOLD, true, 0.5)
 
 func _physics_process(delta: float) -> void:
-	mesh_instance_3d.global_position = global_position + Vector3(0, 0.25, 0)
+	#mesh_instance_3d.global_position = global_position + Vector3(0, 0.25, 0)
+	if is_highlighted:
+		display_debug_cube()
 
 func update_item_parameters():
 	if is_node_ready():
@@ -53,9 +58,14 @@ func set_texture():
 
 func toggle_highlight(toggle : bool):
 	if toggle:
+		is_highlighted = true
 		mesh_instance_3d.material_override.emission = Color.WHITE
 	else:
+		is_highlighted = false
 		mesh_instance_3d.material_override.emission = Color.BLACK
+
+func display_debug_cube():
+	DebugDraw3D.draw_box(position, quaternion, Vector3(0.5,0.5,0.5), Color.WHITE, true, 0)
 
 func randomize_rotation():
 	var random_x = randf() * 2.0 * PI  # Random angle between 0 and 2π radians
