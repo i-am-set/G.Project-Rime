@@ -1,124 +1,27 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7jlc7vkdspss"]
+[gd_scene load_steps=4 format=3 uid="uid://b7jlc7vkdspss"]
 
+[ext_resource type="Texture2D" uid="uid://bj6l6gk30s04n" path="res://textures/items/item_background_glow.png" id="1_5of0a"]
 [ext_resource type="Script" path="res://scripts/player/inventory/inv_item_rect.gd" id="1_5qmgd"]
-[ext_resource type="FontFile" uid="uid://d1hh3q8v4ve62" path="res://ui/fonts/Icons/icon-font.ttf" id="2_cy8y2"]
-[ext_resource type="FontFile" uid="uid://bi8vqxiodvx8h" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBold.ttf" id="3_j8l51"]
-[ext_resource type="FontFile" uid="uid://ib15q14c37gy" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Regular.ttf" id="3_x8fip"]
-[ext_resource type="FontFile" uid="uid://cssxl1qm0huhb" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-MediumItalic.ttf" id="5_5gqlj"]
+[ext_resource type="Texture2D" uid="uid://bbi2nhpvuh4pc" path="res://textures/items/icons/ico_charcoal.png" id="3_dai6j"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d100y"]
-bg_color = Color(0.101961, 0.101961, 0.101961, 0)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2dpmd"]
-
-[sub_resource type="Gradient" id="Gradient_etg7t"]
-offsets = PackedFloat32Array(0, 0.375, 0.5, 0.60119, 0.744048, 1)
-colors = PackedColorArray(1, 1, 1, 0.105882, 1, 1, 1, 0.0352941, 1, 1, 1, 0.0392157, 1, 1, 1, 0.0392157, 1, 1, 1, 0.0352941, 1, 1, 1, 0.105882)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_wu0yv"]
-gradient = SubResource("Gradient_etg7t")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u33jd"]
-texture = SubResource("GradientTexture1D_wu0yv")
-
-[node name="item_0" type="Panel"]
+[node name="item_0" type="TextureRect"]
 custom_minimum_size = Vector2(0, 23)
 offset_right = 878.0
 offset_bottom = 30.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_d100y")
+size_flags_horizontal = 3
+size_flags_vertical = 2
+texture = ExtResource("1_5of0a")
+expand_mode = 4
+stretch_mode = 5
 script = ExtResource("1_5qmgd")
 
-[node name="Button" type="Button" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_2dpmd")
-theme_override_styles/hover = SubResource("StyleBoxTexture_u33jd")
-action_mode = 0
-button_mask = 2
-
-[node name="IconLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -11.0
-offset_right = 29.0
-offset_bottom = 12.0
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_fonts/font = ExtResource("2_cy8y2")
-text = ""
-horizontal_alignment = 1
-vertical_alignment = 1
-clip_text = true
-
-[node name="NameLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 30.0
-offset_top = -11.0
-offset_right = 307.0
-offset_bottom = 12.0
-grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.823529)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_fonts/font = ExtResource("3_x8fip")
-theme_override_font_sizes/font_size = 16
-text = "Name"
-clip_text = true
-
-[node name="WeightLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -103.0
-offset_top = -20.5
-offset_right = -35.0
-offset_bottom = 20.5
-grow_horizontal = 0
-grow_vertical = 2
-size_flags_horizontal = 2
-size_flags_vertical = 1
-theme_override_colors/font_color = Color(1, 1, 1, 0.498039)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.431373)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_fonts/font = ExtResource("3_j8l51")
-theme_override_font_sizes/font_size = 14
-text = "*Weight*"
-horizontal_alignment = 2
-vertical_alignment = 1
-uppercase = true
-
-[node name="WeightlbLabel" type="Label" parent="WeightLabel"]
-layout_mode = 2
-offset_left = 72.0
-offset_right = 88.0
-offset_bottom = 41.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_override_colors/font_color = Color(1, 1, 1, 0.498039)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.431373)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_fonts/font = ExtResource("5_5gqlj")
-theme_override_font_sizes/font_size = 14
-text = "lb."
-horizontal_alignment = 2
-vertical_alignment = 1
-
-[connection signal="pressed" from="Button" to="." method="_on_item_pressed"]
+texture = ExtResource("3_dai6j")
+expand_mode = 4
+stretch_mode = 5

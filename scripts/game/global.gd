@@ -12,6 +12,23 @@ const PACKET_READ_LIMIT: int = 32
 const WORLD_PATH = "res://scenes/maingame/world.tscn"
 const MAX_TEMPERATURE_C = -10 # celsius
 const MIN_TEMPERATURE_C = -25 # celsius
+const ITEM_ICONS : Dictionary = {
+	"a000001" : preload("res://textures/items/icons/ico_flint.png"),
+	"a000002" : preload("res://textures/items/icons/ico_stone.png"),
+	"a000003" : preload("res://textures/items/icons/ico_pine_needles.png"),
+	"a000004" : preload("res://textures/items/icons/ico_dead_pine_needles.png"),
+	"a000005" : preload("res://textures/items/icons/ico_twigs.png"),
+	"a000006" : preload("res://textures/items/icons/ico_stick.png"),
+	"a000007" : preload("res://textures/items/icons/ico_log.png"),
+	"a000008" : preload("res://textures/items/icons/ico_charcoal.png"),
+	"a000009" : preload("res://textures/items/icons/ico_plant_fiber.png"),
+	"a000010" : preload("res://textures/items/icons/ico_tree_bark.png"),
+	"a000011" : preload("res://textures/items/icons/ico_cloth_fragment.png"),
+	"a000012" : preload("res://textures/items/icons/ico_metal_scrap.png"),
+	"a000013" : preload("res://textures/items/icons/ico_glass_shards.png"),
+	"a000014" : preload("res://textures/items/icons/ico_loose_wires.png"),
+	"a000015" : preload("res://textures/items/icons/ico_sharpened_flint.png")
+}
 
 # Player Constants
 const INV_DEFAULT_CELL_SIZE = Vector2(30, 30)

@@ -1,7 +1,12 @@
 extends Control
 class_name InventoryManager
 
-const SUBINVENTORY_RECT = preload("res://scenes/ui/subinventory_rect.tscn")
+@onready var junk_grid_container: GridContainer = $ScrollContainer/VBoxContainer/JunkGridContainer
+@onready var resource_grid_container: GridContainer = $ScrollContainer/VBoxContainer/ResourceGridContainer
+@onready var weapon_grid_container: GridContainer = $ScrollContainer/VBoxContainer/WeaponGridContainer
+@onready var garment_grid_container: GridContainer = $ScrollContainer/VBoxContainer/GarmentGridContainer
+@onready var food_grid_container: GridContainer = $ScrollContainer/VBoxContainer/FoodGridContainer
+@onready var medical_grid_container: GridContainer = $ScrollContainer/VBoxContainer/MedicalGridContainer
 
 @onready var fps_controller: Player = $"../../../../../../.."
 @onready var rmb_menu: Control = $"../../../../RmbMenu"
@@ -25,7 +30,6 @@ var mouse_pos : Vector2
 
 @export var weight_capacity : float = 100
 var weight_current : float
-var empty_slot : Array = ["", 0]
 
 func _ready():
 	update_weight(0)
@@ -33,15 +37,24 @@ func _ready():
 func _process(delta):
 	mouse_pos = get_global_mouse_position()
 
-func try_to_pick_up_item(_picked_up_item_id : String, _stack_size : int) -> bool:
-	var _picked_up_item_size : int = StaticData.item_data[_picked_up_item_id]["item_size"] * _stack_size
-	
-	for i in subinventory_container.subinventory_slot_amount:
-		if subinventory_container.subinventory_contents[i] == empty_slot || subinventory_container.subinventory_contents[i][0] == _picked_up_item_id:
-			subinventory_container.add_item(i, _picked_up_item_id, _stack_size)
-			return true
-	
-	return false
+func item_type_to_grid_container(item_type : int) -> GridContainer:
+	if item_type == 0:
+		return junk_grid_container
+	elif item_type == 1:
+		return resource_grid_container
+	elif item_type == 2:
+		return weapon_grid_container
+	elif item_type == 3:
+		return garment_grid_container
+	elif item_type == 4:
+		return food_grid_container
+	elif item_type == 5:
+		return medical_grid_container
+	else:
+		return junk_grid_container
+
+func pick_up_item(_picked_up_item : InventoryItem):
+	item_type_to_grid_container(_picked_up_item.get_item_type()).add_item(_picked_up_item)
 
 func ShowRmbMenu(_item_slot : int):
 	rmb_menu.position = mouse_pos

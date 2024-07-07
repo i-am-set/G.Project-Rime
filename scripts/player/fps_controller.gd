@@ -11,7 +11,7 @@ extends CharacterBody3D
 @onready var pause_menu = $UserInterface/PauseMenu
 @onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator
 @onready var inventory_menu = $UserInterface/InventoryMenu
-@onready var inventory_manager: InventoryManager = $UserInterface/InventoryMenu/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager
+@onready var inventory_manager: InventoryManager = $UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
 @onready var world = $"../.."
@@ -394,15 +394,16 @@ func looking_process():
 		if look_at_collider != null:
 			look_at_collider.toggle_highlight(false)
 		
-		look_at_collider = look_at_ray_cast.get_collider().get_parent()
-		if look_at_collider != null && look_at_collider.has_user_signal("focused"):
-			look_at_collider.emit_signal("focused")
-			look_at_collider.toggle_highlight(true)
-			look_at_label.text = "item"
+		var temp_look_at_ray_cast_collider = look_at_ray_cast.get_collider()
+		if temp_look_at_ray_cast_collider != null:
+			look_at_collider = temp_look_at_ray_cast_collider.get_parent()
+			if look_at_collider != null && look_at_collider.has_user_signal("focused"):
+				look_at_collider.emit_signal("focused")
+				if look_at_collider.has_method("get_interact_label"):
+					look_at_label.text = look_at_collider.get_interact_label()
 	else:
 		if look_at_collider != null &&  look_at_collider.has_user_signal("unfocused"):
 			look_at_collider.emit_signal("unfocused")
-			look_at_collider.toggle_highlight(false) 
 			look_at_collider = null
 		look_at_label.text = ""
 
@@ -417,10 +418,10 @@ func interact_process(delta):
 					interact_pick_up_to_hand()  # Call function2 when it reaches 100
 
 func interact_pick_up_to_inventory():
-	if inventory_manager.try_to_pick_up_item(look_at_collider.inv_item.item_id, look_at_collider.stack_amount) != false:
-		look_at_collider.queue_free()
-		look_at_label.text = ""
-		look_at_collider = null
+	inventory_manager.pick_up_item(look_at_collider.inv_item)
+	look_at_collider.queue_free()
+	look_at_label.text = ""
+	look_at_collider = null
 
 func interact_pick_up_to_hand():
 	print_debug("item to hand")
@@ -593,6 +594,10 @@ func c_teleport_self_to_player(des_player_name : String) -> void:
 		Console.print_line("[color=RED]Failed to find player position[/color]")
 
 func c_create_item_from_id(item_to_create_id : String, number_of_item : int):
+	if !StaticData.item_data.has(item_to_create_id):
+		Console.print_line("[color=RED]Invalid item ID.[/color]")
+		return
+	
 	var process_step = 0
 	for i in range(number_of_item):
 		process_step += 1

@@ -3,9 +3,7 @@ class_name SubinventoryManager
 
 const INV_ITEM_RECT = preload("res://scenes/ui/inv_item_rect.tscn")
 
-@onready var inventory_manager: InventoryManager = $"../.."
-@onready var header_button: TextureButton = $HeaderButton
-@onready var items_container = $ItemsContainer
+@onready var inventory_manager: InventoryManager = $"../../.."
 #@onready var subinventory_name_label = $HeaderButton/Label
 #@onready var capacity_label = $HeaderButton/CapacityLabel
 
@@ -17,47 +15,32 @@ const INV_ITEM_RECT = preload("res://scenes/ui/inv_item_rect.tscn")
 #var subinventory_quantity_held : int = 0
 var subinventory_slot_amount : int = 999
 
-var subinventory_contents : Array[Array] = []
-var empty_slot : Array = ["", 0]
-var item_rects : Array[Panel] = []
+var subinventory_contents : Array[InventoryItem] = []
+#var item_rects : Array[Panel] = []
 
 func _ready() -> void:
 	await initialize_subinventory()
 
 func initialize_subinventory():
-	await initialize_subinventory_slots()
-	await initialize_item_rects()
+	await update_item_rects()
 	await update_subinventory()
 	#subinventory_name_label.text = name
 
-func initialize_subinventory_slots():
-	for child in items_container.get_children():
-		child.queue_free()
-	
-	await get_tree().create_timer(0.5).timeout
-	
-	for i in subinventory_slot_amount:
-		subinventory_contents.append(empty_slot)
-		var _new_inv_item_rect = INV_ITEM_RECT.instantiate()
-		_new_inv_item_rect.item_slot = i
-		_new_inv_item_rect.hide()
-		items_container.add_child(_new_inv_item_rect)
+func remove_all_item_rects():
+	var _old_inv_children = get_children()
+	for _old_inv_item in _old_inv_children:
+		remove_child(_old_inv_item)
+		_old_inv_item.queue_free()
 
-func initialize_item_rects():
-	for child in items_container.get_children():
-		if child is InvItemRect:
-			item_rects.append(child)
+#func initialize_item_rects():
+	#for child in items_container.get_children():
+		#if child is InvItemRect:
+			#item_rects.append(child)
 
 func update_item_rects():
-	for i in subinventory_slot_amount:
-		var _item_in_slot = subinventory_contents[i]
-		if _item_in_slot != empty_slot:
-			var _item_rect = item_rects[i]
-			var _item_id = _item_in_slot[0]
-			_item_rect.set_inv_item_rect_variables(_item_id, _item_in_slot[1])
-			_item_rect.show()
-		else:
-			item_rects[i].hide()
+	remove_all_item_rects()
+	for _inv_item in subinventory_contents:
+		create_inv_item_rect(_inv_item)
 
 func update_subinventory():
 	#var is_empty : bool = check_if_subinventory_empty()
@@ -82,66 +65,62 @@ func drop_ground_item_backend(_dropped_item_id : String, _stack_amount : int):
 	player.drop_ground_item(_dropped_item_id, _stack_amount)
 
 func check_if_subinventory_empty() -> bool:
-	for i in subinventory_slot_amount:
-		if subinventory_contents[i] != empty_slot:
-			return false
-	
-	return true
-
-func add_item(_item_slot : int, _picked_up_item_id : String, _stack_size : int):
-	var _new_item : Array = [_picked_up_item_id, _stack_size]
-	var _item_slot_reference = subinventory_contents[_item_slot]
-	var _picked_up_item_weight : int = StaticData.item_data[_picked_up_item_id]["item_weight"] * _stack_size
-	
-	if _item_slot_reference == empty_slot:
-		subinventory_contents[_item_slot] = _new_item
-	elif _item_slot_reference[0] == _picked_up_item_id:
-		var _cached_item_stack_size = _item_slot_reference[1]
-		_item_slot_reference[1] = _cached_item_stack_size + _stack_size
+	if get_child_count() == 0:
+		return true
 	else:
-		printerr("Item slot is already occupied. Item slot ", _item_slot, " in ", name, ".")
-		return
+		return false
+
+func create_inv_item_rect(_inv_item : InventoryItem):
+	var _new_inv_item_rect = INV_ITEM_RECT.instantiate()
+	_new_inv_item_rect.set_item_icon(Global.ITEM_ICONS[_inv_item.item_id])
+	add_child(_new_inv_item_rect)
+
+func add_item(_picked_up_item : InventoryItem):
+	subinventory_contents.append(_picked_up_item)
 	
-	inventory_manager.update_weight(inventory_manager.weight_current + _picked_up_item_weight)
+	create_inv_item_rect(_picked_up_item)
+	#var _picked_up_item_weight : int = _picked_up_item.get_item_weight()
+	
+	#inventory_manager.update_weight(inventory_manager.weight_current + _picked_up_item_weight)
 	
 	update_item_rects()
 	update_subinventory()
 
-func remove_item(_item_slot : int, _remove_amount : int):
-	var _item_to_be_removed = subinventory_contents[_item_slot]
-	var _removed_item_weight : float = StaticData.item_data[_item_to_be_removed[0]]["item_weight"] * _remove_amount
-	
-	if _item_to_be_removed != empty_slot:
-		_item_to_be_removed[1] -= _remove_amount
-	else:
-		printerr("Item slot is empty, can't remove. Item slot ", _item_slot, " in ", name, ".")
-		return
-	
-	inventory_manager.update_weight(inventory_manager.weight_current - _removed_item_weight)
-	
-	if _item_to_be_removed[1] < 1:
-		subinventory_contents[_item_slot] = empty_slot
-		item_rects[_item_slot].hide()
-	
-	update_item_rects()
-	update_subinventory()
-
-func drop_item_one(_item_slot : int, _item : Array):
-	remove_item(_item_slot, 1)
-	
-	drop_ground_item_backend(_item[0], 1)
-	
-	update_item_rects()
-	update_subinventory()
-
-func drop_item_all(_item_slot : int, _item : Array):
-	var _cached_item_stack_amount : int = _item[1]
-	
-	remove_item(_item_slot, _cached_item_stack_amount)
-	
-	drop_ground_item_backend(_item[0], _cached_item_stack_amount)
+#func remove_item(_item_slot : int, _remove_amount : int):
+	#var _item_to_be_removed = subinventory_contents[_item_slot]
+	#var _removed_item_weight : float = StaticData.item_data[_item_to_be_removed[0]]["item_weight"] * _remove_amount
 	#
-	#update_grid()
-	
-	update_item_rects()
-	update_subinventory()
+	#if _item_to_be_removed != empty_slot:
+		#_item_to_be_removed[1] -= _remove_amount
+	#else:
+		#printerr("Item slot is empty, can't remove. Item slot ", _item_slot, " in ", name, ".")
+		#return
+	#
+	#inventory_manager.update_weight(inventory_manager.weight_current - _removed_item_weight)
+	#
+	#if _item_to_be_removed[1] < 1:
+		#subinventory_contents[_item_slot] = empty_slot
+		#item_rects[_item_slot].hide()
+	#
+	#update_item_rects()
+	#update_subinventory()
+
+#func drop_item_one(_item_slot : int, _item : Array):
+	#remove_item(_item_slot, 1)
+	#
+	#drop_ground_item_backend(_item[0], 1)
+	#
+	#update_item_rects()
+	#update_subinventory()
+#
+#func drop_item_all(_item_slot : int, _item : Array):
+	#var _cached_item_stack_amount : int = _item[1]
+	#
+	#remove_item(_item_slot, _cached_item_stack_amount)
+	#
+	#drop_ground_item_backend(_item[0], _cached_item_stack_amount)
+	##
+	##update_grid()
+	#
+	#update_item_rects()
+	#update_subinventory()

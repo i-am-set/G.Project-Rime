@@ -28,6 +28,9 @@ func import_json_file(path : String):
 
 
 func create_item_from_id(item_id : String) -> InventoryItem:
+	if !item_data.has(item_id):
+		return
+	
 	var new_item = InventoryItem.new()
 	new_item.item_id = item_id
 	new_item.item_weight = round(randf_range(item_data[item_id]["item_weight_min"], item_data[item_id]["item_weight_max"]) * 100.0) / 100.0

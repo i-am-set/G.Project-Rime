@@ -5,26 +5,6 @@ const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.t
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d = $Area3D/CollisionShape3D
 
-
-const ITEM_ICONS : Dictionary = {
-	"a000001" : preload("res://textures/items/icons/ico_flint.png"),
-	"a000002" : preload("res://textures/items/icons/ico_stone.png"),
-	"a000003" : preload("res://textures/items/icons/ico_pine_needles.png"),
-	"a000004" : preload("res://textures/items/icons/ico_dead_pine_needles.png"),
-	"a000005" : preload("res://textures/items/icons/ico_twigs.png"),
-	"a000006" : preload("res://textures/items/icons/ico_stick.png"),
-	"a000007" : preload("res://textures/items/icons/ico_log.png"),
-	"a000008" : preload("res://textures/items/icons/ico_charcoal.png"),
-	"a000009" : preload("res://textures/items/icons/ico_plant_fiber.png"),
-	"a000010" : preload("res://textures/items/icons/ico_tree_bark.png"),
-	"a000011" : preload("res://textures/items/icons/ico_cloth_fragment.png"),
-	"a000012" : preload("res://textures/items/icons/ico_metal_scrap.png"),
-	"a000013" : preload("res://textures/items/icons/ico_glass_shards.png"),
-	"a000014" : preload("res://textures/items/icons/ico_loose_wires.png"),
-	"a000015" : preload("res://textures/items/icons/ico_sharpened_flint.png")
-}
-
-
 var stack_amount : int = 1
 var is_highlighted : bool = false
 
@@ -43,6 +23,15 @@ func _physics_process(delta: float) -> void:
 	if is_highlighted:
 		display_debug_cube()
 
+func get_interact_label() -> String:
+	return "[E] to pick up " + inv_item.get_item_name()
+
+func in_range():
+	toggle_highlight(true)
+
+func not_in_range():
+	toggle_highlight(false)
+
 func update_item_parameters():
 	if is_node_ready():
 		set_texture()
@@ -53,7 +42,7 @@ func update_item_parameters():
 
 func set_texture():
 	var new_material = mesh_instance_3d.material_override.duplicate()
-	new_material.albedo_texture = ITEM_ICONS[inv_item.item_id]
+	new_material.albedo_texture = Global.ITEM_ICONS[inv_item.item_id]
 	mesh_instance_3d.material_override = new_material
 
 func toggle_highlight(toggle : bool):

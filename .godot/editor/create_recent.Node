@@ -1,3 +1,6 @@
+Control
+TextureRect
+VBoxContainer
 InteractionComponent
 CollisionShape3D
 Area3D
@@ -6,10 +9,7 @@ RigidBody3D
 MeshInstance3D
 Sprite3D
 CanvasLayer
-TextureRect
 Panel
 ColorRect
-VBoxContainer
 GridContainer
 HBoxContainer
-Vircle
