@@ -1,5 +1,10 @@
-Control
+Label
 TextureRect
+LabelAutoSizer
+TextureButton
+Button
+Control
+Container
 VBoxContainer
 InteractionComponent
 CollisionShape3D
@@ -7,9 +12,3 @@ Area3D
 Node3D
 RigidBody3D
 MeshInstance3D
-Sprite3D
-CanvasLayer
-Panel
-ColorRect
-GridContainer
-HBoxContainer

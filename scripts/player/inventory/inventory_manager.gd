@@ -8,11 +8,11 @@ class_name InventoryManager
 @onready var food_grid_container: GridContainer = $ScrollContainer/VBoxContainer/FoodGridContainer
 @onready var medical_grid_container: GridContainer = $ScrollContainer/VBoxContainer/MedicalGridContainer
 
-@onready var fps_controller: Player = $"../../../../../../.."
+@onready var fps_controller = $"../../../../.."
 @onready var rmb_menu: Control = $"../../../../RmbMenu"
 @onready var scroll_container = $ScrollContainer
 @onready var subinventory_container = $ScrollContainer/SubinventoryContainer
-@onready var weight_label: Label = $"../TopDivider/Weight"
+@onready var weight_label : Label = $"../Weight"
 
 var mouse_pos : Vector2
 

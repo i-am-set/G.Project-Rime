@@ -8,7 +8,7 @@ class_name InvItemRect
 var inv_item : InventoryItem = null
 var item_id : String = ""
 
-var ItemType : Array = ["Misc", "Resource", "Resource", "Resource", "Resource", "Resource", "Resource"]
+var ItemType : Array = ["Junk", "Resource", "Weapon", "Garment", "Food", "Medical"]
 
 func set_item_icon(item_icon : CompressedTexture2D):
 	texture_rect = get_child(0)

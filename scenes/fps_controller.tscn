@@ -76,6 +76,7 @@
 [ext_resource type="ButtonGroup" uid="uid://c6180svcrruw8" path="res://ui/button_groups/shadow_filter_button_group.tres" id="37_bblit"]
 [ext_resource type="ButtonGroup" uid="uid://qxij05leecnc" path="res://ui/button_groups/ssil_quality_button_group.tres" id="37_iaqkf"]
 [ext_resource type="ButtonGroup" uid="uid://d1rwdy7rhnv81" path="res://ui/button_groups/ssao_quality_button_group.tres" id="38_bkg3p"]
+[ext_resource type="Texture2D" uid="uid://dyqee0hq5qk88" path="res://textures/ui/Inventory/InvnetoryUI.png" id="57_dxt6j"]
 [ext_resource type="Script" path="res://scripts/player/inventory/subinventory_manager.gd" id="58_omh1u"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vpt8f"]
@@ -2660,10 +2661,6 @@ VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ap6aa")
 bg_color = Color(0.145098, 0.145098, 0.145098, 1)
 shadow_color = Color(0, 0, 0, 0.243137)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n4g8f"]
-bg_color = Color(0.105882, 0.105882, 0.105882, 1)
-shadow_color = Color(0, 0, 0, 0.243137)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
 
@@ -2846,26 +2843,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(3.90147e-12, 0.976234, -0.978518)
+bones/0/position = Vector3(-1.14295e-11, 0.97247, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190255, 0.587408, 0.0119284)
+bones/2/position = Vector3(0.190261, 0.596161, 0.0121061)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00123644, -0.0101094, 0.999139, -0.0402307)
-bones/6/rotation = Quaternion(-0.0436549, 0.00755829, -0.0147771, 0.998909)
+bones/5/rotation = Quaternion(0.002081, 0.0105641, 0.999134, -0.0401966)
+bones/6/rotation = Quaternion(-0.0854748, 0.0143973, -0.0125678, 0.996157)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000872371, -0.0101133, 0.996219, 0.0862871)
+bones/8/rotation = Quaternion(0.000796791, -0.0101195, 0.996836, 0.0788418)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00123527, -0.0101308, 0.999114, 0.0408332)
+bones/11/rotation = Quaternion(-0.00206826, 0.0105655, 0.999109, 0.040799)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.044243, 0.000742082, 0.0188855, 0.998842)
+bones/12/rotation = Quaternion(-0.0865609, 0.0021802, 0.0207705, 0.996028)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3015,7 +3012,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
+blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3092,11 +3089,12 @@ offset_bottom = 0.199982
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
 theme_override_fonts/font = ExtResource("16_h2j1q")
 theme_override_font_sizes/font_size = 12
-text = "asdasd"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
@@ -4294,66 +4292,49 @@ grow_vertical = 2
 texture = ExtResource("14_hebny")
 expand_mode = 1
 
-[node name="MAININVHBOX" type="HBoxContainer" parent="UserInterface/InventoryMenu"]
+[node name="MAININV" type="Control" parent="UserInterface/InventoryMenu"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 336.0
-offset_top = 180.0
-offset_right = -336.0
-offset_bottom = -168.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 0
 
-[node name="EquipmentPanel" type="Panel" parent="UserInterface/InventoryMenu/MAININVHBOX"]
+[node name="EquipmentPanel" type="Panel" parent="UserInterface/InventoryMenu/MAININV"]
 layout_mode = 2
+anchor_left = 0.375
+anchor_right = 0.575
+anchor_bottom = 1.0
+offset_left = -0.625061
+offset_right = 0.574951
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_psggs")
 
-[node name="InventoryPanel" type="Panel" parent="UserInterface/InventoryMenu/MAININVHBOX"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_n4g8f")
-
-[node name="MarginContainer" type="MarginContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel"]
+[node name="InventoryPanel" type="TextureRect" parent="UserInterface/InventoryMenu/MAININV"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 26
-theme_override_constants/margin_bottom = 10
+size_flags_horizontal = 3
+texture = ExtResource("57_dxt6j")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer"]
+[node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1, 20)
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "Inventory"
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
-clip_text = true
-uppercase = true
-
-[node name="Divider2" type="ColorRect" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(1, 2)
-layout_mode = 2
-color = Color(0.870588, 0.870588, 0.870588, 1)
-
-[node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.557
+anchor_top = 0.067
+anchor_right = 0.975
+anchor_bottom = 0.839
+offset_left = -0.643066
+offset_top = -0.300003
+offset_right = -0.0250244
+offset_bottom = -0.100037
 size_flags_vertical = 3
 script = ExtResource("21_kj22e")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4363,69 +4344,58 @@ grow_vertical = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="JunkGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="JunkGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="ResourceGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="ResourceGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="WeaponGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="WeaponGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="GarmentGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="GarmentGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="FoodGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="FoodGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="MedicalGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="MedicalGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="TopDivider" type="HBoxContainer" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Divider" type="ColorRect" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/TopDivider"]
-custom_minimum_size = Vector2(1, 2)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-color = Color(0.870588, 0.870588, 0.870588, 1)
-
-[node name="Weight" type="Label" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/TopDivider"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("22_7k54l")
-theme_override_font_sizes/font_size = 20
-text = "12.0/12.0"
-
-[node name="WeightIcon" type="Label" parent="UserInterface/InventoryMenu/MAININVHBOX/InventoryPanel/MarginContainer/VBoxContainer/TopDivider"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("16_02d1f")
-theme_override_font_sizes/font_size = 20
-text = "lb."
+[node name="Weight" type="Label" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.858
+anchor_top = 0.928
+anchor_right = 0.986
+anchor_bottom = 0.984
+offset_left = 0.0579834
+offset_top = -0.200012
+offset_right = -0.614136
+offset_bottom = 0.399963
 
 [node name="Selector" type="Control" parent="UserInterface/InventoryMenu"]
 visible = false
