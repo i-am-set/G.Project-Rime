@@ -1,4 +1,4 @@
-[gd_scene load_steps=233 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=238 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -53,7 +53,6 @@
 [ext_resource type="Animation" uid="uid://c7566rd4iimra" path="res://meshes/entities/player_models/male_01_model/animations/anim_walk_backwards.res" id="16_vcjye"]
 [ext_resource type="Animation" uid="uid://bu6oaj4e7xc7s" path="res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_backwards.res" id="16_ych3v"]
 [ext_resource type="Animation" uid="uid://bf285mjjecl2w" path="res://meshes/entities/player_models/male_01_model/animations/anim_walk_left.res" id="17_6ek57"]
-[ext_resource type="Material" uid="uid://chpse68y216vv" path="res://materials/post_processing_material.tres" id="17_bjkm5"]
 [ext_resource type="Animation" uid="uid://70upfipghvjt" path="res://meshes/entities/player_models/male_01_model/animations/anim_run_forward.res" id="17_ehbry"]
 [ext_resource type="Animation" uid="uid://buhx16f7trw7l" path="res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_forward.res" id="17_koyta"]
 [ext_resource type="Shader" path="res://shaders/dithering_post_process.gdshader" id="18_6keqs"]
@@ -82,6 +81,7 @@
 [ext_resource type="Script" path="res://scripts/game/UseProgressCircle.gd" id="39_10oom"]
 [ext_resource type="Texture2D" uid="uid://dyqee0hq5qk88" path="res://textures/ui/Inventory/InvnetoryUI.png" id="57_dxt6j"]
 [ext_resource type="Script" path="res://scripts/player/inventory/subinventory_manager.gd" id="58_omh1u"]
+[ext_resource type="Shader" path="res://shaders/player_post_processesing.gdshader" id="81_nnfk3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vpt8f"]
 radius = 0.045
@@ -2661,6 +2661,44 @@ VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ap6aa")
 bg_color = Color(0.145098, 0.145098, 0.145098, 1)
 shadow_color = Color(0, 0, 0, 0.243137)
 
+[sub_resource type="Animation" id="Animation_yo5v2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_8qm0f"]
+resource_name = "bob_up_and_down"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5, 5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 1), Vector2(0, -1), Vector2(0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hpakt"]
+_data = {
+"RESET": SubResource("Animation_yo5v2"),
+"bob_up_and_down": SubResource("Animation_8qm0f")
+}
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
 
@@ -2684,6 +2722,25 @@ shader = ExtResource("18_6keqs")
 shader_parameter/color_depth = 4
 shader_parameter/dithering = true
 shader_parameter/resolution_scale = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_140ma"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dtbcl"]
+render_priority = 2
+shader = ExtResource("81_nnfk3")
+shader_parameter/outlineColor = Color(0, 0, 0, 0.188235)
+shader_parameter/depth_threshold = 0.025
+shader_parameter/normal_threshold = 0.5
+shader_parameter/normal_smoothing = 0.5
+shader_parameter/max_thickness = 1.3
+shader_parameter/min_thickness = 0.5
+shader_parameter/max_distance = 35.0
+shader_parameter/min_distance = 28.0
+shader_parameter/grazing_fresnel_power = 5.0
+shader_parameter/grazing_angle_mask_power = 1.0
+shader_parameter/grazing_angle_modulation_factor = 50.0
 
 [sub_resource type="Curve" id="Curve_aqmb1"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.72541, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -2852,26 +2909,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(4.25164e-12, 0.97699, -0.978518)
+bones/0/position = Vector3(3.97597e-12, 0.976395, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190254, 0.585835, 0.0118965)
+bones/2/position = Vector3(0.190255, 0.587073, 0.0119216)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00109771, -0.0135038, 0.999098, -0.0402346)
-bones/6/rotation = Quaternion(-0.0370246, 0.00647394, -0.0151246, 0.999179)
+bones/5/rotation = Quaternion(0.00120692, -0.0108317, 0.999131, -0.0402316)
+bones/6/rotation = Quaternion(-0.0422398, 0.00732686, -0.0148514, 0.99897)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000886122, -0.0101121, 0.9961, 0.0876416)
+bones/8/rotation = Quaternion(0.000875317, -0.010113, 0.996193, 0.0865772)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00110142, -0.0134547, 0.999075, 0.040837)
+bones/11/rotation = Quaternion(-0.00120654, -0.0108441, 0.999106, 0.040834)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0375022, 0.00051313, 0.0185824, 0.999124)
+bones/12/rotation = Quaternion(-0.0428089, 0.00069337, 0.018821, 0.998906)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3022,7 +3079,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -4303,7 +4360,6 @@ theme_override_font_sizes/font_size = 30
 text = "NO"
 
 [node name="InventoryMenu" type="Control" parent="UserInterface"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4349,12 +4405,19 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 5.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 texture = ExtResource("57_dxt6j")
 
-[node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
+libraries = {
+"": SubResource("AnimationLibrary_hpakt")
+}
+
+[node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu/MAININV"]
 layout_mode = 2
 anchors_preset = 0
 anchor_left = 0.346
@@ -4368,7 +4431,19 @@ offset_bottom = 0.299988
 size_flags_vertical = 3
 script = ExtResource("21_kj22e")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager"]
+[node name="Weight" type="Label" parent="UserInterface/InventoryMenu/MAININV/InventoryManager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.858
+anchor_top = 0.928
+anchor_right = 0.986
+anchor_bottom = 0.984
+offset_left = 387.284
+offset_top = 192.762
+offset_right = 386.612
+offset_bottom = 193.362
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4377,58 +4452,46 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="JunkGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="JunkGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 12
 script = ExtResource("58_omh1u")
 
-[node name="ResourceGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="ResourceGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 12
 script = ExtResource("58_omh1u")
 
-[node name="WeaponGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="WeaponGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="GarmentGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="GarmentGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="FoodGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="FoodGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="MedicalGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="MedicalGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
-
-[node name="Weight" type="Label" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.858
-anchor_top = 0.928
-anchor_right = 0.986
-anchor_bottom = 0.984
-offset_left = 0.0579834
-offset_top = -0.200012
-offset_right = -0.614136
-offset_bottom = 0.399963
 
 [node name="Selector" type="Control" parent="UserInterface/InventoryMenu"]
 visible = false
@@ -4575,10 +4638,9 @@ surface_material_override/0 = SubResource("ShaderMaterial_jnndc")
 
 [node name="PostProcessingOutline" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21163, -0.801684)
-visible = false
 extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_chtvq")
-surface_material_override/0 = ExtResource("17_bjkm5")
+mesh = SubResource("QuadMesh_140ma")
+surface_material_override/0 = SubResource("ShaderMaterial_dtbcl")
 
 [node name="FloorDetector" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.77756, 0)

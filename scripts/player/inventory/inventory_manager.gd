@@ -12,7 +12,8 @@ class_name InventoryManager
 @onready var rmb_menu: Control = $"../../../../RmbMenu"
 @onready var scroll_container = $ScrollContainer
 @onready var subinventory_container = $ScrollContainer/SubinventoryContainer
-@onready var weight_label : Label = $"../Weight"
+@onready var weight_label: Label = $Weight
+@onready var inventory_panel_animation_player: AnimationPlayer = $"../InventoryPanel/AnimationPlayer"
 
 var mouse_pos : Vector2
 
@@ -32,6 +33,7 @@ var mouse_pos : Vector2
 var weight_current : float
 
 func _ready():
+	inventory_panel_animation_player.play("bob_up_and_down")
 	update_weight(0)
 
 func _process(delta):

@@ -1,3 +1,5 @@
+AnimationPlayer
+AnimationTree
 Timer
 Control
 TextureProgressBar
@@ -11,5 +13,3 @@ LabelAutoSizer
 TextureButton
 Button
 Container
-VBoxContainer
-InteractionComponent

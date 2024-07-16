@@ -12,7 +12,7 @@ extends CharacterBody3D
 @onready var pause_menu = $UserInterface/PauseMenu
 @onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator
 @onready var inventory_menu = $UserInterface/InventoryMenu
-@onready var inventory_manager : InventoryManager = $UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager
+@onready var inventory_manager : InventoryManager = $UserInterface/InventoryMenu/MAININV/InventoryManager
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
 @onready var world = $"../.."

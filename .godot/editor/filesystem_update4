@@ -1,9 +1,8 @@
 res://scenes/fps_controller.tscn
 res://resources/weapons/weap_nothing.tres
 res://shaders/2d/blur_shader.gdshader
-res://shaders/player_post_processesing.gdshader
-res://materials/post_processing_material.tres
 res://shaders/dithering_post_process.gdshader
+res://shaders/player_post_processesing.gdshader
 res://GodotSky/Presets/default/sunLightIntensity.tres
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
@@ -32,7 +31,3 @@ res://scenes/ui/inv_item_rect.tscn
 res://scenes/utility/debug_autoload_canvas.tscn
 res://scenes/test_ragdoll_scene2.tscn
 res://scenes/test_ragdoll_scene.tscn
-res://scripts/player/player_sound_manager.gd
-res://scripts/player/FallingPlayerState.gd
-res://scripts/player/fps_controller.gd
-res://scripts/game/UseProgressCircle.gd
