@@ -1,4 +1,4 @@
-[gd_scene load_steps=229 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=233 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -30,11 +30,13 @@
 [ext_resource type="Script" path="res://scripts/player/IdlePlayerState.gd" id="8_rqw4w"]
 [ext_resource type="Texture2D" uid="uid://bgnix38vyapog" path="res://textures/ui/slider_grabber_highlighted.png" id="9_s7idq"]
 [ext_resource type="AudioStream" uid="uid://d0kkd73q8uhxn" path="res://sound/sfx/ui/sfx_ui_button_hover.wav" id="9_sy13b"]
+[ext_resource type="AudioStream" uid="uid://did3b458xfoi6" path="res://sound/sfx/misc/backpack_close.wav" id="9_u18am"]
 [ext_resource type="Script" path="res://scripts/player/WalkingPlayerState.gd" id="9_wvqjd"]
 [ext_resource type="AudioStream" uid="uid://ck47jv5gunc6n" path="res://sound/sfx/ui/sfx_ui_button_click.wav" id="10_lt0l4"]
 [ext_resource type="Script" path="res://scripts/player/SprintingPlayerState.gd" id="10_ssjb3"]
 [ext_resource type="Script" path="res://scripts/player/CrouchingPlayerState.gd" id="11_4t53l"]
 [ext_resource type="Texture2D" uid="uid://btwotc1wxhsk1" path="res://textures/entities/player_models/male_01_model/male_01_texture.png" id="12_qi13c"]
+[ext_resource type="AudioStream" uid="uid://o03au0sqhdfv" path="res://sound/sfx/human/interact/sfx_pick_up.wav" id="12_qryet"]
 [ext_resource type="ButtonGroup" uid="uid://bpp5x1786kour" path="res://ui/button_groups/temperature_unit_button_group.tres" id="12_xwa8q"]
 [ext_resource type="Script" path="res://scripts/player/JumpingPlayerState.gd" id="13_fbjl8"]
 [ext_resource type="Texture2D" uid="uid://bhemuja52jc0n" path="res://textures/entities/player_models/clothing/puffer_jacket_texture_01.png" id="13_lsmte"]
@@ -76,6 +78,8 @@
 [ext_resource type="ButtonGroup" uid="uid://c6180svcrruw8" path="res://ui/button_groups/shadow_filter_button_group.tres" id="37_bblit"]
 [ext_resource type="ButtonGroup" uid="uid://qxij05leecnc" path="res://ui/button_groups/ssil_quality_button_group.tres" id="37_iaqkf"]
 [ext_resource type="ButtonGroup" uid="uid://d1rwdy7rhnv81" path="res://ui/button_groups/ssao_quality_button_group.tres" id="38_bkg3p"]
+[ext_resource type="Texture2D" uid="uid://4o7q5kfibtr6" path="res://textures/ui/hud/hud_progress_circle.png" id="38_sxo8f"]
+[ext_resource type="Script" path="res://scripts/game/UseProgressCircle.gd" id="39_10oom"]
 [ext_resource type="Texture2D" uid="uid://dyqee0hq5qk88" path="res://textures/ui/Inventory/InvnetoryUI.png" id="57_dxt6j"]
 [ext_resource type="Script" path="res://scripts/player/inventory/subinventory_manager.gd" id="58_omh1u"]
 
@@ -1520,9 +1524,9 @@ script/source = "extends Node3D
 @onready var animation_player = $male_arm_model/AnimationPlayer
 
 
-func _input(event):
-	if event.is_action_pressed(\"left_mouse_click\"):
-		animation_player.play(\"left_hand_interact\")
+#func _input(event):
+	#if event.is_action_pressed(\"left_mouse_click\"):
+		#animation_player.play(\"left_hand_grab\")
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
@@ -2047,33 +2051,29 @@ Label/fonts/font = ExtResource("7_dw6kc")
 [sub_resource type="Shader" id="Shader_5rneh"]
 code = "shader_type canvas_item;
 
-uniform float vignette_intensity = 0.4;
-uniform float vignette_opacity : hint_range(0.0, 1.0) = 0.5;
-uniform vec4 vignette_rgb : source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform float inner_radius = 0.1;
+uniform float outer_radius = 1;
+uniform float vignette_strength = 1.0;
+uniform float dither_strength = 0.03;
+uniform vec4 vignette_color: source_color;
 
-uniform sampler2D screen_vec : hint_screen_texture;
 
-float vignette(vec2 uv){
-	uv *= 1.0 - uv.xy;
-	float vignette = uv.x * uv.y * 15.0;
-	return pow(vignette, vignette_intensity * vignette_opacity);
-}
-
-void fragment(){
-	vec4 color = texture(screen_vec, SCREEN_UV);
-	vec4 text = texture(TEXTURE, UV);
+void fragment() {
+	float dist = distance(UV, vec2(0.5));
 	
-	text.rgba *= (vignette_rgb.rgba);
-	text.rgba *= (1.0 - vignette(UV));
+	float vignette = smoothstep(inner_radius, outer_radius, dist) * vignette_strength;
+	float dither = fract(sin(dot(UV, vec2(12.9898, 78.233))) * 43758.5453123) * dither_strength;
 	
-	COLOR = vec4((text.rgb)*color.rgb,text.a);
+	COLOR = vec4(vignette_color.rgb, vignette + dither);
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vqy7e"]
 shader = SubResource("Shader_5rneh")
-shader_parameter/vignette_intensity = 0.675
-shader_parameter/vignette_opacity = 0.05
-shader_parameter/vignette_rgb = Color(0.105882, 0.105882, 0.223529, 1)
+shader_parameter/inner_radius = 0.335
+shader_parameter/outer_radius = 1.0
+shader_parameter/vignette_strength = 1.0
+shader_parameter/dither_strength = 0.03
+shader_parameter/vignette_color = null
 
 [sub_resource type="Theme" id="Theme_dm671"]
 
@@ -2683,7 +2683,7 @@ render_priority = 1
 shader = ExtResource("18_6keqs")
 shader_parameter/color_depth = 4
 shader_parameter/dithering = true
-shader_parameter/resolution_scale = 2
+shader_parameter/resolution_scale = 1
 
 [sub_resource type="Curve" id="Curve_aqmb1"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.72541, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -2821,6 +2821,10 @@ unit_size = 1.0
 pitch_scale = 2.0
 bus = &"SFX"
 
+[node name="SfxInventory" type="AudioStreamPlayer" parent="SoundManager"]
+stream = ExtResource("9_u18am")
+volume_db = -12.0
+
 [node name="SfxButtonHover" type="AudioStreamPlayer" parent="SoundManager"]
 stream = ExtResource("9_sy13b")
 volume_db = -6.0
@@ -2831,6 +2835,11 @@ bus = &"SFX"
 stream = ExtResource("10_lt0l4")
 max_polyphony = 10
 bus = &"SFX"
+
+[node name="SfxPickUp" type="AudioStreamPlayer" parent="SoundManager"]
+stream = ExtResource("12_qryet")
+volume_db = -12.0
+max_polyphony = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
@@ -2843,26 +2852,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(-1.14295e-11, 0.97247, -0.978518)
+bones/0/position = Vector3(4.25164e-12, 0.97699, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190261, 0.596161, 0.0121061)
+bones/2/position = Vector3(0.190254, 0.585835, 0.0118965)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.002081, 0.0105641, 0.999134, -0.0401966)
-bones/6/rotation = Quaternion(-0.0854748, 0.0143973, -0.0125678, 0.996157)
+bones/5/rotation = Quaternion(0.00109771, -0.0135038, 0.999098, -0.0402346)
+bones/6/rotation = Quaternion(-0.0370246, 0.00647394, -0.0151246, 0.999179)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000796791, -0.0101195, 0.996836, 0.0788418)
+bones/8/rotation = Quaternion(0.000886122, -0.0101121, 0.9961, 0.0876416)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00206826, 0.0105655, 0.999109, 0.040799)
+bones/11/rotation = Quaternion(-0.00110142, -0.0134547, 0.999075, 0.040837)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0865609, 0.0021802, 0.0207705, 0.996028)
+bones/12/rotation = Quaternion(-0.0375022, 0.00051313, 0.0185824, 0.999124)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -2974,16 +2983,17 @@ transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 bones/0/rotation = Quaternion(-0.0142814, 0, 0, 0.999898)
 bones/1/rotation = Quaternion(-0.558337, -0.417183, -0.429389, 0.574319)
 bones/2/rotation = Quaternion(-0.31189, 0.646218, -0.433032, 0.545536)
-bones/3/rotation = Quaternion(0.0901744, -0.0101371, -0.0416875, 0.995001)
+bones/3/rotation = Quaternion(0.0901744, -0.0101371, -0.0416876, 0.995001)
 bones/3/scale = Vector3(1, 1, 1)
-bones/4/rotation = Quaternion(-0.106526, -0.698589, 0.00372842, 0.707539)
+bones/4/rotation = Quaternion(-0.106526, -0.698589, 0.00372841, 0.707539)
 bones/5/rotation = Quaternion(-0.558337, 0.417183, 0.429389, 0.574319)
 bones/6/rotation = Quaternion(-0.31189, -0.646218, 0.433032, 0.545536)
-bones/7/rotation = Quaternion(0.0901744, 0.0101371, 0.0416875, 0.995001)
+bones/7/rotation = Quaternion(0.0901744, 0.0101371, 0.0416876, 0.995001)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.106526, 0.698589, -0.00372842, 0.707539)
+bones/8/rotation = Quaternion(-0.106526, 0.698589, -0.00372841, 0.707539)
 
 [node name="Cube_001" parent="CameraController/Camera3D/ArmsModel/male_arm_model/metarig/Skeleton3D" index="0"]
+cast_shadow = 0
 surface_material_override/0 = SubResource("StandardMaterial3D_g6b8g")
 surface_material_override/1 = SubResource("StandardMaterial3D_x8f11")
 
@@ -3012,7 +3022,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3083,9 +3093,9 @@ anchor_top = 0.503
 anchor_right = 0.554
 anchor_bottom = 0.522
 offset_left = -0.600037
-offset_top = 0.299988
+offset_top = 5.29999
 offset_right = 0.599976
-offset_bottom = 0.199982
+offset_bottom = 5.19998
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -3108,6 +3118,28 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = SubResource("Theme_dm671")
+
+[node name="BusyProgressCircle" type="TextureProgressBar" parent="UserInterface/Hud"]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 56.0
+fill_mode = 4
+texture_progress = ExtResource("38_sxo8f")
+script = ExtResource("39_10oom")
+
+[node name="Timer" type="Timer" parent="UserInterface/Hud/BusyProgressCircle"]
+one_shot = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/Hud"]
 layout_mode = 1
@@ -4271,6 +4303,7 @@ theme_override_font_sizes/font_size = 30
 text = "NO"
 
 [node name="InventoryMenu" type="Control" parent="UserInterface"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4301,6 +4334,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="EquipmentPanel" type="Panel" parent="UserInterface/InventoryMenu/MAININV"]
+visible = false
 layout_mode = 2
 anchor_left = 0.375
 anchor_right = 0.575
@@ -4323,14 +4357,14 @@ texture = ExtResource("57_dxt6j")
 [node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
 layout_mode = 2
 anchors_preset = 0
-anchor_left = 0.557
-anchor_top = 0.067
-anchor_right = 0.975
-anchor_bottom = 0.839
-offset_left = -0.643066
-offset_top = -0.300003
-offset_right = -0.0250244
-offset_bottom = -0.100037
+anchor_left = 0.346
+anchor_top = 0.173
+anchor_right = 0.66
+anchor_bottom = 0.753
+offset_left = 0.745972
+offset_top = 0.299988
+offset_right = 0.659912
+offset_bottom = 0.299988
 size_flags_vertical = 3
 script = ExtResource("21_kj22e")
 
@@ -4342,7 +4376,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer"]
 layout_mode = 2
@@ -4352,13 +4385,13 @@ size_flags_vertical = 3
 [node name="JunkGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-columns = 8
+columns = 12
 script = ExtResource("58_omh1u")
 
 [node name="ResourceGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-columns = 8
+columns = 12
 script = ExtResource("58_omh1u")
 
 [node name="WeaponGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
@@ -4542,6 +4575,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_jnndc")
 
 [node name="PostProcessingOutline" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.21163, -0.801684)
+visible = false
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_chtvq")
 surface_material_override/0 = ExtResource("17_bjkm5")
@@ -4553,7 +4587,7 @@ script = ExtResource("19_lm36c")
 
 [node name="SnowFallParticles" type="GPUParticles3D" parent="."]
 amount = 100000
-amount_ratio = 0.001
+amount_ratio = 0.01
 lifetime = 6.0
 process_material = SubResource("ParticleProcessMaterial_628bu")
 draw_pass_1 = SubResource("QuadMesh_pj4i4")
@@ -4561,11 +4595,14 @@ draw_pass_1 = SubResource("QuadMesh_pj4i4")
 [connection signal="finished" from="SoundManager/WorldSfxSounds/SfxDistantCrows" to="SoundManager" method="_on_sfx_distant_crows_finished"]
 [connection signal="timeout" from="SoundManager/WorldSfxSounds/SfxDistantCrows/CrowCooldownTimer" to="SoundManager" method="_on_crow_cooldown_timer_timeout"]
 [connection signal="animation_finished" from="CameraController/Camera3D/ArmsModel/male_arm_model/AnimationPlayer" to="CameraController/Camera3D/ArmsModel" method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="UserInterface/Hud/BusyProgressCircle/Timer" to="UserInterface/Hud/BusyProgressCircle" method="_on_timer_timeout"]
 [connection signal="button_down" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Resume_Button" to="SoundManager" method="play_button_click"]
 [connection signal="button_down" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Resume_Button" to="UserInterface/PauseMenu" method="pressed_resume"]
 [connection signal="mouse_entered" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Resume_Button" to="SoundManager" method="play_button_hover"]
+[connection signal="button_down" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Settings_Button" to="SoundManager" method="play_button_click"]
 [connection signal="button_down" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Settings_Button" to="UserInterface/PauseMenu" method="pressed_settings"]
 [connection signal="mouse_entered" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Settings_Button" to="SoundManager" method="play_button_hover"]
+[connection signal="button_down" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Mainmenu_button" to="SoundManager" method="play_button_click"]
 [connection signal="mouse_entered" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Mainmenu_button" to="SoundManager" method="play_button_hover"]
 [connection signal="button_down" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/QuitButton" to="SoundManager" method="play_button_click"]
 [connection signal="button_down" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/QuitButton" to="UserInterface/PauseMenu" method="pressed_quit"]

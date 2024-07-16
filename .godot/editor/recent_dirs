@@ -1,6 +1,6 @@
+res://scripts/game
 res://scenes
 res://meshes/entities/player_models/male_01_model/animations
-res://scripts/game
 res://shaders
 res://ui/button_groups
 res://resources/inventory

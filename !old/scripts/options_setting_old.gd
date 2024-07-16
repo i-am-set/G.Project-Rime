@@ -273,7 +273,7 @@ func _on_low_quality_shadow_button_up():
 	RenderingServer.directional_shadow_atlas_set_size(512, true)
 
 func _on_high_quality_shadow_button_up():
-	RenderingServer.directional_shadow_atlas_set_size(1024, true)
+	RenderingServer.directional_shadow_atlas_set_size(2048, true)
 
 func _on_ultra_quality_shadow_button_up():
 	RenderingServer.directional_shadow_atlas_set_size(4096, true)

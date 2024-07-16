@@ -98,7 +98,7 @@ bus = &"Music"
 [node name="SkyBox" parent="." instance=ExtResource("1_v0aj0")]
 timeOfDay = 700.0
 simulateTime = true
-rateOfTime = 0.02
+rateOfTime = 0.01
 skyRotation = 47.8
 cloudType = "2D Dynamic"
 cloudCoverage = 0.5

@@ -6,6 +6,7 @@ extends CharacterBody3D
 @onready var player_model = $CollisionShape3D/player_model
 @onready var player_model_instance: MeshInstance3D = $CollisionShape3D/player_model/male_player_model_01/Armature/Skeleton3D/Cube
 @onready var arms_model: Node3D = $CameraController/Camera3D/ArmsModel
+@onready var arms_animation_player: AnimationPlayer = $CameraController/Camera3D/ArmsModel/male_arm_model/AnimationPlayer
 @onready var animation_player: AnimationPlayer = $CollisionShape3D/player_model/male_player_model_01/AnimationPlayer
 @onready var player_animation_tree: AnimationTree = $CollisionShape3D/player_model/AnimationTree
 @onready var pause_menu = $UserInterface/PauseMenu
@@ -22,6 +23,7 @@ extends CharacterBody3D
 @onready var sound_manager: Node = $SoundManager
 @onready var third_person_camera: Camera3D = $CameraController/ThirdPersonCamera
 @onready var front_third_person_camera: Camera3D = $CameraController/FrontThirdPersonCamera
+@onready var busy_progress_circle: TextureProgressBar = $UserInterface/Hud/BusyProgressCircle
 
 @export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -51,6 +53,7 @@ var _strafe_speed : float
 var _head_movement : float
 var _crouch_speed_mod : float
 var _is_crouching : bool = false
+var _is_busy : bool = false
 #var look_at_label_anchor : Vector3
 var look_at_collider
 var _current_rotation : float
@@ -418,10 +421,15 @@ func interact_process(delta):
 					interact_pick_up_to_hand()  # Call function2 when it reaches 100
 
 func interact_pick_up_to_inventory():
-	inventory_manager.pick_up_item(look_at_collider.inv_item)
-	look_at_collider.queue_free()
-	look_at_label.text = ""
-	look_at_collider = null
+	if !_is_busy:
+		busy_progress_circle.start_busy_progress_circle_timer(0.5)
+		arms_animation_player.stop()
+		arms_animation_player.play("left_hand_grab")
+		sound_manager.play_pickup()
+		inventory_manager.pick_up_item(look_at_collider.inv_item)
+		look_at_collider.queue_free()
+		look_at_label.text = ""
+		look_at_collider = null
 
 func interact_pick_up_to_hand():
 	print_debug("item to hand")

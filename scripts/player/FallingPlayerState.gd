@@ -8,11 +8,10 @@ class_name FallingPlayerState extends PlayerMovementState
 
 func enter(previous_state) -> void:
 	ANIMATION.pause()
-	arms_animation_player.play("falling")
+	pass
 	
 func exit() -> void:
-	if arms_animation_player.current_animation == "falling":
-		arms_animation_player.play("a_pose")
+	pass
 	
 func update(delta: float) -> void:
 	PLAYER.update_gravity(delta)

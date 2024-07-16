@@ -24,7 +24,6 @@ res://shaders/snow_post_processesing.gdshader
 res://shaders/leaf_shader.gdshader
 res://shaders/tree_shader.gdshader
 res://shaders/default_object_shader.gdshader
-res://scripts/player/fps_controller.gd
 res://scenes/mainmenu.tscn
 res://GodotSky/GodotSky.tscn
 res://scenes/maingame/world.tscn
@@ -33,4 +32,7 @@ res://scenes/ui/inv_item_rect.tscn
 res://scenes/utility/debug_autoload_canvas.tscn
 res://scenes/test_ragdoll_scene2.tscn
 res://scenes/test_ragdoll_scene.tscn
-res://scripts/player/inventory/inventory_manager.gd
+res://scripts/player/player_sound_manager.gd
+res://scripts/player/FallingPlayerState.gd
+res://scripts/player/fps_controller.gd
+res://scripts/game/UseProgressCircle.gd

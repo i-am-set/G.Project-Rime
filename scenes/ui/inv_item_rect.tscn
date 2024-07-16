@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b7jlc7vkdspss"]
 
-[ext_resource type="Texture2D" uid="uid://bj6l6gk30s04n" path="res://textures/items/item_background_glow.png" id="1_5of0a"]
 [ext_resource type="Script" path="res://scripts/player/inventory/inv_item_rect.gd" id="1_5qmgd"]
+[ext_resource type="Texture2D" uid="uid://nrhxfkgxpkee" path="res://textures/items/item_background_shadow.png" id="1_he17r"]
 [ext_resource type="Texture2D" uid="uid://bbi2nhpvuh4pc" path="res://textures/items/icons/ico_charcoal.png" id="3_dai6j"]
 [ext_resource type="FontFile" uid="uid://gnlsmuf5s1a8" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf" id="4_3dxua"]
 [ext_resource type="Texture2D" uid="uid://dg5q247j1d6h8" path="res://textures/ui/measure units/32x32.png" id="5_cxv3d"]
@@ -12,7 +12,7 @@ offset_right = 878.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
-texture = ExtResource("1_5of0a")
+texture = ExtResource("1_he17r")
 expand_mode = 4
 stretch_mode = 5
 script = ExtResource("1_5qmgd")
@@ -29,18 +29,17 @@ expand_mode = 4
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="."]
+self_modulate = Color(1, 1, 1, 0.54902)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("4_3dxua")
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 10
 text = "1.00 lb."
 horizontal_alignment = 2
 vertical_alignment = 2

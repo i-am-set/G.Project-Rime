@@ -43,6 +43,9 @@ const EXHALE_SOUNDS : Array[AudioStreamWAV] = [
 	preload("res://sound/sfx/human/breathing/exhale/soft_exhale-06.wav")
 ]
 
+const BACKPACK_OPEN = preload("res://sound/sfx/misc/backpack_open.wav")
+const BACKPACK_CLOSE = preload("res://sound/sfx/misc/backpack_close.wav")
+
 @onready var fps_controller: Player = $".."
 @onready var amb_distant_crows: AudioStreamPlayer3D = $WorldSfxSounds/SfxDistantCrows
 @onready var crow_cooldown_timer: Timer = $WorldSfxSounds/SfxDistantCrows/CrowCooldownTimer
@@ -53,6 +56,8 @@ const EXHALE_SOUNDS : Array[AudioStreamWAV] = [
 @onready var sfx_exhale_inhale = $SfxExhaleInhale
 @onready var sfx_button_hover: AudioStreamPlayer = $SfxButtonHover
 @onready var sfx_button_click: AudioStreamPlayer = $SfxButtonClick
+@onready var sfx_inventory: AudioStreamPlayer = $SfxInventory
+@onready var sfx_pick_up: AudioStreamPlayer = $SfxPickUp
 
 
 var wind_audio_players_default_volume : int = -20
@@ -134,9 +139,20 @@ func play_exhale():
 		sfx_exhale_inhale.pitch_scale = randf_range(0.95, 1.05)
 		sfx_exhale_inhale.play()
 
+func play_inventory(toggle : bool):
+	if toggle:
+		sfx_inventory.stream = BACKPACK_OPEN
+		sfx_inventory.play()
+	else:
+		sfx_inventory.stream = BACKPACK_CLOSE
+		sfx_inventory.play()
+
 func play_inhale():
 	pass
 	#sfx_exhale_inhale.play()
+
+func play_pickup():
+	sfx_pick_up.play()
 
 func play_button_hover():
 	sfx_button_hover.play()
