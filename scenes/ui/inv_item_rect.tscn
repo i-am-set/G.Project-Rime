@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b7jlc7vkdspss"]
 
 [ext_resource type="Script" path="res://scripts/player/inventory/inv_item_rect.gd" id="1_5qmgd"]
-[ext_resource type="Texture2D" uid="uid://nrhxfkgxpkee" path="res://textures/items/item_background_shadow.png" id="1_he17r"]
+[ext_resource type="Texture2D" uid="uid://djgijwn0e4qsj" path="res://textures/ui/Inventory/InventoryIcon.png" id="1_8uwie"]
 [ext_resource type="Texture2D" uid="uid://bbi2nhpvuh4pc" path="res://textures/items/icons/ico_charcoal.png" id="3_dai6j"]
 [ext_resource type="FontFile" uid="uid://gnlsmuf5s1a8" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Bold.ttf" id="4_3dxua"]
 [ext_resource type="Texture2D" uid="uid://dg5q247j1d6h8" path="res://textures/ui/measure units/32x32.png" id="5_cxv3d"]
@@ -12,7 +12,7 @@ offset_right = 878.0
 offset_bottom = 30.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
-texture = ExtResource("1_he17r")
+texture = ExtResource("1_8uwie")
 expand_mode = 4
 stretch_mode = 5
 script = ExtResource("1_5qmgd")

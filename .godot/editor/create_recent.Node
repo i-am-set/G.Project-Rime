@@ -1,3 +1,4 @@
+TextureRect
 AnimationPlayer
 AnimationTree
 Timer
@@ -8,8 +9,6 @@ AudioStreamPlayer
 ColorRect
 HBoxContainer
 Label
-TextureRect
 LabelAutoSizer
 TextureButton
 Button
-Container

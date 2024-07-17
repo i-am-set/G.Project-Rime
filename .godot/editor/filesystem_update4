@@ -31,3 +31,14 @@ res://scenes/ui/inv_item_rect.tscn
 res://scenes/utility/debug_autoload_canvas.tscn
 res://scenes/test_ragdoll_scene2.tscn
 res://scenes/test_ragdoll_scene.tscn
+res://addons/godot-console/scripts/ConsoleMono.cs
+res://scripts/resource_objects/ResourceChunkInstancer.cs
+res://scripts/resource_objects/ResourceController.cs
+res://scripts/resource_objects/ResourceInstancer.cs
+res://scripts/world_generation/InfiniteTerrainGenerator.cs
+res://scripts/world_generation/LODInfo.cs
+res://scripts/world_generation/MapDisplay.cs
+res://scripts/world_generation/MapGenerator.cs
+res://scripts/world_generation/TerrainType.cs
+res://scripts/player/inventory/inventory_manager.gd
+res://scripts/player/fps_controller.gd

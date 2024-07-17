@@ -2909,26 +2909,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(3.97597e-12, 0.976395, -0.978518)
+bones/0/position = Vector3(-5.28207e-13, 0.973696, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190255, 0.587073, 0.0119216)
+bones/2/position = Vector3(0.190259, 0.592642, 0.0120347)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00120692, -0.0108317, 0.999131, -0.0402316)
-bones/6/rotation = Quaternion(-0.0422398, 0.00732686, -0.0148514, 0.99897)
+bones/5/rotation = Quaternion(0.00169229, 0.00104678, 0.999189, -0.0402144)
+bones/6/rotation = Quaternion(-0.0655512, 0.0111392, -0.0136242, 0.997694)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000875317, -0.010113, 0.996193, 0.0865772)
+bones/8/rotation = Quaternion(0.000827299, -0.0101171, 0.996593, 0.0818472)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00120654, -0.0108441, 0.999106, 0.040834)
+bones/11/rotation = Quaternion(-0.00168528, 0.00104803, 0.999165, 0.0408169)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0428089, 0.00069337, 0.018821, 0.998906)
+bones/12/rotation = Quaternion(-0.0663789, 0.00149417, 0.0198753, 0.997595)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3079,7 +3079,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
+blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -4412,26 +4412,21 @@ grow_vertical = 2
 size_flags_horizontal = 3
 texture = ExtResource("57_dxt6j")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
-libraries = {
-"": SubResource("AnimationLibrary_hpakt")
-}
-
-[node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu/MAININV"]
+[node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
 layout_mode = 2
 anchors_preset = 0
-anchor_left = 0.346
-anchor_top = 0.173
+anchor_left = 0.348
+anchor_top = 0.182
 anchor_right = 0.66
-anchor_bottom = 0.753
-offset_left = 0.745972
-offset_top = 0.299988
-offset_right = 0.659912
-offset_bottom = 0.299988
+anchor_bottom = 0.757
+offset_left = -0.452026
+offset_top = -4.8
+offset_right = -0.340088
+offset_bottom = -5.30005
 size_flags_vertical = 3
 script = ExtResource("21_kj22e")
 
-[node name="Weight" type="Label" parent="UserInterface/InventoryMenu/MAININV/InventoryManager"]
+[node name="Weight" type="Label" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.858
@@ -4443,7 +4438,7 @@ offset_top = 192.762
 offset_right = 386.612
 offset_bottom = 193.362
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager"]
+[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4452,46 +4447,51 @@ grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="JunkGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="JunkGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 12
 script = ExtResource("58_omh1u")
 
-[node name="ResourceGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="ResourceGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 12
 script = ExtResource("58_omh1u")
 
-[node name="WeaponGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="WeaponGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="GarmentGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="GarmentGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="FoodGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="FoodGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
 
-[node name="MedicalGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryManager/ScrollContainer/VBoxContainer"]
+[node name="MedicalGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 8
 script = ExtResource("58_omh1u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
+libraries = {
+"": SubResource("AnimationLibrary_hpakt")
+}
 
 [node name="Selector" type="Control" parent="UserInterface/InventoryMenu"]
 visible = false

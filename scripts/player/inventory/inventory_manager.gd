@@ -13,7 +13,7 @@ class_name InventoryManager
 @onready var scroll_container = $ScrollContainer
 @onready var subinventory_container = $ScrollContainer/SubinventoryContainer
 @onready var weight_label: Label = $Weight
-@onready var inventory_panel_animation_player: AnimationPlayer = $"../InventoryPanel/AnimationPlayer"
+@onready var inventory_panel_animation_player: AnimationPlayer = $"../AnimationPlayer"
 
 var mouse_pos : Vector2
 
