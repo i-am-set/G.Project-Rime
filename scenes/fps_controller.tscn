@@ -1,4 +1,4 @@
-[gd_scene load_steps=238 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=242 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -2067,13 +2067,89 @@ void fragment() {
 	COLOR = vec4(vignette_color.rgb, vignette + dither);
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vqy7e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vfj52"]
 shader = SubResource("Shader_5rneh")
 shader_parameter/inner_radius = 0.335
 shader_parameter/outer_radius = 1.0
 shader_parameter/vignette_strength = 1.0
 shader_parameter/dither_strength = 0.03
 shader_parameter/vignette_color = null
+
+[sub_resource type="Shader" id="Shader_esooc"]
+code = "shader_type canvas_item;
+
+uniform float pixel = 1.0;
+uniform sampler2D pallete;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+const float bit = 6.0;
+const mat4 bayer = mat4(
+	vec4(1.0,  9.0,  3.0, 11.0),
+    vec4(13.0,  5.0, 15.0,  7.0),
+    vec4(4.0, 12.0,  2.0, 10.0),
+    vec4(16.0,  8.0, 14.0,  6.0));
+
+float getbayer(int x, int y) {
+	if (x == 0) {
+		if (y == 0) return bayer[0][0];
+		if (y == 1) return bayer[0][1];
+		if (y == 2) return bayer[0][2];
+		if (y == 3) return bayer[0][3];
+	}
+	else if (x == 1) {
+		if (y == 0) return bayer[1][0];
+		if (y == 1) return bayer[1][1];
+		if (y == 2) return bayer[1][2];
+		if (y == 3) return bayer[1][3];
+	}
+	else if (x == 2) {
+		if (y == 0) return bayer[2][0];
+		if (y == 1) return bayer[2][1];
+		if (y == 2) return bayer[2][2];
+		if (y == 3) return bayer[2][3];
+	}
+	else if (x == 3) {
+		if (y == 0) return bayer[3][0];
+		if (y == 1) return bayer[3][1];
+		if (y == 2) return bayer[3][2];
+		if (y == 3) return bayer[3][3];
+	}
+}
+
+
+void fragment() {
+	vec4 original = texture(TEXTURE, UV);
+	vec4 _color = texture(SCREEN_TEXTURE, floor(FRAGCOORD.xy / pixel) / floor((1.0 / SCREEN_PIXEL_SIZE) / pixel));
+	vec4 color = _color * texture(pallete, vec2(_color.r, 1.0));
+	
+	
+	float b = getbayer(int(FRAGCOORD.x) % 4, int(FRAGCOORD.y) % 4);// * 1.0) / 1.0;
+	vec2 uv = FRAGCOORD.xy / SCREEN_PIXEL_SIZE;
+	vec4 col_noise = color;
+	vec3 noise = vec3(fract(sin(dot(FRAGCOORD.xy / SCREEN_PIXEL_SIZE, vec2(12.9898, 78.233))) * 43758.5453));
+	noise *= 0.1;
+	noise.xy *= (b / 16.0) * 1.5;
+	col_noise.rgb += noise; //noise effect
+	
+	vec4 post = col_noise * floor(col_noise * 4.0) / 4.0; //noise + post-effect
+	
+	
+	
+	COLOR *= post;
+	
+	
+}"
+
+[sub_resource type="Gradient" id="Gradient_1qqkm"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mxl5y"]
+gradient = SubResource("Gradient_1qqkm")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_56tfa"]
+shader = SubResource("Shader_esooc")
+shader_parameter/pixel = 1.0
+shader_parameter/pallete = SubResource("GradientTexture2D_mxl5y")
 
 [sub_resource type="Theme" id="Theme_dm671"]
 
@@ -2909,26 +2985,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(-5.28207e-13, 0.973696, -0.978518)
+bones/0/position = Vector3(-7.90033e-12, 0.972366, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190259, 0.592642, 0.0120347)
+bones/2/position = Vector3(0.190261, 0.596295, 0.0121088)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00169229, 0.00104678, 0.999189, -0.0402144)
-bones/6/rotation = Quaternion(-0.0655512, 0.0111392, -0.0136242, 0.997694)
+bones/5/rotation = Quaternion(0.00208977, 0.0107787, 0.999132, -0.0401962)
+bones/6/rotation = Quaternion(-0.086273, 0.0145278, -0.0125253, 0.996087)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000827299, -0.0101171, 0.996593, 0.0818472)
+bones/8/rotation = Quaternion(0.000795634, -0.0101196, 0.996844, 0.0787279)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00168528, 0.00104803, 0.999165, 0.0408169)
+bones/11/rotation = Quaternion(-0.0020769, 0.0107802, 0.999107, 0.0407985)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0663789, 0.00149417, 0.0198753, 0.997595)
+bones/12/rotation = Quaternion(-0.0873695, 0.00220769, 0.0208062, 0.995956)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3079,7 +3155,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
+blend_times = [&"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3100,7 +3176,18 @@ mouse_filter = 1
 theme = SubResource("Theme_w86jh")
 
 [node name="Vignette" type="ColorRect" parent="UserInterface"]
-material = SubResource("ShaderMaterial_vqy7e")
+material = SubResource("ShaderMaterial_vfj52")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Grain" type="ColorRect" parent="UserInterface"]
+visible = false
+material = SubResource("ShaderMaterial_56tfa")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -4416,13 +4503,13 @@ texture = ExtResource("57_dxt6j")
 layout_mode = 2
 anchors_preset = 0
 anchor_left = 0.348
-anchor_top = 0.182
-anchor_right = 0.66
-anchor_bottom = 0.757
-offset_left = -0.452026
-offset_top = -4.8
-offset_right = -0.340088
-offset_bottom = -5.30005
+anchor_top = 0.176
+anchor_right = 0.657
+anchor_bottom = 0.751
+offset_left = -0.451965
+offset_top = -0.400009
+offset_right = 0.457031
+offset_bottom = 0.0999756
 size_flags_vertical = 3
 script = ExtResource("21_kj22e")
 
