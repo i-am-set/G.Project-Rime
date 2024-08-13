@@ -1,4 +1,5 @@
 # Project Rime
+## By Seth Gran
 ## Godot 4.2.1 Stable Mono
 
 
