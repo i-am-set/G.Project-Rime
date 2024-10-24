@@ -54,6 +54,7 @@ var hunger_decrease_rate : int = 1800
 var current_hunger_tick : int = 0
 var temperature_change_rate : int = 100
 var current_temperature_tick : int = 0
+var current_freezing_tick : int = 0
 var ambient_temperature_score : int = 0
 #var freeze_screen_amount : float = 0
 var stamina_decrease_rate : int = 8
@@ -112,6 +113,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	update_hunger_tick()
 	update_temperature_tick()
+	update_freezing_tick()
 	update_stamina_tick()
 	update_heart_rate_tick(delta)
 	update_breathing_tick(delta)
@@ -120,22 +122,13 @@ func _physics_process(delta: float) -> void:
 
 #func _input(event):
 	#if event.is_action_pressed("ui_scroll_up"):
-		#if freeze_screen_amount < 1:
-				#freeze_screen_amount += 0.05
-		#elif freeze_screen_amount >= 1:
-			#freeze_screen_amount = 1
-		#set_freeze_screen_amount(freeze_screen_amount)
 		#print_debug("scroll up")
 	#if event.is_action_pressed("ui_scroll_down"):
-		#if freeze_screen_amount > 0:
-			#freeze_screen_amount -= 0.05
-		#elif freeze_screen_amount <= 0:
-			#freeze_screen_amount = 0
-		#set_freeze_screen_amount(freeze_screen_amount)
 		#print_debug("scroll down")
 
 func damage_player(damage : int):
 	var damaged_health = health - damage
+	pain_vignette_animation_player.play("PainVignetteFlash")
 	set_health(damaged_health)
 
 func heal_player(heal : int):
@@ -183,8 +176,17 @@ func set_hunger(value : int):
 			is_starving = false
 
 func starve():
+	if is_starving:
+		return
+	
 	is_starving = true
 	hunger_depleted.emit()
+
+func unstarve():
+	if not is_starving:
+		return
+	
+	is_starving = false
 
 func chill_player(value : int):
 	var chilled_amount = temperature - value
@@ -221,14 +223,12 @@ func freeze():
 		return
 	
 	is_freezing = true
-	pain_vignette_animation_player.play("PainVignetteFlash")
 	temperature_depleted.emit()
 
 func unfreeze():
 	if not is_freezing:
 		return
 	is_freezing = false
-	pain_vignette_animation_player.play("RESET")
 
 func set_stamina(value : int):
 	if value < stamina && god_mode:
@@ -267,6 +267,19 @@ func update_temperature_tick():
 		current_temperature_tick = 0
 		
 		chill_player(1)
+
+func update_freezing_tick():
+	if temperature > freezing_temperature:
+		return
+	
+	var freezing_decrease_rate = 180 + (420 / freezing_temperature) * temperature
+	
+	current_freezing_tick += 1
+	
+	if current_freezing_tick >= freezing_decrease_rate:
+		current_freezing_tick = 0
+		
+		damage_player(1)
 
 func update_stamina_tick():
 	if is_exhausted && stamina >= not_exhausted_threshold:

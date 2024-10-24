@@ -12,7 +12,7 @@ func apply_freeze_screen(_freeze_screen_amount: float, sound_index: int) -> void
 	
 	busy = true
 	var tween = create_tween()
-	if _freeze_screen_amount <= 91:
+	if _freeze_screen_amount <= 90:
 		freeze_shader.set_shader_parameter("vignette_strength", 1.0)
 	else:
 		freeze_shader.set_shader_parameter("vignette_strength", 0.0)

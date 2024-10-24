@@ -2073,7 +2073,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vfj52"]
 shader = SubResource("Shader_okk0j")
 shader_parameter/inner_radius = 0.45
-shader_parameter/outer_radius = 1.045
+shader_parameter/outer_radius = 1.23
 shader_parameter/vignette_strength = 1.0
 shader_parameter/dither_strength = -0.02
 shader_parameter/vignette_color = Color(1, 1, 1, 1)
@@ -2102,33 +2102,32 @@ void fragment() {
 shader = SubResource("Shader_0fptd")
 shader_parameter/inner_radius = 0.45
 shader_parameter/outer_radius = 0.75
-shader_parameter/vignette_strength = 1.0
+shader_parameter/vignette_strength = 0.0
 shader_parameter/dither_strength = -0.035
 shader_parameter/vignette_texture = ExtResource("36_y6mqt")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aiy5x"]
 shader = SubResource("Shader_okk0j")
 shader_parameter/inner_radius = 1.0
-shader_parameter/outer_radius = 1.045
-shader_parameter/vignette_strength = 0.0
-shader_parameter/dither_strength = -0.02
-shader_parameter/vignette_color = Color(0.968627, 0, 0, 1)
+shader_parameter/outer_radius = 1.055
+shader_parameter/vignette_strength = 1.0
+shader_parameter/dither_strength = -0.16
+shader_parameter/vignette_color = Color(0.803922, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_nwi8t"]
 resource_name = "PainVignetteFlash"
-length = 3.0
-loop_mode = 1
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("../PainVignette:material:shader_parameter/inner_radius")
-tracks/0/interp = 2
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [1.0, 0.6, 0.6, 1.0]
+"values": [0.7, 0.4, 0.34, 0.7, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_8i8ch"]
@@ -3066,26 +3065,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(-6.68857e-12, 0.97921, -0.978518)
+bones/0/position = Vector3(4.54796e-12, 0.97763, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190252, 0.581288, 0.0118042)
+bones/2/position = Vector3(0.190254, 0.584504, 0.0118695)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.000701267, -0.0232006, 0.99892, -0.0402433)
-bones/6/rotation = Quaternion(-0.0180277, 0.003367, -0.0161158, 0.999702)
+bones/5/rotation = Quaternion(0.000981191, -0.0163541, 0.999056, -0.0402376)
+bones/6/rotation = Quaternion(-0.0314549, 0.00556303, -0.0154159, 0.999371)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000925181, -0.0101086, 0.995754, 0.0914891)
+bones/8/rotation = Quaternion(0.00089753, -0.0101111, 0.996001, 0.0887654)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.000708886, -0.0232, 0.998896, 0.0408458)
+bones/11/rotation = Quaternion(-0.000988407, -0.0162608, 0.999033, 0.0408399)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0182391, -0.000140951, 0.017712, 0.999677)
+bones/12/rotation = Quaternion(-0.0318404, 0.000320852, 0.0183272, 0.999325)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -4602,8 +4601,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 5.0
-offset_right = 1599.0
-offset_bottom = 905.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3

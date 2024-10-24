@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_beekf"]
 [ext_resource type="PackedScene" uid="uid://1gfropwtqfbn" path="res://GodotSky/GodotSky.tscn" id="1_v0aj0"]
 [ext_resource type="Script" path="res://scripts/world_generation/MapGenerator.cs" id="2_l6eyd"]
-[ext_resource type="AudioStream" uid="uid://ca4e7q4npjqdm" path="res://sound/music/ambient_world_drone_track_1.wav" id="2_x5rox"]
+[ext_resource type="AudioStream" uid="uid://co081pmgpep1e" path="res://sound/music/mus_world_drone_track_1.wav" id="2_x5rox"]
 [ext_resource type="Script" path="res://scripts/world_generation/TerrainType.cs" id="3_f2kf7"]
 [ext_resource type="Material" uid="uid://cokndnhyl7pb3" path="res://materials/world_gen_material.tres" id="4_5r3nd"]
 [ext_resource type="Curve" uid="uid://bcgo5si7q5hok" path="res://scenes/utility/mesh_height_curve.tres" id="4_bp6yq"]

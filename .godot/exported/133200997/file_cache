@@ -1,5 +1,3 @@
-res://!old/environment/WE_test.tres::56b801825acc8c542d1415707fd401a6::1729785416::res://.godot/exported/133200997/export-86112cc74929b806065d769fff85d7b9-WE_test.res
-res://!old/levels/WE_test.tscn::bd0447c5caead5a2dcc8594c4f4885ef::1729785416::res://.godot/exported/133200997/export-62bfdb6f70f207d19d0a83852ba1b4b8-WE_test.scn
 res://addons/anthonyec.camera_preview/preview.tscn::5bda523664ec4679a7409130bb0c60ca::1713805371::res://.godot/exported/133200997/export-3b88bc956636ac73548e66524dcf9741-preview.scn
 res://addons/diagnosticlist/Panel.tscn::6a5ab403d64d50095aeec07043524356::1711554660::res://.godot/exported/133200997/export-75aa556c982dc41c63ab5ff5bb5a2ec0-Panel.scn
 res://addons/FillGapContainer/fill_gap_container.tscn::7171d89556d806fc4860e21762c0a0ff::1712519004::res://.godot/exported/133200997/export-84826a48f8b56ae15d3c4e7856c6b63d-fill_gap_container.scn
@@ -182,12 +180,7 @@ res://ui/button_groups/temperature_unit_button_group.tres::bb450534a5f4079294cb9
 res://ui/themes/debug.tres::cc3ce5038b4f13de6bec095b3720c4a1::1709244752::res://.godot/exported/133200997/export-1514babe4c05d56f20b44fc5a1ffc9a1-debug.res
 res://ui/themes/debug_panel.tres::39f4824ca0380d15b3ebb5bb5ed6d087::1709244752::res://.godot/exported/133200997/export-b6cf304526806b5ae19ac3945e60b03e-debug_panel.res
 res://default_bus_layout.tres::d862667697725c4895cb74a5dd8be1f8::1719099249::res://.godot/exported/133200997/export-19246414aa9fb561ced4b8dce477acec-default_bus_layout.res
-res://!old/levels/level_001.tscn::cba26f90bce74cfa7d16ecc417be8045::1729785416::res://.godot/exported/133200997/export-0c3d5f9b280443509a15d43347fa8522-level_001.scn
-res://!old/levels/level_002.tscn::f68f8bd00ee96036f2ceba807201fd2d::1729785416::res://.godot/exported/133200997/export-0c7d739f9a2dcebdd5fc60b50c2aeec8-level_002.scn
-res://!old/levels/level_003.tscn::3a70a3a2efc64012e3c0e216a8740e74::1729785416::res://.godot/exported/133200997/export-778ddd6428e6fb285f72b234e3e14c22-level_003.scn
-res://!old/levels/level_008.tscn::6eb66c58502a4d41482d2fa77c02fde1::1729785416::res://.godot/exported/133200997/export-c3bb0413a3b658d31bbd4a2c0585d0c8-level_008.scn
-res://!old/levels/level_014.tscn::bc3e4ed4a14dbbf1729c59ffdd280010::1729785416::res://.godot/exported/133200997/export-f49f3b2c86108ddd7e04f5f3c13779c6-level_014.scn
-res://!old/levels/level_015.tscn::8c4356e03723f89546f4b4219a285493::1729785416::res://.godot/exported/133200997/export-9c0db7eac627631f17e1ee0b8eb8e613-level_015.scn
 res://addons/proton_scatter/src/presets/presets.tscn::4afa111ff85c139c90443292bd906ed9::1709244751::res://.godot/exported/133200997/export-ba129e65a2eeff7828fd217314c4c6e3-presets.scn
 res://addons/proton_scatter/src/stack/inspector_plugin/ui/stack_panel.tscn::96446a41e63de026b8b224f63c5d436e::1709244751::res://.godot/exported/133200997/export-54c43a1586782ac89e94889738b9c874-stack_panel.scn
 res://scenes/ui/subinventory_rect.tscn::cafa63430ab55167e12cd28f5d9b2aa5::1714668190::res://.godot/exported/133200997/export-55f9c585e04e12fb16d83f62750a7087-subinventory_rect.scn
+res://scenes/maingame/world.tscn::36befae9c3be2e588644d78127d83340::1729788110::res://.godot/exported/133200997/export-1d7111ee7e766b54b76833a470200bff-world.scn
