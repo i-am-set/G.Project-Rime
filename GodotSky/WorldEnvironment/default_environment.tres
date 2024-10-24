@@ -8,6 +8,7 @@ sky = ExtResource("1_o86xx")
 ambient_light_source = 3
 ambient_light_energy = 3.5
 reflected_light_source = 2
+tonemap_mode = 3
 tonemap_exposure = 0.15
 tonemap_white = 2.31
 ssao_enabled = true

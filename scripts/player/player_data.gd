@@ -20,6 +20,9 @@ signal stamina_regened
 @onready var stamina_bar_right: ProgressBar = $"../UserInterface/Hud/StaminaBar/StaminaBarRight"
 @onready var stamina_bar_animation_player: AnimationPlayer = $"../UserInterface/Hud/StaminaBarAnimationPlayer"
 @onready var sound_manager = $"../SoundManager"
+@onready var freeze_screen: ColorRect = $"../UserInterface/FreezeScreen"
+@onready var pain_vignette_animation_player: AnimationPlayer = $"../UserInterface/PainVignette/AnimationPlayer"
+
 
 @export var god_mode : bool = false
 @export var no_clip : bool = false
@@ -30,6 +33,7 @@ const max_stamina : int = 100
 const min_stamina : int = 0
 const max_temperature : int = 200
 const comfortable_temperature : int = 100
+const freezing_temperature : int = 30
 const min_temperature : int = 0
 const max_hunger : int = 100
 const min_hunger : int = 0
@@ -48,6 +52,10 @@ var hunger : int
 var hunger_damage : int = 1
 var hunger_decrease_rate : int = 1800
 var current_hunger_tick : int = 0
+var temperature_change_rate : int = 100
+var current_temperature_tick : int = 0
+var ambient_temperature_score : int = 0
+#var freeze_screen_amount : float = 0
 var stamina_decrease_rate : int = 8
 var stamina_regen_rate : int = 3
 var jump_stamina_requirement : int = 25
@@ -103,11 +111,28 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	update_hunger_tick()
+	update_temperature_tick()
 	update_stamina_tick()
 	update_heart_rate_tick(delta)
 	update_breathing_tick(delta)
 	update_stamina_regen_cooldown(delta)
 	update_progress_bars(delta)
+
+#func _input(event):
+	#if event.is_action_pressed("ui_scroll_up"):
+		#if freeze_screen_amount < 1:
+				#freeze_screen_amount += 0.05
+		#elif freeze_screen_amount >= 1:
+			#freeze_screen_amount = 1
+		#set_freeze_screen_amount(freeze_screen_amount)
+		#print_debug("scroll up")
+	#if event.is_action_pressed("ui_scroll_down"):
+		#if freeze_screen_amount > 0:
+			#freeze_screen_amount -= 0.05
+		#elif freeze_screen_amount <= 0:
+			#freeze_screen_amount = 0
+		#set_freeze_screen_amount(freeze_screen_amount)
+		#print_debug("scroll down")
 
 func damage_player(damage : int):
 	var damaged_health = health - damage
@@ -166,11 +191,11 @@ func chill_player(value : int):
 	set_temperature(chilled_amount)
 
 func warm_player(value : int):
-	var warmed_amoung = temperature + value
-	set_temperature(warmed_amoung)
+	var warmed_amount = temperature + value
+	set_temperature(warmed_amount)
 
 func set_temperature(value : int):
-	if value < temperature && god_mode:
+	if (value < temperature || value > comfortable_temperature) && god_mode:
 		return
 	
 	var clamped_value = clampi(value, min_temperature, max_temperature)
@@ -179,14 +204,31 @@ func set_temperature(value : int):
 		var difference = clamped_value - temperature
 		temperature = clamped_value
 		temperature_changed.emit(difference)
+		if temperature < comfortable_temperature:
+			set_freeze_screen_amount(temperature)
+		else:
+			set_freeze_screen_amount(0)
 		
-		if temperature <= min_temperature:
-			temperature = min_temperature
+		if temperature <= freezing_temperature:
 			freeze()
+			if temperature <= min_temperature:
+				temperature = min_temperature
+		elif is_freezing:
+			unfreeze()
 
 func freeze():
+	if is_freezing:
+		return
+	
 	is_freezing = true
+	pain_vignette_animation_player.play("PainVignetteFlash")
 	temperature_depleted.emit()
+
+func unfreeze():
+	if not is_freezing:
+		return
+	is_freezing = false
+	pain_vignette_animation_player.play("RESET")
 
 func set_stamina(value : int):
 	if value < stamina && god_mode:
@@ -217,6 +259,14 @@ func update_hunger_tick():
 			damage_player(hunger_damage)
 		else:
 			set_hunger(new_hunger)
+
+func update_temperature_tick():
+	current_temperature_tick += 1
+	
+	if current_temperature_tick >= temperature_change_rate:
+		current_temperature_tick = 0
+		
+		chill_player(1)
 
 func update_stamina_tick():
 	if is_exhausted && stamina >= not_exhausted_threshold:
@@ -348,6 +398,17 @@ func update_progress_bars(delta: float):
 	stamina_bar_right.value = lerp(stamina_bar_right.value, stamina, _lerp_speed)
 	health_bar.value = health
 	hunger_bar.value = hunger
+
+func set_freeze_screen_amount(_freeze_screen_amount: float) -> void:
+	if _freeze_screen_amount >= 90:
+		freeze_screen.apply_freeze_screen(_freeze_screen_amount, -1)
+	elif _freeze_screen_amount >= 60:
+		freeze_screen.apply_freeze_screen(70, 0)
+	elif _freeze_screen_amount >= 30:
+		freeze_screen.apply_freeze_screen(40, 1)
+	elif _freeze_screen_amount >= 0:
+		freeze_screen.apply_freeze_screen(0, 2)
+
 
 func c_toggle_god_mode():
 	god_mode = !god_mode

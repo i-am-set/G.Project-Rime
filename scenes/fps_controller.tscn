@@ -1,4 +1,4 @@
-[gd_scene load_steps=245 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=251 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -28,6 +28,7 @@
 [ext_resource type="Script" path="res://scripts/game/fps_label.gd" id="8_mj3xk"]
 [ext_resource type="AudioStream" uid="uid://brwe8houxfwm" path="res://sound/sfx/footsteps/sfx_snow_footstep-01.wav" id="8_n3hft"]
 [ext_resource type="Script" path="res://scripts/player/IdlePlayerState.gd" id="8_rqw4w"]
+[ext_resource type="AudioStream" uid="uid://12a3kvhgpmha" path="res://sound/sfx/cold/sfx_freezing_screen-01.wav" id="9_l4w0c"]
 [ext_resource type="Texture2D" uid="uid://bgnix38vyapog" path="res://textures/ui/slider_grabber_highlighted.png" id="9_s7idq"]
 [ext_resource type="AudioStream" uid="uid://d0kkd73q8uhxn" path="res://sound/sfx/ui/sfx_ui_button_hover.wav" id="9_sy13b"]
 [ext_resource type="AudioStream" uid="uid://did3b458xfoi6" path="res://sound/sfx/misc/backpack_close.wav" id="9_u18am"]
@@ -74,9 +75,10 @@
 [ext_resource type="FontFile" uid="uid://qgy4e6kjb26y" path="res://ui/fonts/FiraCode/FiraCode-SemiBold.ttf" id="32_avdi6"]
 [ext_resource type="FontFile" uid="uid://b1bajxug27g8d" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBoldItalic.ttf" id="33_hiq4g"]
 [ext_resource type="ButtonGroup" uid="uid://dw7u7yaahfym6" path="res://ui/button_groups/shadow_quality_button_group.tres" id="36_j0b2w"]
-[ext_resource type="Texture2D" uid="uid://d10ab4j51ogt6" path="res://textures/nature/effects/ice_texture_hi_res.jpeg" id="36_ljg0y"]
+[ext_resource type="Texture2D" uid="uid://d10ab4j51ogt6" path="res://textures/nature/effects/ice_texture_hi_res.jpeg" id="36_y6mqt"]
 [ext_resource type="ButtonGroup" uid="uid://c6180svcrruw8" path="res://ui/button_groups/shadow_filter_button_group.tres" id="37_bblit"]
 [ext_resource type="ButtonGroup" uid="uid://qxij05leecnc" path="res://ui/button_groups/ssil_quality_button_group.tres" id="37_iaqkf"]
+[ext_resource type="Script" path="res://scripts/player/freeze_screen_logic.gd" id="37_o7w6n"]
 [ext_resource type="ButtonGroup" uid="uid://d1rwdy7rhnv81" path="res://ui/button_groups/ssao_quality_button_group.tres" id="38_bkg3p"]
 [ext_resource type="Texture2D" uid="uid://4o7q5kfibtr6" path="res://textures/ui/hud/hud_progress_circle.png" id="38_sxo8f"]
 [ext_resource type="Script" path="res://scripts/game/UseProgressCircle.gd" id="39_10oom"]
@@ -1463,7 +1465,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="Curve" id="Curve_i32yu"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.565574, 0.164835), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.549133, 0.406593), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_t0tiq"]
@@ -1497,7 +1499,7 @@ damping_max = 0.5
 scale_min = 0.25
 scale_curve = SubResource("CurveTexture_lec33")
 scale_over_velocity_curve = SubResource("CurveTexture_tp1v8")
-color = Color(0.572549, 0.619608, 0.737255, 1)
+color = Color(0.187052, 0.217766, 0.297115, 1)
 alpha_curve = SubResource("CurveTexture_t0tiq")
 
 [sub_resource type="QuadMesh" id="QuadMesh_bndfs"]
@@ -2070,10 +2072,10 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vfj52"]
 shader = SubResource("Shader_okk0j")
-shader_parameter/inner_radius = 0.5
-shader_parameter/outer_radius = 1.405
+shader_parameter/inner_radius = 0.45
+shader_parameter/outer_radius = 1.045
 shader_parameter/vignette_strength = 1.0
-shader_parameter/dither_strength = 0.03
+shader_parameter/dither_strength = -0.02
 shader_parameter/vignette_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Shader" id="Shader_0fptd"]
@@ -2083,7 +2085,7 @@ uniform float inner_radius = 0.1;
 uniform float outer_radius = 1;
 uniform float vignette_strength = 1.0;
 uniform float dither_strength = 0.03;
-uniform sampler2D vignette_texture;
+uniform sampler2D vignette_texture : source_color,filter_nearest;
 
 
 void fragment() {
@@ -2098,11 +2100,57 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dlmub"]
 shader = SubResource("Shader_0fptd")
-shader_parameter/inner_radius = 0.275
-shader_parameter/outer_radius = 1.0
+shader_parameter/inner_radius = 0.45
+shader_parameter/outer_radius = 0.75
 shader_parameter/vignette_strength = 1.0
-shader_parameter/dither_strength = 0.03
-shader_parameter/vignette_texture = ExtResource("36_ljg0y")
+shader_parameter/dither_strength = -0.035
+shader_parameter/vignette_texture = ExtResource("36_y6mqt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aiy5x"]
+shader = SubResource("Shader_okk0j")
+shader_parameter/inner_radius = 1.0
+shader_parameter/outer_radius = 1.045
+shader_parameter/vignette_strength = 0.0
+shader_parameter/dither_strength = -0.02
+shader_parameter/vignette_color = Color(0.968627, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_nwi8t"]
+resource_name = "PainVignetteFlash"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../PainVignette:material:shader_parameter/inner_radius")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 0.6, 0.6, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_8i8ch"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../PainVignette:material:shader_parameter/inner_radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0tf5s"]
+_data = {
+"PainVignetteFlash": SubResource("Animation_nwi8t"),
+"RESET": SubResource("Animation_8i8ch")
+}
 
 [sub_resource type="Shader" id="Shader_esooc"]
 code = "shader_type canvas_item;
@@ -2983,6 +3031,10 @@ unit_size = 1.0
 pitch_scale = 2.0
 bus = &"SFX"
 
+[node name="SfxFreezingScreen" type="AudioStreamPlayer" parent="SoundManager"]
+stream = ExtResource("9_l4w0c")
+bus = &"SFX"
+
 [node name="SfxInventory" type="AudioStreamPlayer" parent="SoundManager"]
 stream = ExtResource("9_u18am")
 volume_db = -12.0
@@ -3014,26 +3066,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(3.57126e-12, 0.97552, -0.978518)
+bones/0/position = Vector3(-2.40583e-11, 0.980075, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190256, 0.588891, 0.0119585)
+bones/2/position = Vector3(0.190251, 0.579408, 0.011766)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00136725, -0.00690848, 0.999166, -0.0402265)
-bones/6/rotation = Quaternion(-0.0499706, 0.00859118, -0.0144455, 0.998609)
+bones/5/rotation = Quaternion(0.000536676, -0.0272254, 0.998819, -0.0402458)
+bones/6/rotation = Quaternion(-0.0101086, 0.00207179, -0.0165271, 0.99981)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000859374, -0.0101144, 0.996329, 0.0850068)
+bones/8/rotation = Quaternion(0.000941171, -0.0101071, 0.995608, 0.0930644)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00136502, -0.00690817, 0.999141, 0.040829)
+bones/11/rotation = Quaternion(-0.000551819, -0.0270983, 0.998798, 0.0408481)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0505977, 0.00095795, 0.0191705, 0.998535)
+bones/12/rotation = Quaternion(-0.0102173, -0.000413249, 0.0173478, 0.999797)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3184,7 +3236,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3223,6 +3275,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("37_o7w6n")
+
+[node name="PainVignette" type="ColorRect" parent="UserInterface"]
+material = SubResource("ShaderMaterial_aiy5x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0.0705882, 0.270588, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UserInterface/PainVignette"]
+root_node = NodePath("../../FreezeScreen")
+libraries = {
+"": SubResource("AnimationLibrary_0tf5s")
+}
 
 [node name="Grain" type="ColorRect" parent="UserInterface"]
 visible = false

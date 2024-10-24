@@ -1,11 +1,11 @@
-TextureRect
 AnimationPlayer
+AudioStreamPlayer
+TextureRect
 AnimationTree
 Timer
 Control
 TextureProgressBar
 ProgressBar
-AudioStreamPlayer
 ColorRect
 HBoxContainer
 Label

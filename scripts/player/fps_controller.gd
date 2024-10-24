@@ -391,6 +391,7 @@ func debug_process():
 		Global.debug.add_property("Heart Rate", player_data.current_heart_rate_bpm, 2)
 		Global.debug.add_property("Breathe Sine", player_data.breath_sine_wave, 2)
 		Global.debug.add_property("Has Exhaled", player_data.has_exhaled, 2)
+		Global.debug.add_property("Body Temperature", player_data.temperature, 2)
 
 func looking_process():
 	if look_at_ray_cast.is_colliding():

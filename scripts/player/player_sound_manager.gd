@@ -43,6 +43,12 @@ const EXHALE_SOUNDS : Array[AudioStreamWAV] = [
 	preload("res://sound/sfx/human/breathing/exhale/soft_exhale-06.wav")
 ]
 
+const  FREEZING_SCREEN_SOUNDS : Array[AudioStreamWAV] = [
+	preload("res://sound/sfx/cold/sfx_freezing_screen-01.wav"),
+	preload("res://sound/sfx/cold/sfx_freezing_screen-02.wav"),
+	preload("res://sound/sfx/cold/sfx_freezing_screen-03.wav")
+]
+
 const BACKPACK_OPEN = preload("res://sound/sfx/misc/backpack_open.wav")
 const BACKPACK_CLOSE = preload("res://sound/sfx/misc/backpack_close.wav")
 
@@ -58,6 +64,7 @@ const BACKPACK_CLOSE = preload("res://sound/sfx/misc/backpack_close.wav")
 @onready var sfx_button_click: AudioStreamPlayer = $SfxButtonClick
 @onready var sfx_inventory: AudioStreamPlayer = $SfxInventory
 @onready var sfx_pick_up: AudioStreamPlayer = $SfxPickUp
+@onready var sfx_freezing_screen: AudioStreamPlayer = $SfxFreezingScreen
 
 
 var wind_audio_players_default_volume : int = -20
@@ -129,6 +136,10 @@ func footstep_right_logic():
 	if !sfx_right_footstep.playing:
 		sfx_right_footstep.stream = FOOTSTEP_SOUNDS[footstep_index]
 		sfx_right_footstep.play()
+
+func play_freezing_screen(sound_index: int):
+	sfx_freezing_screen.stream = FREEZING_SCREEN_SOUNDS[sound_index]
+	sfx_freezing_screen.play()
 
 func play_exhale():
 	var exhale_index : int = previous_exhale_index
