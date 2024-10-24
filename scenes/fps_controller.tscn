@@ -119,7 +119,7 @@ texture_filter = 0
 albedo_texture = ExtResource("15_bhbs5")
 texture_filter = 0
 
-[sub_resource type="Animation" id="Animation_7rqbi"]
+[sub_resource type="Animation" id="Animation_ddnkl"]
 resource_name = "a_pose"
 length = 0.0416667
 tracks/0/type = "position_3d"
@@ -235,7 +235,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="Animation" id="Animation_oofdb"]
+[sub_resource type="Animation" id="Animation_7pqen"]
 resource_name = "Action"
 length = 0.001
 tracks/0/type = "position_3d"
@@ -351,7 +351,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="Animation" id="Animation_veky3"]
+[sub_resource type="Animation" id="Animation_l1uio"]
 resource_name = "crouch_idle"
 length = 0.833333
 loop_mode = 1
@@ -468,7 +468,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="Animation" id="Animation_jt326"]
+[sub_resource type="Animation" id="Animation_durnr"]
 resource_name = "head_looking_down"
 length = 0.833333
 tracks/0/type = "rotation_3d"
@@ -584,7 +584,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="Animation" id="Animation_vygqs"]
+[sub_resource type="Animation" id="Animation_jlbw7"]
 resource_name = "head_looking_up"
 length = 0.833333
 tracks/0/type = "rotation_3d"
@@ -700,7 +700,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="Animation" id="Animation_myl7l"]
+[sub_resource type="Animation" id="Animation_ac7sq"]
 resource_name = "idle_arms"
 length = 2.5
 loop_mode = 1
@@ -817,7 +817,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="Animation" id="Animation_g03nl"]
+[sub_resource type="Animation" id="Animation_8yd4v"]
 resource_name = "interact_arms"
 length = 0.833333
 tracks/0/type = "rotation_3d"
@@ -933,7 +933,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, 0.673228, 0.00181528, -0.00276143, 0.739427)
 
-[sub_resource type="Animation" id="Animation_dwilu"]
+[sub_resource type="Animation" id="Animation_lhihf"]
 resource_name = "standing_idle"
 length = 2.5
 loop_mode = 1
@@ -1050,7 +1050,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="Animation" id="Animation_3wr2p"]
+[sub_resource type="Animation" id="Animation_q87wl"]
 resource_name = "t_pose"
 length = 0.0416667
 tracks/0/type = "rotation_3d"
@@ -1166,7 +1166,7 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="Animation" id="Animation_g1oy3"]
+[sub_resource type="Animation" id="Animation_oe4og"]
 resource_name = "walk_forward_arms"
 length = 0.833333
 loop_mode = 1
@@ -1283,28 +1283,28 @@ tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = PackedFloat32Array(0, 1, -0.0387568, 0.0034877, 0.0916016, 0.995035)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_bvl45"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mgoti"]
 _data = {
-"Action": SubResource("Animation_oofdb"),
-"a_pose": SubResource("Animation_7rqbi"),
-"crouch_idle": SubResource("Animation_veky3"),
+"Action": SubResource("Animation_7pqen"),
+"a_pose": SubResource("Animation_ddnkl"),
+"crouch_idle": SubResource("Animation_l1uio"),
 "crouch_walk_backward": ExtResource("16_ych3v"),
 "crouch_walk_forward": ExtResource("17_koyta"),
 "crouch_walk_left": ExtResource("18_6wdto"),
 "crouch_walk_right": ExtResource("19_uufsp"),
-"head_looking_down": SubResource("Animation_jt326"),
-"head_looking_up": SubResource("Animation_vygqs"),
-"idle_arms": SubResource("Animation_myl7l"),
-"interact_arms": SubResource("Animation_g03nl"),
+"head_looking_down": SubResource("Animation_durnr"),
+"head_looking_up": SubResource("Animation_jlbw7"),
+"idle_arms": SubResource("Animation_ac7sq"),
+"interact_arms": SubResource("Animation_8yd4v"),
 "run_backward": ExtResource("16_ses6m"),
 "run_forward": ExtResource("17_ehbry"),
 "run_left": ExtResource("18_gn4k0"),
 "run_right": ExtResource("19_2gbdy"),
-"standing_idle": SubResource("Animation_dwilu"),
-"t_pose": SubResource("Animation_3wr2p"),
+"standing_idle": SubResource("Animation_lhihf"),
+"t_pose": SubResource("Animation_q87wl"),
 "walk_backwards": ExtResource("16_vcjye"),
 "walk_forward": ExtResource("16_nwru8"),
-"walk_forward_arms": SubResource("Animation_g1oy3"),
+"walk_forward_arms": SubResource("Animation_oe4og"),
 "walk_left": ExtResource("17_6ek57"),
 "walk_right": ExtResource("18_kj8gg")
 }
@@ -3066,26 +3066,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(-2.40583e-11, 0.980075, -0.978518)
+bones/0/position = Vector3(-6.68857e-12, 0.97921, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190251, 0.579408, 0.011766)
+bones/2/position = Vector3(0.190252, 0.581288, 0.0118042)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.000536676, -0.0272254, 0.998819, -0.0402458)
-bones/6/rotation = Quaternion(-0.0101086, 0.00207179, -0.0165271, 0.99981)
+bones/5/rotation = Quaternion(0.000701267, -0.0232006, 0.99892, -0.0402433)
+bones/6/rotation = Quaternion(-0.0180277, 0.003367, -0.0161158, 0.999702)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000941171, -0.0101071, 0.995608, 0.0930644)
+bones/8/rotation = Quaternion(0.000925181, -0.0101086, 0.995754, 0.0914891)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.000551819, -0.0270983, 0.998798, 0.0408481)
+bones/11/rotation = Quaternion(-0.000708886, -0.0232, 0.998896, 0.0408458)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0102173, -0.000413249, 0.0173478, 0.999797)
+bones/12/rotation = Quaternion(-0.0182391, -0.000140951, 0.017712, 0.999677)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3098,7 +3098,7 @@ surface_material_override/3 = SubResource("StandardMaterial3D_pvjh0")
 [node name="AnimationTree" type="AnimationTree" parent="CollisionShape3D/player_model"]
 root_node = NodePath("../male_player_model_01")
 libraries = {
-"": SubResource("AnimationLibrary_bvl45")
+"": SubResource("AnimationLibrary_mgoti")
 }
 tree_root = SubResource("AnimationNodeBlendTree_r625r")
 anim_player = NodePath("../male_player_model_01/AnimationPlayer")
@@ -3236,7 +3236,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
