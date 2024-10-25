@@ -12,7 +12,6 @@ extends CharacterBody3D
 @onready var pause_menu = $UserInterface/PauseMenu
 @onready var pause_animator = $UserInterface/PauseMenu/BlurAnimator
 @onready var inventory_menu = $UserInterface/InventoryMenu
-@onready var inventory_manager : InventoryManager = $UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager
 @onready var POSTP_DITHER = $PostProcessingDither
 @onready var POSTP_OUTLINE = $PostProcessingOutline
 @onready var world = $"../.."
@@ -141,10 +140,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE:
 			capture_mouse()
 		if event.is_action_pressed("exit"):
-			if (inventory_menu.visible):
-				if !Global.IS_IN_CONSOLE:
-					inventory_menu.toggle_inventory()
-			elif Global.IS_IN_CONSOLE:
+			if Global.IS_IN_CONSOLE:
 				pass
 			else:
 				toggle_pause_menu()
@@ -292,7 +288,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 			# Allow flying movement based on mouse direction
 			var input_dir = Vector3.ZERO
 			var camera_forward = Vector3.ZERO
-			if (Global.MOUSE_CAPTURED == true && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE) || Global.IS_IN_INVENTORY:
+			if (Global.MOUSE_CAPTURED == true && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE):
 				input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 				camera_forward = -CAMERA_CONTROLLER.global_transform.basis.z.normalized()
 				
@@ -319,7 +315,7 @@ func update_input(speed: float, acceleration: float, deceleration: float) -> voi
 				velocity.y = -speed  # Move down
 		else:
 			var input_dir = Vector3.ZERO
-			if (Global.MOUSE_CAPTURED == true && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE) || Global.IS_IN_INVENTORY:
+			if (Global.MOUSE_CAPTURED == true && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE):
 				input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 			
 			var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -427,7 +423,7 @@ func interact_pick_up_to_inventory():
 		arms_animation_player.stop()
 		arms_animation_player.play("left_hand_grab")
 		sound_manager.play_pickup()
-		inventory_manager.pick_up_item(look_at_collider.inv_item)
+		inventory_menu.pick_up_item(look_at_collider.inv_item)
 		look_at_collider.queue_free()
 		look_at_label.text = ""
 		look_at_collider = null

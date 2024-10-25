@@ -93,7 +93,6 @@ var INV_CELL_SIZE = INV_DEFAULT_CELL_SIZE:
 		INV_CELL_SIZE = new_value
 		emit_signal("inv_cell_size_updated")
 var IS_PAUSED := false
-var IS_IN_INVENTORY := false
 var IS_IN_CONSOLE := false
 var IS_IN_GAME := false
 
@@ -167,7 +166,6 @@ func leave_lobby():
 	WORLD_SEED = 0
 	SPAWN_POINT = Vector2.ZERO
 	IS_PAUSED = false
-	IS_IN_INVENTORY = false
 	IS_IN_GAME = false
 
 func get_current_temperature_display() -> float:

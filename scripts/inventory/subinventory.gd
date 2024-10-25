@@ -16,10 +16,6 @@ func _ready():
 	set_up_cell_grid()
 	update_grid()
 
-#func _process(delta):
-	#if Global.IS_IN_INVENTORY:
-		#queue_redraw()
-
 func _draw():
 	if Global.IS_IN_INVENTORY:
 			# Fetch the inter-cell spacing from a global configuration or directly define here

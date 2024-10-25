@@ -4,7 +4,6 @@ extends Control
 @onready var debug_panel = $DebugPanel
 @onready var is_pausedindicator = $DebugPanel/HBoxContainer/is_pausedindicator
 @onready var is_in_consoleindicator = $DebugPanel/HBoxContainer/is_in_consoleindicator
-@onready var is_in_inventoryindicator = $DebugPanel/HBoxContainer/is_in_inventoryindicator
 
 #var property
 var frames_per_second : String
@@ -42,11 +41,6 @@ func display_indicators():
 		is_in_consoleindicator.visible = true
 	else:
 		is_in_consoleindicator.visible = false
-	
-	if Global.IS_IN_INVENTORY:
-		is_in_inventoryindicator.visible = true
-	else:
-		is_in_inventoryindicator.visible = false
 
 func c_toggle_debug_panel() -> void:
 	# Toggle debug panel

@@ -25,13 +25,13 @@ func _input(event: InputEvent) -> void:
 					chat_hide_tween.stop()
 					chat.modulate.a = 1
 			# change logic based on if the chat window is open or not
-			if visible == false || chatInput.has_focus() == false && Global.IS_PAUSED == false && Global.IS_IN_INVENTORY == false && Global.IS_IN_CONSOLE == false:
+			if visible == false || chatInput.has_focus() == false && Global.IS_PAUSED == false && Global.IS_IN_CONSOLE == false:
 				visible = true
 				select_chat_input()
 				uncapture_mouse()
 			else:
 				send_chat_message()
-		if Input.is_action_pressed("exit") || Global.IS_PAUSED == true || Global.IS_IN_INVENTORY == true || Global.IS_IN_CONSOLE == true:
+		if Input.is_action_pressed("exit") || Global.IS_PAUSED == true || Global.IS_IN_CONSOLE == true:
 			chatInput.clear()
 			if visible == true:
 				deselect_chat_input()

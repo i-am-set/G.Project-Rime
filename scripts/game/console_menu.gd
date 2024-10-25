@@ -20,5 +20,5 @@ func toggle_debug_console():
 	if visible:
 		Global.capture_mouse(false)
 	else:
-		if !Global.IS_PAUSED && !Global.IS_IN_INVENTORY && Global.IS_IN_GAME:
+		if !Global.IS_PAUSED && Global.IS_IN_GAME:
 				Global.capture_mouse(true)

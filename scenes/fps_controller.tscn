@@ -1,4 +1,4 @@
-[gd_scene load_steps=251 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=242 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -64,11 +64,7 @@
 [ext_resource type="FontFile" uid="uid://b8m7rk12l8ne" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Medium.ttf" id="19_k1d5d"]
 [ext_resource type="Script" path="res://scripts/player/floor_detector_script.gd" id="19_lm36c"]
 [ext_resource type="Animation" uid="uid://crwriegbjqw2k" path="res://meshes/entities/player_models/male_01_model/animations/anim_crouch_walk_right.res" id="19_uufsp"]
-[ext_resource type="Script" path="res://scripts/player/inventory/inventory_manager.gd" id="21_kj22e"]
 [ext_resource type="FontFile" uid="uid://bi8vqxiodvx8h" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-SemiBold.ttf" id="22_7k54l"]
-[ext_resource type="PackedScene" uid="uid://nvpqhb7ntek8" path="res://scenes/ui/inventory_tooltip.tscn" id="22_m7qam"]
-[ext_resource type="PackedScene" uid="uid://b4kiu73xi3i07" path="res://scenes/ui/inventory_rmb_menu.tscn" id="23_xmp0g"]
-[ext_resource type="PackedScene" uid="uid://ca0qt70ydcxfg" path="res://scenes/ui/held_item_preview.tscn" id="25_8skjh"]
 [ext_resource type="Script" path="res://scripts/game/pause_menu_manager.gd" id="26_dwci0"]
 [ext_resource type="PackedScene" uid="uid://c42sfvywcr5gv" path="res://meshes/entities/player_models/male_arms_model/male_arm_model.glb" id="29_vuwgx"]
 [ext_resource type="Script" path="res://scripts/game/settings_page.gd" id="32_a7oif"]
@@ -82,8 +78,7 @@
 [ext_resource type="ButtonGroup" uid="uid://d1rwdy7rhnv81" path="res://ui/button_groups/ssao_quality_button_group.tres" id="38_bkg3p"]
 [ext_resource type="Texture2D" uid="uid://4o7q5kfibtr6" path="res://textures/ui/hud/hud_progress_circle.png" id="38_sxo8f"]
 [ext_resource type="Script" path="res://scripts/game/UseProgressCircle.gd" id="39_10oom"]
-[ext_resource type="Texture2D" uid="uid://dyqee0hq5qk88" path="res://textures/ui/Inventory/InvnetoryUI.png" id="57_dxt6j"]
-[ext_resource type="Script" path="res://scripts/player/inventory/subinventory_manager.gd" id="58_omh1u"]
+[ext_resource type="PackedScene" uid="uid://b7jlc7vkdspss" path="res://scenes/ui/inv_item_rect.tscn" id="64_su1hu"]
 [ext_resource type="Shader" path="res://shaders/player_post_processesing.gdshader" id="81_nnfk3"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_vpt8f"]
@@ -2809,48 +2804,6 @@ VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_o10mt")
 VScrollBar/styles/scroll = SubResource("StyleBoxFlat_s7c2d")
 VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ap6aa")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_psggs"]
-bg_color = Color(0.145098, 0.145098, 0.145098, 1)
-shadow_color = Color(0, 0, 0, 0.243137)
-
-[sub_resource type="Animation" id="Animation_yo5v2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 5)]
-}
-
-[sub_resource type="Animation" id="Animation_8qm0f"]
-resource_name = "bob_up_and_down"
-length = 5.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 2.5, 5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 1), Vector2(0, -1), Vector2(0, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hpakt"]
-_data = {
-"RESET": SubResource("Animation_yo5v2"),
-"bob_up_and_down": SubResource("Animation_8qm0f")
-}
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
 
@@ -3065,26 +3018,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(4.54796e-12, 0.97763, -0.978518)
+bones/0/position = Vector3(-2.27769e-11, 0.97449, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190254, 0.584504, 0.0118695)
+bones/2/position = Vector3(0.190258, 0.591178, 0.012005)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.000981191, -0.0163541, 0.999056, -0.0402376)
-bones/6/rotation = Quaternion(-0.0314549, 0.00556303, -0.0154159, 0.999371)
+bones/5/rotation = Quaternion(0.00156459, -0.00207903, 0.999187, -0.0402195)
+bones/6/rotation = Quaternion(-0.0595067, 0.0101507, -0.0139433, 0.998079)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.00089753, -0.0101111, 0.996001, 0.0887654)
+bones/8/rotation = Quaternion(0.000839652, -0.0101161, 0.996493, 0.0830638)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.000988407, -0.0162608, 0.999033, 0.0408399)
+bones/11/rotation = Quaternion(-0.00155617, -0.00215975, 0.999163, 0.0408221)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0318404, 0.000320852, 0.0183272, 0.999325)
+bones/12/rotation = Quaternion(-0.060256, 0.0012861, 0.0196023, 0.99799)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3235,7 +3188,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -4562,8 +4515,69 @@ anchor_bottom = 1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = SubResource("Theme_d6bwr")
 script = ExtResource("5_m68ou")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.306
+anchor_top = 0.851
+anchor_right = 0.694
+anchor_bottom = 0.971
+offset_left = -0.294037
+offset_top = 0.0999756
+offset_right = 0.293945
+offset_bottom = 0.0999146
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="item_0" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_1" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_2" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_3" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_4" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="Red" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.811765, 0, 0.254902, 1)
+
+[node name="Blue" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0, 0.45098, 0.843137, 1)
+
+[node name="Green" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.376471, 0.815686, 0, 1)
+
+[node name="Yellow" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 0.835294, 0.129412, 1)
+
+[node name="Orange" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.882353, 0.337255, 0, 1)
 
 [node name="FACADE" type="TextureRect" parent="UserInterface/InventoryMenu"]
 visible = false
@@ -4575,149 +4589,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("14_hebny")
 expand_mode = 1
-
-[node name="MAININV" type="Control" parent="UserInterface/InventoryMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="EquipmentPanel" type="Panel" parent="UserInterface/InventoryMenu/MAININV"]
-visible = false
-layout_mode = 2
-anchor_left = 0.375
-anchor_right = 0.575
-anchor_bottom = 1.0
-offset_left = -0.625061
-offset_right = 0.574951
-size_flags_horizontal = 3
-theme_override_styles/panel = SubResource("StyleBoxFlat_psggs")
-
-[node name="InventoryPanel" type="TextureRect" parent="UserInterface/InventoryMenu/MAININV"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 5.0
-offset_bottom = 5.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-texture = ExtResource("57_dxt6j")
-
-[node name="InventoryManager" type="Control" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
-layout_mode = 2
-anchors_preset = 0
-anchor_left = 0.348
-anchor_top = 0.176
-anchor_right = 0.657
-anchor_bottom = 0.751
-offset_left = -0.451965
-offset_top = -0.400009
-offset_right = 0.457031
-offset_bottom = 0.0999756
-size_flags_vertical = 3
-script = ExtResource("21_kj22e")
-
-[node name="Weight" type="Label" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.858
-anchor_top = 0.928
-anchor_right = 0.986
-anchor_bottom = 0.984
-offset_left = 387.284
-offset_top = 192.762
-offset_right = 386.612
-offset_bottom = 193.362
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-horizontal_scroll_mode = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="JunkGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 12
-script = ExtResource("58_omh1u")
-
-[node name="ResourceGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 12
-script = ExtResource("58_omh1u")
-
-[node name="WeaponGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 8
-script = ExtResource("58_omh1u")
-
-[node name="GarmentGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 8
-script = ExtResource("58_omh1u")
-
-[node name="FoodGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 8
-script = ExtResource("58_omh1u")
-
-[node name="MedicalGridContainer" type="GridContainer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel/InventoryManager/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 8
-script = ExtResource("58_omh1u")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UserInterface/InventoryMenu/MAININV/InventoryPanel"]
-libraries = {
-"": SubResource("AnimationLibrary_hpakt")
-}
-
-[node name="Selector" type="Control" parent="UserInterface/InventoryMenu"]
-visible = false
-layout_mode = 2
-anchors_preset = 0
-offset_right = 30.0
-offset_bottom = 30.0
-size_flags_horizontal = 0
-size_flags_vertical = 0
-mouse_filter = 2
-
-[node name="ColorRect" type="ColorRect" parent="UserInterface/InventoryMenu/Selector"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(15, 15)
-mouse_filter = 2
-color = Color(1, 1, 1, 0.392157)
-
-[node name="Tooltip" parent="UserInterface/InventoryMenu" instance=ExtResource("22_m7qam")]
-visible = false
-
-[node name="RmbMenu" parent="UserInterface/InventoryMenu" instance=ExtResource("23_xmp0g")]
-visible = false
-layout_mode = 1
-
-[node name="held_item_preview" parent="UserInterface/InventoryMenu" instance=ExtResource("25_8skjh")]
-visible = false
 
 [node name="Debug" type="Control" parent="UserInterface"]
 layout_mode = 1
@@ -4754,13 +4625,6 @@ theme = SubResource("Theme_g3ryb")
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
-
-[node name="is_in_inventoryindicator" type="ColorRect" parent="UserInterface/Debug/DebugPanel/HBoxContainer"]
-custom_minimum_size = Vector2(3, 3)
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-color = Color(0.901961, 0.65098, 0.368627, 1)
 
 [node name="is_in_consoleindicator" type="ColorRect" parent="UserInterface/Debug/DebugPanel/HBoxContainer"]
 custom_minimum_size = Vector2(3, 3)
