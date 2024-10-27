@@ -118,7 +118,6 @@ func _input(event):
 		print_debug("scroll up")
 	if event.is_action_pressed("ui_scroll_down"):
 		print_debug("scroll down")
-		#
 	
 	if event.is_action_pressed("interact"):
 		is_holding_interact = true
@@ -418,7 +417,7 @@ func interact_process(delta):
 					interact_pick_up_to_hand()  # Call function2 when it reaches 100
 
 func interact_pick_up_to_inventory():
-	if !_is_busy:
+	if !_is_busy && inventory_menu.has_empty_slots(1):
 		busy_progress_circle.start_busy_progress_circle_timer(0.5)
 		arms_animation_player.stop()
 		arms_animation_player.play("left_hand_grab")

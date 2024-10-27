@@ -2222,6 +2222,62 @@ shader = SubResource("Shader_esooc")
 shader_parameter/pixel = 1.0
 shader_parameter/pallete = SubResource("GradientTexture2D_mxl5y")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhjre"]
+bg_color = Color(0.196078, 0.196078, 0.196078, 0.376471)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iebnp"]
+bg_color = Color(0.129412, 0.129412, 0.129412, 0.607843)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+expand_margin_left = 30.0
+expand_margin_right = 30.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp6ma"]
+bg_color = Color(0.333333, 0.333333, 0.333333, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.364706, 0.364706, 0.364706, 0.552941)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfpxa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o10mt"]
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7c2d"]
+content_margin_left = 6.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0.0823529)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ap6aa"]
+
+[sub_resource type="Theme" id="Theme_d6bwr"]
+Button/fonts/font = ExtResource("7_dw6kc")
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.854902)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/font_sizes/font_size = 16
+Label/fonts/font = ExtResource("7_dw6kc")
+MarginContainer/constants/margin_bottom = 4
+MarginContainer/constants/margin_left = 4
+MarginContainer/constants/margin_top = 4
+TabContainer/constants/side_margin = 30
+TabContainer/font_sizes/font_size = 12
+TabContainer/styles/panel = SubResource("StyleBoxFlat_yhjre")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_iebnp")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_hp6ma")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_mfpxa")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_o10mt")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_s7c2d")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ap6aa")
+
 [sub_resource type="Theme" id="Theme_dm671"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npmun"]
@@ -2748,62 +2804,6 @@ Button/styles/pressed = SubResource("StyleBoxEmpty_r6dkg")
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
 Label/font_sizes/font_size = 16
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhjre"]
-bg_color = Color(0.196078, 0.196078, 0.196078, 0.376471)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iebnp"]
-bg_color = Color(0.129412, 0.129412, 0.129412, 0.607843)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-expand_margin_left = 30.0
-expand_margin_right = 30.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp6ma"]
-bg_color = Color(0.333333, 0.333333, 0.333333, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.364706, 0.364706, 0.364706, 0.552941)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfpxa"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o10mt"]
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7c2d"]
-content_margin_left = 6.0
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.8, 0.8, 0.8, 0.0823529)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ap6aa"]
-
-[sub_resource type="Theme" id="Theme_d6bwr"]
-Button/fonts/font = ExtResource("7_dw6kc")
-Label/colors/font_shadow_color = Color(0, 0, 0, 0.854902)
-Label/constants/shadow_offset_x = 1
-Label/constants/shadow_offset_y = 1
-Label/font_sizes/font_size = 16
-Label/fonts/font = ExtResource("7_dw6kc")
-MarginContainer/constants/margin_bottom = 4
-MarginContainer/constants/margin_left = 4
-MarginContainer/constants/margin_top = 4
-TabContainer/constants/side_margin = 30
-TabContainer/font_sizes/font_size = 12
-TabContainer/styles/panel = SubResource("StyleBoxFlat_yhjre")
-TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_iebnp")
-VScrollBar/styles/grabber = SubResource("StyleBoxFlat_hp6ma")
-VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_mfpxa")
-VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_o10mt")
-VScrollBar/styles/scroll = SubResource("StyleBoxFlat_s7c2d")
-VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ap6aa")
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnxiv"]
 bg_color = Color(0.0862745, 0.0784314, 0.0666667, 0.266667)
 
@@ -3018,26 +3018,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(-2.27769e-11, 0.97449, -0.978518)
+bones/0/position = Vector3(-1.39789e-11, 0.975861, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190258, 0.591178, 0.012005)
+bones/2/position = Vector3(0.190256, 0.588281, 0.0119462)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00156459, -0.00207903, 0.999187, -0.0402195)
-bones/6/rotation = Quaternion(-0.0595067, 0.0101507, -0.0139433, 0.998079)
+bones/5/rotation = Quaternion(0.00131377, -0.00821715, 0.999156, -0.0402283)
+bones/6/rotation = Quaternion(-0.0473911, 0.00816932, -0.014581, 0.998737)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000839652, -0.0101161, 0.996493, 0.0830638)
+bones/8/rotation = Quaternion(0.000864797, -0.010114, 0.996283, 0.0855409)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00155617, -0.00215975, 0.999163, 0.0408221)
+bones/11/rotation = Quaternion(-0.00131236, -0.00821613, 0.999132, 0.0408308)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.060256, 0.0012861, 0.0196023, 0.99799)
+bones/12/rotation = Quaternion(-0.0480019, 0.000869766, 0.0190541, 0.998665)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3188,7 +3188,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpEnd", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Sprinting", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3313,6 +3313,62 @@ theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="InventoryMenu" type="Control" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_d6bwr")
+script = ExtResource("5_m68ou")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.306
+anchor_top = 0.851
+anchor_right = 0.694
+anchor_bottom = 0.971
+offset_left = -0.294037
+offset_top = 0.0999756
+offset_right = 0.293945
+offset_bottom = 0.0999146
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="item_0" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_1" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_2" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_3" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_4" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="item_5" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
+layout_mode = 2
+
+[node name="FACADE" type="TextureRect" parent="UserInterface/InventoryMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("14_hebny")
+expand_mode = 1
 
 [node name="Hud" type="Control" parent="UserInterface"]
 layout_mode = 1
@@ -4506,89 +4562,6 @@ theme_override_colors/font_pressed_color = Color(0.403922, 0.403922, 0.403922, 1
 theme_override_colors/font_hover_color = Color(0.403922, 0.403922, 0.403922, 1)
 theme_override_font_sizes/font_size = 30
 text = "NO"
-
-[node name="InventoryMenu" type="Control" parent="UserInterface"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_d6bwr")
-script = ExtResource("5_m68ou")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterface/InventoryMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.306
-anchor_top = 0.851
-anchor_right = 0.694
-anchor_bottom = 0.971
-offset_left = -0.294037
-offset_top = 0.0999756
-offset_right = 0.293945
-offset_bottom = 0.0999146
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="item_0" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
-layout_mode = 2
-
-[node name="item_1" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
-layout_mode = 2
-
-[node name="item_2" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
-layout_mode = 2
-
-[node name="item_3" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
-layout_mode = 2
-
-[node name="item_4" parent="UserInterface/InventoryMenu/HBoxContainer" instance=ExtResource("64_su1hu")]
-layout_mode = 2
-
-[node name="Red" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0.811765, 0, 0.254902, 1)
-
-[node name="Blue" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0, 0.45098, 0.843137, 1)
-
-[node name="Green" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0.376471, 0.815686, 0, 1)
-
-[node name="Yellow" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(1, 0.835294, 0.129412, 1)
-
-[node name="Orange" type="ColorRect" parent="UserInterface/InventoryMenu/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(0.882353, 0.337255, 0, 1)
-
-[node name="FACADE" type="TextureRect" parent="UserInterface/InventoryMenu"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("14_hebny")
-expand_mode = 1
 
 [node name="Debug" type="Control" parent="UserInterface"]
 layout_mode = 1
