@@ -1,7 +1,5 @@
 extends Control
 
-const info_offset: Vector2 = Vector2(20, 0)
-
 @onready var fps_controller = $"../.."
 @onready var inventory = $inventory
 @onready var sound_manager: Node = $"../../SoundManager"
@@ -15,7 +13,7 @@ const info_offset: Vector2 = Vector2(20, 0)
 var selected_index := 0
 var inventory_contents := []
 var inventory_slots
-
+var filler_slots := []
 
 func _unhandled_input(event):
 	if event is InputEventKey:
@@ -57,43 +55,65 @@ func _input(event):
 func _ready():
 	for i in range(6):
 		inventory_contents.append(null)
+		filler_slots.append(false)
 	
 	inventory_slots = [item_0, item_1, item_2, item_3, item_4, item_5]
 	
 	update_selection()
 
 func add_item_to_inventory(added_inventory_item):
+	var slot_size = added_inventory_item.item_slot_size
 	for i in range(6):
-		if inventory_contents[i] == null:
-			inventory_contents[i] = added_inventory_item
-			update_selection()
-			break
+		if inventory_contents[i] == null and not filler_slots[i]:
+			var can_place = true
+			for j in range(1, slot_size):
+				if i + j >= 6 or inventory_contents[i + j] != null or filler_slots[i + j]:
+					can_place = false
+					break
+			if can_place:
+				inventory_contents[i] = added_inventory_item
+				for j in range(1, slot_size):
+					filler_slots[i + j] = true
+				update_selection()
+				break
 
 func remove_item_in_inventory_at_index(index: int):
 	if index >= 0 and index < 6:
+		var slot_size = inventory_contents[index].item_slot_size if inventory_contents[index] != null else 1
 		for i in range(index, 5):
-			inventory_contents[i] = inventory_contents[i + 1]
-		inventory_contents[5] = null
+			if i + slot_size < 6:
+				inventory_contents[i] = inventory_contents[i + slot_size]
+				filler_slots[i] = filler_slots[i + slot_size]
+			else:
+				inventory_contents[i] = null
+				filler_slots[i] = false
+		for i in range(6 - slot_size, 6):
+			inventory_contents[i] = null
+			filler_slots[i] = false
 		update_selection()
 
 func select_previous_slot():
 	selected_index = (selected_index - 1) % 6
+	while filler_slots[selected_index]:
+		selected_index = (selected_index - 1) % 6
 	if selected_index < 0:
 		selected_index = 5
 	update_selection()
 
 func select_next_slot():
 	selected_index = (selected_index + 1) % 6
+	while filler_slots[selected_index]:
+		selected_index = (selected_index + 1) % 6
 	if selected_index > 5:
 		selected_index = 0
 	update_selection()
 
 func select_slot(index: int):
-	if index >= 0 and index < 6:
+	if index >= 0 and index < 6 and not filler_slots[index]:
 		selected_index = index
 		update_selection()
 	else:
-		printerr("Index is out of range: ", index)
+		printerr("Index is out of range or is a filler slot: ", index)
 
 func update_selection():
 	for i in range(6):
@@ -101,7 +121,10 @@ func update_selection():
 			inventory_slots[i].select_slot()
 		else:
 			inventory_slots[i].deselect_slot()
-			
+		
+		if filler_slots[i]:
+			inventory_slots[i].filler_slot()
+		
 		if inventory_contents[i] != null:
 			inventory_slots[i].set_item_icon(Global.ITEM_ICONS[inventory_contents[i].item_id])
 		else:

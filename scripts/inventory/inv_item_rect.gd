@@ -3,6 +3,7 @@ class_name InvItemRect
 
 @onready var texture_rect: TextureRect = $TextureRect
 const INVENTORY_SLOT_SELECTED = preload("res://textures/ui/Inventory/inventory_slot_selected.png")
+const INVENTORY_SLOT_FILLER = preload("res://textures/ui/Inventory/inventory_slot_filled.png")
 const INVENTORY_SLOT_DESELECTED = [
 	preload("res://textures/ui/Inventory/inventory_slot_0.png"),
 	preload("res://textures/ui/Inventory/inventory_slot_1.png"),
@@ -26,7 +27,10 @@ func set_item_icon(item_icon : CompressedTexture2D):
 func select_slot():
 	self.texture = INVENTORY_SLOT_SELECTED
 
+func filler_slot():
+	self.texture = INVENTORY_SLOT_FILLER
+
 func deselect_slot():
-	if self.texture == INVENTORY_SLOT_SELECTED:
+	if self.texture == INVENTORY_SLOT_SELECTED || self.texture == INVENTORY_SLOT_FILLER:
 		var random_index = randi_range(0, 3)
 		self.texture = INVENTORY_SLOT_DESELECTED[random_index]
