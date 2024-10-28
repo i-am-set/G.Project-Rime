@@ -4,6 +4,7 @@ class_name InventoryItem
 # Item properties
 @export var item_id: String
 @export var item_weight: float
+@export var item_slot_size: float
 @export var item_durability: int
 
 # Optional: Provide a function to display basic info
@@ -21,6 +22,9 @@ func get_item_type() -> int:
 
 func get_item_weight() -> float:
 	return item_weight
+
+func get_item_slot_size() -> int:
+	return item_slot_size
 
 func get_item_durability() -> int:
 	return item_durability
