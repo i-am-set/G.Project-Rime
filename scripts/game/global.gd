@@ -29,6 +29,24 @@ const ITEM_ICONS : Dictionary = {
 	"a000014" : preload("res://textures/items/icons/ico_loose_wires.png"),
 	"a000015" : preload("res://textures/items/icons/ico_sharpened_flint.png")
 }
+const FILLER_MESH : Mesh = preload("res://meshes/items/resources/stick_item_model.obj")
+const ITEM_MESHES : Dictionary = {
+	"a000001" : preload("res://meshes/items/resources/flint_item_model.obj"),
+	"a000002" : preload("res://meshes/items/resources/stone_item_model.obj"),
+	"a000003" : FILLER_MESH,
+	"a000004" : FILLER_MESH,
+	"a000005" : preload("res://meshes/items/resources/twig_item_model.obj"),
+	"a000006" : preload("res://meshes/items/resources/stick_item_model.obj"),
+	"a000007" : preload("res://meshes/items/resources/log_item_model.obj"),
+	"a000008" : preload("res://meshes/items/resources/flint_item_model.obj"),
+	"a000009" : FILLER_MESH,
+	"a000010" : FILLER_MESH,
+	"a000011" : FILLER_MESH,
+	"a000012" : FILLER_MESH,
+	"a000013" : FILLER_MESH,
+	"a000014" : FILLER_MESH,
+	"a000015" : FILLER_MESH
+}
 
 # Player Constants
 const INV_DEFAULT_CELL_SIZE = Vector2(30, 30)

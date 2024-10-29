@@ -23,3 +23,9 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
+res://scenes/maingame/ground_item.tscn
+res://scripts/inventory/ground_item.gd
+res://scripts/game/global.gd
+res://scripts/player/fps_controller.gd
+res://scripts/player/inventory_logic.gd
+res://scripts/game/game_controller.gd

@@ -4,6 +4,7 @@ const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.t
 
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d = $Area3D/CollisionShape3D
+@onready var highlight_material = StandardMaterial3D.new()
 
 var stack_amount : int = 1
 var is_highlighted : bool = false
@@ -17,6 +18,8 @@ func set_inv_item(value):
 
 func _ready():
 	DebugDraw3D.draw_box(position, Quaternion.IDENTITY, Vector3.ONE * 0.5, Color.GOLD, true, 0.5)
+	highlight_material.emission_enabled = true
+	highlight_material.emission = Color.WHITE
 
 func _physics_process(delta: float) -> void:
 	#mesh_instance_3d.global_position = global_position + Vector3(0, 0.25, 0)
@@ -34,24 +37,22 @@ func not_in_range():
 
 func update_item_parameters():
 	if is_node_ready():
-		set_texture()
+		set_mesh()
 		mass = inv_item.item_weight
 	else:
 		await ready
 		update_item_parameters()
 
-func set_texture():
-	var new_material = mesh_instance_3d.material_override.duplicate()
-	new_material.albedo_texture = Global.ITEM_ICONS[inv_item.item_id]
-	mesh_instance_3d.material_override = new_material
+func set_mesh():
+	mesh_instance_3d.mesh = Global.ITEM_MESHES[inv_item.item_id]
 
 func toggle_highlight(toggle : bool):
 	if toggle:
 		is_highlighted = true
-		mesh_instance_3d.material_override.emission = Color.WHITE
+		mesh_instance_3d.material_override = highlight_material
 	else:
 		is_highlighted = false
-		mesh_instance_3d.material_override.emission = Color.BLACK
+		mesh_instance_3d.material_override = null
 
 func display_debug_cube():
 	DebugDraw3D.draw_box(position, quaternion, Vector3(0.5,0.5,0.5), Color.WHITE, true, 0)

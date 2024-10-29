@@ -196,13 +196,19 @@ func set_current_wind_direction():
 	Global.WIND_DIRECTION = raw_wind_direction
 	send_p2p_packet(0, {"message": "set_wind_direction", "wind_direction": Global.WIND_DIRECTION})
 
-func instance_ground_item(_dropped_inv_item : InventoryItem, _stack_amount : int, _drop_position : Vector3):
+func instance_ground_item(_dropped_inv_item : InventoryItem, _stack_amount : int, _drop_position : Vector3, look_dir : Vector3):
 	var _new_ground_item = GROUND_ITEM.instantiate()
 	_new_ground_item.inv_item = _dropped_inv_item
 	_new_ground_item.stack_amount = _stack_amount
 	
 	ground_objects.add_child(_new_ground_item)
 	_new_ground_item.position = _drop_position
+	
+	if look_dir != Vector3.ZERO:
+		var rigid_body = _new_ground_item as RigidBody3D
+		if rigid_body:
+			var throw_velocity = look_dir.normalized() * 3
+			rigid_body.linear_velocity = throw_velocity
 
 func check_if_server_host():
 	var _lobby_id = Global.LOBBY_ID

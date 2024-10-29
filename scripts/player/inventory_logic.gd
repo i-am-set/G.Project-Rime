@@ -17,14 +17,6 @@ var filler_slots := []
 
 func _unhandled_input(event):
 	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_SPACE:
-			for i in range(6):
-				if inventory_contents[i] != null:
-					printerr(inventory_contents[i].get_item_name())
-				else:
-					printerr("Nothing")
-	
-	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_1:
 			#if inventory_contents[0] != null:
 			select_slot(0)
@@ -66,6 +58,7 @@ func add_item_to_inventory(added_inventory_item):
 	for i in range(6):
 		if inventory_contents[i] == null and not filler_slots[i]:
 			var can_place = true
+			selected_index = i
 			for j in range(1, slot_size):
 				if i + j >= 6 or inventory_contents[i + j] != null or filler_slots[i + j]:
 					can_place = false

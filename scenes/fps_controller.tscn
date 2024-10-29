@@ -3018,26 +3018,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(2.93296e-12, 0.974142, -0.978518)
+bones/0/position = Vector3(-1.88843e-12, 0.980138, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190258, 0.591732, 0.0120162)
+bones/2/position = Vector3(0.190251, 0.579375, 0.0117653)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00161291, -0.000896271, 0.999189, -0.0402176)
-bones/6/rotation = Quaternion(-0.0617479, 0.0105172, -0.0138251, 0.997941)
+bones/5/rotation = Quaternion(0.000531088, -0.027362, 0.998815, -0.0402459)
+bones/6/rotation = Quaternion(-0.00986705, 0.00203228, -0.0165396, 0.999812)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000835094, -0.0101164, 0.99653, 0.082615)
+bones/8/rotation = Quaternion(0.000941742, -0.0101071, 0.995603, 0.0931204)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00160653, -0.000908601, 0.999165, 0.0408201)
+bones/11/rotation = Quaternion(-0.000541217, -0.0273614, 0.998791, 0.0408483)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0625263, 0.00136325, 0.0197036, 0.997848)
+bones/12/rotation = Quaternion(-0.00997256, -0.000421554, 0.0173366, 0.9998)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3108,7 +3108,7 @@ collision_mask = 4
 collide_with_areas = true
 
 [node name="DropPosition" type="Node3D" parent="CameraController/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 0.997564, -0.0697565, 0, 0.0697565, 0.997564, 0, -0.296309, -1.11968)
+transform = Transform3D(1, 0, 0, 0, 0.997564, -0.0697565, 0, 0.0697565, 0.997564, 0, -0.513299, -0.703551)
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="CameraController/Camera3D"]
 visible = false

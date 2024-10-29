@@ -1,23 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://co4ekrifuc318"]
+[gd_scene load_steps=6 format=3 uid="uid://co4ekrifuc318"]
 
 [ext_resource type="Script" path="res://scripts/inventory/ground_item.gd" id="1_v12ep"]
 [ext_resource type="Script" path="res://scripts/game/interaction_component.gd" id="2_epiyl"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_c3n7p"]
-load_path = "res://.godot/imported/ico_charcoal.png-00a3321366c90e893b7b907f02a257da.s3tc.ctex"
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xdymh"]
-transparency = 2
-alpha_scissor_threshold = 0.5
-alpha_antialiasing_mode = 0
-shading_mode = 2
-albedo_texture = SubResource("CompressedTexture2D_c3n7p")
-emission_enabled = true
-texture_filter = 0
-billboard_mode = 1
-
-[sub_resource type="QuadMesh" id="QuadMesh_wd4hg"]
-size = Vector2(0.65, 0.65)
+[ext_resource type="ArrayMesh" uid="uid://y3y407hlkj35" path="res://meshes/items/resources/flint_item_model.obj" id="2_ksxxf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0rtoa"]
 size = Vector3(0.2, 0.2, 0.2)
@@ -37,8 +22,7 @@ contact_monitor = true
 script = ExtResource("1_v12ep")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_xdymh")
-mesh = SubResource("QuadMesh_wd4hg")
+mesh = ExtResource("2_ksxxf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_0rtoa")

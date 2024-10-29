@@ -431,7 +431,7 @@ func interact_pick_up_to_hand():
 	print_debug("item to hand")
 
 func drop_ground_item(_item_id : String, _stack_amount : int):
-	world.instance_ground_item(StaticData.create_item_from_id(_item_id), _stack_amount, drop_position.global_position)
+	world.instance_ground_item(StaticData.create_item_from_id(_item_id), _stack_amount, drop_position.global_position, -CAMERA_CONTROLLER.get_global_transform().basis.z)
 
 func enable_postp_dither(toggle : bool) -> void:
 	POSTP_DITHER.get_surface_override_material(0).set_shader_parameter("dithering", toggle)
@@ -607,7 +607,7 @@ func c_create_item_from_id(item_to_create_id : String, number_of_item : int):
 		process_step += 1
 		if process_step % 10 == 0:
 			await get_tree().process_frame
-		world.instance_ground_item(StaticData.create_item_from_id(item_to_create_id), 1, drop_position.global_position)
+		world.instance_ground_item(StaticData.create_item_from_id(item_to_create_id), 1, drop_position.global_position, Vector3.ZERO)
 
 func c_switch_pov(mode : int):
 	if mode == 0:
