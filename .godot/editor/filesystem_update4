@@ -11,9 +11,6 @@ res://GodotSky/Presets/default/moonGlowColor.tres
 res://resources/weapons/weap_nothing.tres
 res://GodotSky/WorldEnvironment/default_sky.tres
 res://materials/world_gen_material.tres
-res://scripts/player/inventory_logic.gd
-res://scripts/inventory/inventory_item.gd
-res://data/StaticData.gd
 res://scenes/mainmenu.tscn
 res://scenes/maingame/world.tscn
 res://scenes/ui/inv_item_rect.tscn
@@ -26,4 +23,3 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/inventory/inv_item_rect.gd
