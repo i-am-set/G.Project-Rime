@@ -203,6 +203,7 @@ func instance_ground_item(_dropped_inv_item : InventoryItem, _stack_amount : int
 	
 	ground_objects.add_child(_new_ground_item)
 	_new_ground_item.position = _drop_position
+	_new_ground_item.rotation = Vector3(randf() * 2 * PI, randf() * 2 * PI, randf() * 2 * PI)
 	
 	if look_dir != Vector3.ZERO:
 		var rigid_body = _new_ground_item as RigidBody3D

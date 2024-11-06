@@ -13,9 +13,6 @@ size = Vector3(0.5, 0.5, 0.5)
 [node name="ground_item" type="RigidBody3D"]
 collision_layer = 8
 collision_mask = 9
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
 continuous_cd = true
 max_contacts_reported = 4
 contact_monitor = true

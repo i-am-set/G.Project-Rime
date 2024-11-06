@@ -3,7 +3,8 @@ extends RigidBody3D
 const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.tres")
 
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
-@onready var collision_shape_3d = $Area3D/CollisionShape3D
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+@onready var interact_collision_shape_3d = $Area3D/CollisionShape3D
 @onready var highlight_material = StandardMaterial3D.new()
 
 var stack_amount : int = 1
@@ -17,7 +18,7 @@ func set_inv_item(value):
 
 
 func _ready():
-	DebugDraw3D.draw_box(position, Quaternion.IDENTITY, Vector3.ONE * 0.5, Color.GOLD, true, 0.5)
+	#DebugDraw3D.draw_box(position, Quaternion.IDENTITY, Vector3.ONE * 0.5, Color.GOLD, true, 0.5)
 	highlight_material.emission_enabled = true
 	highlight_material.emission = Color.WHITE
 
@@ -30,15 +31,20 @@ func get_interact_label() -> String:
 	return "[E] to pick up " + inv_item.get_item_name()
 
 func in_range():
-	toggle_highlight(true)
+	pass
+	#toggle_highlight(true)
 
 func not_in_range():
-	toggle_highlight(false)
+	pass
+	#toggle_highlight(false)
 
 func update_item_parameters():
 	if is_node_ready():
 		set_mesh()
 		mass = inv_item.item_weight
+		var mesh_collision_shape = mesh_instance_3d.mesh.create_convex_shape()
+		collision_shape_3d.shape = mesh_collision_shape
+		interact_collision_shape_3d.shape = mesh_collision_shape
 	else:
 		await ready
 		update_item_parameters()

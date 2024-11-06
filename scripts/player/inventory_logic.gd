@@ -125,8 +125,8 @@ func update_selection():
 
 func has_empty_slots(count: int) -> bool:
 	var empty_slots := 0
-	for item in inventory_contents:
-		if item == null:
+	for i in range(6):
+		if inventory_contents[i] == null && not filler_slots[i]:
 			empty_slots += 1
 	return empty_slots >= count
 

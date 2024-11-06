@@ -29,7 +29,7 @@ const ITEM_ICONS : Dictionary = {
 	"a000014" : preload("res://textures/items/icons/ico_loose_wires.png"),
 	"a000015" : preload("res://textures/items/icons/ico_sharpened_flint.png")
 }
-const FILLER_MESH : Mesh = preload("res://meshes/items/resources/stick_item_model.obj")
+const FILLER_MESH : Mesh = preload("res://meshes/items/resources/sack_item_model.obj")
 const ITEM_MESHES : Dictionary = {
 	"a000001" : preload("res://meshes/items/resources/flint_item_model.obj"),
 	"a000002" : preload("res://meshes/items/resources/stone_item_model.obj"),

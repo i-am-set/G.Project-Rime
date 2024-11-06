@@ -417,7 +417,8 @@ func interact_process(delta):
 					interact_pick_up_to_hand()  # Call function2 when it reaches 100
 
 func interact_pick_up_to_inventory():
-	if !_is_busy && inventory_menu.has_empty_slots(1):
+	printerr(inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size))
+	if !_is_busy && inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size):
 		busy_progress_circle.start_busy_progress_circle_timer(0.5)
 		arms_animation_player.stop()
 		arms_animation_player.play("left_hand_grab")
