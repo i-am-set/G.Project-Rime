@@ -51,7 +51,7 @@ movie_writer/movie_file="D:/StayAtHomeDev/Video Production/Social Video Teasers/
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/FillGapContainer/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/better_vircle/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/godot-console/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/imrp/plugin.cfg", "res://addons/label_font_auto_sizer/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/FillGapContainer/plugin.cfg", "res://addons/RadialMenu/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/better_vircle/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/godot-console/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/imrp/plugin.cfg", "res://addons/label_font_auto_sizer/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [input]
 
@@ -131,6 +131,7 @@ inventory={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":73,"key_label":0,"unicode":105,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":71,"key_label":0,"unicode":103,"echo":false,"script":null)
 ]
 }
 attack={

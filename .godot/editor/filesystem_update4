@@ -1,4 +1,4 @@
-res://scenes/maingame/ground_item.tscn
+res://scenes/fps_controller.tscn
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
 res://GodotSky/Presets/default/overcastCloudColor.tres
@@ -11,11 +11,9 @@ res://GodotSky/Presets/default/moonGlowColor.tres
 res://resources/weapons/weap_nothing.tres
 res://GodotSky/WorldEnvironment/default_sky.tres
 res://materials/world_gen_material.tres
-res://scripts/game/global.gd
-res://scenes/fps_controller.tscn
 res://scenes/mainmenu.tscn
 res://scenes/maingame/world.tscn
 res://scenes/ui/inv_item_rect.tscn
-res://scripts/inventory/ground_item.gd
-res://scripts/player/fps_controller.gd
-res://scripts/game/UseProgressCircle.gd
+res://scenes/maingame/ground_item.tscn
+res://addons/RadialMenu/RadialMenu.gd
+res://addons/RadialMenu/dark_default_theme.tres
