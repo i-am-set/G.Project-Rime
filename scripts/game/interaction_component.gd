@@ -1,5 +1,7 @@
 class_name InteractionComponent extends Node
 
+@export var is_pickable : bool = false
+
 var parent
 
 func _ready():

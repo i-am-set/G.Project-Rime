@@ -23,6 +23,7 @@ extends CharacterBody3D
 @onready var third_person_camera: Camera3D = $CameraController/ThirdPersonCamera
 @onready var front_third_person_camera: Camera3D = $CameraController/FrontThirdPersonCamera
 @onready var busy_progress_circle: TextureProgressBar = $UserInterface/Hud/BusyProgressCircle
+@onready var radial_menu_controller: Control = $UserInterface/Hud/RadialMenuController
 
 @export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -119,20 +120,29 @@ func _input(event):
 	if event.is_action_pressed("ui_scroll_down"):
 		print_debug("scroll down")
 	
-	if event.is_action_pressed("interact"):
+	if event.is_action_pressed("pick_up"):
 		is_holding_interact = true
 		interact_hold_time = 0  # Reset the timer
 		increasing_interact_value = 0  # Reset the increasing value
 
-	if event.is_action_released("interact"):
+	if event.is_action_released("pick_up"):
 		if look_at_collider != null:
-			if increasing_interact_value > 0 and increasing_interact_value < 100:
-				# Reset values if released while value is above 0 but below 100
+			var look_at_collider_interaction_component = look_at_collider.get_node("InteractionComponent")
+			if look_at_collider_interaction_component.is_pickable:
+				if increasing_interact_value > 0 and increasing_interact_value < 100:
+					# Reset values if released while value is above 0 but below 100
+					is_holding_interact = false
+					increasing_interact_value = 0
+				elif increasing_interact_value == 0:
+					interact_pick_up_to_inventory()
 				is_holding_interact = false
-				increasing_interact_value = 0
-			elif increasing_interact_value == 0:
-				interact_pick_up_to_inventory()
-			is_holding_interact = false
+	
+	if event.is_action_pressed("interact"):
+		if look_at_collider != null:
+			radial_menu_controller.open_radial_menu()
+	if event.is_action_released("interact"):
+		if radial_menu_controller.radial_menu.visible:
+			radial_menu_controller.close_radial_menu()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_authorized_user == true:
@@ -417,7 +427,7 @@ func interact_process(delta):
 					interact_pick_up_to_hand()  # Call function2 when it reaches 100
 
 func interact_pick_up_to_inventory():
-	printerr(inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size))
+	#printerr(inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size))
 	if !_is_busy && inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size):
 		busy_progress_circle.start_busy_progress_circle_timer(0.5)
 		arms_animation_player.stop()

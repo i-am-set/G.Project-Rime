@@ -3020,26 +3020,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(-2.49384e-11, 0.974153, -0.978518)
+bones/0/position = Vector3(4.20534e-12, 0.97689, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190258, 0.59188, 0.0120192)
+bones/2/position = Vector3(0.190255, 0.586043, 0.0119007)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00162542, -0.000589967, 0.999189, -0.0402171)
-bones/6/rotation = Quaternion(-0.0623476, 0.0106153, -0.0137934, 0.997903)
+bones/5/rotation = Quaternion(0.00111605, -0.013055, 0.999104, -0.0402341)
+bones/6/rotation = Quaternion(-0.0379006, 0.00661721, -0.0150787, 0.999146)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000833833, -0.0101166, 0.99654, 0.0824907)
+bones/8/rotation = Quaternion(0.000884322, -0.0101123, 0.996116, 0.0874643)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.0016125, -0.000760441, 0.999165, 0.0408199)
+bones/11/rotation = Quaternion(-0.00111907, -0.0130162, 0.99908, 0.0408365)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0631337, 0.00138389, 0.0197307, 0.997809)
+bones/12/rotation = Quaternion(-0.0383936, 0.000543404, 0.0186225, 0.999089)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3190,7 +3190,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3279,6 +3279,7 @@ points = PackedVector2Array(0, -5, 0, -15)
 width = 1.5
 
 [node name="Right" type="Line2D" parent="UserInterface/Reticle"]
+visible = false
 points = PackedVector2Array(5, 0, 15, 0)
 width = 1.5
 
@@ -3288,6 +3289,7 @@ points = PackedVector2Array(0, 5, 0, 15)
 width = 1.5
 
 [node name="Left" type="Line2D" parent="UserInterface/Reticle"]
+visible = false
 points = PackedVector2Array(-5, 0, -15, 0)
 width = 1.5
 
@@ -3404,6 +3406,7 @@ center_radius = 0
 selector_position = 0
 circle_coverage = 1.0
 show_animation = true
+animation_speed_factor = 0.15
 
 [node name="BusyProgressCircle" type="TextureProgressBar" parent="UserInterface/Hud"]
 modulate = Color(1, 1, 1, 0.588235)

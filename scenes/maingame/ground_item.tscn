@@ -24,14 +24,15 @@ mesh = ExtResource("2_ksxxf")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_0rtoa")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="InteractableCollider" type="Area3D" parent="."]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableCollider"]
 shape = SubResource("BoxShape3D_oenaf")
 
 [node name="InteractionComponent" type="Node" parent="."]
 script = ExtResource("2_epiyl")
+is_pickable = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

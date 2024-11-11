@@ -4,7 +4,7 @@ const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.t
 
 @onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
-@onready var interact_collision_shape_3d = $Area3D/CollisionShape3D
+@onready var interact_collision_shape_3d = $InteractableCollider/CollisionShape3D
 @onready var highlight_material = StandardMaterial3D.new()
 
 var stack_amount : int = 1
