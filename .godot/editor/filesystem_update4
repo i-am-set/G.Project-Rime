@@ -11,9 +11,6 @@ res://GodotSky/Presets/default/moonGlowColor.tres
 res://resources/weapons/weap_nothing.tres
 res://GodotSky/WorldEnvironment/default_sky.tres
 res://materials/world_gen_material.tres
-res://scripts/player/fps_controller.gd
-res://scripts/inventory/ground_item.gd
-res://scripts/game/interaction_component.gd
 res://scenes/mainmenu.tscn
 res://scenes/maingame/world.tscn
 res://scenes/ui/inv_item_rect.tscn
@@ -27,6 +24,11 @@ res://scripts/world_generation/LODInfo.cs
 res://scripts/world_generation/MapDisplay.cs
 res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
-res://scripts/player/reticle.gd
-res://addons/RadialMenu/RadialMenu.gd
+res://scripts/player/fps_controller.gd
+res://scripts/inventory/inventory_item.gd
+res://data/Item_Data.json
+res://data/Recipe_Data.json
+res://data/Structure_Data.json
+res://scripts/inventory/ground_item.gd
 res://scripts/player/RadialMenuManager.gd
+res://addons/RadialMenu/RadialMenu.gd

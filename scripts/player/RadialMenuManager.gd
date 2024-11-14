@@ -1,7 +1,14 @@
 extends Control
 
+@onready var fps_controller: Player = $"../../.."
+
 @onready var reticle: CenterContainer = $"../../Reticle"
 @onready var radial_menu: Control = $RadialMenu
+
+@onready var radial_interacted_object_title: Label = $RadialMenu/RadialInteractedObjectTitle
+@onready var radial_selection_title: Label = $RadialMenu/RadialSelectionTitle
+@onready var radial_subtext: Label = $RadialMenu/RadialSubtext
+
 
 var mouse_limit_radius = 50.0
 
@@ -30,17 +37,38 @@ func _process(delta: float) -> void:
 
 func open_radial_menu() -> void:
 	Global.capture_mouse(false)
-	# Pass the center position to open_menu as a Vector2!
+	radial_selection_title.text = ""
+	radial_subtext.text = ""
 	radial_menu.open_menu(reticle.position)
-	## Make sure we don't handle the click again anywhere else...
-	#get_viewport().set_input_as_handled()
 
 func close_radial_menu() -> void:
 	radial_menu.close_menu()
 
+func update_main_title(_interacted_object_id) -> void:
+	if _interacted_object_id != null:
+		if _interacted_object_id.length() > 0:
+			if _interacted_object_id[0] == "a":
+				radial_interacted_object_title.text = StaticData.item_data[_interacted_object_id]["item_name"]
+			elif _interacted_object_id[0] == "c":
+				radial_interacted_object_title.text = StaticData.structure_data[_interacted_object_id]["structure_name"]
+
 func _on_radial_menu_menu_closed(menu: Variant) -> void:
 	Global.capture_mouse(true)
 
-
 func _on_radial_menu_item_selected(id: Variant, position: Variant) -> void:
-	printerr(id)
+	fps_controller.run_interact_method_by_id(id)
+
+func _on_radial_menu_item_hovered(_selection_dictionary: Variant) -> void:
+	radial_selection_title.text = _selection_dictionary["title"]
+	radial_subtext.text = ""
+	if _selection_dictionary["id"] == "interact_description":
+		var _interacted_object_id = fps_controller.get_collider_id(fps_controller.look_at_collider)
+		if _interacted_object_id != null:
+			if _interacted_object_id.length() > 0:
+				if _interacted_object_id[0] == "a":
+					radial_subtext.text = StaticData.item_data[_interacted_object_id]["item_description"]
+				elif _interacted_object_id[0] == "c":
+					radial_subtext.text = StaticData.structure_data[_interacted_object_id]["structure_description"]
+				else:
+					radial_subtext.text = ""
+

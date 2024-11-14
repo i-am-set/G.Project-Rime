@@ -1,8 +1,10 @@
 {
   "c000001": {
-    "structure_name": "Simple Fire Pit"
+	"structure_name": "Simple Fire Pit",
+	"structure_description": "A simple fire pit. Vulnerable to the elements."
   },
   "c000002": {
-    "structure_name": "Stone Fire Pit"
+	"structure_name": "Stone Fire Pit",
+	"structure_description": "A fire pit surrounded by stones. Can easily be rebuilt after being extinguished."
   }
 }

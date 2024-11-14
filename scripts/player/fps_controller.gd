@@ -123,6 +123,8 @@ func _input(event):
 	
 	if event.is_action_pressed("interact"):
 		if look_at_collider != null:
+			set_radial_menu_items(look_at_collider)
+			
 			radial_menu_controller.open_radial_menu()
 	if event.is_action_released("interact"):
 		if radial_menu_controller.radial_menu.visible:
@@ -399,6 +401,39 @@ func looking_process():
 			look_at_collider = null
 		interact_label.text = ""
 		pick_up_label.text = ""
+
+func run_interact_method_by_id(_interact_method_id : String):
+	match _interact_method_id:
+		"interact_close_menu":
+			radial_menu_controller.close_radial_menu()
+		"interact_description":
+			radial_menu_controller.close_radial_menu()
+
+func get_collider_id(_look_at_collider):
+	var _collider_id
+	if "inv_item" in _look_at_collider: # if collider is an item
+		_collider_id = _look_at_collider.inv_item.item_id
+	elif "structure_id" in _look_at_collider: # if collider is a structure
+		_collider_id = _look_at_collider.structure_id
+	else:
+		_collider_id = null
+		printerr("collider_id was not set to a given id after interacting")
+	
+	return _collider_id
+
+func set_radial_menu_items(_look_at_collider):
+	var _collider_id = get_collider_id(_look_at_collider)
+	
+	radial_menu_controller.update_main_title(_collider_id) # changes the title above the radial menu to display what you are interacting with
+	var _menu_items : Array
+	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.CLOSE_TEXTURE, "Close", "interact_close_menu")) # first radial menu option; is guaranteed to be added
+	if _collider_id[0] == "a" || _collider_id[0] == "c":
+		_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.STAR_TEXTURE, "Description", "interact_description")) # second radial menu option; not guaranteed to be added
+	
+	radial_menu_controller.radial_menu.set_items(_menu_items)
+
+func get_radial_menu_selection_dictionary(_texture : CompressedTexture2D, _title : String, _id : String) -> Dictionary:
+	return {'texture': _texture, 'title': _title, 'id': _id}
 
 func get_interact_label() -> String:
 	for actionName in InputMap.get_actions():

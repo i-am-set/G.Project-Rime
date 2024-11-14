@@ -15,7 +15,7 @@ func get_item_name() -> String:
 	return StaticData.item_data[item_id]["item_name"]
 
 func get_item_description() -> String:
-	return StaticData.item_data[item_id]["item_description"]
+	return StaticData.item_data[item_id]["description"]
 
 func get_item_type() -> int:
 	return StaticData.item_data[item_id]["item_type"]

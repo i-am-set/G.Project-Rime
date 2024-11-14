@@ -332,7 +332,7 @@ func get_selected_by_mouse():
 	var s = selected
 	var mpos = get_local_mouse_position() - center_offset
 	var lsq = mpos.length_squared()
-	var inner_limit = min((radius-width)*(radius-width), 400)
+	var inner_limit = 0 #min((radius-width)*(radius-width), 400)
 	var outer_limit = (radius+width*outside_selection_factor)*(radius+width*outside_selection_factor)
 	if is_submenu :
 		inner_limit = pow(get_inner_outer()[0], 2)

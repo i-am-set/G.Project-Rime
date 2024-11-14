@@ -1,39 +1,39 @@
 {
   "b000001": {
-    "recipe_output_name": "Sharpened Flint",
-    "recipe_output_id": "a000015",
-    "recipe_output_amount": 1,
-    "recipe_tool_requirement": 0,
-    "a000001": 1
+	"recipe_output_name": "Sharpened Flint",
+	"recipe_output_id": "a000015",
+	"recipe_output_amount": 1,
+	"recipe_tool_requirement": 0,
+	"a000001": 1
   },
   "b000002": {
-    "recipe_output_name": "Sharpened Flint",
-    "recipe_output_id": "a000015",
-    "recipe_output_amount": 1,
-    "recipe_station_requirement": 1
+	"recipe_output_name": "Sharpened Flint",
+	"recipe_output_id": "a000015",
+	"recipe_output_amount": 1,
+	"recipe_station_requirement": 1
   },
   "b000003": {
-    "recipe_output_name": "Burning Stick",
-    "recipe_output_id": "a000021",
-    "recipe_output_amount": 1,
-    "recipe_station_requirement": 0,
-    "recipe_description": "\"Light stick on fire\"",
-    "a000006": 1
+	"recipe_output_name": "Burning Stick",
+	"recipe_output_id": "a000021",
+	"recipe_output_amount": 1,
+	"recipe_station_requirement": 0,
+	"recipe_description": "\"Light stick on fire\"",
+	"a000006": 1
   },
   "b000004": {
-    "recipe_output_name": "Unlit Torch",
-    "recipe_output_id": "a000022",
-    "recipe_output_amount": 1,
-    "a000006": 1,
-    "a000009": 1,
-    "a000011": 1
+	"recipe_output_name": "Unlit Torch",
+	"recipe_output_id": "a000022",
+	"recipe_output_amount": 1,
+	"a000006": 1,
+	"a000009": 1,
+	"a000011": 1
   },
   "b000005": {
-    "recipe_output_name": "Lit Torch",
-    "recipe_output_id": "a000023",
-    "recipe_output_amount": 1,
-    "recipe_station_requirement": 0,
-    "recipe_description": "\"Light torch on fire\"",
-    "a000022": 1
+	"recipe_output_name": "Lit Torch",
+	"recipe_output_id": "a000023",
+	"recipe_output_amount": 1,
+	"recipe_station_requirement": 0,
+	"recipe_description": "\"Light torch on fire\"",
+	"a000022": 1
   }
 }
