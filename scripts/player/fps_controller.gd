@@ -17,7 +17,9 @@ extends CharacterBody3D
 @onready var world = $"../.."
 @onready var drop_position = $CameraController/Camera3D/DropPosition
 @onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
-@onready var look_at_label: Label = $UserInterface/WAILA
+@onready var tooltips: Control = $UserInterface/Hud/Tooltips
+@onready var pick_up_label: Label = $UserInterface/Hud/Tooltips/PickUpLabel
+@onready var interact_label: Label = $UserInterface/Hud/Tooltips/InteractLabel
 @onready var debug_panel: PanelContainer = $UserInterface/Debug/DebugPanel
 @onready var sound_manager: Node = $SoundManager
 @onready var third_person_camera: Camera3D = $CameraController/ThirdPersonCamera
@@ -54,18 +56,11 @@ var _head_movement : float
 var _crouch_speed_mod : float
 var _is_crouching : bool = false
 var _is_busy : bool = false
-#var look_at_label_anchor : Vector3
 var look_at_collider
 var _current_rotation : float
 
 # state variables
 var is_sprinting : bool = false
-
-# interaction variables
-var is_holding_interact = false
-var interact_hold_time = 0.0
-var increasing_interact_value = 0
-var interact_time_threshold = 0.5
 
 # Get the gravity from the project s ettings to be synced with RigidBody nodes.
 var gravity = 9.8
@@ -121,21 +116,10 @@ func _input(event):
 		print_debug("scroll down")
 	
 	if event.is_action_pressed("pick_up"):
-		is_holding_interact = true
-		interact_hold_time = 0  # Reset the timer
-		increasing_interact_value = 0  # Reset the increasing value
-
-	if event.is_action_released("pick_up"):
 		if look_at_collider != null:
-			var look_at_collider_interaction_component = look_at_collider.get_node("InteractionComponent")
+			var look_at_collider_interaction_component = look_at_collider.interaction_component
 			if look_at_collider_interaction_component.is_pickable:
-				if increasing_interact_value > 0 and increasing_interact_value < 100:
-					# Reset values if released while value is above 0 but below 100
-					is_holding_interact = false
-					increasing_interact_value = 0
-				elif increasing_interact_value == 0:
-					interact_pick_up_to_inventory()
-				is_holding_interact = false
+				pick_up_to_inventory()
 	
 	if event.is_action_pressed("interact"):
 		if look_at_collider != null:
@@ -275,9 +259,6 @@ func _physics_process(delta):
 		
 		if pause_menu.visible && !Global.IS_PAUSED:
 			Global.IS_PAUSED = true
-#
-#func _process(delta):
-	#look_at_label.global_position = look_at_label_anchor
 
 func update_gravity(delta) -> void:
 	if (player_data.no_clip):
@@ -408,25 +389,38 @@ func looking_process():
 			look_at_collider = temp_look_at_ray_cast_collider.get_parent()
 			if look_at_collider != null && look_at_collider.has_user_signal("focused"):
 				look_at_collider.emit_signal("focused")
-				if look_at_collider.has_method("get_interact_label"):
-					look_at_label.text = look_at_collider.get_interact_label()
+				interact_label.text = get_interact_label()
+				if "inv_item" in look_at_collider:
+					if look_at_collider.inv_item != null:
+						pick_up_label.text = get_pick_up_label(look_at_collider.inv_item)
 	else:
 		if look_at_collider != null &&  look_at_collider.has_user_signal("unfocused"):
 			look_at_collider.emit_signal("unfocused")
 			look_at_collider = null
-		look_at_label.text = ""
+		interact_label.text = ""
+		pick_up_label.text = ""
+
+func get_interact_label() -> String:
+	for actionName in InputMap.get_actions():
+		if actionName == "interact":
+			for inputEvent in InputMap.action_get_events(actionName):
+				return "Hold [" + inputEvent.as_text().split(" (")[0] + "] to interact"
+	return "Hold [??] to interact"
+
+func get_pick_up_label(_inv_item : InventoryItem) -> String:
+	for actionName in InputMap.get_actions():
+		if actionName == "pick_up":
+			for inputEvent in InputMap.action_get_events(actionName):
+				return "Press [" + inputEvent.as_text().split(" (")[0] + "] to pick up " + _inv_item.get_item_name()
+	return "Press [??] to pick up " + _inv_item.get_item_name()
 
 func interact_process(delta):
-	if is_holding_interact:
-		interact_hold_time += delta
-		if interact_hold_time >= interact_time_threshold:
-			# Increase value only if hold time has surpassed the threshold
-			if increasing_interact_value < 100:
-				increasing_interact_value += 2  # Increase the value each frame
-				if increasing_interact_value >= 100:
-					interact_pick_up_to_hand()  # Call function2 when it reaches 100
+	if radial_menu_controller.radial_menu.visible == true:
+		tooltips.visible = false
+	else:
+		tooltips.visible = true
 
-func interact_pick_up_to_inventory():
+func pick_up_to_inventory():
 	#printerr(inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size))
 	if !_is_busy && inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size):
 		busy_progress_circle.start_busy_progress_circle_timer(0.5)
@@ -435,7 +429,8 @@ func interact_pick_up_to_inventory():
 		sound_manager.play_pickup()
 		inventory_menu.pick_up_item(look_at_collider.inv_item)
 		look_at_collider.queue_free()
-		look_at_label.text = ""
+		interact_label.text = ""
+		pick_up_label.text = ""
 		look_at_collider = null
 
 func interact_pick_up_to_hand():

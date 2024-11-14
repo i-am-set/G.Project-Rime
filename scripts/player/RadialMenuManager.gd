@@ -40,3 +40,7 @@ func close_radial_menu() -> void:
 
 func _on_radial_menu_menu_closed(menu: Variant) -> void:
 	Global.capture_mouse(true)
+
+
+func _on_radial_menu_item_selected(id: Variant, position: Variant) -> void:
+	printerr(id)

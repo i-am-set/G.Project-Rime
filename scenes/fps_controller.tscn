@@ -3020,26 +3020,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(5.03467e-12, 0.978682, -0.978518)
+bones/0/position = Vector3(3.00352e-12, 0.979318, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190252, 0.582439, 0.0118275)
+bones/2/position = Vector3(0.190251, 0.581055, 0.0117994)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.000802193, -0.0207324, 0.998975, -0.0402415)
-bones/6/rotation = Quaternion(-0.0228685, 0.00415872, -0.0158638, 0.999604)
+bones/5/rotation = Quaternion(0.000681366, -0.0236873, 0.998909, -0.0402437)
+bones/6/rotation = Quaternion(-0.0170732, 0.00321089, -0.0161654, 0.999718)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000915162, -0.0101095, 0.995845, 0.0905022)
+bones/8/rotation = Quaternion(0.000927224, -0.0101084, 0.995736, 0.0916903)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.000808323, -0.0207316, 0.99895, 0.0408439)
+bones/11/rotation = Quaternion(-0.000689279, -0.0236866, 0.998884, 0.0408461)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0231426, 2.55216e-05, 0.0179342, 0.999571)
+bones/12/rotation = Quaternion(-0.0172722, -0.000173774, 0.0176682, 0.999695)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3190,7 +3190,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3259,7 +3259,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Reticle" type="CenterContainer" parent="UserInterface" node_paths=PackedStringArray("PLAYER_CONTROLLER")]
+[node name="Reticle" type="CenterContainer" parent="UserInterface"]
 modulate = Color(1, 1, 1, 0.588235)
 layout_mode = 1
 anchors_preset = 8
@@ -3270,7 +3270,6 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_ntsfx")
-PLAYER_CONTROLLER = NodePath("../..")
 RETICLE_DISTANCE = 1.0
 
 [node name="Top" type="Line2D" parent="UserInterface/Reticle"]
@@ -3292,31 +3291,6 @@ width = 1.5
 visible = false
 points = PackedVector2Array(-5, 0, -15, 0)
 width = 1.5
-
-[node name="WAILA" type="Label" parent="UserInterface"]
-modulate = Color(1, 1, 1, 0.588235)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.446
-anchor_top = 0.503
-anchor_right = 0.554
-anchor_bottom = 0.522
-offset_left = -0.600037
-offset_top = 5.29999
-offset_right = 0.599976
-offset_bottom = 5.19998
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_fonts/font = ExtResource("16_h2j1q")
-theme_override_font_sizes/font_size = 12
-horizontal_alignment = 1
-vertical_alignment = 1
-uppercase = true
 
 [node name="InventoryMenu" type="Control" parent="UserInterface"]
 layout_mode = 1
@@ -3384,6 +3358,65 @@ grow_vertical = 2
 mouse_filter = 2
 theme = SubResource("Theme_dm671")
 
+[node name="Tooltips" type="Control" parent="UserInterface/Hud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InteractLabel" type="Label" parent="UserInterface/Hud/Tooltips"]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.446
+anchor_top = 0.513
+anchor_right = 0.554
+anchor_bottom = 0.532
+offset_left = -0.600037
+offset_top = 0.299988
+offset_right = 0.599976
+offset_bottom = 0.199982
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("16_h2j1q")
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="PickUpLabel" type="Label" parent="UserInterface/Hud/Tooltips"]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.446
+anchor_top = 0.529
+anchor_right = 0.554
+anchor_bottom = 0.548
+offset_left = -0.600037
+offset_top = -0.100037
+offset_right = 0.599976
+offset_bottom = -0.200043
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("16_h2j1q")
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
 [node name="RadialMenuController" type="Control" parent="UserInterface/Hud"]
 layout_mode = 1
 anchors_preset = 15
@@ -3413,7 +3446,33 @@ show_animation = true
 animation_speed_factor = 0.15
 outside_selection_factor = 5.0
 
-[node name="RadialTitle" type="Label" parent="UserInterface/Hud/RadialMenuController/RadialMenu"]
+[node name="RadialInteractedObject" type="Label" parent="UserInterface/Hud/RadialMenuController/RadialMenu"]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -92.0
+offset_top = -95.0
+offset_right = 93.0
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("16_h2j1q")
+theme_override_font_sizes/font_size = 18
+text = "Firepit"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="RadialSelectionTitle" type="Label" parent="UserInterface/Hud/RadialMenuController/RadialMenu"]
 modulate = Color(1, 1, 1, 0.588235)
 layout_mode = 1
 anchors_preset = 8
@@ -4774,6 +4833,7 @@ draw_pass_1 = SubResource("QuadMesh_pj4i4")
 [connection signal="finished" from="SoundManager/WorldSfxSounds/SfxDistantCrows" to="SoundManager" method="_on_sfx_distant_crows_finished"]
 [connection signal="timeout" from="SoundManager/WorldSfxSounds/SfxDistantCrows/CrowCooldownTimer" to="SoundManager" method="_on_crow_cooldown_timer_timeout"]
 [connection signal="animation_finished" from="CameraController/Camera3D/ArmsModel/male_arm_model/AnimationPlayer" to="CameraController/Camera3D/ArmsModel" method="_on_animation_player_animation_finished"]
+[connection signal="item_selected" from="UserInterface/Hud/RadialMenuController/RadialMenu" to="UserInterface/Hud/RadialMenuController" method="_on_radial_menu_item_selected"]
 [connection signal="menu_closed" from="UserInterface/Hud/RadialMenuController/RadialMenu" to="UserInterface/Hud/RadialMenuController" method="_on_radial_menu_menu_closed"]
 [connection signal="timeout" from="UserInterface/Hud/BusyProgressCircle/Timer" to="UserInterface/Hud/BusyProgressCircle" method="_on_timer_timeout"]
 [connection signal="button_down" from="UserInterface/PauseMenu/LANDING_PAGE/HBoxContainer/VBoxContainer/Resume_Button" to="SoundManager" method="play_button_click"]

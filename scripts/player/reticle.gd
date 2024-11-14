@@ -1,7 +1,8 @@
 extends CenterContainer
 
+@onready var PLAYER_CONTROLLER: Player = $"../.."
+
 @export var RETICLE_LINES : Array
-@export var PLAYER_CONTROLLER : CharacterBody3D
 @export var RETICLE_SPEED : float = 0.25
 @export var RETICLE_DISTANCE : float = 2.0
 @export var DOT_RADIUS : float = 1.0

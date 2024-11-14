@@ -6,6 +6,8 @@ const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.t
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var interact_collision_shape_3d = $InteractableCollider/CollisionShape3D
 @onready var highlight_material = StandardMaterial3D.new()
+@onready var interaction_component: InteractionComponent = $InteractionComponent
+
 
 var stack_amount : int = 1
 var is_highlighted : bool = false
@@ -26,9 +28,6 @@ func _physics_process(delta: float) -> void:
 	#mesh_instance_3d.global_position = global_position + Vector3(0, 0.25, 0)
 	if is_highlighted:
 		display_debug_cube()
-
-func get_interact_label() -> String:
-	return "[E] to pick up " + inv_item.get_item_name()
 
 func in_range():
 	pass
