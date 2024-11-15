@@ -428,7 +428,11 @@ func set_radial_menu_items(_look_at_collider):
 	var _menu_items : Array
 	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.CLOSE_TEXTURE, "Close", "interact_close_menu")) # first radial menu option; is guaranteed to be added
 	if _collider_id[0] == "a" || _collider_id[0] == "c":
-		_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.STAR_TEXTURE, "Description", "interact_description")) # second radial menu option; not guaranteed to be added
+		_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.DESCRIPTION_TEXTURE, "Description", "interact_description")) # second radial menu option; not guaranteed to be added
+	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.CRAFT_TEXTURE, "Close", "interact_close_menu"))
+	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.COMBINE_TEXTURE, "Close", "interact_close_menu"))
+	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.UNCOMBINE_TEXTURE, "Close", "interact_close_menu"))
+	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.INQUIRE_TEXTURE, "Close", "interact_close_menu"))
 	
 	radial_menu_controller.radial_menu.set_items(_menu_items)
 

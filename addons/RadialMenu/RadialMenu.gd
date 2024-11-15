@@ -31,7 +31,12 @@ const DEBUG = false
 const DEFAULT_THEME = preload("dark_default_theme.tres")
 const STAR_TEXTURE = preload("icons/Favorites.svg")
 const BACK_TEXTURE = preload("icons/Back.svg")
-const CLOSE_TEXTURE = preload("icons/Close.svg")
+const CLOSE_TEXTURE = preload("res://textures/ui/hud/icons/close_icon.svg")
+const DESCRIPTION_TEXTURE = preload("res://textures/ui/hud/icons/description_icon.svg")
+const INQUIRE_TEXTURE = preload("res://textures/ui/hud/icons/inquire_icon.svg")
+const COMBINE_TEXTURE = preload("res://textures/ui/hud/icons/combine_icon.svg")
+const CRAFT_TEXTURE = preload("res://textures/ui/hud/icons/craft_icon.svg")
+const UNCOMBINE_TEXTURE = preload("res://textures/ui/hud/icons/uncombine_icon.svg")
 
 const JOY_DEADZONE = 0.2
 const JOY_AXIS_RESCALE = 1.0/(1.0-JOY_DEADZONE)

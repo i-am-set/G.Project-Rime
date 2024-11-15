@@ -25,15 +25,15 @@ func _process(delta: float) -> void:
 	if !Input.is_action_pressed("interact") and radial_menu.visible:
 		radial_menu.close_menu()
 	
-	if radial_menu.visible:
-		var center = Vector2(get_viewport().size / 2)
-		var mouse_pos = get_global_mouse_position()
-		var distance = center.distance_to(mouse_pos)
-		
-		if distance > mouse_limit_radius:
-			var direction = (mouse_pos - center).normalized()
-			var limited_pos = center + direction * mouse_limit_radius
-			Input.warp_mouse(limited_pos)
+	#if radial_menu.visible:
+		#var center = Vector2(get_viewport().size / 2)
+		#var mouse_pos = get_global_mouse_position()
+		#var distance = center.distance_to(mouse_pos)
+		#
+		#if distance > mouse_limit_radius:
+			#var direction = (mouse_pos - center).normalized()
+			#var limited_pos = center + direction * mouse_limit_radius
+			#Input.warp_mouse(limited_pos)
 
 func open_radial_menu() -> void:
 	Global.capture_mouse(false)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=245 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=246 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -80,6 +80,7 @@
 [ext_resource type="Script" path="res://scripts/game/UseProgressCircle.gd" id="39_10oom"]
 [ext_resource type="Script" path="res://scripts/player/RadialMenuManager.gd" id="44_e8ohw"]
 [ext_resource type="Script" path="res://addons/RadialMenu/RadialMenu.gd" id="44_xtp45"]
+[ext_resource type="FontFile" uid="uid://fo0xgeapygd4" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-BoldItalic.ttf" id="47_tftne"]
 [ext_resource type="PackedScene" uid="uid://b7jlc7vkdspss" path="res://scenes/ui/inv_item_rect.tscn" id="64_su1hu"]
 [ext_resource type="Shader" path="res://shaders/player_post_processesing.gdshader" id="81_nnfk3"]
 
@@ -2283,7 +2284,7 @@ VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ap6aa")
 [sub_resource type="Theme" id="Theme_dm671"]
 
 [sub_resource type="FontVariation" id="FontVariation_d0pqt"]
-base_font = ExtResource("16_h2j1q")
+base_font = ExtResource("47_tftne")
 spacing_top = -4
 spacing_bottom = -6
 
@@ -3025,26 +3026,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(4.09685e-12, 0.976656, -0.978518)
+bones/0/position = Vector3(4.16719e-12, 0.978852, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190255, 0.58653, 0.0119106)
+bones/2/position = Vector3(0.190252, 0.582075, 0.0118201)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00115903, -0.0120034, 0.999118, -0.0402329)
-bones/6/rotation = Quaternion(-0.039953, 0.00695287, -0.0149712, 0.999065)
+bones/5/rotation = Quaternion(0.00076991, -0.0215219, 0.998958, -0.0402421)
+bones/6/rotation = Quaternion(-0.0213201, 0.00390548, -0.0159445, 0.999638)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000880095, -0.0101126, 0.996152, 0.0870479)
+bones/8/rotation = Quaternion(0.000918228, -0.0101093, 0.995817, 0.0908042)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00116044, -0.0119889, 0.999093, 0.0408354)
+bones/11/rotation = Quaternion(-0.000776517, -0.0215212, 0.998933, 0.0408445)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.040482, 0.000614334, 0.0187165, 0.999005)
+bones/12/rotation = Quaternion(-0.0215741, -2.77298e-05, 0.0178632, 0.999608)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3195,7 +3196,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3433,7 +3434,6 @@ mouse_filter = 1
 script = ExtResource("44_e8ohw")
 
 [node name="RadialMenu" type="Control" parent="UserInterface/Hud/RadialMenuController"]
-visible = false
 custom_minimum_size = Vector2(130, 130)
 anchors_preset = 0
 offset_right = 130.0
@@ -3450,6 +3450,7 @@ selector_position = 0
 circle_coverage = 1.0
 show_animation = true
 animation_speed_factor = 0.15
+outside_selection_factor = 500.0
 
 [node name="RadialInteractedObjectTitle" type="Label" parent="UserInterface/Hud/RadialMenuController/RadialMenu"]
 modulate = Color(1, 1, 1, 0.588235)
@@ -3491,12 +3492,12 @@ offset_right = 93.0
 offset_bottom = 98.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.720467, 0.720468, 0.720467, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
-theme_override_fonts/font = ExtResource("33_hiq4g")
+theme_override_fonts/font = ExtResource("7_22y7g")
 theme_override_font_sizes/font_size = 22
 text = "ERROR: Title"
 horizontal_alignment = 1
