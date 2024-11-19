@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpmtcp8tj1f01"]
+
+[ext_resource type="Script" path="res://scripts/game/combined_items.gd" id="1_cug6l"]
+[ext_resource type="Script" path="res://scripts/game/interaction_component.gd" id="2_syyb4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lt1f7"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1t27x"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="combined_items" type="StaticBody3D"]
+script = ExtResource("1_cug6l")
+
+[node name="MeshContainer" type="Node3D" parent="."]
+
+[node name="Mesh0" type="MeshInstance3D" parent="MeshContainer"]
+skeleton = NodePath("../..")
+
+[node name="Mesh1" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(-0.776753, 0.161677, -0.608699, 0.0226271, 0.973028, 0.229573, 0.629398, 0.164548, -0.759461, 0.12161, 0, 0.103452)
+skeleton = NodePath("../..")
+
+[node name="Mesh2" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(-0.90171, -0.110775, -0.417909, -0.107902, 0.993691, -0.0305806, 0.41866, 0.0175184, -0.907974, -0.127313, 0, -0.0704112)
+skeleton = NodePath("../..")
+
+[node name="Mesh3" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(0.942369, 0.283363, -0.177892, -0.310004, 0.939506, -0.145692, 0.125847, 0.192443, 0.973205, -0.136871, 0, 0.110088)
+skeleton = NodePath("../..")
+
+[node name="Mesh4" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(-0.148755, 0.0605562, 0.987018, 0.203708, 0.978592, -0.0293381, -0.967665, 0.196699, -0.157906, 0.184484, 0, 0.302713)
+skeleton = NodePath("../..")
+
+[node name="Mesh5" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(0.549857, 0.185118, 0.814487, -0.6368, 0.723924, 0.265366, -0.540503, -0.664578, 0.515938, 0.0980739, 0, -0.205439)
+skeleton = NodePath("../..")
+
+[node name="Mesh6" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(0.451901, 0.434665, -0.779007, -0.717142, 0.696386, -0.0274482, 0.530559, 0.571062, 0.626415, 0.252194, 0, -0.0817728)
+skeleton = NodePath("../..")
+
+[node name="Mesh7" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(-0.737293, -0.323785, -0.592926, -0.401313, 0.91594, -0.00115146, 0.543458, 0.2371, -0.805256, -0.0369747, 0, 0.243313)
+skeleton = NodePath("../..")
+
+[node name="Mesh8" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(0.935777, 0, 0.352593, -0.0601056, 0.985363, 0.159519, -0.347432, -0.170467, 0.92208, -0.179357, 0, -0.199614)
+skeleton = NodePath("../..")
+
+[node name="Mesh9" type="MeshInstance3D" parent="MeshContainer"]
+transform = Transform3D(0.315288, -0.166838, -0.934216, 0.582388, 0.811267, 0.0516691, 0.749278, -0.560367, 0.352947, -0.337062, 0, 0.0597748)
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_lt1f7")
+
+[node name="InteractableCollider" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableCollider"]
+shape = SubResource("BoxShape3D_1t27x")
+
+[node name="InteractionComponent" type="Node" parent="."]
+script = ExtResource("2_syyb4")

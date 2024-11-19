@@ -1,9 +1,13 @@
 {
   "c000001": {
+	"structure_name": "Combined Items",
+	"structure_description": "A collection of items."
+  },
+  "c000002": {
 	"structure_name": "Simple Fire Pit",
 	"structure_description": "A simple fire pit. Vulnerable to the elements."
   },
-  "c000002": {
+  "c000003": {
 	"structure_name": "Stone Fire Pit",
 	"structure_description": "A fire pit surrounded by stones. Can easily be rebuilt after being extinguished."
   }

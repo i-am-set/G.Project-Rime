@@ -134,8 +134,25 @@ func pick_up_item(_picked_up_item : InventoryItem):
 	add_item_to_inventory(_picked_up_item)
 	print_debug(_picked_up_item.get_item_name())
 
-func drop_selected_item():
+func is_selecting_item() -> bool:
 	if inventory_contents[selected_index] == null:
+		return false
+	else:
+		return true
+
+func get_selected_item() -> InventoryItem:
+	if inventory_contents[selected_index] == null:
+		return null
+	else:
+		return inventory_contents[selected_index]
+
+func erase_selected_item():
+	if !is_selecting_item():
+		return
+	remove_item_in_inventory_at_index(selected_index)
+
+func drop_selected_item():
+	if !is_selecting_item():
 		return
 	fps_controller.drop_ground_item(inventory_contents[selected_index].item_id, 1)
 	remove_item_in_inventory_at_index(selected_index)

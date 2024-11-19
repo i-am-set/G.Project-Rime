@@ -1,3 +1,7 @@
+VBoxContainer
+Node3D
+MultiMeshInstance3D
+StaticBody3D
 Control
 RichTextLabel
 TextEdit

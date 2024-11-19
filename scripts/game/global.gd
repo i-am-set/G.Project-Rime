@@ -12,6 +12,7 @@ const PACKET_READ_LIMIT: int = 32
 const WORLD_PATH = "res://scenes/maingame/world.tscn"
 const MAX_TEMPERATURE_C = -10 # celsius
 const MIN_TEMPERATURE_C = -25 # celsius
+const COMBINED_ITEMS_SCENE = preload("res://scenes/maingame/combined_items.tscn")
 const ITEM_ICONS : Dictionary = {
 	"a000001" : preload("res://textures/items/icons/ico_flint.png"),
 	"a000002" : preload("res://textures/items/icons/ico_stone.png"),

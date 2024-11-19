@@ -18,8 +18,9 @@ extends CharacterBody3D
 @onready var drop_position = $CameraController/Camera3D/DropPosition
 @onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
 @onready var tooltips: Control = $UserInterface/Hud/Tooltips
-@onready var pick_up_label: Label = $UserInterface/Hud/Tooltips/PickUpLabel
-@onready var interact_label: Label = $UserInterface/Hud/Tooltips/InteractLabel
+@onready var waila_label: Label = $UserInterface/Hud/Tooltips/WAILALabel
+@onready var interact_label: Label = $UserInterface/Hud/Tooltips/TooltipVbox/InteractLabel
+@onready var pick_up_label: Label = $UserInterface/Hud/Tooltips/TooltipVbox/PickUpLabel
 @onready var debug_panel: PanelContainer = $UserInterface/Debug/DebugPanel
 @onready var sound_manager: Node = $SoundManager
 @onready var third_person_camera: Camera3D = $CameraController/ThirdPersonCamera
@@ -58,6 +59,10 @@ var _is_crouching : bool = false
 var _is_busy : bool = false
 var look_at_collider
 var _current_rotation : float
+
+# interact variables
+var interact_hold_threshold : float = 0.25
+var interact_hold_time : float = 0.0
 
 # state variables
 var is_sprinting : bool = false
@@ -115,20 +120,16 @@ func _input(event):
 	if event.is_action_pressed("ui_scroll_down"):
 		print_debug("scroll down")
 	
-	if event.is_action_pressed("pick_up"):
-		if look_at_collider != null:
-			var look_at_collider_interaction_component = look_at_collider.interaction_component
-			if look_at_collider_interaction_component.is_pickable:
-				pick_up_to_inventory()
-	
 	if event.is_action_pressed("interact"):
-		if look_at_collider != null:
-			set_radial_menu_items(look_at_collider)
-			
-			radial_menu_controller.open_radial_menu()
-	if event.is_action_released("interact"):
-		if radial_menu_controller.radial_menu.visible:
-			radial_menu_controller.close_radial_menu()
+		interact_hold_time = 0.0
+	elif event.is_action_released("interact"):
+		if interact_hold_time < interact_hold_threshold:
+			if look_at_collider != null:
+				var look_at_collider_interaction_component = look_at_collider.interaction_component
+				if look_at_collider_interaction_component.is_pickable:
+					pick_up_to_inventory()
+			if radial_menu_controller.radial_menu.visible:
+				radial_menu_controller.close_radial_menu()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_authorized_user == true:
@@ -383,31 +384,46 @@ func debug_process():
 
 func looking_process():
 	if look_at_ray_cast.is_colliding():
-		if look_at_collider != null:
-			look_at_collider.toggle_highlight(false)
+		#if look_at_collider != null && look_at_collider.has_method("toggle_highlight"):
+			#look_at_collider.toggle_highlight(false)
 		
 		var temp_look_at_ray_cast_collider = look_at_ray_cast.get_collider()
 		if temp_look_at_ray_cast_collider != null:
 			look_at_collider = temp_look_at_ray_cast_collider.get_parent()
 			if look_at_collider != null && look_at_collider.has_user_signal("focused"):
 				look_at_collider.emit_signal("focused")
+				waila_label.text = get_waila_string(look_at_collider)
+				interact_label.visible = true
 				interact_label.text = get_interact_label()
 				if "inv_item" in look_at_collider:
 					if look_at_collider.inv_item != null:
+						pick_up_label.visible = true
 						pick_up_label.text = get_pick_up_label(look_at_collider.inv_item)
 	else:
 		if look_at_collider != null &&  look_at_collider.has_user_signal("unfocused"):
 			look_at_collider.emit_signal("unfocused")
 			look_at_collider = null
+		waila_label.text = ""
 		interact_label.text = ""
+		interact_label.visible = false
 		pick_up_label.text = ""
+		pick_up_label.visible = false
 
 func run_interact_method_by_id(_interact_method_id : String):
 	match _interact_method_id:
 		"interact_close_menu":
 			radial_menu_controller.close_radial_menu()
-		"interact_description":
+		"interact_inquire":
 			radial_menu_controller.close_radial_menu()
+		"interact_combine":
+			var _collider = radial_menu_controller.interacted_collider
+			var _collider_id = radial_menu_controller.interacted_collider_id
+			if _collider_id != "":
+				if _collider_id[0] == "a":
+					create_combined_items(_collider, _collider_id)
+				elif _collider_id[0] == "c":
+					if _collider is Combined_Items:
+						combine_combined_items(_collider, _collider_id)
 
 func get_collider_id(_look_at_collider):
 	var _collider_id
@@ -423,21 +439,41 @@ func get_collider_id(_look_at_collider):
 
 func set_radial_menu_items(_look_at_collider):
 	var _collider_id = get_collider_id(_look_at_collider)
+	radial_menu_controller.interacted_collider = _look_at_collider
+	radial_menu_controller.interacted_collider_id = _collider_id
 	
 	radial_menu_controller.update_main_title(_collider_id) # changes the title above the radial menu to display what you are interacting with
 	var _menu_items : Array
 	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.CLOSE_TEXTURE, "Close", "interact_close_menu")) # first radial menu option; is guaranteed to be added
 	if _collider_id[0] == "a" || _collider_id[0] == "c":
-		_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.DESCRIPTION_TEXTURE, "Description", "interact_description")) # second radial menu option; not guaranteed to be added
+		_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.INQUIRE_TEXTURE, "Inquire", "interact_inquire")) # second radial menu option; not guaranteed to be added
+		if (_collider_id == "c000001" || _collider_id[0] == "a") && inventory_menu.is_selecting_item():
+			_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.COMBINE_TEXTURE, ("Combine"), "interact_combine"))
 	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.CRAFT_TEXTURE, "Close", "interact_close_menu"))
-	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.COMBINE_TEXTURE, "Close", "interact_close_menu"))
 	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.UNCOMBINE_TEXTURE, "Close", "interact_close_menu"))
-	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.INQUIRE_TEXTURE, "Close", "interact_close_menu"))
 	
 	radial_menu_controller.radial_menu.set_items(_menu_items)
 
 func get_radial_menu_selection_dictionary(_texture : CompressedTexture2D, _title : String, _id : String) -> Dictionary:
 	return {'texture': _texture, 'title': _title, 'id': _id}
+
+func create_combined_items(_collider, _collider_id : String):
+	if _collider_id[0] == "a" && inventory_menu.is_selecting_item():
+		world.instance_combined_item(_collider.position, StaticData.create_item_from_id(_collider_id), inventory_menu.get_selected_item())
+		inventory_menu.erase_selected_item()
+		_collider.queue_free()
+
+func combine_combined_items(_collider, _collider_id : String):
+	if _collider is Combined_Items:
+		_collider.add_item_to_combined_items(inventory_menu.get_selected_item())
+
+func get_waila_string(_look_at_collider) -> String:
+	if "inv_item" in _look_at_collider: # if collider is an item
+		return StaticData.item_data[_look_at_collider.inv_item.item_id]["item_name"]
+	elif "structure_id" in _look_at_collider: # if collider is a structure
+		return StaticData.structure_data[_look_at_collider.structure_id]["structure_name"]
+	else:
+		return ""
 
 func get_interact_label() -> String:
 	for actionName in InputMap.get_actions():
@@ -448,12 +484,20 @@ func get_interact_label() -> String:
 
 func get_pick_up_label(_inv_item : InventoryItem) -> String:
 	for actionName in InputMap.get_actions():
-		if actionName == "pick_up":
+		if actionName == "interact":
 			for inputEvent in InputMap.action_get_events(actionName):
 				return "Press [" + inputEvent.as_text().split(" (")[0] + "] to pick up " + _inv_item.get_item_name()
 	return "Press [??] to pick up " + _inv_item.get_item_name()
 
 func interact_process(delta):
+	if Input.is_action_pressed("interact"):
+		interact_hold_time += delta
+		if interact_hold_time >= interact_hold_threshold:
+			if look_at_collider != null && !radial_menu_controller.radial_menu.visible:
+				set_radial_menu_items(look_at_collider)
+				
+				radial_menu_controller.open_radial_menu()
+	
 	if radial_menu_controller.radial_menu.visible == true:
 		tooltips.visible = false
 	else:

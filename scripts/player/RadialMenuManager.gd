@@ -9,7 +9,8 @@ extends Control
 @onready var radial_selection_title: Label = $RadialMenu/RadialSelectionTitle
 @onready var radial_subtext: Label = $RadialMenu/RadialSubtext
 
-
+var interacted_collider = null
+var interacted_collider_id : String = ""
 var mouse_limit_radius = 50.0
 
 func _ready() -> void:
@@ -42,6 +43,8 @@ func open_radial_menu() -> void:
 	radial_menu.open_menu(reticle.position)
 
 func close_radial_menu() -> void:
+	interacted_collider = null
+	interacted_collider_id = ""
 	radial_menu.close_menu()
 
 func update_main_title(_interacted_object_id) -> void:
@@ -61,7 +64,7 @@ func _on_radial_menu_item_selected(id: Variant, position: Variant) -> void:
 func _on_radial_menu_item_hovered(_selection_dictionary: Variant) -> void:
 	radial_selection_title.text = _selection_dictionary["title"]
 	radial_subtext.text = ""
-	if _selection_dictionary["id"] == "interact_description":
+	if _selection_dictionary["id"] == "interact_inquire":
 		var _interacted_object_id = fps_controller.get_collider_id(fps_controller.look_at_collider)
 		if _interacted_object_id != null:
 			if _interacted_object_id.length() > 0:

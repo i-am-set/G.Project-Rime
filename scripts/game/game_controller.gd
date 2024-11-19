@@ -196,6 +196,13 @@ func set_current_wind_direction():
 	Global.WIND_DIRECTION = raw_wind_direction
 	send_p2p_packet(0, {"message": "set_wind_direction", "wind_direction": Global.WIND_DIRECTION})
 
+func instance_combined_item(_combined_item_position : Vector3, _ground_inv_item : InventoryItem, _held_inv_item : InventoryItem):
+	var combined_items_instance = Global.COMBINED_ITEMS_SCENE.instantiate()
+	ground_objects.add_child(combined_items_instance)
+	combined_items_instance.position = _combined_item_position
+	
+	combined_items_instance.create_combined_items(_ground_inv_item, _held_inv_item)
+
 func instance_ground_item(_dropped_inv_item : InventoryItem, _stack_amount : int, _drop_position : Vector3, look_dir : Vector3):
 	var _new_ground_item = GROUND_ITEM.instantiate()
 	_new_ground_item.inv_item = _dropped_inv_item

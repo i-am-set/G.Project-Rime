@@ -247,12 +247,12 @@ func _handle_actions(event):
 		get_viewport().set_input_as_handled()
 		selected = -1
 		activate_selected()
-	elif event.is_action_pressed("ui_down") or event.is_action_pressed("ui_right"):
-		select_next()
-		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("ui_up") or event.is_action_pressed("ui_left"):
-		select_prev()
-		get_viewport().set_input_as_handled()
+	#elif event.is_action_pressed("ui_down") or event.is_action_pressed("ui_right"):
+		#select_next()
+		#get_viewport().set_input_as_handled()
+	#elif event.is_action_pressed("ui_up") or event.is_action_pressed("ui_left"):
+		#select_prev()
+		#get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("ui_accept"):
 		get_viewport().set_input_as_handled()
 		activate_selected()

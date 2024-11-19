@@ -1,4 +1,5 @@
 extends RigidBody3D
+class_name Ground_Item
 
 const HIGHLIGHT_MATERIAL = preload("res://materials/utility/highlight_material.tres")
 

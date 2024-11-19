@@ -13,7 +13,7 @@ const MISSING_MESH_MODEL = preload("res://meshes/utility/missing_mesh_model.obj"
 func _ready():
 	item_data = import_json_file(item_data_file_path)
 	recipe_data = import_json_file(recipe_data_file_path)
-	structure_data_file_path = import_json_file(structure_data_file_path)
+	structure_data = import_json_file(structure_data_file_path)
 	await get_tree().create_timer(0.25).timeout
 	
 	Console.create_command("get_item_list", self.c_list_all_items, "Lists all items and their IDs.")
