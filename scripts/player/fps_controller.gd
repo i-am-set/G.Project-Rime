@@ -111,30 +111,43 @@ func strip_into_peer():
 	AMBIENT_SOUNDS.queue_free()
 
 func _input(event):
-	if event.is_action_pressed("ui_scroll_up"):
-		print_debug("scroll up")
-	if event.is_action_pressed("ui_scroll_down"):
-		print_debug("scroll down")
-	
-	if event.is_action_pressed("pick_up"):
-		if look_at_collider != null:
-			if "interaction_component" in look_at_collider:
-				var look_at_collider_interaction_component = look_at_collider.interaction_component
-				if look_at_collider_interaction_component.is_pickable:
-					pick_up_to_inventory()
-	
-	if event.is_action_pressed("interact"):
-		if scrollable_interact_menu.visible:
-			if scrollable_interact_menu.menu_options.size() > 0:
-				run_interact_method_by_id(scrollable_interact_menu.menu_options[scrollable_interact_menu.current_selection]["id"])
-			scrollable_interact_menu.close_interact_menu()
-		else:
+	if _is_authorized_user == true:
+		if event.is_action_pressed("ui_scroll_up"):
+			if !is_interacting():
+				try_open_interact_menu()
+			if !is_interacting():
+				inventory_menu.select_previous_slot()
+			else:
+				scrollable_interact_menu.previous_menu_option()
+			print_debug("scroll up")
+		if event.is_action_pressed("ui_scroll_down"):
+			if !is_interacting():
+				try_open_interact_menu()
+			if !is_interacting():
+				inventory_menu.select_next_slot()
+			else:
+				scrollable_interact_menu.next_menu_option()
+			print_debug("scroll down")
+		
+		looking_process()
+		
+		if event.is_action_pressed("pick_up"):
 			if look_at_collider != null:
-				set_interact_menu_items(look_at_collider)
-				scrollable_interact_menu.open_interact_menu()
-	
-	if (event.is_action_pressed("left_mouse_click") || event.is_action_pressed("right_mouse_click")) && scrollable_interact_menu.visible:
-		scrollable_interact_menu.close_interact_menu()
+				if "interaction_component" in look_at_collider:
+					var look_at_collider_interaction_component = look_at_collider.interaction_component
+					if look_at_collider_interaction_component.is_pickable:
+						pick_up_to_inventory()
+		
+		if event.is_action_pressed("interact"):
+			if scrollable_interact_menu.visible:
+				if scrollable_interact_menu.menu_options.size() > 0:
+					run_interact_method_by_id(scrollable_interact_menu.menu_options[scrollable_interact_menu.current_selection]["id"])
+				scrollable_interact_menu.close_interact_menu()
+			else:
+				try_open_interact_menu()
+		
+		if (event.is_action_pressed("left_mouse_click") || event.is_action_pressed("right_mouse_click")) && scrollable_interact_menu.visible:
+			scrollable_interact_menu.close_interact_menu()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_authorized_user == true:
@@ -149,7 +162,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true:
 			look_dir = event.relative * 0.001
 			_rotate_camera()
-			looking_process()
 			send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_rotation": rotation, "player_head_animation_value": _head_movement})
 
 func toggle_pause_menu():
@@ -430,6 +442,8 @@ func run_interact_method_by_id(_interact_method_id : String):
 				if _collider_id[0] == "c":
 					if _collider is Combined_Items:
 						_collider.uncombine_all_combined_items()
+		"interact_craft":
+			printerr("not yet implimented: craft function") # have it change the interaction menu to a list of craftable items or something with a back button idrk
 
 func get_collider_id(_look_at_collider):
 	var _collider_id
@@ -458,7 +472,10 @@ func set_interact_menu_items(_look_at_collider):
 				if "combined_items" in _look_at_collider:
 					if _look_at_collider.combined_items.size() > 1:
 						_menu_options.append(get_interact_menu_selection_dictionary("Uncombine", "interact_uncombine"))
-	_menu_options.append(get_interact_menu_selection_dictionary("Craft", "interact_inquire"))
+					for _item in _look_at_collider.combined_items:
+						for _recipe in StaticData.recipe_data:
+							if StaticData.recipe_data[_recipe].has(_item.item_id):
+								_menu_options.append(get_interact_menu_selection_dictionary("Craft", "interact_craft"))
 	
 	scrollable_interact_menu.set_menu_options(_menu_options)
 
@@ -499,6 +516,11 @@ func get_pick_up_label(_inv_item : InventoryItem) -> String:
 
 func is_interacting() -> bool:
 	return scrollable_interact_menu.visible
+
+func try_open_interact_menu():
+	if look_at_collider != null:
+		set_interact_menu_items(look_at_collider)
+		scrollable_interact_menu.open_interact_menu()
 
 func interact_process(delta):
 	if scrollable_interact_menu.visible == true:

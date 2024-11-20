@@ -30,12 +30,6 @@ func _ready() -> void:
 	ellipses_next.text = ""
 	update_menu_option_visuals()
 
-func _input(event):
-	if event.is_action_pressed("ui_scroll_up"):
-		previous_menu_option()
-	if event.is_action_pressed("ui_scroll_down"):
-		next_menu_option()
-
 func set_menu_options(_options):
 	"""
 	Changes the menu options. Expects a list of 2-item dictionaries with the
@@ -67,7 +61,6 @@ func previous_menu_option():
 	update_menu_option_visuals()
 
 func next_menu_option():
-	printerr(menu_options.size())
 	if current_selection + 1 < menu_options.size():
 		current_selection += 1
 	else:

@@ -29,3 +29,4 @@ res://scripts/world_generation/MapGenerator.cs
 res://scripts/world_generation/TerrainType.cs
 res://scripts/game/combined_items.gd
 res://scripts/player/inventory_logic.gd
+res://scripts/player/scrollable_interact_menu.gd

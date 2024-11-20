@@ -39,10 +39,6 @@ func _unhandled_input(event):
 
 func _input(event):
 	if !fps_controller.is_interacting():
-		if event.is_action_pressed("ui_scroll_up"):
-			select_previous_slot()
-		if event.is_action_pressed("ui_scroll_down"):
-			select_next_slot()
 		if event.is_action_pressed("drop_selected_item"):
 			drop_selected_item()
 
