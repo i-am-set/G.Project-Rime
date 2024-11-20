@@ -1,5 +1,5 @@
-res://scenes/maingame
 res://scripts/game
+res://scenes/maingame
 res://textures/ui/hud
 res://scripts/player
 res://textures/ui/Inventory

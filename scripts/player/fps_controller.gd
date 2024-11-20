@@ -63,6 +63,7 @@ var _current_rotation : float
 # interact variables
 var interact_hold_threshold : float = 0.25
 var interact_hold_time : float = 0.0
+var interact_hold_executed : bool = false
 
 # state variables
 var is_sprinting : bool = false
@@ -123,11 +124,13 @@ func _input(event):
 	if event.is_action_pressed("interact"):
 		interact_hold_time = 0.0
 	elif event.is_action_released("interact"):
+		interact_hold_executed = false
 		if interact_hold_time < interact_hold_threshold:
 			if look_at_collider != null:
-				var look_at_collider_interaction_component = look_at_collider.interaction_component
-				if look_at_collider_interaction_component.is_pickable:
-					pick_up_to_inventory()
+				if "interaction_component" in look_at_collider:
+					var look_at_collider_interaction_component = look_at_collider.interaction_component
+					if look_at_collider_interaction_component.is_pickable:
+						pick_up_to_inventory()
 			if radial_menu_controller.radial_menu.visible:
 				radial_menu_controller.close_radial_menu()
 
@@ -270,7 +273,7 @@ func update_gravity(delta) -> void:
 		var gravitational_force = gravity * mass
 		var acceleration = gravitational_force / mass  # Simplifies to gravity
 		velocity.y -= acceleration * delta
-	
+
 func update_input(speed: float, acceleration: float, deceleration: float) -> void:
 	if _is_authorized_user == true:
 		if player_data.no_clip:
@@ -423,7 +426,14 @@ func run_interact_method_by_id(_interact_method_id : String):
 					create_combined_items(_collider, _collider_id)
 				elif _collider_id[0] == "c":
 					if _collider is Combined_Items:
-						combine_combined_items(_collider, _collider_id)
+						add_item_to_combined_items(_collider, _collider_id)
+		"interact_uncombine":
+			var _collider = radial_menu_controller.interacted_collider
+			var _collider_id = radial_menu_controller.interacted_collider_id
+			if _collider_id != "":
+				if _collider_id[0] == "c":
+					if _collider is Combined_Items:
+						_collider.uncombine_all_combined_items()
 
 func get_collider_id(_look_at_collider):
 	var _collider_id
@@ -447,10 +457,14 @@ func set_radial_menu_items(_look_at_collider):
 	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.CLOSE_TEXTURE, "Close", "interact_close_menu")) # first radial menu option; is guaranteed to be added
 	if _collider_id[0] == "a" || _collider_id[0] == "c":
 		_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.INQUIRE_TEXTURE, "Inquire", "interact_inquire")) # second radial menu option; not guaranteed to be added
-		if (_collider_id == "c000001" || _collider_id[0] == "a") && inventory_menu.is_selecting_item():
-			_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.COMBINE_TEXTURE, ("Combine"), "interact_combine"))
+		if _collider_id == "c000001" || _collider_id[0] == "a":
+			if inventory_menu.is_selecting_item():
+				_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.COMBINE_TEXTURE, "Combine", "interact_combine"))
+			if _collider_id == "c000001":
+				if "combined_items" in _look_at_collider:
+					if _look_at_collider.combined_items.size() > 1:
+						_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.UNCOMBINE_TEXTURE, "Uncombine", "interact_uncombine"))
 	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.CRAFT_TEXTURE, "Close", "interact_close_menu"))
-	_menu_items.append(get_radial_menu_selection_dictionary(radial_menu_controller.radial_menu.UNCOMBINE_TEXTURE, "Close", "interact_close_menu"))
 	
 	radial_menu_controller.radial_menu.set_items(_menu_items)
 
@@ -463,9 +477,9 @@ func create_combined_items(_collider, _collider_id : String):
 		inventory_menu.erase_selected_item()
 		_collider.queue_free()
 
-func combine_combined_items(_collider, _collider_id : String):
-	if _collider is Combined_Items:
-		_collider.add_item_to_combined_items(inventory_menu.get_selected_item())
+func add_item_to_combined_items(_collider, _collider_id : String):
+	_collider.add_item_to_combined_items(inventory_menu.get_selected_item())
+	inventory_menu.erase_selected_item()
 
 func get_waila_string(_look_at_collider) -> String:
 	if "inv_item" in _look_at_collider: # if collider is an item
@@ -493,7 +507,8 @@ func interact_process(delta):
 	if Input.is_action_pressed("interact"):
 		interact_hold_time += delta
 		if interact_hold_time >= interact_hold_threshold:
-			if look_at_collider != null && !radial_menu_controller.radial_menu.visible:
+			if look_at_collider != null && !radial_menu_controller.radial_menu.visible && interact_hold_executed == false:
+				interact_hold_executed = true
 				set_radial_menu_items(look_at_collider)
 				
 				radial_menu_controller.open_radial_menu()

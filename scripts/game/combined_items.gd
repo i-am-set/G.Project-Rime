@@ -37,6 +37,18 @@ func add_item_to_combined_items(_inv_item : InventoryItem):
 		printerr("No meshes in combined_items '", self, "' were null")
 		set_mesh_of_mesh_instance(mesh_0, Global.ITEM_MESHES[_inv_item.item_id])
 
+func uncombine_all_combined_items():
+	var _world = get_parent().get_parent()
+	if !_world.has_method("instance_ground_item"):
+		printerr("Doesn't have instance_ground_item()")
+	
+	for _item in combined_items:
+		_world.instance_ground_item(_item, 1, self.position, Vector3.ZERO)
+	
+	combined_items.clear()
+	clear_meshes_in_mech_container()
+	queue_free()
+
 func set_mesh_of_mesh_instance(_mesh_instance : MeshInstance3D, _array_mesh):
 	_mesh_instance.mesh = _array_mesh
 
@@ -44,6 +56,4 @@ func clear_meshes_in_mech_container():
 	for _mesh in mesh_container.get_children():
 		if _mesh is MeshInstance3D:
 			_mesh.mesh = null
-		
-		combined_items.clear()
 

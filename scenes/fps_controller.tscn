@@ -1,4 +1,4 @@
-[gd_scene load_steps=246 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=247 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -78,6 +78,7 @@
 [ext_resource type="ButtonGroup" uid="uid://d1rwdy7rhnv81" path="res://ui/button_groups/ssao_quality_button_group.tres" id="38_bkg3p"]
 [ext_resource type="Texture2D" uid="uid://4o7q5kfibtr6" path="res://textures/ui/hud/hud_progress_circle.png" id="38_sxo8f"]
 [ext_resource type="Script" path="res://scripts/game/UseProgressCircle.gd" id="39_10oom"]
+[ext_resource type="Script" path="res://scripts/game/scrollable_interact_menu.gd" id="44_5ansl"]
 [ext_resource type="Script" path="res://scripts/player/RadialMenuManager.gd" id="44_e8ohw"]
 [ext_resource type="Script" path="res://addons/RadialMenu/RadialMenu.gd" id="44_xtp45"]
 [ext_resource type="FontFile" uid="uid://fo0xgeapygd4" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-BoldItalic.ttf" id="47_tftne"]
@@ -3026,26 +3027,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(-2.4902e-11, 0.980304, -0.978518)
+bones/0/position = Vector3(7.24538e-12, 0.97192, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.19025, 0.578675, 0.0117511)
+bones/2/position = Vector3(0.190261, 0.596869, 0.0121205)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.000465643, -0.0289621, 0.99877, -0.0402467)
-bones/6/rotation = Quaternion(-0.00666338, 0.00150829, -0.0167057, 0.999837)
+bones/5/rotation = Quaternion(0.00208496, 0.0106609, 0.999133, -0.0401964)
+bones/6/rotation = Quaternion(-0.0844493, 0.0142296, -0.0126224, 0.996246)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000947784, -0.0101065, 0.995547, 0.0937157)
+bones/8/rotation = Quaternion(0.000790672, -0.01012, 0.996883, 0.0782391)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.000484385, -0.0287718, 0.998751, 0.040849)
+bones/11/rotation = Quaternion(-0.00207216, 0.0106624, 0.999108, 0.0407988)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.00672734, -0.000531697, 0.0171889, 0.99983)
+bones/12/rotation = Quaternion(-0.0855221, 0.00214488, 0.0207246, 0.996118)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3196,7 +3197,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3394,7 +3395,6 @@ theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_fonts/font = ExtResource("16_h2j1q")
 theme_override_font_sizes/font_size = 16
-text = "Flint"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
@@ -3442,6 +3442,92 @@ theme_override_fonts/font = ExtResource("16_h2j1q")
 theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
+
+[node name="ScrollableInteractMenu" type="Control" parent="UserInterface/Hud"]
+layout_mode = 1
+anchor_left = 0.509
+anchor_top = 0.417
+anchor_right = 0.675
+anchor_bottom = 0.583
+offset_left = -0.400024
+offset_top = 1.69998
+offset_bottom = 0.299988
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("44_5ansl")
+
+[node name="SelectorColorRect" type="ColorRect" parent="UserInterface/Hud/ScrollableInteractMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.023
+anchor_top = 0.426
+anchor_right = 1.0
+anchor_bottom = 0.574
+offset_left = -0.118001
+offset_top = -0.0480042
+offset_bottom = 0.0479965
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25098, 0.25098, 0.25098, 0.329412)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/Hud/ScrollableInteractMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.023
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.118001
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="EllipsesPrevious" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("16_02d1f")
+uppercase = true
+
+[node name="FarPreviousSelection" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("16_02d1f")
+uppercase = true
+
+[node name="PreviousSelection" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("16_02d1f")
+uppercase = true
+
+[node name="CurrentSelection" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("22_7k54l")
+uppercase = true
+
+[node name="Selector" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer/CurrentSelection"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -13.0
+offset_right = -3.0
+offset_bottom = 9.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("16_h2j1q")
+text = ">"
+
+[node name="NextSelection" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("16_02d1f")
+uppercase = true
+
+[node name="FarNextSelection" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("16_02d1f")
+uppercase = true
+
+[node name="EllipsesNext" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("16_02d1f")
 uppercase = true
 
 [node name="RadialMenuController" type="Control" parent="UserInterface/Hud"]

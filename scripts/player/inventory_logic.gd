@@ -150,6 +150,8 @@ func erase_selected_item():
 	if !is_selecting_item():
 		return
 	remove_item_in_inventory_at_index(selected_index)
+	
+	select_next_open_slot_in_reverse_order()
 
 func drop_selected_item():
 	if !is_selecting_item():
@@ -157,6 +159,9 @@ func drop_selected_item():
 	fps_controller.drop_ground_item(inventory_contents[selected_index].item_id, 1)
 	remove_item_in_inventory_at_index(selected_index)
 	
+	select_next_open_slot_in_reverse_order()
+
+func select_next_open_slot_in_reverse_order():
 	if inventory_contents[selected_index] == null:
 		for i in range(5, -1, -1):
 			if inventory_contents[i] != null:

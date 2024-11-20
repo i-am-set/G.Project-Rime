@@ -1,0 +1,147 @@
+[gd_scene load_steps=28 format=3 uid="uid://clnopfwnhl6j4"]
+
+[ext_resource type="Script" path="res://scripts/game/game_controller.gd" id="1_beekf"]
+[ext_resource type="PackedScene" uid="uid://1gfropwtqfbn" path="res://GodotSky/GodotSky.tscn" id="1_v0aj0"]
+[ext_resource type="Script" path="res://scripts/world_generation/MapGenerator.cs" id="2_l6eyd"]
+[ext_resource type="AudioStream" uid="uid://co081pmgpep1e" path="res://sound/music/mus_world_drone_track_1.wav" id="2_x5rox"]
+[ext_resource type="Script" path="res://scripts/world_generation/TerrainType.cs" id="3_f2kf7"]
+[ext_resource type="Material" uid="uid://cokndnhyl7pb3" path="res://materials/world_gen_material.tres" id="4_5r3nd"]
+[ext_resource type="Curve" uid="uid://bcgo5si7q5hok" path="res://scenes/utility/mesh_height_curve.tres" id="4_bp6yq"]
+[ext_resource type="Script" path="res://scripts/world_generation/InfiniteTerrainGenerator.cs" id="6_gmd1k"]
+[ext_resource type="Script" path="res://scripts/world_generation/LODInfo.cs" id="7_s7f0o"]
+[ext_resource type="Script" path="res://scripts/resource_objects/ResourceChunkInstancer.cs" id="9_8y3m7"]
+[ext_resource type="PackedScene" uid="uid://dea3xq433l3uo" path="res://scenes/utility/mountain_range_skybox_scene.tscn" id="11_bofon"]
+[ext_resource type="Texture2D" uid="uid://vumnicjktnyy" path="res://textures/nature/resource/pine/pinetree_branch_hd.png" id="12_c6ask"]
+[ext_resource type="Texture2D" uid="uid://cm7q5u3kq1ebq" path="res://textures/nature/ground/ice/ice_raw_Base_Color.jpg" id="12_hq3je"]
+[ext_resource type="Texture2D" uid="uid://ch0lv4twi6jw8" path="res://textures/nature/ground/ice/ice_raw_Height.png" id="13_isn0k"]
+[ext_resource type="Texture2D" uid="uid://ccfdl7dutavpr" path="res://textures/nature/ground/ice/ice_raw_Normal.jpg" id="14_3l2u2"]
+[ext_resource type="Texture2D" uid="uid://cvf2cm7f6n23" path="res://textures/nature/ground/ice/ice_raw_Roughness.jpg" id="15_eb41i"]
+
+[sub_resource type="Resource" id="Resource_rrn6f"]
+script = ExtResource("3_f2kf7")
+name = "Water"
+height = -0.965
+color = Color(0.454902, 0.807843, 0.8, 1)
+
+[sub_resource type="Resource" id="Resource_qiy2y"]
+script = ExtResource("3_f2kf7")
+name = "Sand"
+height = 0.001
+color = Color(0.796078, 0.768627, 0.533333, 1)
+
+[sub_resource type="Resource" id="Resource_p26xn"]
+script = ExtResource("3_f2kf7")
+name = "Land"
+height = 0.135
+color = Color(0.223529, 0.411765, 0.243137, 1)
+
+[sub_resource type="Resource" id="Resource_tjvym"]
+script = ExtResource("3_f2kf7")
+name = "MountainBase"
+height = 0.24
+color = Color(0.301961, 0.298039, 0.270588, 1)
+
+[sub_resource type="Resource" id="Resource_bbt57"]
+script = ExtResource("3_f2kf7")
+name = "MountainMiddle"
+height = 0.74
+color = Color(0.25098, 0.247059, 0.223529, 1)
+
+[sub_resource type="Resource" id="Resource_5ytf7"]
+script = ExtResource("3_f2kf7")
+name = "MountainTop"
+height = 1.0
+color = Color(0.215686, 0.207843, 0.192157, 1)
+
+[sub_resource type="Resource" id="Resource_8v3l0"]
+script = ExtResource("7_s7f0o")
+lod = 0
+visibleDstThreshold = 75.0
+
+[sub_resource type="Resource" id="Resource_hy6ck"]
+script = ExtResource("7_s7f0o")
+lod = 4
+visibleDstThreshold = 150.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dp3sg"]
+albedo_texture = ExtResource("12_hq3je")
+metallic_specular = 0.1
+roughness = 0.12
+roughness_texture = ExtResource("15_eb41i")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_scale = 0.1
+normal_texture = ExtResource("14_3l2u2")
+rim_enabled = true
+heightmap_texture = ExtResource("13_isn0k")
+subsurf_scatter_strength = 1.0
+subsurf_scatter_texture = ExtResource("12_hq3je")
+uv1_scale = Vector3(0.02, 0.02, 0.02)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_j34ww"]
+size = Vector2(400, 400)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_em6ja"]
+points = PackedVector3Array(-100, 0, -100, -100, 0, 100, 100, 0, -100, 100, 0, 100)
+
+[node name="World" type="Node3D" node_paths=PackedStringArray("generated_terrain")]
+script = ExtResource("1_beekf")
+generated_terrain = NodePath("MapGenerator/InfiniteTerrainGen")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_x5rox")
+volume_db = -20.0
+bus = &"Music"
+
+[node name="SkyBox" parent="." instance=ExtResource("1_v0aj0")]
+timeOfDay = 700.0
+simulateTime = true
+rateOfTime = 0.01
+skyRotation = 47.8
+cloudType = "2D Dynamic"
+cloudCoverage = 0.5
+
+[node name="MapGenerator" type="Node3D" parent="."]
+script = ExtResource("2_l6eyd")
+octaves = 10
+persistance = 0.525
+meshHeightCurve = ExtResource("4_bp6yq")
+regions = [SubResource("Resource_rrn6f"), SubResource("Resource_qiy2y"), SubResource("Resource_p26xn"), SubResource("Resource_tjvym"), SubResource("Resource_bbt57"), SubResource("Resource_5ytf7")]
+
+[node name="InfiniteTerrainGen" type="Node3D" parent="MapGenerator" node_paths=PackedStringArray("viewer")]
+script = ExtResource("6_gmd1k")
+detailLevels = Array[Object]([SubResource("Resource_8v3l0"), SubResource("Resource_hy6ck")])
+worldSize = 10
+viewer = NodePath("../../Marker3D")
+shaderMaterial = ExtResource("4_5r3nd")
+
+[node name="ResourceChunkInstancer" type="Node3D" parent="MapGenerator"]
+script = ExtResource("9_8y3m7")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1165.3, 74.0264, 1144.61)
+
+[node name="mountain_range_skybox_model_1" parent="." instance=ExtResource("11_bofon")]
+visible = false
+
+[node name="Ice" type="MeshInstance3D" parent="mountain_range_skybox_model_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+material_override = SubResource("StandardMaterial3D_dp3sg")
+mesh = SubResource("PlaneMesh_j34ww")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mountain_range_skybox_model_1/Ice"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mountain_range_skybox_model_1/Ice/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_em6ja")
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0756981, -18.0763, 0)
+texture_albedo = ExtResource("12_c6ask")
+
+[node name="Entities" type="Node3D" parent="."]
+
+[node name="GroundObjects" type="Node3D" parent="."]
+
+[editable path="SkyBox"]

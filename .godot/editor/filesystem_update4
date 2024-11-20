@@ -1,4 +1,4 @@
-res://scenes/maingame/combined_items.tscn
+res://scenes/fps_controller.tscn
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
 res://GodotSky/Presets/default/overcastCloudColor.tres
@@ -11,15 +11,9 @@ res://GodotSky/Presets/default/moonGlowColor.tres
 res://resources/weapons/weap_nothing.tres
 res://GodotSky/WorldEnvironment/default_sky.tres
 res://materials/world_gen_material.tres
-res://scripts/game/global.gd
-res://scenes/maingame/world.tscn
-res://scripts/game/game_controller.gd
-res://scripts/player/fps_controller.gd
-res://scripts/player/inventory_logic.gd
-res://scenes/fps_controller.tscn
+res://scripts/game/scrollable_interact_menu.gd
 res://scenes/mainmenu.tscn
+res://scenes/maingame/world.tscn
 res://scenes/ui/inv_item_rect.tscn
 res://scenes/maingame/ground_item.tscn
-res://data/StaticData.gd
-res://scripts/game/world_structure.gd
-res://addons/RadialMenu/RadialMenu.gd
+res://scenes/maingame/combined_items.tscn

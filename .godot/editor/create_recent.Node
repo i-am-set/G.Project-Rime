@@ -1,14 +1,14 @@
+ColorRect
+Label
 VBoxContainer
+Control
 Node3D
 MultiMeshInstance3D
 StaticBody3D
-Control
 RichTextLabel
 TextEdit
 RadialMenu
-ColorRect
 Button
 RayCast3D
 Sprite2D
 HBoxContainer
-GridContainer
