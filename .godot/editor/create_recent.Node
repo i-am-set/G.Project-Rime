@@ -1,5 +1,5 @@
-ColorRect
 Label
+ColorRect
 VBoxContainer
 Control
 Node3D
@@ -7,7 +7,6 @@ MultiMeshInstance3D
 StaticBody3D
 RichTextLabel
 TextEdit
-RadialMenu
 Button
 RayCast3D
 Sprite2D

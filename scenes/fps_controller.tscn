@@ -1,4 +1,4 @@
-[gd_scene load_steps=243 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=244 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -79,6 +79,7 @@
 [ext_resource type="Texture2D" uid="uid://4o7q5kfibtr6" path="res://textures/ui/hud/hud_progress_circle.png" id="38_sxo8f"]
 [ext_resource type="Script" path="res://scripts/game/UseProgressCircle.gd" id="39_10oom"]
 [ext_resource type="Script" path="res://scripts/player/scrollable_interact_menu.gd" id="44_8ets3"]
+[ext_resource type="FontFile" uid="uid://vb0qyqx3l721" path="res://ui/fonts/IBM Plex Sans Condensed/IBMPlexSansCondensed-Thin.ttf" id="45_4rsyf"]
 [ext_resource type="PackedScene" uid="uid://b7jlc7vkdspss" path="res://scenes/ui/inv_item_rect.tscn" id="64_su1hu"]
 [ext_resource type="Shader" path="res://shaders/player_post_processesing.gdshader" id="81_nnfk3"]
 
@@ -3019,26 +3020,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(4.98835e-12, 0.978582, -0.978518)
+bones/0/position = Vector3(1.17756e-11, 0.971787, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190252, 0.582632, 0.0118314)
+bones/2/position = Vector3(0.190261, 0.59651, 0.0121132)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.000818707, -0.0203284, 0.998983, -0.0402412)
-bones/6/rotation = Quaternion(-0.0236607, 0.00428829, -0.0158225, 0.999586)
+bones/5/rotation = Quaternion(0.00203091, 0.00933738, 0.999146, -0.0401991)
+bones/6/rotation = Quaternion(-0.0818814, 0.0138097, -0.0127589, 0.996465)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000913561, -0.0101097, 0.995859, 0.0903445)
+bones/8/rotation = Quaternion(0.000793776, -0.0101198, 0.996859, 0.0785448)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.000824594, -0.0203277, 0.998958, 0.0408436)
+bones/11/rotation = Quaternion(-0.00201891, 0.00933883, 0.999122, 0.0408015)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0239451, 5.27669e-05, 0.0179705, 0.999552)
+bones/12/rotation = Quaternion(-0.0829209, 0.00205645, 0.0206095, 0.996341)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3189,7 +3190,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3370,14 +3371,14 @@ mouse_filter = 2
 modulate = Color(1, 1, 1, 0.588235)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.396
-anchor_top = 0.462
-anchor_right = 0.604
-anchor_bottom = 0.481
-offset_left = 0.399963
-offset_top = 2.19998
-offset_right = 0.599976
-offset_bottom = 7.09998
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -166.0
+offset_top = -32.0
+offset_right = 167.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
@@ -3385,7 +3386,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
-theme_override_fonts/font = ExtResource("16_h2j1q")
+theme_override_fonts/font = ExtResource("45_4rsyf")
 theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -3399,7 +3400,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -91.0
-offset_top = 14.0
+offset_top = 10.0
 offset_right = 91.0
 offset_bottom = 157.0
 grow_horizontal = 2
@@ -3437,29 +3438,43 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="ScrollableInteractMenu" type="Control" parent="UserInterface/Hud"]
-visible = false
 layout_mode = 1
-anchor_left = 0.509
+anchor_left = 0.5
 anchor_top = 0.417
 anchor_right = 0.675
 anchor_bottom = 0.583
-offset_left = -0.400024
+offset_left = 14.0
 offset_top = 1.69998
 offset_bottom = 0.299988
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("44_8ets3")
 
+[node name="WAILAInteractLabel" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -231.0
+offset_top = -11.0
+offset_right = -24.0
+offset_bottom = 11.0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("45_4rsyf")
+text = "Flint"
+horizontal_alignment = 2
+uppercase = true
+
 [node name="SelectorColorRect" type="ColorRect" parent="UserInterface/Hud/ScrollableInteractMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.023
-anchor_top = 0.426
+anchor_left = -0.023
+anchor_top = 0.432
 anchor_right = 1.0
-anchor_bottom = 0.574
-offset_left = -0.118001
-offset_top = -0.0480042
-offset_bottom = 0.0479965
+anchor_bottom = 0.568
+offset_left = 0.118001
+offset_top = 0.0639839
+offset_bottom = -0.0640182
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.25098, 0.25098, 0.25098, 0.329412)

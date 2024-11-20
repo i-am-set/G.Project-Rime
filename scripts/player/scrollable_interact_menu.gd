@@ -9,19 +9,21 @@ extends Control
 @onready var ellipses_previous: Label = $VBoxContainer/EllipsesPrevious
 @onready var ellipses_next: Label = $VBoxContainer/EllipsesNext
 
+
 var interacted_collider = null
 var interacted_collider_id : String = ""
 
 var ellipses_text = "  . . ."
 var current_selection : int
+var cached_menu_options
 var menu_options = [
-	{'title': 'Inquire', 'id': 'arc_id1'},
-	{'title': 'Combine', 'id': 'arc_id2'},	
-	{'title': 'Uncombine (All)', 'id': 'arc_id3'},	
-	{'title': 'Craft (Flint Spear)', 'id': 'arc_id4'},	
-	{'title': 'Start fire pit', 'id': 'arc_id5'},	
-	{'title': 'Item6', 'id': 'arc_id6'},	
-	{'title': 'Item7', 'id': 'arc_id7'},	
+	{'title': 'Inquire', 'color': '#ffffff', 'id': 'arc_id1'},
+	{'title': 'Combine', 'color': '#ffffff', 'id': 'arc_id2'},	
+	{'title': 'Uncombine (All)', 'color': '#ffffff', 'id': 'arc_id3'},	
+	{'title': 'Craft (Flint Spear)', 'color': '#ffffff', 'id': 'arc_id4'},	
+	{'title': 'Start fire pit', 'color': '#ffffff', 'id': 'arc_id5'},	
+	{'title': 'Item6', 'color': '#ffffff', 'id': 'arc_id6'},	
+	{'title': 'Item7', 'color': '#ffffff', 'id': 'arc_id7'},	
 ] : set = set_menu_options
 
 func _ready() -> void:
@@ -32,14 +34,32 @@ func _ready() -> void:
 
 func set_menu_options(_options):
 	"""
-	Changes the menu options. Expects a list of 2-item dictionaries with the
-	keys 'title' and 'id'.
+	Changes the menu options. Expects a list of 3-item dictionaries with the
+	keys 'title', 'color', and 'id'.
 	"""
+	current_selection = 0
 	clear_menu_options()
 	menu_options = _options
+	update_menu_option_visuals()
+
+func set_sub_menu_items(_sub_options):
+	cached_menu_options = menu_options.duplicate()
+	current_selection = 0
+	clear_menu_options()
+	menu_options = _sub_options
+	update_menu_option_visuals()
+
+func back_out_of_sub_menu_options():
+	if cached_menu_options == null:
+		close_interact_menu()
+		print_debug("cached_menu_options not present for back function")
+		return
+	
+	set_menu_options(cached_menu_options)
 
 func open_interact_menu():
 	current_selection = 0
+	cached_menu_options = null
 	visible = true
 	update_menu_option_visuals()
 
@@ -83,6 +103,7 @@ func update_menu_option_visuals():
 			prefix = option["prefix"]
 		if option.index >= 0 and option.index < menu_options.size():
 			option.label.text = prefix + menu_options[option.index]["title"]
+			option.label.set("theme_override_colors/font_color", Color.html(menu_options[option.index]["color"]))
 		else:
 			option.label.text = ""
 	

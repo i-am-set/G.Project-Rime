@@ -53,7 +53,7 @@ movie_writer/movie_file="D:/StayAtHomeDev/Video Production/Social Video Teasers/
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/FillGapContainer/plugin.cfg", "res://addons/RadialMenu/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/better_vircle/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/godot-console/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/imrp/plugin.cfg", "res://addons/label_font_auto_sizer/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/FillGapContainer/plugin.cfg", "res://addons/Todo_Manager/plugin.cfg", "res://addons/anthonyec.camera_preview/plugin.cfg", "res://addons/better_vircle/plugin.cfg", "res://addons/diagnosticlist/plugin.cfg", "res://addons/godot-console/plugin.cfg", "res://addons/hyperlog/plugin.cfg", "res://addons/imrp/plugin.cfg", "res://addons/label_font_auto_sizer/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [input]
 

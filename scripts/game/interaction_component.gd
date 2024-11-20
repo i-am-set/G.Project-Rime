@@ -14,7 +14,7 @@ func _process(delta):
 # Give "get_interact_label()" to the parent to apply an interact label
 
 func in_range() -> void:
-	print("In range.")
+	print_debug("In range.")
 	if parent.has_method("in_range"):
 		parent.in_range()
 	else:

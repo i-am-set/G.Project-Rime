@@ -19,6 +19,7 @@ extends CharacterBody3D
 @onready var look_at_ray_cast = $CameraController/Camera3D/LookAtRayCast
 @onready var tooltips: Control = $UserInterface/Hud/Tooltips
 @onready var waila_label: Label = $UserInterface/Hud/Tooltips/WAILALabel
+@onready var waila_interact_label: Label = $UserInterface/Hud/ScrollableInteractMenu/WAILAInteractLabel
 @onready var interact_label: Label = $UserInterface/Hud/Tooltips/TooltipVbox/InteractLabel
 @onready var pick_up_label: Label = $UserInterface/Hud/Tooltips/TooltipVbox/PickUpLabel
 @onready var debug_panel: PanelContainer = $UserInterface/Debug/DebugPanel
@@ -57,8 +58,14 @@ var _head_movement : float
 var _crouch_speed_mod : float
 var _is_crouching : bool = false
 var _is_busy : bool = false
-var look_at_collider
 var _current_rotation : float
+var look_at_collider :
+	get:
+		return look_at_collider
+	set(value):
+		if value == null:
+			scrollable_interact_menu.close_interact_menu()
+		look_at_collider = value
 
 # state variables
 var is_sprinting : bool = false
@@ -141,7 +148,10 @@ func _input(event):
 		if event.is_action_pressed("interact"):
 			if scrollable_interact_menu.visible:
 				if scrollable_interact_menu.menu_options.size() > 0:
-					run_interact_method_by_id(scrollable_interact_menu.menu_options[scrollable_interact_menu.current_selection]["id"])
+					var _cached_id : String = scrollable_interact_menu.menu_options[scrollable_interact_menu.current_selection]["id"]
+					run_interact_method_by_id(_cached_id)
+					if _cached_id.begins_with("open"):
+						return
 				scrollable_interact_menu.close_interact_menu()
 			else:
 				try_open_interact_menu()
@@ -410,6 +420,7 @@ func looking_process():
 			if look_at_collider != null && look_at_collider.has_user_signal("focused"):
 				look_at_collider.emit_signal("focused")
 				waila_label.text = get_waila_string(look_at_collider)
+				waila_interact_label.text = get_waila_string(look_at_collider)
 				interact_label.visible = true
 				interact_label.text = get_interact_label()
 				if "inv_item" in look_at_collider:
@@ -435,15 +446,18 @@ func run_interact_method_by_id(_interact_method_id : String):
 				elif _collider_id[0] == "c":
 					if _collider is Combined_Items:
 						add_item_to_combined_items(_collider, _collider_id)
-		"interact_uncombine":
+		"interact_uncombine_all":
 			var _collider = scrollable_interact_menu.interacted_collider
 			var _collider_id = scrollable_interact_menu.interacted_collider_id
 			if _collider_id != "":
 				if _collider_id[0] == "c":
 					if _collider is Combined_Items:
 						_collider.uncombine_all_combined_items()
-		"interact_craft":
-			printerr("not yet implimented: craft function") # have it change the interaction menu to a list of craftable items or something with a back button idrk
+		"open_craft_menu":
+			var _collider = scrollable_interact_menu.interacted_collider
+			set_sub_interact_menu_items(_collider, "open_craft_menu")
+		"open_back_out_of_sub_menu":
+			scrollable_interact_menu.back_out_of_sub_menu_options()
 
 func get_collider_id(_look_at_collider):
 	var _collider_id
@@ -464,23 +478,73 @@ func set_interact_menu_items(_look_at_collider):
 	
 	var _menu_options : Array
 	if _collider_id[0] == "a" || _collider_id[0] == "c":
-		_menu_options.append(get_interact_menu_selection_dictionary("Inquire", "interact_inquire"))
+		_menu_options.append(get_interact_menu_selection_dictionary("Inquire", "#ffffff", "interact_inquire"))
 		if _collider_id == "c000001" || _collider_id[0] == "a":
 			if inventory_menu.is_selecting_item():
-				_menu_options.append(get_interact_menu_selection_dictionary("Combine", "interact_combine"))
+				_menu_options.append(get_interact_menu_selection_dictionary("Combine", "#ffffff", "interact_combine"))
 			if _collider_id == "c000001":
 				if "combined_items" in _look_at_collider:
 					if _look_at_collider.combined_items.size() > 1:
-						_menu_options.append(get_interact_menu_selection_dictionary("Uncombine", "interact_uncombine"))
+						_menu_options.append(get_interact_menu_selection_dictionary("Uncombine (All)", "#ffffff", "interact_uncombine_all"))
+					var _all_possible_recipes_ids : Array
 					for _item in _look_at_collider.combined_items:
 						for _recipe in StaticData.recipe_data:
 							if StaticData.recipe_data[_recipe].has(_item.item_id):
-								_menu_options.append(get_interact_menu_selection_dictionary("Craft", "interact_craft"))
+								_all_possible_recipes_ids.append(_recipe)
+					if _all_possible_recipes_ids.size() > 0:
+						_menu_options.append(get_interact_menu_selection_dictionary("Craft . . .", "#d2974d", "open_craft_menu"))
 	
 	scrollable_interact_menu.set_menu_options(_menu_options)
 
-func get_interact_menu_selection_dictionary(_title : String, _id : String) -> Dictionary:
-	return {'title': _title, 'id': _id}
+func set_sub_interact_menu_items(_look_at_collider, _sub_menu_id : String):
+	var _sub_menu_options : Array = []
+	
+	_sub_menu_options.append(get_interact_menu_selection_dictionary("...", "#ffffff", "open_back_out_of_sub_menu"))
+	if _sub_menu_id == "open_craft_menu":
+		if "combined_items" in _look_at_collider:
+			
+			var _all_possible_recipes_ids : Array = []
+			for _item in _look_at_collider.combined_items:
+				for _recipe in StaticData.recipe_data:
+					if StaticData.recipe_data[_recipe].has(_item.item_id):
+						_all_possible_recipes_ids.append(_recipe)
+			
+			var _combined_item_dictionary = {}
+			for _combined_item in _look_at_collider.combined_items:
+				if _combined_item.item_id in _combined_item_dictionary:
+					_combined_item_dictionary[_combined_item.item_id] += 1
+				else:
+					_combined_item_dictionary[_combined_item.item_id] = 1
+			
+			if _all_possible_recipes_ids.size() > 0:
+				for _recipe in _all_possible_recipes_ids:
+					var _recipe_component_count = 0
+					for _component in _recipe:
+						if _component[0] == "a":
+							_recipe_component_count += _recipe[_component]
+					
+					if _look_at_collider.combined_items.size() == _recipe_component_count:
+						var _recipe_matches_combined_items = true
+						for _component in _recipe:
+							if _component in _combined_item_dictionary:
+								if _recipe[_component] != _combined_item_dictionary[_component]:
+									_recipe_matches_combined_items = false
+									break
+							else:
+								_recipe_matches_combined_items = false
+								break
+						
+						if _recipe_matches_combined_items:
+							printerr("success")
+							_sub_menu_options.append(get_interact_menu_selection_dictionary("Craft "+ StaticData.recipe_data[_recipe]["recipe_name"], "#ffffff", "open_craft_menu"))
+						else:
+							printerr("failed")
+							_sub_menu_options.append(get_interact_menu_selection_dictionary("Craft "+ StaticData.recipe_data[_recipe]["recipe_name"], "#e53c3c", "open_craft_menu"))
+	
+	scrollable_interact_menu.set_sub_menu_items(_sub_menu_options)
+
+func get_interact_menu_selection_dictionary(_title : String, _hex_code : String, _id : String) -> Dictionary:
+	return {'title': _title, 'color': _hex_code, 'id': _id}
 
 func create_combined_items(_collider, _collider_id : String):
 	if _collider_id[0] == "a" && inventory_menu.is_selecting_item():
@@ -504,15 +568,15 @@ func get_interact_label() -> String:
 	for actionName in InputMap.get_actions():
 		if actionName == "interact":
 			for inputEvent in InputMap.action_get_events(actionName):
-				return "Press [" + inputEvent.as_text().split(" (")[0] + "] to interact"
+				return "[" + inputEvent.as_text().split(" (")[0] + "] to interact"
 	return "Hold [??] to interact"
 
 func get_pick_up_label(_inv_item : InventoryItem) -> String:
 	for actionName in InputMap.get_actions():
 		if actionName == "pick_up":
 			for inputEvent in InputMap.action_get_events(actionName):
-				return "Press [" + inputEvent.as_text().split(" (")[0] + "] to pick up " + _inv_item.get_item_name()
-	return "Press [??] to pick up " + _inv_item.get_item_name()
+				return "Press [" + inputEvent.as_text().split(" (")[0] + "] to pick up" #+ _inv_item.get_item_name()
+	return "Press [??] to pick up" #+ _inv_item.get_item_name()
 
 func is_interacting() -> bool:
 	return scrollable_interact_menu.visible
@@ -542,6 +606,7 @@ func pick_up_to_inventory():
 
 func clear_hud_labels():
 	waila_label.text = ""
+	waila_interact_label.text = ""
 	interact_label.text = ""
 	interact_label.visible = false
 	pick_up_label.text = ""
