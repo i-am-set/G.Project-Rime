@@ -9,6 +9,9 @@ extends Control
 @onready var ellipses_previous: Label = $VBoxContainer/EllipsesPrevious
 @onready var ellipses_next: Label = $VBoxContainer/EllipsesNext
 
+var interacted_collider = null
+var interacted_collider_id : String = ""
+
 var ellipses_text = "  . . ."
 var current_selection : int
 var menu_options = [
@@ -22,6 +25,7 @@ var menu_options = [
 ] : set = set_menu_options
 
 func _ready() -> void:
+	visible = false
 	ellipses_previous.text = ""
 	ellipses_next.text = ""
 	update_menu_option_visuals()
@@ -40,11 +44,19 @@ func set_menu_options(_options):
 	clear_menu_options()
 	menu_options = _options
 
+func open_interact_menu():
+	current_selection = 0
+	visible = true
+	update_menu_option_visuals()
+
+func close_interact_menu():
+	clear_menu_options()
+	interacted_collider = null
+	interacted_collider_id = ""
+	visible = false
+
 func clear_menu_options():
 	menu_options.clear()
-
-func open_menu_options():
-	current_selection = 0
 
 func previous_menu_option():
 	if current_selection - 1 >= 0:
@@ -55,7 +67,8 @@ func previous_menu_option():
 	update_menu_option_visuals()
 
 func next_menu_option():
-	if current_selection + 1 <= menu_options.size()-1:
+	printerr(menu_options.size())
+	if current_selection + 1 < menu_options.size():
 		current_selection += 1
 	else:
 		current_selection = menu_options.size()-1
@@ -85,26 +98,7 @@ func update_menu_option_visuals():
 	else:
 		ellipses_previous.text = ""
 	
-	if current_selection + 3 <= menu_options.size():
+	if current_selection + 3 < menu_options.size():
 		ellipses_next.text = ellipses_text
 	else:
 		ellipses_next.text = ""
-	#if current_selection-2 >= 0:
-		#far_previous_selection_label.text = "  " + menu_options[current_selection-2]["title"]
-	#else:
-		#far_previous_selection_label.text = ""
-	#if current_selection-1 >= 0:
-		#previous_selection_label.text = "  " + menu_options[current_selection-1]["title"]
-	#else:
-		#previous_selection_label.text = ""
-	#
-	#current_selection_label.text = menu_options[current_selection]["title"]
-	#
-	#if current_selection+1 <= menu_options.size():
-		#next_selection_label.text = "  " + menu_options[current_selection+1]["title"]
-	#else:
-		#next_selection_label.text = ""
-	#if current_selection+2 <= menu_options.size():
-		#far_next_selection_label.text = "  " + menu_options[current_selection+2]["title"]
-	#else:
-		#far_next_selection_label.text = ""

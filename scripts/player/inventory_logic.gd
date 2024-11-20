@@ -16,33 +16,35 @@ var inventory_slots
 var filler_slots := []
 
 func _unhandled_input(event):
-	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_1:
-			#if inventory_contents[0] != null:
-			select_slot(0)
-		elif event.pressed and event.keycode == KEY_2:
-			#if inventory_contents[1] != null:
-			select_slot(1)
-		elif event.pressed and event.keycode == KEY_3:
-			#if inventory_contents[2] != null:
-			select_slot(2)
-		elif event.pressed and event.keycode == KEY_4:
-			#if inventory_contents[3] != null:
-			select_slot(3)
-		elif event.pressed and event.keycode == KEY_5:
-			#if inventory_contents[4] != null:
-			select_slot(4)
-		elif event.pressed and event.keycode == KEY_6:
-			#if inventory_contents[5] != null:
-			select_slot(5)
+	if !fps_controller.is_interacting():
+		if event is InputEventKey:
+			if event.pressed and event.keycode == KEY_1:
+				#if inventory_contents[0] != null:
+				select_slot(0)
+			elif event.pressed and event.keycode == KEY_2:
+				#if inventory_contents[1] != null:
+				select_slot(1)
+			elif event.pressed and event.keycode == KEY_3:
+				#if inventory_contents[2] != null:
+				select_slot(2)
+			elif event.pressed and event.keycode == KEY_4:
+				#if inventory_contents[3] != null:
+				select_slot(3)
+			elif event.pressed and event.keycode == KEY_5:
+				#if inventory_contents[4] != null:
+				select_slot(4)
+			elif event.pressed and event.keycode == KEY_6:
+				#if inventory_contents[5] != null:
+				select_slot(5)
 
 func _input(event):
-	if event.is_action_pressed("ui_scroll_up"):
-		select_previous_slot()
-	if event.is_action_pressed("ui_scroll_down"):
-		select_next_slot()
-	if event.is_action_pressed("drop_selected_item"):
-		drop_selected_item()
+	if !fps_controller.is_interacting():
+		if event.is_action_pressed("ui_scroll_up"):
+			select_previous_slot()
+		if event.is_action_pressed("ui_scroll_down"):
+			select_next_slot()
+		if event.is_action_pressed("drop_selected_item"):
+			drop_selected_item()
 
 func _ready():
 	for i in range(6):

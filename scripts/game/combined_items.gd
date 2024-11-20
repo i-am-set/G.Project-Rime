@@ -24,6 +24,9 @@ func create_combined_items(_ground_inv_item : InventoryItem, _held_inv_item : In
 	add_item_to_combined_items(_held_inv_item)
 
 func add_item_to_combined_items(_inv_item : InventoryItem):
+	if _inv_item == null:
+		printerr("inv_item was null when 'add_item_to_combined_items(_inv_item : InventoryItem)' called in 'combined_items'")
+		return
 	combined_items.append(_inv_item)
 	
 	var empty_meshes := []

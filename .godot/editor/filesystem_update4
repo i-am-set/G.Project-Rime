@@ -17,3 +17,15 @@ res://scenes/maingame/world.tscn
 res://scenes/ui/inv_item_rect.tscn
 res://scenes/maingame/ground_item.tscn
 res://scenes/maingame/combined_items.tscn
+res://scripts/player/fps_controller.gd
+res://addons/godot-console/scripts/ConsoleMono.cs
+res://scripts/resource_objects/ResourceChunkInstancer.cs
+res://scripts/resource_objects/ResourceController.cs
+res://scripts/resource_objects/ResourceInstancer.cs
+res://scripts/world_generation/InfiniteTerrainGenerator.cs
+res://scripts/world_generation/LODInfo.cs
+res://scripts/world_generation/MapDisplay.cs
+res://scripts/world_generation/MapGenerator.cs
+res://scripts/world_generation/TerrainType.cs
+res://scripts/game/combined_items.gd
+res://scripts/player/inventory_logic.gd
