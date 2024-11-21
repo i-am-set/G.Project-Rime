@@ -1,3 +1,4 @@
+RichTextLabel
 Label
 ColorRect
 VBoxContainer
@@ -5,7 +6,6 @@ Control
 Node3D
 MultiMeshInstance3D
 StaticBody3D
-RichTextLabel
 TextEdit
 Button
 RayCast3D

@@ -6,6 +6,8 @@ extends Control
 @onready var next_selection_label: Label = $VBoxContainer/NextSelection
 @onready var far_next_selection_label: Label = $VBoxContainer/FarNextSelection
 
+@onready var selector: Label = $VBoxContainer/CurrentSelection/Selector
+
 @onready var ellipses_previous: Label = $VBoxContainer/EllipsesPrevious
 @onready var ellipses_next: Label = $VBoxContainer/EllipsesNext
 
@@ -17,13 +19,13 @@ var ellipses_text = "  . . ."
 var current_selection : int
 var cached_menu_options
 var menu_options = [
-	{'title': 'Inquire', 'color': '#ffffff', 'id': 'arc_id1'},
-	{'title': 'Combine', 'color': '#ffffff', 'id': 'arc_id2'},	
-	{'title': 'Uncombine (All)', 'color': '#ffffff', 'id': 'arc_id3'},	
-	{'title': 'Craft (Flint Spear)', 'color': '#ffffff', 'id': 'arc_id4'},	
-	{'title': 'Start fire pit', 'color': '#ffffff', 'id': 'arc_id5'},	
-	{'title': 'Item6', 'color': '#ffffff', 'id': 'arc_id6'},	
-	{'title': 'Item7', 'color': '#ffffff', 'id': 'arc_id7'},	
+	{'title': 'Inquire', 'color': '#ffffff', 'id': 'arc_id1', 'selector': '>'},
+	{'title': 'Combine', 'color': '#ffffff', 'id': 'arc_id2', 'selector': '>'},	
+	{'title': 'Uncombine (All)', 'color': '#ffffff', 'id': 'arc_id3', 'selector': '>'},	
+	{'title': 'Craft (Flint Spear)', 'color': '#ffffff', 'id': 'arc_id4', 'selector': '>'},	
+	{'title': 'Start fire pit', 'color': '#ffffff', 'id': 'arc_id5', 'selector': '>'},	
+	{'title': 'Item6', 'color': '#ffffff', 'id': 'arc_id6', 'selector': '>'},	
+	{'title': 'Item7', 'color': '#ffffff', 'id': 'arc_id7', 'selector': '>'},	
 ] : set = set_menu_options
 
 func _ready() -> void:
@@ -96,6 +98,8 @@ func update_menu_option_visuals():
 		{"label": next_selection_label, "index": current_selection + 1},
 		{"label": far_next_selection_label, "index": current_selection + 2}
 	]
+	
+	selector.text = menu_options[current_selection]["selector"]
 	
 	for option in options:
 		var prefix = "  "

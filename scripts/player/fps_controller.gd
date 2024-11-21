@@ -420,7 +420,6 @@ func looking_process():
 			if look_at_collider != null && look_at_collider.has_user_signal("focused"):
 				look_at_collider.emit_signal("focused")
 				waila_label.text = get_waila_string(look_at_collider)
-				waila_interact_label.text = get_waila_string(look_at_collider)
 				interact_label.visible = true
 				interact_label.text = get_interact_label()
 				if "inv_item" in look_at_collider:
@@ -454,9 +453,11 @@ func run_interact_method_by_id(_interact_method_id : String):
 					if _collider is Combined_Items:
 						_collider.uncombine_all_combined_items()
 		"open_craft_menu":
+			waila_interact_label.text = "Craft . . ."
 			var _collider = scrollable_interact_menu.interacted_collider
 			set_sub_interact_menu_items(_collider, "open_craft_menu")
 		"open_back_out_of_sub_menu":
+			waila_interact_label.text = get_waila_string(look_at_collider)
 			scrollable_interact_menu.back_out_of_sub_menu_options()
 
 func get_collider_id(_look_at_collider):
@@ -478,28 +479,28 @@ func set_interact_menu_items(_look_at_collider):
 	
 	var _menu_options : Array
 	if _collider_id[0] == "a" || _collider_id[0] == "c":
-		_menu_options.append(get_interact_menu_selection_dictionary("Inquire", "#ffffff", "interact_inquire"))
+		_menu_options.append(get_interact_menu_selection_dictionary("Inquire", "#ffffff", "interact_inquire", ">"))
 		if _collider_id == "c000001" || _collider_id[0] == "a":
 			if inventory_menu.is_selecting_item():
-				_menu_options.append(get_interact_menu_selection_dictionary("Combine", "#ffffff", "interact_combine"))
+				_menu_options.append(get_interact_menu_selection_dictionary("Combine", "#ffffff", "interact_combine", ">"))
 			if _collider_id == "c000001":
 				if "combined_items" in _look_at_collider:
 					if _look_at_collider.combined_items.size() > 1:
-						_menu_options.append(get_interact_menu_selection_dictionary("Uncombine (All)", "#ffffff", "interact_uncombine_all"))
+						_menu_options.append(get_interact_menu_selection_dictionary("Uncombine (All)", "#ffffff", "interact_uncombine_all", ">"))
 					var _all_possible_recipes_ids : Array
 					for _item in _look_at_collider.combined_items:
 						for _recipe in StaticData.recipe_data:
 							if StaticData.recipe_data[_recipe].has(_item.item_id):
 								_all_possible_recipes_ids.append(_recipe)
 					if _all_possible_recipes_ids.size() > 0:
-						_menu_options.append(get_interact_menu_selection_dictionary("Craft . . .", "#d2974d", "open_craft_menu"))
+						_menu_options.append(get_interact_menu_selection_dictionary("Craft...", "#d2974d", "open_craft_menu", ">"))
 	
 	scrollable_interact_menu.set_menu_options(_menu_options)
 
 func set_sub_interact_menu_items(_look_at_collider, _sub_menu_id : String):
 	var _sub_menu_options : Array = []
 	
-	_sub_menu_options.append(get_interact_menu_selection_dictionary("...", "#ffffff", "open_back_out_of_sub_menu"))
+	_sub_menu_options.append(get_interact_menu_selection_dictionary("...", "#ffffff", "open_back_out_of_sub_menu", ">"))
 	if _sub_menu_id == "open_craft_menu":
 		if "combined_items" in _look_at_collider:
 			
@@ -516,35 +517,39 @@ func set_sub_interact_menu_items(_look_at_collider, _sub_menu_id : String):
 				else:
 					_combined_item_dictionary[_combined_item.item_id] = 1
 			
+			var _used_recipes : Array = []
 			if _all_possible_recipes_ids.size() > 0:
 				for _recipe in _all_possible_recipes_ids:
+					if _used_recipes.has(_recipe):
+						break
+					_used_recipes.append(_recipe)
 					var _recipe_component_count = 0
 					for _component in _recipe:
 						if _component[0] == "a":
 							_recipe_component_count += _recipe[_component]
 					
-					if _look_at_collider.combined_items.size() == _recipe_component_count:
-						var _recipe_matches_combined_items = true
-						for _component in _recipe:
-							if _component in _combined_item_dictionary:
-								if _recipe[_component] != _combined_item_dictionary[_component]:
-									_recipe_matches_combined_items = false
-									break
-							else:
+					#if _look_at_collider.combined_items.size() == _recipe_component_count:
+					var _recipe_matches_combined_items = true
+					for _component in _recipe:
+						if _component in _combined_item_dictionary:
+							if _recipe[_component] != _combined_item_dictionary[_component]:
 								_recipe_matches_combined_items = false
 								break
-						
-						if _recipe_matches_combined_items:
-							printerr("success")
-							_sub_menu_options.append(get_interact_menu_selection_dictionary("Craft "+ StaticData.recipe_data[_recipe]["recipe_name"], "#ffffff", "open_craft_menu"))
 						else:
-							printerr("failed")
-							_sub_menu_options.append(get_interact_menu_selection_dictionary("Craft "+ StaticData.recipe_data[_recipe]["recipe_name"], "#e53c3c", "open_craft_menu"))
+							_recipe_matches_combined_items = false
+							break
+					
+					if _recipe_matches_combined_items:
+						printerr("success")
+						_sub_menu_options.append(get_interact_menu_selection_dictionary(StaticData.recipe_data[_recipe]["recipe_output_name"], "#ffffff", "open_back_out_of_sub_menu", ">"))
+					else:
+						printerr("failed")
+						_sub_menu_options.append(get_interact_menu_selection_dictionary(StaticData.recipe_data[_recipe]["recipe_output_name"], "#e53c3c", "open_back_out_of_sub_menu", "x"))
 	
 	scrollable_interact_menu.set_sub_menu_items(_sub_menu_options)
 
-func get_interact_menu_selection_dictionary(_title : String, _hex_code : String, _id : String) -> Dictionary:
-	return {'title': _title, 'color': _hex_code, 'id': _id}
+func get_interact_menu_selection_dictionary(_title : String, _hex_code : String, _id : String, _selector : String) -> Dictionary:
+	return {'title': _title, 'color': _hex_code, 'id': _id, 'selector': _selector}
 
 func create_combined_items(_collider, _collider_id : String):
 	if _collider_id[0] == "a" && inventory_menu.is_selecting_item():
@@ -583,6 +588,7 @@ func is_interacting() -> bool:
 
 func try_open_interact_menu():
 	if look_at_collider != null:
+		waila_interact_label.text = get_waila_string(look_at_collider)
 		set_interact_menu_items(look_at_collider)
 		scrollable_interact_menu.open_interact_menu()
 

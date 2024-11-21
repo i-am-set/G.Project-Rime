@@ -1,4 +1,4 @@
-[gd_scene load_steps=244 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=245 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -2282,6 +2282,11 @@ VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_ap6aa")
 
 [sub_resource type="Theme" id="Theme_dm671"]
 
+[sub_resource type="FontVariation" id="FontVariation_6afi1"]
+base_font = ExtResource("22_7k54l")
+spacing_glyph = 2
+spacing_bottom = -4
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_npmun"]
 bg_color = Color(1, 0.239216, 0.341176, 0.196078)
 
@@ -3020,26 +3025,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(1.17756e-11, 0.971787, -0.978518)
+bones/0/position = Vector3(-2.72859e-11, 0.98095, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190261, 0.59651, 0.0121132)
+bones/2/position = Vector3(0.19025, 0.577694, 0.0117312)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00203091, 0.00933738, 0.999146, -0.0401991)
-bones/6/rotation = Quaternion(-0.0818814, 0.0138097, -0.0127589, 0.996465)
+bones/5/rotation = Quaternion(0.000378024, -0.0311043, 0.998706, -0.0402476)
+bones/6/rotation = Quaternion(-0.00229422, 0.000793669, -0.0169319, 0.999854)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000793776, -0.0101198, 0.996859, 0.0785448)
+bones/8/rotation = Quaternion(0.000956247, -0.0101057, 0.995468, 0.0945494)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00201891, 0.00933883, 0.999122, 0.0408015)
+bones/11/rotation = Quaternion(-0.00039041, -0.0311038, 0.998681, 0.04085)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0829209, 0.00205645, 0.0206095, 0.996341)
+bones/12/rotation = Quaternion(-0.00230152, -0.000681898, 0.0169872, 0.999853)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3190,7 +3195,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -3465,6 +3470,22 @@ text = "Flint"
 horizontal_alignment = 2
 uppercase = true
 
+[node name="WAILAInteractSubtextLabel" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/WAILAInteractLabel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 22.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("FontVariation_6afi1")
+theme_override_font_sizes/font_size = 10
+text = "2x Cloth Fragment : 2
+1x Stick : 3
+1x Plant Fiber : 3"
+horizontal_alignment = 2
+
 [node name="SelectorColorRect" type="ColorRect" parent="UserInterface/Hud/ScrollableInteractMenu"]
 layout_mode = 1
 anchors_preset = -1
@@ -3520,7 +3541,7 @@ offset_top = -13.0
 offset_right = -3.0
 offset_bottom = 9.0
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("16_h2j1q")
+theme_override_fonts/font = ExtResource("22_7k54l")
 text = ">"
 
 [node name="NextSelection" type="Label" parent="UserInterface/Hud/ScrollableInteractMenu/VBoxContainer"]
