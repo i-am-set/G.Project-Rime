@@ -1,7 +1,7 @@
+VBoxContainer
 RichTextLabel
 Label
 ColorRect
-VBoxContainer
 Control
 Node3D
 MultiMeshInstance3D

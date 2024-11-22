@@ -52,6 +52,10 @@ const ITEM_MESHES : Dictionary = {
 # Player Constants
 const INV_DEFAULT_CELL_SIZE = Vector2(30, 30)
 
+# UI Constants
+const COLOR_WHITE_HTML = "#ffffff"
+const COLOR_RED_HTML = "#e53c3c"
+
 # Options Constants
 const DEFAULT_FOV = 75
 const MIN_FOV = 60
