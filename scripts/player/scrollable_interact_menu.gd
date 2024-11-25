@@ -10,6 +10,7 @@ const WAILA_INTERACT_SUBTEXT_LABEL = preload("res://scenes/ui/waila_interact_sub
 @onready var next_selection_label: Label = $VBoxContainer/NextSelection
 @onready var far_next_selection_label: Label = $VBoxContainer/FarNextSelection
 
+@onready var waila_interact_label: Label = $WAILAInteractLabel/WAILAInteractLabel
 @onready var waila_interact_subtext_v_box_container: VBoxContainer = $WAILAInteractLabel/WAILAInteractSubtextVBoxContainer
 @onready var selector: Label = $VBoxContainer/CurrentSelection/Selector
 
@@ -101,8 +102,6 @@ func set_waila_interact_subtext():
 		return
 	
 	if interacted_collider != null && StaticData.recipe_data.has(_imbedded_data):
-		if not "combined_items" in interacted_collider:
-			return
 		var _recipe = StaticData.recipe_data[_imbedded_data]
 		for _recipe_component in _recipe:
 			if _recipe_component[0] != "a":
@@ -110,9 +109,13 @@ func set_waila_interact_subtext():
 			var _required_component_amount = _recipe[_recipe_component]
 			var _subtext_item = WAILA_INTERACT_SUBTEXT_LABEL.instantiate()
 			var _recipe_component_count = 0
-			for _item in interacted_collider.combined_items:
-				if _item.item_id == _recipe_component:
-					_recipe_component_count += 1
+			if "combined_items" in interacted_collider:
+				for _item in interacted_collider.combined_items:
+					if _item.item_id == _recipe_component:
+						_recipe_component_count += 1
+			elif "inv_item" in interacted_collider:
+				if interacted_collider.inv_item.item_id == _recipe_component:
+						_recipe_component_count += 1
 			var _text = str(_required_component_amount) + "x " + StaticData.item_data[_recipe_component]["item_name"] + " : " + str(_recipe_component_count) + "/" + str(_required_component_amount)
 			_subtext_item.text = _text
 			if _recipe_component_count < _required_component_amount:
@@ -150,6 +153,7 @@ func update_menu_option_visuals():
 	]
 	
 	selector.text = menu_options[current_selection]["selector"]
+	waila_interact_label.text = fps_controller.get_interact_label()
 	clear_waila_interact_subtext()
 	set_waila_interact_subtext()
 	

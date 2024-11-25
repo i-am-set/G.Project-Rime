@@ -10,6 +10,8 @@ const INVENTORY_SLOT_DESELECTED = [
 	preload("res://textures/ui/Inventory/inventory_slot_2.png"),
 	preload("res://textures/ui/Inventory/inventory_slot_3.png")
 ]
+const FULL_VISIBLE = Color(1, 1, 1, 1)
+const HALF_VISIBLE = Color(1, 1, 1, 0.35)
 
 var inv_item : InventoryItem = null
 var item_id : String = ""
@@ -26,6 +28,7 @@ func set_item_icon(item_icon : CompressedTexture2D):
 
 func select_slot():
 	self.texture = INVENTORY_SLOT_SELECTED
+	texture_rect.modulate = FULL_VISIBLE
 
 func filler_slot():
 	self.texture = INVENTORY_SLOT_FILLER
@@ -34,3 +37,4 @@ func deselect_slot():
 	if self.texture == INVENTORY_SLOT_SELECTED || self.texture == INVENTORY_SLOT_FILLER:
 		var random_index = randi_range(0, 3)
 		self.texture = INVENTORY_SLOT_DESELECTED[random_index]
+		texture_rect.modulate = HALF_VISIBLE

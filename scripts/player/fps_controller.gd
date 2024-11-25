@@ -28,6 +28,7 @@ extends CharacterBody3D
 @onready var front_third_person_camera: Camera3D = $CameraController/FrontThirdPersonCamera
 @onready var busy_progress_circle: TextureProgressBar = $UserInterface/Hud/BusyProgressCircle
 @onready var scrollable_interact_menu: Control = $UserInterface/Hud/ScrollableInteractMenu
+@onready var interact_pointer: Node3D = $InteractPointer
 
 @export var MOUSE_SENSITIVITY : float = 1
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
@@ -146,7 +147,7 @@ func _input(event):
 						pick_up_to_inventory()
 		
 		if event.is_action_pressed("interact"):
-			if scrollable_interact_menu.visible:
+			if is_interacting():
 				if scrollable_interact_menu.menu_options.size() > 0:
 					var _cached_id : String = scrollable_interact_menu.menu_options[scrollable_interact_menu.current_selection]["id"]
 					run_interact_method_by_id(_cached_id)
@@ -156,20 +157,20 @@ func _input(event):
 			else:
 				try_open_interact_menu()
 		
-		if (event.is_action_pressed("left_mouse_click") || event.is_action_pressed("right_mouse_click")) && scrollable_interact_menu.visible:
+		if event.is_action_pressed("exit"):
+			if Global.IS_IN_CONSOLE || is_interacting():
+				pass
+			else:
+				toggle_pause_menu()
+		if (event.is_action_pressed("left_mouse_click") || event.is_action_pressed("right_mouse_click") || event.is_action_pressed("exit")) && is_interacting():
 			scrollable_interact_menu.close_interact_menu()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _is_authorized_user == true:
 		if event.is_action_pressed("mouse_click") && !Global.IS_PAUSED && !Global.IS_IN_CONSOLE:
 			capture_mouse()
-		if event.is_action_pressed("exit"):
-			if Global.IS_IN_CONSOLE:
-				pass
-			else:
-				toggle_pause_menu()
 		
-		if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true:
+		if event is InputEventMouseMotion && Global.MOUSE_CAPTURED == true && !is_interacting():
 			look_dir = event.relative * 0.001
 			_rotate_camera()
 			send_p2p_packet(0, {"message": "move", "steam_id": _steam_ID, "player_rotation": rotation, "player_head_animation_value": _head_movement})
@@ -434,8 +435,14 @@ func looking_process():
 
 func run_interact_method_by_id(_interact_method_id : String):
 	match _interact_method_id:
-		"interact_inquire":
+		"interact_close":
 			pass
+		"interact_pick_up":
+			if look_at_collider != null:
+				if "interaction_component" in look_at_collider:
+					var look_at_collider_interaction_component = look_at_collider.interaction_component
+					if look_at_collider_interaction_component.is_pickable:
+						pick_up_to_inventory()
 		"interact_combine":
 			var _collider = scrollable_interact_menu.interacted_collider
 			var _collider_id = scrollable_interact_menu.interacted_collider_id
@@ -478,80 +485,110 @@ func set_interact_menu_items(_look_at_collider):
 	scrollable_interact_menu.interacted_collider_id = _collider_id
 	
 	var _menu_options : Array
+	_menu_options.append(get_interact_menu_selection_dictionary("[x]", Global.COLOR_WHITE_HTML, "interact_close", "", ">"))
 	if _collider_id[0] == "a" || _collider_id[0] == "c":
-		_menu_options.append(get_interact_menu_selection_dictionary("Inquire", Global.COLOR_WHITE_HTML, "interact_inquire", "", ">"))
+		if _collider_id[0] == "a":
+			_menu_options.append(get_interact_menu_selection_dictionary("Pick up", Global.COLOR_WHITE_HTML, "interact_pick_up", "", ">"))
 		if _collider_id == "c000001" || _collider_id[0] == "a":
 			if inventory_menu.is_selecting_item():
 				_menu_options.append(get_interact_menu_selection_dictionary("Combine", Global.COLOR_WHITE_HTML, "interact_combine", "", ">"))
+			var _all_possible_recipes_ids : Array
 			if _collider_id == "c000001":
 				if "combined_items" in _look_at_collider:
 					if _look_at_collider.combined_items.size() > 1:
 						_menu_options.append(get_interact_menu_selection_dictionary("Uncombine (All)", Global.COLOR_WHITE_HTML, "interact_uncombine_all", "", ">"))
-					var _all_possible_recipes_ids : Array
 					for _item in _look_at_collider.combined_items:
 						for _recipe in StaticData.recipe_data:
 							if StaticData.recipe_data[_recipe].has(_item.item_id):
 								_all_possible_recipes_ids.append(_recipe)
-					if _all_possible_recipes_ids.size() > 0:
-						_menu_options.append(get_interact_menu_selection_dictionary("Craft...", "#d2974d", "open_craft_menu", "", ">"))
+			elif _collider_id[0] == "a":
+				for _recipe in StaticData.recipe_data:
+					if StaticData.recipe_data[_recipe].has(_collider_id):
+						_all_possible_recipes_ids.append(_recipe)
+			if _all_possible_recipes_ids.size() > 0:
+				_menu_options.append(get_interact_menu_selection_dictionary("Craft...", "#d2974d", "open_craft_menu", "", ">"))
 	
 	scrollable_interact_menu.set_menu_options(_menu_options)
 
 func set_sub_interact_menu_items(_look_at_collider, _sub_menu_id : String):
 	var _sub_menu_options : Array = []
-	
 	_sub_menu_options.append(get_interact_menu_selection_dictionary("...", Global.COLOR_WHITE_HTML, "open_back_out_of_sub_menu", "", ">"))
+
 	if _sub_menu_id == "open_craft_menu":
-		if "combined_items" in _look_at_collider:
-			
-			var _all_possible_recipes_ids : Array = []
-			for _item in _look_at_collider.combined_items:
-				for _recipe in StaticData.recipe_data:
-					if StaticData.recipe_data[_recipe].has(_item.item_id):
-						_all_possible_recipes_ids.append(_recipe)
-			
-			var _combined_item_dictionary = {}
-			for _combined_item in _look_at_collider.combined_items:
-				if _combined_item.item_id in _combined_item_dictionary:
-					_combined_item_dictionary[_combined_item.item_id] += 1
-				else:
-					_combined_item_dictionary[_combined_item.item_id] = 1
-			
+		var _all_possible_recipes_ids : Array = []
+		var _recipe_matches_items = true
+
+		if "inv_item" in _look_at_collider:
+			_all_possible_recipes_ids = get_possible_recipes(_look_at_collider.inv_item.item_id)
+		elif "combined_items" in _look_at_collider:
+			_all_possible_recipes_ids = get_possible_recipes_from_combined_items(_look_at_collider.combined_items)
+
+		if _all_possible_recipes_ids.size() > 0:
 			var _used_recipes : Array = []
-			if _all_possible_recipes_ids.size() > 0:
-				for _recipe in _all_possible_recipes_ids:
-					if _used_recipes.has(_recipe):
-						break
-					_used_recipes.append(_recipe)
-					var _recipe_component_count = 0
-					for _component in _recipe:
-						if _component[0] == "a":
-							_recipe_component_count += _recipe[_component]
-					
-					#if _look_at_collider.combined_items.size() == _recipe_component_count:
-					var _recipe_matches_combined_items = true
-					for _component in _recipe:
-						if _component[0] == "a":
-							if _component in _combined_item_dictionary:
-								if _recipe[_component] <= _combined_item_dictionary[_component]:
-									continue
-							_recipe_matches_combined_items = false
-					
-					var _currently_held_item = inventory_menu.get_selected_item()
-					if StaticData.recipe_data[_recipe].has("recipe_tool_requirement"):
-						var _recipe_tool_requirement = StaticData.recipe_data[_recipe]["recipe_tool_requirement"]
-						if _recipe_tool_requirement == 0: # hammer
-							if _currently_held_item == null || StaticData.item_data[_currently_held_item.item_id]["item_hammer_value"] <= 0:
-								_recipe_matches_combined_items = false
-					
-					if _recipe_matches_combined_items:
-						printerr("success")
-						_sub_menu_options.append(get_interact_menu_selection_dictionary(StaticData.recipe_data[_recipe]["recipe_output_name"], Global.COLOR_WHITE_HTML, "open_back_out_of_sub_menu", _recipe, ">"))
-					else:
-						printerr("failed")
-						_sub_menu_options.append(get_interact_menu_selection_dictionary(StaticData.recipe_data[_recipe]["recipe_output_name"], Global.COLOR_RED_HTML, "open_back_out_of_sub_menu", _recipe, "x"))
-	
+			for _recipe in _all_possible_recipes_ids:
+				if _used_recipes.has(_recipe):
+					break
+				_used_recipes.append(_recipe)
+				_recipe_matches_items = check_recipe_matches(_recipe, _look_at_collider, inventory_menu.get_selected_item())
+
+				var color = Global.COLOR_GREEN_HTML if _recipe_matches_items else Global.COLOR_RED_HTML
+				_sub_menu_options.append(get_interact_menu_selection_dictionary(StaticData.recipe_data[_recipe]["recipe_output_name"], color, "open_back_out_of_sub_menu", _recipe, ">" if _recipe_matches_items else "x"
+))
+
 	scrollable_interact_menu.set_sub_menu_items(_sub_menu_options)
+
+func get_possible_recipes(_interacted_item_id):
+	var _all_possible_recipes_ids : Array = []
+	for _recipe in StaticData.recipe_data:
+		if StaticData.recipe_data[_recipe].has(_interacted_item_id):
+			_all_possible_recipes_ids.append(_recipe)
+	return _all_possible_recipes_ids
+
+func get_possible_recipes_from_combined_items(_combined_items):
+	var _all_possible_recipes_ids : Array = []
+	var _combined_item_dictionary = {}
+	for _item in _combined_items:
+		if _item.item_id in _combined_item_dictionary:
+			_combined_item_dictionary[_item.item_id] += 1
+		else:
+			_combined_item_dictionary[_item.item_id] = 1
+
+	for _item in _combined_items:
+		for _recipe in StaticData.recipe_data:
+			if StaticData.recipe_data[_recipe].has(_item.item_id):
+				_all_possible_recipes_ids.append(_recipe)
+	return _all_possible_recipes_ids
+
+func check_recipe_matches(_recipe, _look_at_collider, _currently_held_item):
+	var _recipe_matches_items = true
+	var _recipe_component_count = 0
+	var _combined_item_dictionary = {}
+
+	if "combined_items" in _look_at_collider:
+		for _combined_item in _look_at_collider.combined_items:
+			if _combined_item.item_id in _combined_item_dictionary:
+				_combined_item_dictionary[_combined_item.item_id] += 1
+			else:
+				_combined_item_dictionary[_combined_item.item_id] = 1
+
+	for _component in _recipe:
+		if _component[0] == "a":
+			_recipe_component_count += _recipe[_component]
+			if "inv_item" in _look_at_collider and _component == _look_at_collider.inv_item.item_id:
+				if _recipe[_component] <= 1:
+					continue
+			elif "combined_items" in _look_at_collider and _component in _combined_item_dictionary:
+				if _recipe[_component] <= _combined_item_dictionary[_component]:
+					continue
+			_recipe_matches_items = false
+
+	if StaticData.recipe_data[_recipe].has("recipe_tool_requirement"):
+		var _recipe_tool_requirement = StaticData.recipe_data[_recipe]["recipe_tool_requirement"]
+		if _recipe_tool_requirement == 0: # hammer
+			if _currently_held_item == null or StaticData.item_data[_currently_held_item.item_id]["item_hammer_value"] <= 0:
+				_recipe_matches_items = false
+
+	return _recipe_matches_items
 
 func get_interact_menu_selection_dictionary(_title : String, _hex_code : String, _id : String, _imbedded_data : String, _selector : String) -> Dictionary:
 	return {'title': _title, 'color': _hex_code, 'id': _id, 'imbedded_data': _imbedded_data, 'selector': _selector}
@@ -585,8 +622,8 @@ func get_pick_up_label(_inv_item : InventoryItem) -> String:
 	for actionName in InputMap.get_actions():
 		if actionName == "pick_up":
 			for inputEvent in InputMap.action_get_events(actionName):
-				return "Press [" + inputEvent.as_text().split(" (")[0] + "] to pick up" #+ _inv_item.get_item_name()
-	return "Press [??] to pick up" #+ _inv_item.get_item_name()
+				return "[" + inputEvent.as_text().split(" (")[0] + "] to pick up" #+ _inv_item.get_item_name()
+	return "[??] to pick up" #+ _inv_item.get_item_name()
 
 func is_interacting() -> bool:
 	return scrollable_interact_menu.visible
@@ -598,15 +635,20 @@ func try_open_interact_menu():
 		scrollable_interact_menu.open_interact_menu()
 
 func interact_process(delta):
-	if scrollable_interact_menu.visible == true:
+	if is_interacting():
 		tooltips.visible = false
+		if look_at_collider != null:
+			interact_pointer.global_position = look_at_collider.global_position
+		else:
+			interact_pointer.global_position = position + Vector3(0, 100000, 0)
 	else:
 		tooltips.visible = true
+		interact_pointer.global_position = position + Vector3(0, 100000, 0)
 
 func pick_up_to_inventory():
 	#printerr(inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size))
 	if !_is_busy && inventory_menu.has_empty_slots(look_at_collider.inv_item.item_slot_size):
-		busy_progress_circle.start_busy_progress_circle_timer(0.5)
+		busy_progress_circle.start_busy_progress_circle_timer(0.35)
 		arms_animation_player.stop()
 		arms_animation_player.play("left_hand_grab")
 		sound_manager.play_pickup()
