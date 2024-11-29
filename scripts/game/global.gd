@@ -56,6 +56,7 @@ const INV_DEFAULT_CELL_SIZE = Vector2(30, 30)
 const COLOR_WHITE_HTML = "#ffffff"
 const COLOR_RED_HTML = "#e53c3c"
 const COLOR_GREEN_HTML = "#3fad62"
+const COLOR_GRAY_HTML = "#808080"
 
 # Options Constants
 const DEFAULT_FOV = 75

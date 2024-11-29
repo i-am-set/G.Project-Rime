@@ -10,13 +10,5 @@ res://GodotSky/Presets/default/moonLight.tres
 res://GodotSky/Presets/default/moonGlowColor.tres
 res://resources/weapons/weap_nothing.tres
 res://GodotSky/WorldEnvironment/default_sky.tres
-res://materials/world_gen_material.tres
-res://scenes/mainmenu.tscn
-res://scenes/maingame/world.tscn
-res://scenes/ui/inv_item_rect.tscn
-res://scenes/maingame/ground_item.tscn
-res://scenes/maingame/combined_items.tscn
 res://GodotSky/WorldEnvironment/default_environment.tres
-res://scripts/player/fps_controller.gd
-res://scripts/game/global.gd
-res://scripts/player/scrollable_interact_menu.gd
+res://materials/world_gen_material.tres

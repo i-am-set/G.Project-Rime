@@ -1,12 +1,12 @@
+Label
+Control
 Node3D
 MeshInstance3D
-Label
 Sprite3D
 Node
 ColorRect
 VBoxContainer
 RichTextLabel
-Control
 MultiMeshInstance3D
 StaticBody3D
 TextEdit

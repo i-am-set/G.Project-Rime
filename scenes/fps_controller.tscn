@@ -1,4 +1,4 @@
-[gd_scene load_steps=246 format=3 uid="uid://c3ffql15mo0aj"]
+[gd_scene load_steps=248 format=3 uid="uid://c3ffql15mo0aj"]
 
 [ext_resource type="Script" path="res://scripts/player/fps_controller.gd" id="1_k00bc"]
 [ext_resource type="PackedScene" uid="uid://cvcwpqk4pmogj" path="res://meshes/entities/player_models/male_01_model/male_player_model_01.glb" id="2_1hpm4"]
@@ -2832,6 +2832,16 @@ RichTextLabel/fonts/normal_font = ExtResource("7_22y7g")
 [sub_resource type="Theme" id="Theme_g3ryb"]
 Label/font_sizes/font_size = 8
 
+[sub_resource type="FontVariation" id="FontVariation_0xfxh"]
+base_font = ExtResource("7_22y7g")
+spacing_glyph = -1
+spacing_top = -5
+
+[sub_resource type="Theme" id="Theme_l8qr6"]
+Label/colors/font_color = Color(1, 1, 1, 0.509804)
+Label/font_sizes/font_size = 18
+Label/fonts/font = SubResource("FontVariation_0xfxh")
+
 [sub_resource type="QuadMesh" id="QuadMesh_chtvq"]
 flip_faces = true
 size = Vector2(2, 2)
@@ -3039,26 +3049,26 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -1.
 transform = Transform3D(1.43, 0, 0, 0, 1.43, 0, 0, 0, 1.43, 0, 0, 0)
 
 [node name="Skeleton3D" parent="CollisionShape3D/player_model/male_player_model_01/Armature" index="0"]
-bones/0/position = Vector3(-2.91965e-11, 0.973489, -0.978518)
+bones/0/position = Vector3(3.49591e-12, 0.979121, -0.978518)
 bones/0/rotation = Quaternion(-0.0101507, -2.9025e-08, 0.000301486, 0.999948)
 bones/1/rotation = Quaternion(0.0266308, -6.57631e-06, -0.00115145, 0.999645)
-bones/2/position = Vector3(0.190259, 0.593156, 0.0120451)
+bones/2/position = Vector3(0.190252, 0.581487, 0.0118082)
 bones/2/rotation = Quaternion(-0.000958898, -0.0101055, 0.9955, -0.0942138)
 bones/2/scale = Vector3(1, 1, 1)
 bones/3/rotation = Quaternion(0.0818324, -0.00820059, -0.0200425, 0.996411)
 bones/3/scale = Vector3(1, 1, 1)
 bones/4/rotation = Quaternion(-0.0387568, -0.0034877, -0.0916014, 0.995035)
-bones/5/rotation = Quaternion(0.00173653, 0.00212989, 0.999187, -0.0402126)
-bones/6/rotation = Quaternion(-0.0676707, 0.0114858, -0.0135122, 0.99755)
+bones/5/rotation = Quaternion(0.000718075, -0.0227896, 0.99893, -0.040243)
+bones/6/rotation = Quaternion(-0.0188338, 0.00349885, -0.0160739, 0.999687)
 bones/7/rotation = Quaternion(0.673228, 0.00181528, -0.00276143, 0.739427)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000822864, -0.0101175, 0.996629, 0.0814101)
+bones/8/rotation = Quaternion(0.000923417, -0.0101088, 0.99577, 0.0913153)
 bones/8/scale = Vector3(0.999999, 1, 1)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0387568, 0.0034877, 0.0916016, 0.995035)
-bones/11/rotation = Quaternion(-0.00172345, 0.00199629, 0.999163, 0.0408153)
+bones/11/rotation = Quaternion(-0.000725446, -0.0227889, 0.998905, 0.0408455)
 bones/11/scale = Vector3(1.00002, 1, 1.00001)
-bones/12/rotation = Quaternion(-0.0685259, 0.00156714, 0.0199708, 0.997448)
+bones/12/rotation = Quaternion(-0.0190556, -0.00011323, 0.0177491, 0.999661)
 bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
 
@@ -3209,7 +3219,7 @@ uppercase = true
 libraries = {
 "": SubResource("AnimationLibrary_m2i2j")
 }
-blend_times = [&"Walking", &"Walking", 0.5, &"Walking", &"Sprinting", 0.5, &"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Crouching", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1, &"JumpStart", &"Walking", 0.5]
+blend_times = [&"Sprinting", &"Walking", 0.5, &"Sprinting", &"Crouching", 0.5, &"Walking", &"Sprinting", 0.5, &"Walking", &"Walking", 0.5, &"Crouching", &"Sprinting", 0.5, &"Crouching", &"Walking", 0.5, &"JumpStart", &"Walking", 0.5, &"JumpEnd", &"Walking", 0.5, &"JumpEnd", &"JumpStart", 0.1]
 
 [node name="OverheadShapeCast" type="ShapeCast3D" parent="."]
 unique_name_in_owner = true
@@ -4829,6 +4839,28 @@ custom_minimum_size = Vector2(3, 3)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+
+[node name="TestBuildLabel" type="Control" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_l8qr6")
+
+[node name="Label" type="Label" parent="UserInterface/TestBuildLabel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -97.0
+offset_right = 354.0
+offset_bottom = -17.0
+grow_vertical = 0
+text = "Press F1 to open console
+v0.0.12 Alpha Version"
+vertical_alignment = 2
 
 [node name="PlayerStateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
 script = ExtResource("7_f1ve2")

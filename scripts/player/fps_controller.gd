@@ -150,7 +150,8 @@ func _input(event):
 			if is_interacting():
 				if scrollable_interact_menu.menu_options.size() > 0:
 					var _cached_id : String = scrollable_interact_menu.menu_options[scrollable_interact_menu.current_selection]["id"]
-					run_interact_method_by_id(_cached_id)
+					var _cached_imbedded_data : String = scrollable_interact_menu.menu_options[scrollable_interact_menu.current_selection]["imbedded_data"]
+					run_interact_method_by_id(_cached_id, _cached_imbedded_data)
 					if _cached_id.begins_with("open"):
 						return
 				scrollable_interact_menu.close_interact_menu()
@@ -433,7 +434,7 @@ func looking_process():
 			look_at_collider = null
 		clear_hud_labels()
 
-func run_interact_method_by_id(_interact_method_id : String):
+func run_interact_method_by_id(_interact_method_id : String, _cached_imbedded_data : String):
 	match _interact_method_id:
 		"interact_close":
 			pass
@@ -459,6 +460,12 @@ func run_interact_method_by_id(_interact_method_id : String):
 				if _collider_id[0] == "c":
 					if _collider is Combined_Items:
 						_collider.uncombine_all_combined_items()
+		"interact_craft":
+			if _cached_imbedded_data[0] == "c":
+				#craft
+				pass
+			else:
+				printerr("Can't craft... ", _cached_imbedded_data, " not a recipe.")
 		"open_craft_menu":
 			waila_interact_label.text = "Craft..."
 			var _collider = scrollable_interact_menu.interacted_collider
@@ -485,10 +492,10 @@ func set_interact_menu_items(_look_at_collider):
 	scrollable_interact_menu.interacted_collider_id = _collider_id
 	
 	var _menu_options : Array
-	_menu_options.append(get_interact_menu_selection_dictionary("[x]", Global.COLOR_WHITE_HTML, "interact_close", "", ">"))
+	_menu_options.append(get_interact_menu_selection_dictionary("[close]", Global.COLOR_GRAY_HTML, "interact_close", "", ">"))
 	if _collider_id[0] == "a" || _collider_id[0] == "c":
 		if _collider_id[0] == "a":
-			_menu_options.append(get_interact_menu_selection_dictionary("Pick up", Global.COLOR_WHITE_HTML, "interact_pick_up", "", ">"))
+			_menu_options.append(get_interact_menu_selection_dictionary("Take", Global.COLOR_WHITE_HTML, "interact_pick_up", "", ">"))
 		if _collider_id == "c000001" || _collider_id[0] == "a":
 			if inventory_menu.is_selecting_item():
 				_menu_options.append(get_interact_menu_selection_dictionary("Combine", Global.COLOR_WHITE_HTML, "interact_combine", "", ">"))
@@ -532,8 +539,7 @@ func set_sub_interact_menu_items(_look_at_collider, _sub_menu_id : String):
 				_recipe_matches_items = check_recipe_matches(_recipe, _look_at_collider, inventory_menu.get_selected_item())
 
 				var color = Global.COLOR_GREEN_HTML if _recipe_matches_items else Global.COLOR_RED_HTML
-				_sub_menu_options.append(get_interact_menu_selection_dictionary(StaticData.recipe_data[_recipe]["recipe_output_name"], color, "open_back_out_of_sub_menu", _recipe, ">" if _recipe_matches_items else "x"
-))
+				_sub_menu_options.append(get_interact_menu_selection_dictionary(StaticData.recipe_data[_recipe]["recipe_output_name"], color, "interact_craft", _recipe, ">" if _recipe_matches_items else "x"))
 
 	scrollable_interact_menu.set_sub_menu_items(_sub_menu_options)
 
