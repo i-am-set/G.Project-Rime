@@ -17,8 +17,12 @@ ResourceScriptDirectories=["res://"]
 [application]
 
 config/name="G.Project-Rime"
+config/version="v0.0.12"
 run/main_scene="res://scenes/mainmenu.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
+config/icon="res://textures/items/icons/ico_log.png"
 
 [autoload]
 

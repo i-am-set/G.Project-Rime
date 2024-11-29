@@ -8,6 +8,9 @@ var player # Reference to PlayerController
 
 const PACKET_READ_LIMIT: int = 32
 
+# GAME CONSTANTS
+const BUILD_VERSION = "v0.0.12"
+
 # World Constants
 const WORLD_PATH = "res://scenes/maingame/world.tscn"
 const MAX_TEMPERATURE_C = -10 # celsius

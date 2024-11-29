@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://drtesdudxprjy"]
+
+[ext_resource type="FontFile" uid="uid://seeio8ulr1kf" path="res://ui/fonts/FiraCode/FiraCode-Medium.ttf" id="1_cycb7"]
+
+[sub_resource type="FontVariation" id="FontVariation_q6tvm"]
+base_font = ExtResource("1_cycb7")
+spacing_glyph = -1
+spacing_top = -5
+
+[sub_resource type="Theme" id="Theme_l8qr6"]
+Label/colors/font_color = Color(1, 1, 1, 0.372549)
+Label/font_sizes/font_size = 18
+Label/fonts/font = SubResource("FontVariation_q6tvm")
+
+[sub_resource type="GDScript" id="GDScript_51p44"]
+script/source = "extends Control
+
+@onready var test_build_label: Label = $TestBuildLabel
+
+func _ready() -> void:
+	test_build_label.text = Global.BUILD_VERSION + \" Alpha Version
+Press F1 for Console\"
+"
+
+[node name="TestBuildLabelControl" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_l8qr6")
+script = SubResource("GDScript_51p44")
+
+[node name="TestBuildLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -381.0
+offset_top = 8.0
+offset_right = -11.0
+offset_bottom = 94.0
+grow_horizontal = 0
+text = "v?.?.? ??? Version
+Press F1 for Console"
+horizontal_alignment = 2

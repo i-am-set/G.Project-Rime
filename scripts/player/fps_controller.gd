@@ -121,6 +121,8 @@ func strip_into_peer():
 func _input(event):
 	if _is_authorized_user == true:
 		if event.is_action_pressed("ui_scroll_up"):
+			if Global.IS_IN_CONSOLE:
+				return
 			if !is_interacting():
 				try_open_interact_menu()
 			if !is_interacting():
@@ -129,6 +131,8 @@ func _input(event):
 				scrollable_interact_menu.previous_menu_option()
 			print_debug("scroll up")
 		if event.is_action_pressed("ui_scroll_down"):
+			if Global.IS_IN_CONSOLE:
+				return
 			if !is_interacting():
 				try_open_interact_menu()
 			if !is_interacting():

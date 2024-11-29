@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bf3ab670oy0m8"]
+[gd_scene load_steps=16 format=3 uid="uid://bf3ab670oy0m8"]
 
 [ext_resource type="Script" path="res://scripts/steam/SteamLobby.gd" id="1_0trix"]
 [ext_resource type="Script" path="res://scripts/game/mainmenu_controller.gd" id="1_nfqda"]
+[ext_resource type="FontFile" uid="uid://cblhlwfgq7uv3" path="res://ui/fonts/FiraCode/FiraCode-Regular.ttf" id="3_exu41"]
+[ext_resource type="PackedScene" uid="uid://drtesdudxprjy" path="res://scenes/ui/test_build_label_control.tscn" id="4_es34y"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bh53q"]
 
@@ -17,6 +19,77 @@ Label/font_sizes/font_size = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bt38q"]
 bg_color = Color(0.364706, 0.290196, 0.32549, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_23bif"]
+base_font = ExtResource("3_exu41")
+spacing_space = -22
+
+[sub_resource type="Theme" id="Theme_rs7wl"]
+Label/font_sizes/font_size = 32
+Label/fonts/font = SubResource("FontVariation_23bif")
+
+[sub_resource type="GDScript" id="GDScript_3tp41"]
+script/source = "extends Control
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+var canceled : bool = false
+
+func _ready() -> void:
+	animation_player.play(\"LoadingScreenAnimation\")
+	var load_time = randi_range(2, 4)
+	await get_tree().create_timer(load_time).timeout
+	if canceled != true:
+		var seed = randi_range(1, 999999999999)
+		Global.LOBBY_ID = -1
+		Global.WORLD_SEED = seed
+		await get_tree().process_frame
+		await get_parent().initialize_game(seed)
+		await get_tree().change_scene_to_file(Global.WORLD_PATH)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.keycode == KEY_F2:
+		canceled = true
+		queue_free()
+"
+
+[sub_resource type="Animation" id="Animation_jjs7b"]
+resource_name = "LoadingScreenAnimation"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoadingLabel:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["Loading", "Loading.", "Loading. .", "Loading. . ."]
+}
+
+[sub_resource type="Animation" id="Animation_sjyeq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoadingLabel:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["Loading"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1oxae"]
+_data = {
+"LoadingScreenAnimation": SubResource("Animation_jjs7b"),
+"RESET": SubResource("Animation_sjyeq")
+}
 
 [node name="Mainmenu" type="Control"]
 layout_mode = 3
@@ -329,6 +402,51 @@ offset_top = -0.400024
 grow_horizontal = 0
 grow_vertical = 0
 text = "S/"
+
+[node name="LoadingScreen" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_rs7wl")
+script = SubResource("GDScript_3tp41")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LoadingScreen"]
+libraries = {
+"": SubResource("AnimationLibrary_1oxae")
+}
+
+[node name="LoadingScreenCurtain" type="ColorRect" parent="LoadingScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="LoadingLabel" type="Label" parent="LoadingScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = -21.0
+offset_right = 250.0
+offset_bottom = 22.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading"
+vertical_alignment = 1
+uppercase = true
+
+[node name="TestBuildLabelControl" parent="." instance=ExtResource("4_es34y")]
+layout_mode = 1
 
 [connection signal="pressed" from="Multiplayer/CreateLobby" to="Multiplayer" method="_on_create_lobby_pressed"]
 [connection signal="text_changed" from="Multiplayer/CreateLobby/LobbySetName" to="Multiplayer" method="_on_lobby_set_name_text_changed"]
