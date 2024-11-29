@@ -2,8 +2,8 @@
 ## By Seth Gran
 ## Godot 4.2.1 Stable Mono
 
-Download and try the most recent build on Itch.io:
-https://i-am-set.itch.io/project-rime
+### Download and try the most recent build on Itch.io:
+#### https://i-am-set.itch.io/project-rime
 
 
 ### Features:
