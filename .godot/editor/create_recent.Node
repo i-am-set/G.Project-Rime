@@ -1,3 +1,5 @@
+AudioStreamPlayer
+AudioStreamPlayer2D
 AnimationPlayer
 Label
 VBoxContainer
@@ -10,6 +12,3 @@ MeshInstance3D
 Sprite3D
 Node
 MultiMeshInstance3D
-StaticBody3D
-TextEdit
-Button

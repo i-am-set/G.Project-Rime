@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvc65bqe3o070"]
+
+[ext_resource type="AudioStream" uid="uid://co081pmgpep1e" path="res://sound/music/mus_world_drone_track_1.wav" id="1_jqf8b"]
+[ext_resource type="Script" path="res://scripts/game/global_audio_player.gd" id="2_4fldy"]
+
+[node name="GlobalAudioPlayer" type="AudioStreamPlayer"]
+stream = ExtResource("1_jqf8b")
+volume_db = -36.0
+autoplay = true
+bus = &"Music"
+script = ExtResource("2_4fldy")

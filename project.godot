@@ -33,6 +33,7 @@ ConsoleMono="*res://addons/godot-console/scripts/ConsoleMono.cs"
 DebugAutoloadCanvas="*res://scenes/utility/debug_autoload_canvas.tscn"
 StaticData="*res://data/StaticData.gd"
 Global="*res://scripts/game/global.gd"
+GlobalAudioPlayer="*res://scenes/maingame/global_audio_player.tscn"
 
 [debug]
 
