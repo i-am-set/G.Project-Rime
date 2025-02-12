@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/steam/SteamLobby.gd" id="1_0trix"]
 [ext_resource type="Script" path="res://scripts/game/mainmenu_controller.gd" id="1_nfqda"]
-[ext_resource type="FontFile" uid="uid://cblhlwfgq7uv3" path="res://ui/fonts/FiraCode/FiraCode-Regular.ttf" id="3_exu41"]
+[ext_resource type="FontFile" uid="uid://eic76ud4invn" path="res://ui/fonts/SixtyfourConvergence/SixtyfourConvergence-Regular-VariableFont_BLED,SCAN,XELA,YELA.ttf" id="3_a0ioy"]
 [ext_resource type="AudioStream" uid="uid://d0sg5ggqjwqod" path="res://sound/sfx/synth/synth_blip_short_1.wav" id="4_6e8gh"]
 [ext_resource type="PackedScene" uid="uid://drtesdudxprjy" path="res://scenes/ui/test_build_label_control.tscn" id="4_es34y"]
-[ext_resource type="AudioStream" uid="uid://dptob6lwrt31l" path="res://sound/sfx/static/full_static_loop_1_lowpass.wav" id="5_wh3qh"]
+[ext_resource type="AudioStream" uid="uid://bljdey25l5q75" path="res://sound/sfx/static/full_static_loop_1_lowpass2x.wav" id="5_bb5c5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bh53q"]
 
@@ -23,7 +23,7 @@ Label/font_sizes/font_size = 16
 bg_color = Color(0.364706, 0.290196, 0.32549, 1)
 
 [sub_resource type="FontVariation" id="FontVariation_23bif"]
-base_font = ExtResource("3_exu41")
+base_font = ExtResource("3_a0ioy")
 spacing_space = -22
 
 [sub_resource type="Theme" id="Theme_rs7wl"]
@@ -445,8 +445,8 @@ volume_db = -24.0
 bus = &"SFX"
 
 [node name="AmbLoadingStatic" type="AudioStreamPlayer" parent="LoadingScreen"]
-stream = ExtResource("5_wh3qh")
-volume_db = -12.0
+stream = ExtResource("5_bb5c5")
+volume_db = -24.0
 autoplay = true
 bus = &"Ambience"
 
@@ -472,9 +472,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -66.0
+offset_left = -125.0
 offset_top = -21.0
-offset_right = 250.0
+offset_right = 255.0
 offset_bottom = 22.0
 grow_horizontal = 2
 grow_vertical = 2
