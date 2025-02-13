@@ -1,4 +1,4 @@
-res://scenes/maingame/world.tscn
+res://scenes/maingame/bunker.tscn
 res://GodotSky/Presets/default/baseSkyColor.tres
 res://GodotSky/Presets/default/baseCloudColor.tres
 res://GodotSky/Presets/default/overcastCloudColor.tres
@@ -10,16 +10,14 @@ res://GodotSky/Presets/default/moonLight.tres
 res://GodotSky/Presets/default/moonGlowColor.tres
 res://resources/weapons/weap_nothing.tres
 res://GodotSky/WorldEnvironment/default_sky.tres
-res://GodotSky/WorldEnvironment/default_environment.tres
 res://materials/world_gen_material.tres
 res://scenes/fps_controller.tscn
 res://scenes/mainmenu.tscn
+res://scenes/maingame/world.tscn
 res://scenes/ui/inv_item_rect.tscn
 res://scenes/maingame/ground_item.tscn
 res://scenes/maingame/combined_items.tscn
 res://scenes/ui/test_build_label_control.tscn
-res://scenes/utility/global_audio_player.tscn
-res://scripts/game/global_audio_player.gd
 res://scenes/maingame/global_audio_player.tscn
 res://addons/godot-console/scripts/ConsoleMono.cs
 res://scripts/resource_objects/ResourceChunkInstancer.cs

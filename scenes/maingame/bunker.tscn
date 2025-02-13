@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://i4jr1cbjw7wy"]
+
+[ext_resource type="Sky" uid="uid://bq7217qbtqsdc" path="res://GodotSky/WorldEnvironment/default_sky.tres" id="1_j5to0"]
+[ext_resource type="PackedScene" uid="uid://beyxitbtxa67" path="res://meshes/world/scene_models/bunker_01_model/bunker_model_01.glb" id="2_3dijb"]
+
+[sub_resource type="Environment" id="Environment_xp4gk"]
+background_mode = 2
+background_energy_multiplier = 0.0
+sky = ExtResource("1_j5to0")
+ambient_light_source = 3
+ambient_light_energy = 3.5
+reflected_light_source = 2
+tonemap_mode = 3
+tonemap_exposure = 0.15
+tonemap_white = 2.31
+ssao_enabled = true
+sdfgi_bounce_feedback = 1.99
+sdfgi_cascades = 1
+sdfgi_min_cell_size = 5.46875
+sdfgi_cascade0_distance = 350.0
+sdfgi_max_distance = 700.0
+sdfgi_y_scale = 0
+sdfgi_energy = 0.25
+sdfgi_normal_bias = 2.0
+glow_enabled = true
+glow_blend_mode = 0
+glow_hdr_scale = 0.5
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_albedo = Color(0.580392, 0.807843, 0.996078, 1)
+volumetric_fog_emission_energy = 0.0
+volumetric_fog_anisotropy = 0.84
+volumetric_fog_length = 277.93
+volumetric_fog_ambient_inject = 1.0
+volumetric_fog_sky_affect = 0.75
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_5r4op"]
+
+[node name="bunker" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xp4gk")
+camera_attributes = SubResource("CameraAttributesPractical_5r4op")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99032, 2.01982)
+light_color = Color(0.992157, 0.85098, 0.752941, 1)
+light_energy = 2.0
+
+[node name="bunker_model_01" parent="." instance=ExtResource("2_3dijb")]
